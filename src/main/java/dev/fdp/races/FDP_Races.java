@@ -21,15 +21,15 @@ public class FDP_Races extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        raceManager = new RaceManager(getDataFolder());
-        getServer().getPluginManager().registerEvents(new PlayerJoinListener(raceManager), this);
-
         getLogger().info("Загрузка!!!");
 
         RacesConfigLoader.checkConfigExists(this);
 
         this.races = RacesConfigLoader.loadConfig(this);
         getLogger().info("Загружено: " + this.races.size() + " расс");
+
+        raceManager = new RaceManager(getDataFolder(), this);
+        getServer().getPluginManager().registerEvents(new PlayerJoinListener(raceManager), this);
     }
 
     @Override

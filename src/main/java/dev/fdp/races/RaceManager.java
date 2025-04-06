@@ -11,10 +11,12 @@ public class RaceManager {
     private final File dataFile;
     private YamlConfiguration racesData;
     private final Map<String, String> nameToRaceMap= new HashMap<>();
-    private final List<String> races = Arrays.asList("HUMAN", "ELF", "BEAR", "WOLF", "TIGER", "ORK");
+//    private final List<String> races = Arrays.asList("HUMAN", "ELF", "BEAR", "WOLF", "TIGER", "ORK");
+    private final FDP_Races plugin;
 
-    public RaceManager(File dataFolder) {
+    public RaceManager(File dataFolder, FDP_Races plugin) {
         this.dataFile = new File(dataFolder, "playerData.yml");
+        this.plugin = plugin;
         loadData();
     }
 
@@ -53,12 +55,14 @@ public class RaceManager {
     }
 
     private String getRandomRace() {
-        int index = ThreadLocalRandom.current().nextInt(races.size());
-        return races.get(index);
+        if (plugin.races == null || plugin.races.isEmpty()) {
+            return "HUMAN"; // Раса по умолчанию
+        }
+        List<String> raceIds = new ArrayList<>(plugin.races.keySet());
+        return raceIds.get(ThreadLocalRandom.current().nextInt(raceIds.size()));
     }
 
-
     public List<String> getRaces() {
-        return new ArrayList<>(races);
+        return new ArrayList<>((Collection) plugin.races);
     }
 }

@@ -3,6 +3,7 @@ package dev.fdp.races;
 import java.util.Map;
 
 import dev.fdp.races.commands.RacesCommand;
+import dev.fdp.races.events.AttackRangeUpdater;
 import dev.fdp.races.events.HeathUpdater;
 import dev.fdp.races.events.MineSpeedUpdater;
 import dev.fdp.races.events.PlayerJoinListener;
@@ -39,6 +40,7 @@ public class FDP_Races extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(raceManager), this);
         getServer().getPluginManager().registerEvents(new HeathUpdater(raceManager), this);
         getServer().getPluginManager().registerEvents(new MineSpeedUpdater(raceManager), this);
+        getServer().getPluginManager().registerEvents(new AttackRangeUpdater(raceManager), this);
 
         RacesReloader.reloadRaceForAllPlayers();
 

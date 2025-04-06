@@ -1,5 +1,6 @@
 package dev.fdp.races;
 
+import dev.fdp.races.events.AttackRangeUpdater;
 import dev.fdp.races.events.MineSpeedUpdater;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -10,6 +11,7 @@ public class RacesReloader {
   public static void reloadRaceForPlayer(Player player) {
     HeathUpdater.updateHealth(FDP_Races.getInstance().raceManager, player);
     MineSpeedUpdater.updateMineSpeed(FDP_Races.getInstance().raceManager, player);
+    AttackRangeUpdater.updateAttackRange(FDP_Races.getInstance().raceManager, player);
   }
 
   public static void reloadRaceForAllPlayers() {

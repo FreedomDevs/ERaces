@@ -1,5 +1,6 @@
 plugins {
     java
+    `maven-publish`
 }
 
 group = "dev.fdp.races"
@@ -23,5 +24,16 @@ java {
 tasks.processResources {
     filesMatching("plugin.yml") {
         expand("version" to project.version)
+    }
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("mavenJava") {
+            from(components["java"])
+            groupId = project.group.toString()
+            artifactId = "races-plugin"
+            version = project.version.toString()
+        }
     }
 }

@@ -1,6 +1,7 @@
 package dev.fdp.races.events;
 
 import dev.fdp.races.RaceManager;
+
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,6 +17,10 @@ public class PlayerJoinListener implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        raceManager.getPlayerRace(player.getName());
+        if (!raceManager.getNameToRaceMap().containsKey(event.getPlayer().getName().toLowerCase())) {
+            String randomRace = raceManager.getRandomRace();
+
+            raceManager.setPlayerRace(player.getName(), randomRace);
+        }
     }
 }

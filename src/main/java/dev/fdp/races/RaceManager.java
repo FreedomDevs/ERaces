@@ -30,7 +30,7 @@ public class RaceManager {
 
                 if (!plugin.races.containsKey(racename)) {
                     plugin.getLogger().severe("ВНИМАНИЕ: РАССА: " + racename + " КУДАТ ПРОПАЛА (перегенерация...)");
-                    racename = getPlayerRace(nickname);
+                    racename = getRandomRace();
                 }
                 nameToRaceMap.put(nickname.toLowerCase(), racesData.getString(nickname));
             }
@@ -60,12 +60,24 @@ public class RaceManager {
         return nameToRaceMap.get(loverNickname);
     }
 
-    private String getRandomRace() {
+    public void setPlayerRace(String nickname, String racename) {
+        String loverNickname = nickname.toLowerCase();
+        if (!plugin.races.containsKey(racename))
+            throw new RuntimeException("Данная расса не существует! (" + racename + ")");
+
+        nameToRaceMap.put(loverNickname, racename);
+    }
+
+    public String getRandomRace() {
         List<String> raceIds = new ArrayList<>(plugin.races.keySet());
         return raceIds.get(ThreadLocalRandom.current().nextInt(raceIds.size()));
     }
 
     public Map<String, Race> getRaces() {
         return plugin.races;
+    }
+
+    public Map<String, String> getNameToRaceMap() {
+        return nameToRaceMap;
     }
 }

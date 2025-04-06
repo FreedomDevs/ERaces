@@ -7,8 +7,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class FDP_Races extends JavaPlugin {
     public Map<String, Race> races = null;
+    public RaceManager raceManager;
     private static FDP_Races instance;
-    private RaceManager raceManager;
 
     @Override
     public void onLoad() {

@@ -1,37 +1,76 @@
 package dev.fdp.races.commands;
 
-import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 
 import dev.fdp.races.FDP_Races;
-import dev.fdp.races.RacesReloader;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 
 public class RacesCommand implements TabExecutor {
+  Map<String, AbstractSubCommand> subCommands;
+
+  public RacesCommand() {
+    subCommands = new HashMap<>();
+    subCommands.put("reload", new ReloadSubCommand());
+    subCommands.put("regenerate_player_race", new RegeneratePlayerRaceSubCommand());
+    subCommands.put("set_player_race", new SetPlayerRaceSubCommand());
+  }
+
   public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
     if (args.length == 0) {
       sender.sendMessage(Component.text("Не указана подкоманда", NamedTextColor.RED));
     }
 
-    if (args[0].equals("reload")) {
-      FDP_Races.getInstance().reloadConfig();
-      FDP_Races.getInstance().raceManager.loadData();
-      RacesReloader.reloadRaceForAllPlayers();
-      sender.sendMessage(Component.text("Конфиг перезагружен👍"));
+    if (!subCommands.containsKey(args[0])) {
+      sender.sendMessage(Component.text("Подкоманда: " + args[0] + " не существует", NamedTextColor.RED));
     }
+
+    subCommands.get(args[0]).onCommandExecute(sender, args);
     return true;
   }
 
+  @Override
   public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
     if (args.length == 1) {
-      return Arrays.asList("reload");
+      String input = args[0].toLowerCase();
+      return subCommands.keySet().stream()
+          .filter(s -> s.toLowerCase().startsWith(input))
+          .sorted()
+          .toList(); // Используется List из Stream API
     }
+
+    if (args.length == 2) {
+      String sub = args[0].toLowerCase();
+      if (sub.equals("set_player_race") || sub.equals("regenerate_player_race")) {
+        String input = args[1].toLowerCase();
+        return Bukkit.getOnlinePlayers().stream()
+            .map(player -> player.getName())
+            .filter(name -> name.toLowerCase().startsWith(input))
+            .sorted()
+            .toList();
+      }
+    }
+
+    if (args.length == 3) {
+      String sub = args[0].toLowerCase();
+      if (sub.equals("set_player_race")) {
+        String input = args[2].toLowerCase();
+        return FDP_Races.getInstance().races.keySet().stream()
+            .filter(s -> s.toLowerCase().startsWith(input))
+            .sorted()
+            .toList();
+      }
+    }
+
     return Collections.emptyList();
   }
+
 }

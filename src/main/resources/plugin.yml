@@ -1,0 +1,5 @@
+name: FDP_Races
+version: ${version}
+main: dev.fdp.races.FDP_Races
+description: Просто плагин на рассы
+api-version: '1.21.1'

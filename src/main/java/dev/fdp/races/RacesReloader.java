@@ -11,8 +11,8 @@ public class RacesReloader {
 
   private static final List<IUpdater> updaters = List.of(
       new HealthUpdater(),
-      new MineSpeedUpdater(),
-      new AttackRangeUpdater(),
+      //new MineSpeedUpdater(),
+    //new AttackRangeUpdater(),
       new AdditionalArmorUpdater());
 
   public static void reloadRaceForPlayer(Player player) {

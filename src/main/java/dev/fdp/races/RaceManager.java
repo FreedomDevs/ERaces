@@ -55,9 +55,6 @@ public class RaceManager {
     }
 
     private String getRandomRace() {
-        if (plugin.races == null || plugin.races.isEmpty()) {
-            return "HUMAN"; // Раса по умолчанию
-        }
         List<String> raceIds = new ArrayList<>(plugin.races.keySet());
         return raceIds.get(ThreadLocalRandom.current().nextInt(raceIds.size()));
     }

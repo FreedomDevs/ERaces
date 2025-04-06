@@ -3,10 +3,8 @@ package dev.fdp.races;
 import java.util.Map;
 
 import dev.fdp.races.commands.RacesCommand;
-import dev.fdp.races.events.AttackRangeUpdater;
-import dev.fdp.races.events.HeathUpdater;
-import dev.fdp.races.events.MineSpeedUpdater;
-import dev.fdp.races.events.PlayerJoinListener;
+import dev.fdp.races.events.*;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class FDP_Races extends JavaPlugin {
@@ -37,10 +35,18 @@ public class FDP_Races extends JavaPlugin {
         reloadConfig();
 
         raceManager = new RaceManager(getDataFolder(), this);
-        getServer().getPluginManager().registerEvents(new PlayerJoinListener(raceManager), this);
-        getServer().getPluginManager().registerEvents(new HeathUpdater(raceManager), this);
-        getServer().getPluginManager().registerEvents(new MineSpeedUpdater(raceManager), this);
-        getServer().getPluginManager().registerEvents(new AttackRangeUpdater(raceManager), this);
+
+        Listener[] listeners = {
+                new PlayerJoinListener(raceManager),
+                new HeathUpdater(raceManager),
+                new MineSpeedUpdater(raceManager),
+                new AttackRangeUpdater(raceManager),
+                new AdditionalArmorUpdater(raceManager)
+        };
+
+        for (Listener listener : listeners) {
+            getServer().getPluginManager().registerEvents(listener, this);
+        }
 
         RacesReloader.reloadRaceForAllPlayers();
 

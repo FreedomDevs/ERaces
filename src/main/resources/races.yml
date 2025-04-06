@@ -1,0 +1,63 @@
+elf:
+  name: "Эльф"
+  max_hp: 15                              # Макс хп 15
+  hunger_loss_multiplier: 0.75            # Голодают на 25% медленнее
+  weapon_proficiency:
+    bow_damage_multiplier: 2  # Урон от лука уменьшается на 50%
+    bow_projectile_speed_multiplier: 2
+    sword_damage_multiplier: 0.5 # Урон от меча уменьшается на 25%
+    axe_damage_multiplier: 0.5  # Нормальный урон от топора
+    mace_damage_multiplier: 0.5  # Урон от булавы увеличен на 50%
+  forbidden_foods:                        # Запрещённая еда для поедания
+    - cooked_beef
+    - cooked_pork
+    - cooked_mutton
+    - cooked_chicken
+  # Нету пока ушей и скорости в лесу
+
+human:
+  name: "Человек"
+  mine_speed: 1.5        # 1.5x для скорости копки
+  hand_distance-bonus: 1 # +1 к длинне руки 
+
+bear_beastman:
+  name: "Зверолюд медведь"
+  max_hp: 30
+  additional_armor: 3
+  weapon_proficiency:
+    bow_damage_multiplier: 0.5  # Урон от лука уменьшается на 50%
+    sword_damage_multiplier: 0.75 # Урон от меча уменьшается на 25%
+    axe_damage_multiplier: 1.0  # Нормальный урон от топора
+    mace_damage_multiplier: 1.5  # Урон от булавы увеличен на 50%
+  shield_usage: false  # Зверолюды не могут использовать щиты
+
+wolf_beastman:
+  name: "Зверолюд волк"
+  weapon_proficiency:
+    hand_damage_additional: 3
+  regeneration_per_sec: 0.25
+  # Не сделано: и +2 урjyf если в радиусе  находится не менее 2 зверолюдов волков или обычных волков/собак
+  # Эффект скорости тоже нету
+  # И то что мирные опасаются тоже нету
+  shield_usage: false  # Зверолюды не могут использовать щиты
+  additional_armor: 1
+
+tiger_beastman:
+  name: "Зверолюд тигр"
+  max_hp: 25
+  additional_armor: 2
+  # Постоянная скорость два нету
+  shield_usage: false  # Зверолюды не могут использовать щиты
+  weapon_proficiency:
+    hand_damage_additional: 6
+    axe_damage_multiplier: 0.5
+    bow_damage_multiplier: 0.75
+
+ork:
+  name: "Орк"
+  max_hp: 30
+  # Нету если носит жел броню или выше получает сопротивление урону 1 и сопротивление отбрасыванию если ниже то весь урон умножается на 1.75
+  # Боец парным оружием
+  # при сражении с одинаковым оружием в обоих руках наносит урон +2 (если в броне ниже железной  получает x1.5 урон) при ношении щита получает замедление 1
+  # Неповоротливость
+  # Получает замедление 1

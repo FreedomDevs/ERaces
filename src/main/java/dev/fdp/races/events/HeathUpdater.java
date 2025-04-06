@@ -34,5 +34,4 @@ public class HeathUpdater implements Listener {
   public void onPlayerJoin(PlayerJoinEvent event) {
     updateHealth(raceManager, event.getPlayer());
   }
-
 }

@@ -1,19 +1,26 @@
 package dev.fdp.races;
 
-import dev.fdp.races.events.AdditionalArmorUpdater;
-import dev.fdp.races.events.AttackRangeUpdater;
-import dev.fdp.races.events.MineSpeedUpdater;
+import dev.fdp.races.updaters.*;
+
+import java.util.List;
+
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import dev.fdp.races.events.HeathUpdater;
-
 public class RacesReloader {
+
+  private static final List<IUpdater> updaters = List.of(
+      new HealthUpdater(),
+      new MineSpeedUpdater(),
+      new AttackRangeUpdater(),
+      new AdditionalArmorUpdater());
+
   public static void reloadRaceForPlayer(Player player) {
-    HeathUpdater.updateHealth(FDP_Races.getInstance().raceManager, player);
-    MineSpeedUpdater.updateMineSpeed(FDP_Races.getInstance().raceManager, player);
-    AttackRangeUpdater.updateAttackRange(FDP_Races.getInstance().raceManager, player);
-    AdditionalArmorUpdater.updateAdditionalArmor(FDP_Races.getInstance().raceManager, player);
+    RaceManager raceManager = FDP_Races.getInstance().raceManager;
+
+    for (IUpdater updater : updaters) {
+      updater.update(raceManager, player);
+    }
   }
 
   public static void reloadRaceForAllPlayers() {

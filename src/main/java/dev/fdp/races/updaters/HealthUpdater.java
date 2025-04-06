@@ -1,24 +1,16 @@
-package dev.fdp.races.events;
+package dev.fdp.races.updaters;
 
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
 
 import dev.fdp.races.Race;
 import dev.fdp.races.RaceManager;
 
-public class HeathUpdater implements Listener {
-
-  private final RaceManager raceManager;
-
-  public HeathUpdater(RaceManager raceManager) {
-    this.raceManager = raceManager;
-  }
-
-  public static void updateHealth(RaceManager raceManager, Player player) {
+public class HealthUpdater implements Listener, IUpdater {
+  @Override
+  public void update(RaceManager raceManager, Player player) {
     String playerRace = raceManager.getPlayerRace(player.getName());
 
     Race race = raceManager.getRaces().get(playerRace);
@@ -28,10 +20,5 @@ public class HeathUpdater implements Listener {
     AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
     if (attribute != null)
       attribute.setBaseValue(maxHealth);
-  }
-
-  @EventHandler
-  public void onPlayerJoin(PlayerJoinEvent event) {
-    updateHealth(raceManager, event.getPlayer());
   }
 }

@@ -4,7 +4,6 @@ import java.util.Map;
 
 import dev.fdp.races.commands.RacesCommand;
 import dev.fdp.races.events.*;
-import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class FDP_Races extends JavaPlugin {
@@ -36,19 +35,7 @@ public class FDP_Races extends JavaPlugin {
 
         raceManager = new RaceManager(getDataFolder(), this);
 
-        Listener[] listeners = {
-                new PlayerJoinListener(raceManager),
-                new HeathUpdater(raceManager),
-                new MineSpeedUpdater(raceManager),
-                new AttackRangeUpdater(raceManager),
-                new AdditionalArmorUpdater(raceManager)
-        };
-
-        for (Listener listener : listeners) {
-            getServer().getPluginManager().registerEvents(listener, this);
-        }
-
-        RacesReloader.reloadRaceForAllPlayers();
+        getServer().getPluginManager().registerEvents(new PlayerJoinListener(raceManager), this);
 
         getCommand("races").setExecutor(new RacesCommand());
         getCommand("races").setTabCompleter(new RacesCommand());

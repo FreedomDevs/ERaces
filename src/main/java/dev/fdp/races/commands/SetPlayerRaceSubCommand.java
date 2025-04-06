@@ -20,7 +20,7 @@ public class SetPlayerRaceSubCommand extends AbstractSubCommand {
     String newRace = args[2];
 
     if (!FDP_Races.getInstance().races.containsKey(newRace)) {
-      ChatUtil.message(sender, "<red>Такая расса не существует");
+      ChatUtil.message(sender, "<red>Такая раса не существует");
       return;
     }
 
@@ -32,6 +32,7 @@ public class SetPlayerRaceSubCommand extends AbstractSubCommand {
 
     FDP_Races.getInstance().raceManager.setPlayerRace(player.getName(), newRace);
     RacesReloader.reloadRaceForPlayer(player);
-    ChatUtil.message(sender, "<green>Расса игрока <yellow>{player} <green>установлена на: <gold>{race}", Map.of("{player}", player.getName(), "{race}", newRace));
+    ChatUtil.message(sender, "<green>Раса игрока <yellow>{player} <green>установлена на: <gold>{race}",
+        Map.of("{player}", player.getName(), "{race}", newRace));
   }
 }

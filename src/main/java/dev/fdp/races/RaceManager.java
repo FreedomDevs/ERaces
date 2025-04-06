@@ -38,6 +38,8 @@ public class RaceManager {
     }
 
     private void saveData() {
+        System.out.println("Сохранене " + nameToRaceMap.size() + " записей");
+
         for (Map.Entry<String, String> entry : nameToRaceMap.entrySet()) {
             racesData.set(entry.getKey(), entry.getValue());
         }
@@ -45,6 +47,7 @@ public class RaceManager {
         try {
             racesData.save(dataFile);
         } catch (IOException e) {
+            System.out.println("Failed to save data:");
             e.printStackTrace();
         }
     }
@@ -66,6 +69,7 @@ public class RaceManager {
             throw new RuntimeException("Данная расса не существует! (" + racename + ")");
 
         nameToRaceMap.put(loverNickname, racename);
+        saveData();
     }
 
     public String getRandomRace() {

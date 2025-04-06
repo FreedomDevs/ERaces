@@ -2,6 +2,7 @@ package dev.fdp.races;
 
 import java.util.Map;
 
+import dev.fdp.races.events.HeathUpdater;
 import dev.fdp.races.events.PlayerJoinListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -30,6 +31,7 @@ public class FDP_Races extends JavaPlugin {
 
         raceManager = new RaceManager(getDataFolder(), this);
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(raceManager), this);
+        getServer().getPluginManager().registerEvents(new HeathUpdater(raceManager), this);
     }
 
     @Override

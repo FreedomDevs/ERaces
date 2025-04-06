@@ -23,7 +23,5 @@ public class RegeneratePlayerRaceSubCommand extends AbstractSubCommand {
     FDP_Races.getInstance().raceManager.setPlayerRace(player.getName(), newRace);
     RacesReloader.reloadRaceForPlayer(player);
     ChatUtil.message(sender, "<green>Расса игрока <yellow>{player} <green>установлена на: <gold>{race}", Map.of("{player}", player.getName(), "{race}", newRace));
-//    sender.sendMessage(
-//        Component.text("Расса игрока " + player.getName() + " установлена расса: " + newRace, NamedTextColor.GREEN));
   }
 }

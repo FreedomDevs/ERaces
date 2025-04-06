@@ -12,8 +12,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 
 import dev.fdp.races.FDP_Races;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 
 public class RacesCommand implements TabExecutor {
   Map<String, AbstractSubCommand> subCommands;
@@ -23,6 +21,7 @@ public class RacesCommand implements TabExecutor {
     subCommands.put("reload", new ReloadSubCommand());
     subCommands.put("regenerate_player_race", new RegeneratePlayerRaceSubCommand());
     subCommands.put("set_player_race", new SetPlayerRaceSubCommand());
+    subCommands.put("get_player_race", new GetPlayerRace());
   }
 
   public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -45,12 +44,12 @@ public class RacesCommand implements TabExecutor {
       return subCommands.keySet().stream()
           .filter(s -> s.toLowerCase().startsWith(input))
           .sorted()
-          .toList(); // Используется List из Stream API
+          .toList();
     }
 
     if (args.length == 2) {
       String sub = args[0].toLowerCase();
-      if (sub.equals("set_player_race") || sub.equals("regenerate_player_race")) {
+      if (sub.equals("set_player_race") || sub.equals("regenerate_player_race") || sub.equals("get_player_race")) {
         String input = args[1].toLowerCase();
         return Bukkit.getOnlinePlayers().stream()
             .map(player -> player.getName())

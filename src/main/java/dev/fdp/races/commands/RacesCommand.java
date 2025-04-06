@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import dev.fdp.races.utils.ChatUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -26,11 +27,11 @@ public class RacesCommand implements TabExecutor {
 
   public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
     if (args.length == 0) {
-      sender.sendMessage(Component.text("Не указана подкоманда", NamedTextColor.RED));
+      ChatUtil.message(sender, "<red>Не указана подкоманда");
     }
 
     if (!subCommands.containsKey(args[0])) {
-      sender.sendMessage(Component.text("Подкоманда: " + args[0] + " не существует", NamedTextColor.RED));
+      ChatUtil.message(sender, "<red>Подкоманда: <yellow>{arg} <red>не существует", Map.of("{arg}", args[0]));
     }
 
     subCommands.get(args[0]).onCommandExecute(sender, args);

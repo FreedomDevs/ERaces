@@ -3,3 +3,12 @@ version: ${version}
 main: dev.fdp.races.FDP_Races
 description: Просто плагин на рассы
 api-version: '1.21.1'
+
+commands:
+  races:
+    description: "Коаманда на рассы типо"
+    permission: fdp_races.races_command.use
+
+permissions:
+  fdp_races.races_command.use:
+    default: op

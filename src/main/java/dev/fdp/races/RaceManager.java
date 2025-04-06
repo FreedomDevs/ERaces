@@ -19,7 +19,7 @@ public class RaceManager {
         loadData();
     }
 
-    private void loadData() {
+    public void loadData() {
         if (!dataFile.exists()) {
             racesData = new YamlConfiguration();
         } else {

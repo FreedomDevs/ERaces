@@ -18,7 +18,7 @@ public class HeathUpdater implements Listener {
     this.raceManager = raceManager;
   }
 
-  public void updateHealth(Player player) {
+  public static void updateHealth(RaceManager raceManager, Player player) {
     String playerRace = raceManager.getPlayerRace(player.getName());
 
     Race race = raceManager.getRaces().get(playerRace);
@@ -32,7 +32,7 @@ public class HeathUpdater implements Listener {
 
   @EventHandler
   public void onPlayerJoin(PlayerJoinEvent event) {
-    updateHealth(event.getPlayer());
+    updateHealth(raceManager, event.getPlayer());
   }
 
 }

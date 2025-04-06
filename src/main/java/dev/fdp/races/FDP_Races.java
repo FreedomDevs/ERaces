@@ -2,6 +2,7 @@ package dev.fdp.races;
 
 import java.util.Map;
 
+import dev.fdp.races.commands.RacesCommand;
 import dev.fdp.races.events.HeathUpdater;
 import dev.fdp.races.events.PlayerJoinListener;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -16,8 +17,13 @@ public class FDP_Races extends JavaPlugin {
         instance = this;
     }
 
-    public FDP_Races getInstance() {
+    public static FDP_Races getInstance() {
         return instance;
+    }
+
+    public void reloadConfig() {
+        this.races = RacesConfigLoader.loadConfig(this);
+        getLogger().info("Загружено: " + this.races.size() + " расс");
     }
 
     @Override
@@ -26,12 +32,16 @@ public class FDP_Races extends JavaPlugin {
 
         RacesConfigLoader.checkConfigExists(this);
 
-        this.races = RacesConfigLoader.loadConfig(this);
-        getLogger().info("Загружено: " + this.races.size() + " расс");
+        reloadConfig();
 
         raceManager = new RaceManager(getDataFolder(), this);
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(raceManager), this);
         getServer().getPluginManager().registerEvents(new HeathUpdater(raceManager), this);
+
+        RacesReloader.reloadRaceForAllPlayers();
+
+        getCommand("races").setExecutor(new RacesCommand());
+        getCommand("races").setTabCompleter(new RacesCommand());
     }
 
     @Override

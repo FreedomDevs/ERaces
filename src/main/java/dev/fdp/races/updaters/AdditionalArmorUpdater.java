@@ -13,8 +13,7 @@ public class AdditionalArmorUpdater implements Listener, IUpdater {
 
         AttributeInstance attibute = player.getAttribute(Attribute.GENERIC_ARMOR);
         if (attibute != null) {
-            double baseAttribute = attibute.getBaseValue();
-            attibute.setBaseValue(baseAttribute + additionalArmor); // Сомнительный прикол
+            attibute.setBaseValue(additionalArmor);
         }
     }
 }

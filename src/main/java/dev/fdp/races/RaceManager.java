@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.logging.Level;
 
 public class RaceManager {
     private final File dataFile;
@@ -47,8 +48,7 @@ public class RaceManager {
         try {
             racesData.save(dataFile);
         } catch (IOException e) {
-            System.out.println("Failed to save data:");
-            e.printStackTrace();
+            FDP_Races.getInstance().getLogger().log(Level.SEVERE, "Failed to save data:", e);
         }
     }
 

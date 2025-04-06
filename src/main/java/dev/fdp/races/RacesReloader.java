@@ -19,7 +19,7 @@ public class RacesReloader {
     RaceManager raceManager = FDP_Races.getInstance().raceManager;
 
     for (IUpdater updater : updaters) {
-      updater.update(raceManager, player);
+      updater.update(raceManager.getRaces().get(raceManager.getPlayerRace(player.getName())), player);
     }
   }
 

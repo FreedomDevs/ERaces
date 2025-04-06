@@ -19,12 +19,6 @@ public class PlayerJoinListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        if (!raceManager.getNameToRaceMap().containsKey(event.getPlayer().getName().toLowerCase())) {
-            String randomRace = raceManager.getRandomRace();
-
-            raceManager.setPlayerRace(player.getName(), randomRace);
-        }
-
         RacesReloader.reloadRaceForPlayer(player);
     }
 }

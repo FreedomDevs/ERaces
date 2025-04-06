@@ -2,8 +2,8 @@ package dev.fdp.races.updaters;
 
 import org.bukkit.entity.Player;
 
-import dev.fdp.races.RaceManager;
+import dev.fdp.races.Race;
 
 public interface IUpdater {
-  public void update(RaceManager raceManager, Player player);
+  public void update(Race race, Player player);
 }

@@ -25,7 +25,6 @@ public class FDP_Races extends JavaPlugin {
 
         this.races = RacesConfigLoader.loadConfig(this);
         getLogger().info("Загружено: " + this.races.size() + " расс");
-        getLogger().info(races.toString());
     }
 
     @Override

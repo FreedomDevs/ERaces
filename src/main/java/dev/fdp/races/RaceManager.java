@@ -10,8 +10,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class RaceManager {
     private final File dataFile;
     private YamlConfiguration racesData;
-    private final Map<String, String> nameToRaceMap= new HashMap<>();
-//    private final List<String> races = Arrays.asList("HUMAN", "ELF", "BEAR", "WOLF", "TIGER", "ORK");
+    private final Map<String, String> nameToRaceMap = new HashMap<>();
     private final FDP_Races plugin;
 
     public RaceManager(File dataFolder, FDP_Races plugin) {
@@ -21,12 +20,19 @@ public class RaceManager {
     }
 
     private void loadData() {
-        if(!dataFile.exists()) {
+        if (!dataFile.exists()) {
             racesData = new YamlConfiguration();
         } else {
             racesData = YamlConfiguration.loadConfiguration(dataFile);
-            for (String nicname : racesData.getKeys(false)) {
-                nameToRaceMap.put(nicname.toLowerCase(), racesData.getString(nicname));
+            for (String nickname : racesData.getKeys(false)) {
+
+                String racename = racesData.getString(nickname);
+
+                if (!plugin.races.containsKey(racename)) {
+                    plugin.getLogger().severe("ВНИМАНИЕ: РАССА: " + racename + " КУДАТ ПРОПАЛА (перегенерация...)");
+                    racename = getPlayerRace(nickname);
+                }
+                nameToRaceMap.put(nickname.toLowerCase(), racesData.getString(nickname));
             }
         }
     }
@@ -59,7 +65,7 @@ public class RaceManager {
         return raceIds.get(ThreadLocalRandom.current().nextInt(raceIds.size()));
     }
 
-    public List<String> getRaces() {
-        return new ArrayList<>((Collection) plugin.races);
+    public Map<String, Race> getRaces() {
+        return plugin.races;
     }
 }

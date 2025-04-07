@@ -1,12 +1,15 @@
 package dev.fdp.races;
 
+import java.util.List;
 import java.util.Map;
 
 import dev.fdp.races.commands.RacesCommand;
 import dev.fdp.races.events.*;
 import dev.fdp.races.updaters.ForbiddenFoodsUpdater;
+import dev.fdp.races.updaters.HandDamageUpdater;
 import dev.fdp.races.updaters.ShieldUsageUpdater;
 
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class FDP_Races extends JavaPlugin {
@@ -41,10 +44,16 @@ public class FDP_Races extends JavaPlugin {
 
         raceManager = new RaceManager(getDataFolder(), this);
 
-        getServer().getPluginManager().registerEvents(new PlayerJoinListener(raceManager), this);
+        Listener[] listeners = {
+                new PlayerJoinListener(raceManager),
+                new ShieldUsageUpdater(),
+                new ForbiddenFoodsUpdater(),
+                new HandDamageUpdater(),
+        };
 
-        getServer().getPluginManager().registerEvents(new ShieldUsageUpdater(), this);
-        getServer().getPluginManager().registerEvents(new ForbiddenFoodsUpdater(), this);
+        for (Listener listener : listeners) {
+            getServer().getPluginManager().registerEvents(listener, this);
+        }
 
         getCommand("races").setExecutor(new RacesCommand());
         getCommand("races").setTabCompleter(new RacesCommand());

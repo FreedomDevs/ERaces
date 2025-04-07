@@ -10,13 +10,16 @@ import org.bukkit.entity.Player;
 public class RacesReloader {
 
   private static final List<IUpdater> updaters = List.of(
+      // new AttackRangeUpdater(),
       new HealthUpdater(),
       new MineSpeedUpdater(),
-      // new AttackRangeUpdater(),
       new AdditionalArmorUpdater(),
       new HealthRegenUpdater(),
       new ShieldUsageUpdater(),
-      new ForbiddenFoodsUpdater());
+      new ForbiddenFoodsUpdater(),
+      new HandDamageUpdater()
+  );
+
 
   public static void reloadRaceForPlayer(Player player) {
     RaceManager raceManager = FDP_Races.getInstance().raceManager;

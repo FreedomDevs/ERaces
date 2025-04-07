@@ -16,6 +16,7 @@ public class HandDamageUpdater implements Listener, IUpdater {
 
     @EventHandler
     public void onEntityDamage(EntityDamageByEntityEvent event) {
+        if (event.getEntity() instanceof Player);
         Player player = (Player) event.getDamager();
         String playerName = player.getName();
         if (playerHandDamage.containsKey(playerName)) {

@@ -1,6 +1,5 @@
 package dev.fdp.races;
 
-import java.util.List;
 import java.util.Map;
 
 import dev.fdp.races.commands.RacesCommand;

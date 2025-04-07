@@ -1,6 +1,8 @@
 package dev.fdp.races.updaters;
 
 import dev.fdp.races.Race;
+import org.bukkit.Particle;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -21,6 +23,15 @@ public class HandDamageUpdater implements Listener, IUpdater {
             double bonusDamage =  playerHandDamage.get(playerName);
             double incrementDamage = originalDamage + bonusDamage;
             event.setDamage(incrementDamage);
+
+            LivingEntity target = (LivingEntity) event.getEntity();
+            target.getWorld().spawnParticle(
+                    Particle.FLAME,
+                    target.getLocation(),
+                    30,
+                    0.5, 1, 0.5,
+                    0.1
+            );
         }
     }
 

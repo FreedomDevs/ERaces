@@ -29,7 +29,7 @@ public class HandDamageUpdater implements Listener, IUpdater {
             target.getWorld().spawnParticle(
                     Particle.FLAME,
                     target.getLocation(),
-                    30,
+                    15,
                     0.5, 1, 0.5,
                     0.1
             );

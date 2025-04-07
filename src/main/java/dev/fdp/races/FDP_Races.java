@@ -28,6 +28,8 @@ public class FDP_Races extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        messageManager = new MessageManager(this);
+
         getLogger().info(messageManager.getString("plugin.enabled"));
 
         RacesConfigLoader.checkConfigExists(this);
@@ -35,7 +37,6 @@ public class FDP_Races extends JavaPlugin {
         reloadConfig();
 
         raceManager = new RaceManager(getDataFolder(), this);
-        messageManager = new MessageManager(this);
 
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(raceManager), this);
 

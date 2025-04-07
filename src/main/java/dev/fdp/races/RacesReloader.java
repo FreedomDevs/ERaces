@@ -12,8 +12,9 @@ public class RacesReloader {
   private static final List<IUpdater> updaters = List.of(
       new HealthUpdater(),
       new MineSpeedUpdater(),
-    //new AttackRangeUpdater(),
-      new AdditionalArmorUpdater());
+      // new AttackRangeUpdater(),
+      new AdditionalArmorUpdater(),
+      new HealthRegenUpdater());
 
   public static void reloadRaceForPlayer(Player player) {
     RaceManager raceManager = FDP_Races.getInstance().raceManager;

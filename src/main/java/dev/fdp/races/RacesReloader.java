@@ -17,7 +17,8 @@ public class RacesReloader {
       new HealthRegenUpdater(),
       new ShieldUsageUpdater(),
       new ForbiddenFoodsUpdater(),
-      new HandDamageUpdater()
+      new HandDamageUpdater(),
+      new RunningSpeedUpdater()
   );
 
 

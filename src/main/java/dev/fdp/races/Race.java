@@ -13,6 +13,7 @@ public class Race {
   private double additionalArmor = 0.0;
   private boolean shieldUsage = true;
   private double regenerationPerSec = 0.0;
+  private int runningSpeed = 0;
   private List<String> forbiddenFoods = new ArrayList<>();
   private WeaponProficiency weaponProficiency;
 
@@ -32,6 +33,10 @@ public class Race {
   public void setName(String name) {
     this.name = name;
   }
+
+  public void setRunningSpeed(int runningSpeed) { this.runningSpeed = runningSpeed; }
+
+  public int getRunningSpeed() { return runningSpeed; }
 
   public double getMaxHp() {
     return maxHp;

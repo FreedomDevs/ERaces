@@ -44,6 +44,7 @@ public class RacesConfigLoader {
       race.setAdditionalArmor(section.getDouble("additional_armor", 0.0));
       race.setShieldUsage(section.getBoolean("shield_usage", true));
       race.setRegenerationPerSec(section.getDouble("regeneration_per_sec", 0.0));
+      race.setRunningSpeed(section.getInt("running_speed", 0));
 
       if (section.isList("forbidden_foods")) {
         race.setForbiddenFoods(section.getStringList("forbidden_foods"));

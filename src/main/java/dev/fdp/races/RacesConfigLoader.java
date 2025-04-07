@@ -27,15 +27,12 @@ public class RacesConfigLoader {
 
   public static Map<String, Race> loadConfig(JavaPlugin plugin) {
     Map<String, Race> races = new HashMap<>();
-
     File file = new File(plugin.getDataFolder(), "races.yml");
-
     YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
 
     for (String key : config.getKeys(false)) {
       ConfigurationSection section = config.getConfigurationSection(key);
-      if (section == null)
-        continue; // на случай пустой секции
+      if (section == null) continue;
 
       Race race = new Race();
       race.setId(key);
@@ -47,23 +44,24 @@ public class RacesConfigLoader {
       race.setAdditionalArmor(section.getDouble("additional_armor", 0.0));
       race.setShieldUsage(section.getBoolean("shield_usage", true));
       race.setRegenerationPerSec(section.getDouble("regeneration_per_sec", 0.0));
+
       if (section.isList("forbidden_foods")) {
         race.setForbiddenFoods(section.getStringList("forbidden_foods"));
       }
 
-      // Загружаем вложенную секцию weapon_proficiency, если есть
+      WeaponProficiency wp = new WeaponProficiency();
+
       if (section.isConfigurationSection("weapon_proficiency")) {
         ConfigurationSection wpSection = section.getConfigurationSection("weapon_proficiency");
-        WeaponProficiency wp = new WeaponProficiency();
-        wp.setBowDamageMultiplier(wpSection.getDouble("bow_damage_multiplier", 1.0));
-        wp.setBowProjectileSpeedMultiplier(wpSection.getDouble("bow_projectile_speed_multiplier", 1.0));
-        wp.setSwordDamageMultiplier(wpSection.getDouble("sword_damage_multiplier", 1.0));
-        wp.setAxeDamageMultiplier(wpSection.getDouble("axe_damage_multiplier", 1.0));
-        wp.setMaceDamageMultiplier(wpSection.getDouble("mace_damage_multiplier", 1.0));
-        wp.setHandDamageAdditional(wpSection.getDouble("hand_damage_additional", 0.0));
-        race.setWeaponProficiency(wp);
+        wp.setBowDamageMultiplier(wpSection.getDouble("bow_damage_multiplier", wp.getBowDamageMultiplier()));
+        wp.setBowProjectileSpeedMultiplier(wpSection.getDouble("bow_projectile_speed_multiplier", wp.getBowProjectileSpeedMultiplier()));
+        wp.setSwordDamageMultiplier(wpSection.getDouble("sword_damage_multiplier", wp.getSwordDamageMultiplier()));
+        wp.setAxeDamageMultiplier(wpSection.getDouble("axe_damage_multiplier", wp.getAxeDamageMultiplier()));
+        wp.setMaceDamageMultiplier(wpSection.getDouble("mace_damage_multiplier", wp.getMaceDamageMultiplier()));
+        wp.setHandDamageAdditional(wpSection.getDouble("hand_damage_additional", wp.getHandDamageAdditional()));
       }
 
+      race.setWeaponProficiency(wp);
       races.put(key, race);
     }
     return races;

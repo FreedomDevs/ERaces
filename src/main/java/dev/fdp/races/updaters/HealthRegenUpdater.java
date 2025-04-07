@@ -41,6 +41,10 @@ public class HealthRegenUpdater implements IUpdater {
       }, 0, 20);
     }
 
-    playerToRegen.put(player.getName(), race.getRegenerationPerSec());
+    double regenPerSec = race.getRegenerationPerSec();
+    if (regenPerSec == 0)
+      playerToRegen.remove(player.getName());
+    else
+      playerToRegen.put(player.getName(), regenPerSec);
   }
 }

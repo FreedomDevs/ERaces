@@ -39,7 +39,7 @@ public class RaceManager {
     }
 
     private void saveData() {
-        System.out.println("Сохранене " + nameToRaceMap.size() + " записей");
+        FDP_Races.getInstance().getLogger().info("Сохранене " + nameToRaceMap.size() + " записей");
 
         for (Map.Entry<String, String> entry : nameToRaceMap.entrySet()) {
             racesData.set(entry.getKey(), entry.getValue());

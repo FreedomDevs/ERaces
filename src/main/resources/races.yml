@@ -37,7 +37,6 @@ wolf_beastman:
     hand_damage_additional: 3
   regeneration_per_sec: 0.25
   # Не сделано: и +2 урjyf если в радиусе  находится не менее 2 зверолюдов волков или обычных волков/собак
-  # Эффект скорости тоже нету
   running_speed: 1
   # И то что мирные опасаются тоже нету
   shield_usage: false  # Зверолюды не могут использовать щиты
@@ -47,8 +46,7 @@ tiger_beastman:
   name: "Зверолюд тигр"
   max_hp: 25
   additional_armor: 2
-  # Постоянная скорость два нету
-  speed: 2
+  running_speed: 2
   shield_usage: false  # Зверолюды не могут использовать щиты
   weapon_proficiency:
     hand_damage_additional: 6

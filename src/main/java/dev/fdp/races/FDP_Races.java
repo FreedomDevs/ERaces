@@ -9,6 +9,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class FDP_Races extends JavaPlugin {
     public Map<String, Race> races = null;
     public RaceManager raceManager;
+    public MessageManager messageManager;
     private static FDP_Races instance;
 
     @Override
@@ -27,13 +28,14 @@ public class FDP_Races extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        getLogger().info("Загрузка!!!");
+        getLogger().info(messageManager.getString("plugin.enabled"));
 
         RacesConfigLoader.checkConfigExists(this);
 
         reloadConfig();
 
         raceManager = new RaceManager(getDataFolder(), this);
+        messageManager = new MessageManager(this);
 
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(raceManager), this);
 
@@ -43,6 +45,7 @@ public class FDP_Races extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        getLogger().info("Выключение😞");
+        getLogger().info(messageManager.getString("plugin.disabled", "Выключение😞"));
     }
+
 }

@@ -26,11 +26,13 @@ public class RacesCommand implements TabExecutor {
 
   public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
     if (args.length == 0) {
-      ChatUtil.message(sender, "<red>Не указана подкоманда");
+      String message = FDP_Races.getInstance().messageManager.getString("commands.races.subcommand_error");
+      ChatUtil.message(sender, message);
     }
 
     if (!subCommands.containsKey(args[0])) {
-      ChatUtil.message(sender, "<red>Подкоманда: <yellow>{arg} <red>не существует", Map.of("{arg}", args[0]));
+      String message = FDP_Races.getInstance().messageManager.getString("commands.races.subcommand_is_null");
+      ChatUtil.message(sender, message, Map.of("{arg}", args[0]));
     }
 
     subCommands.get(args[0]).onCommandExecute(sender, args);

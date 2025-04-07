@@ -10,7 +10,8 @@ import java.util.Map;
 public class GetPlayerRace extends AbstractSubCommand {
     public void onCommandExecute(CommandSender sender, String[] args) {
         if (args.length < 2 && !(sender instanceof Player)) {
-            ChatUtil.message(sender, "<red>Вы не указали игрока для получения расы");
+            String message = FDP_Races.getInstance().messageManager.getString("commands.get_player_race.race_check_error");
+            ChatUtil.message(sender, message);
             return;
         }
 
@@ -18,11 +19,16 @@ public class GetPlayerRace extends AbstractSubCommand {
 
         String playerRace = FDP_Races.getInstance().raceManager.getPlayerRace(playerName);
 
-        if (sender.getName().equals(playerName))
-            ChatUtil.message(sender, "<green>Ваша раса <yellow>{race}",
+        if (sender.getName().equals(playerName)) {
+            String message = FDP_Races.getInstance().messageManager.getString("commands.get_player_race.race_check_success_me");
+            ChatUtil.message(sender, message,
                     Map.of("{race}", playerRace));
-        else
-            ChatUtil.message(sender, "<green>У игрока <yellow>{player} <green>раса <yellow>{race}",
+        }
+        else {
+            String message = FDP_Races.getInstance().messageManager.getString("commands.get_player_race.race_check_success");
+            ChatUtil.message(sender, message,
                     Map.of("{player}", playerName, "{race}", playerRace));
+        }
+
     }
 }

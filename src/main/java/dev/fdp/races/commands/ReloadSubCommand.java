@@ -11,7 +11,7 @@ public class ReloadSubCommand extends AbstractSubCommand {
     FDP_Races.getInstance().reloadConfig();
     FDP_Races.getInstance().raceManager.loadData();
     RacesReloader.reloadRaceForAllPlayers();
-
-    ChatUtil.message(sender, "<green>Конфиг перезагружен");
+    String message = FDP_Races.getInstance().messageManager.getString("commands.reload.reload_success");
+    ChatUtil.message(sender, message);
   }
 }

@@ -16,13 +16,15 @@ public class RegeneratePlayerRaceSubCommand extends AbstractSubCommand {
 
     Player player = args.length == 1 ? (Player) sender : Bukkit.getPlayer(args[1]); // Если это вызовет консоль то бобо
     if (player == null) {
-      ChatUtil.message(sender, "<red>Неверно указан ник игрока");
+      String message = FDP_Races.getInstance().messageManager.getString("commands.regenerate_player_race.nick_error");
+      ChatUtil.message(sender, message);
       return;
     }
 
     FDP_Races.getInstance().raceManager.setPlayerRace(player.getName(), newRace);
     RacesReloader.reloadRaceForPlayer(player);
-    ChatUtil.message(sender, "<green>Раса игрока <yellow>{player} <green>установлена на: <gold>{race}",
+    String message = FDP_Races.getInstance().messageManager.getString("commands.regenerate_player_race.regenerate_success");
+    ChatUtil.message(sender, message,
         Map.of("{player}", player.getName(), "{race}", newRace));
   }
 }

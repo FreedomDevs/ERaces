@@ -1,5 +1,31 @@
 plugin:
   enabled: "Плагин включен!"
   disabled: "Плагин выключен"
+
+commands:
+  get_player_race:
+    race_check_error: "<red>Вы не указали игрока для получения расы"
+    race_check_success: "<green>У игрока <yellow>{player} <green>раса <yellow>{race}"
+    race_check_success_me: "<green>Ваша раса <yellow>{race}"
+
+  races:
+    subcommand_error: "<red>Не указана подкоманда"
+    subcommand_is_null: "<red>Подкоманда: <yellow>{arg} <red>не существует"
+
+  regenerate_player_race:
+    nick_error: "<red>Неверно указан ник игрока"
+    regenerate_success: "<green>Раса игрока <yellow>{player} <green>установлена на: <yellow>{race}"
+
+  set_player_race:
+    small_args: "<red>Мала аргументов"
+    race_not_found: "<red>Такая раса не существует"
+    nick_null: "<red>Неверно указан ник игрока"
+    set_success: "<green>Раса игрока <yellow>{player} <green>установлена на: <yellow>{race}"
+
+  reload:
+    reload_success: "<green>Конфиг перезагружен"
+
+
 shield_block: "<red>Ваша раса не умеет использовать щиты"
 forbidden_foods: "<red>Ваша раса не приемлет данную еду"
+

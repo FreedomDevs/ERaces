@@ -4,6 +4,8 @@ import java.util.Map;
 
 import dev.fdp.races.commands.RacesCommand;
 import dev.fdp.races.events.*;
+import dev.fdp.races.updaters.ShieldUsageUpdater;
+
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class FDP_Races extends JavaPlugin {
@@ -40,8 +42,12 @@ public class FDP_Races extends JavaPlugin {
 
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(raceManager), this);
 
+        getServer().getPluginManager().registerEvents(new ShieldUsageUpdater(), this);
+
         getCommand("races").setExecutor(new RacesCommand());
         getCommand("races").setTabCompleter(new RacesCommand());
+
+        RacesReloader.reloadRaceForAllPlayers();
     }
 
     @Override

@@ -14,7 +14,8 @@ public class RacesReloader {
       new MineSpeedUpdater(),
       // new AttackRangeUpdater(),
       new AdditionalArmorUpdater(),
-      new HealthRegenUpdater());
+      new HealthRegenUpdater(),
+      new ShieldUsageUpdater());
 
   public static void reloadRaceForPlayer(Player player) {
     RaceManager raceManager = FDP_Races.getInstance().raceManager;

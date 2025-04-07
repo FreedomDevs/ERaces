@@ -11,7 +11,7 @@ import dev.fdp.races.FDP_Races;
 import dev.fdp.races.Race;
 
 public class HealthRegenUpdater implements IUpdater {
-  private static HashMap<String, Double> playerToRegen = new HashMap<>();
+  private static Map<String, Double> playerToRegen = new HashMap<>();
   private static Integer taskid = null;
 
   @Override

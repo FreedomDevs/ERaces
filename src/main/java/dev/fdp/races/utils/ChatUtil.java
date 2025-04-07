@@ -14,14 +14,13 @@ import java.util.Map;
 
 public class ChatUtil {
     private static final MiniMessage miniMessage = MiniMessage.builder().tags(TagResolver.builder()
-        .resolver(StandardTags.color())
-        .resolver(StandardTags.gradient())
-        .resolver(StandardTags.rainbow())
-        .build()
-    ).build();
+            .resolver(StandardTags.color())
+            .resolver(StandardTags.gradient())
+            .resolver(StandardTags.rainbow())
+            .build()).build();
 
-    private static Component format(String text, Map<String, String> args) {
-        return  miniMessage.deserialize(applyArgs(text, args));
+    public static Component format(String text, Map<String, String> args) {
+        return miniMessage.deserialize(applyArgs(text, args));
     }
 
     public static String applyArgs(String text, Map<String, String> args) {
@@ -42,15 +41,12 @@ public class ChatUtil {
 
     public static void sendTitle(Player player, String title, String subtitle, int fadeIn, int stay, int fadeOut) {
         player.showTitle(Title.title(
-                        format(title, Collections.emptyMap()),
-                        format(subtitle, Collections.emptyMap()),
-                        Title.Times.times(
-                                Duration.ofMillis(fadeIn),
-                                Duration.ofMillis(stay),
-                                Duration.ofMillis(fadeOut)
-                        )
-                )
-        );
+                format(title, Collections.emptyMap()),
+                format(subtitle, Collections.emptyMap()),
+                Title.Times.times(
+                        Duration.ofMillis(fadeIn),
+                        Duration.ofMillis(stay),
+                        Duration.ofMillis(fadeOut))));
     }
 
     public static void sendTitle(Player player, String title, String subtitle) {

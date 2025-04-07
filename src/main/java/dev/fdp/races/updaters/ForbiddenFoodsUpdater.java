@@ -23,7 +23,6 @@ public class ForbiddenFoodsUpdater implements Listener, IUpdater {
   public void onPlayerEat(PlayerItemConsumeEvent event) {
     if (forbiddenFoods.containsKey(event.getPlayer().getName())) {
       String item = event.getItem().getType().getKey().getKey();
-      Bukkit.getLogger().info(item);
 
       if (forbiddenFoods.get(event.getPlayer().getName()).contains(item)) {
         event.getPlayer()

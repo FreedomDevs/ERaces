@@ -52,4 +52,13 @@ public class ChatUtil {
     public static void sendTitle(Player player, String title, String subtitle) {
         sendTitle(player, title, subtitle, 10, 20, 10);
     }
+
+    public static void sendAction(Player player, String msg, Map<String, String> args) {
+        Component formatted = format(msg, args);
+        player.sendActionBar(formatted);
+    }
+
+    public static void sendAction(Player player, String msg) {
+        sendAction(player, msg, Collections.emptyMap());
+    }
 }

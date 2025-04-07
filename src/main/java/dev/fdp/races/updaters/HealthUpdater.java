@@ -3,10 +3,9 @@ package dev.fdp.races.updaters;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
 import dev.fdp.races.Race;
 
-public class HealthUpdater implements Listener, IUpdater {
+public class HealthUpdater implements IUpdater {
   @Override
   public void update(Race race, Player player) {
     double maxHealth = race.getMaxHp();

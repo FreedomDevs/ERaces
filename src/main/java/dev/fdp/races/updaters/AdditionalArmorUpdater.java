@@ -4,9 +4,8 @@ import dev.fdp.races.Race;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
 
-public class AdditionalArmorUpdater implements Listener, IUpdater {
+public class AdditionalArmorUpdater implements IUpdater {
     @Override
     public void update(Race race, Player player) {
         double additionalArmor = race.getAdditionalArmor();

@@ -6,12 +6,11 @@ import java.util.Map;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
 
 import dev.fdp.races.FDP_Races;
 import dev.fdp.races.Race;
 
-public class HealthRegenUpdater implements Listener, IUpdater {
+public class HealthRegenUpdater implements IUpdater {
   private static HashMap<String, Double> playerToRegen = new HashMap<>();
   private static Integer taskid = null;
 

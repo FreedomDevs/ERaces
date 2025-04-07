@@ -16,23 +16,23 @@ public class HandDamageUpdater implements Listener, IUpdater {
 
     @EventHandler
     public void onEntityDamage(EntityDamageByEntityEvent event) {
-        if (event.getEntity() instanceof Player);
-        Player player = (Player) event.getDamager();
-        String playerName = player.getName();
-        if (playerHandDamage.containsKey(playerName)) {
-            double originalDamage = event.getDamage();
-            double bonusDamage =  playerHandDamage.get(playerName);
-            double incrementDamage = originalDamage + bonusDamage;
-            event.setDamage(incrementDamage);
+        if (event.getDamager() instanceof Player) {
+            String playerName = event.getDamager().getName();
+            if (playerHandDamage.containsKey(playerName)) {
+                double originalDamage = event.getDamage();
+                double bonusDamage =  playerHandDamage.get(playerName);
+                double incrementDamage = originalDamage + bonusDamage;
+                event.setDamage(incrementDamage);
 
-            LivingEntity target = (LivingEntity) event.getEntity();
-            target.getWorld().spawnParticle(
-                    Particle.FLAME,
-                    target.getLocation(),
-                    15,
-                    0.5, 1, 0.5,
-                    0.1
-            );
+                LivingEntity target = (LivingEntity) event.getEntity();
+                target.getWorld().spawnParticle(
+                        Particle.FLAME,
+                        target.getLocation(),
+                        15,
+                        0.5, 1, 0.5,
+                        0.1
+                );
+            }
         }
     }
 

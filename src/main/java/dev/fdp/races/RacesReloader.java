@@ -15,7 +15,8 @@ public class RacesReloader {
       // new AttackRangeUpdater(),
       new AdditionalArmorUpdater(),
       new HealthRegenUpdater(),
-      new ShieldUsageUpdater());
+      new ShieldUsageUpdater(),
+      new ForbiddenFoodsUpdater());
 
   public static void reloadRaceForPlayer(Player player) {
     RaceManager raceManager = FDP_Races.getInstance().raceManager;

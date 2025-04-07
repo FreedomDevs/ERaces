@@ -2,3 +2,4 @@ plugin:
   enabled: "Плагин включен!"
   disabled: "Плагин выключен"
 shield_block: "<red>Ваша раса не умеет использовать щиты"
+forbidden_foods: "<red>Ваша раса не приемлет данную еду"

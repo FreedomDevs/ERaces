@@ -6,7 +6,6 @@ import dev.fdp.races.Race;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -17,7 +16,6 @@ import java.util.Map;
 
 public class BiomeSpeedUpdator implements IUpdater, IUnloadable {
     private static Map<String, List<String>> biomeSpeed = new HashMap<>();
-
 
     @Override
     public void update(Race race, Player player) {

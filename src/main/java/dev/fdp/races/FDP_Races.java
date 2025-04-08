@@ -14,7 +14,7 @@ public class FDP_Races extends JavaPlugin {
     public RaceManager raceManager;
     public MessageManager messageManager;
     private static FDP_Races instance;
-    private BiomeSpeedUpdator biomeSpeedUpdator;
+    private BiomeSpeedUpdater biomeSpeedUpdator;
 
     @Override
     public void onLoad() {
@@ -40,7 +40,7 @@ public class FDP_Races extends JavaPlugin {
 
         reloadConfig();
 
-        biomeSpeedUpdator = new BiomeSpeedUpdator();
+        biomeSpeedUpdator = new BiomeSpeedUpdater();
 
         raceManager = new RaceManager(getDataFolder(), this);
 
@@ -50,8 +50,9 @@ public class FDP_Races extends JavaPlugin {
                 new ShieldUsageUpdater(),
                 new ForbiddenFoodsUpdater(),
                 new HandDamageUpdater(),
-                new AxeDamageUpdator(),
-                new SwordDamageUpdator()
+                new AxeDamageUpdater(),
+                new SwordDamageUpdater(),
+                new BowDamageUpdater()
         };
 
         for (Listener listener : listeners) {

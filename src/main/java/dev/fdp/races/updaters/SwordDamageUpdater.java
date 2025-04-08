@@ -9,7 +9,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SwordDamageUpdator implements Listener, IUpdater,IUnloadable {
+public class SwordDamageUpdater implements Listener, IUpdater,IUnloadable {
     private static Map<String, Double> playerSwordDamage = new HashMap<>();
 
     @EventHandler

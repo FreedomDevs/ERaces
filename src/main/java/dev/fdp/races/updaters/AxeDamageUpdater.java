@@ -9,7 +9,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AxeDamageUpdator implements Listener,IUpdater, IUnloadable {
+public class AxeDamageUpdater implements Listener,IUpdater, IUnloadable {
     private static Map<String, Double> playerAxeDamage = new HashMap<>();
 
     @EventHandler

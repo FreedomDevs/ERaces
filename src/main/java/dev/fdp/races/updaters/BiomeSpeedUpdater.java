@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class BiomeSpeedUpdator implements IUpdater, IUnloadable {
+public class BiomeSpeedUpdater implements IUpdater, IUnloadable {
     private static Map<String, List<String>> biomeSpeed = new HashMap<>();
 
     @Override

@@ -20,10 +20,10 @@ public class RacesReloader {
       new HandDamageUpdater(),
       new RunningSpeedUpdater(),
       new AntiKnockbackLevelUpdater(),
-      new BiomeSpeedUpdator(),
-      new AxeDamageUpdator(),
-      new SwordDamageUpdator()
-
+      new BiomeSpeedUpdater(),
+      new AxeDamageUpdater(),
+      new SwordDamageUpdater(),
+      new BowDamageUpdater()
   );
 
   public static void reloadRaceForPlayer(Player player) {

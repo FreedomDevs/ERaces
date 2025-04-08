@@ -18,9 +18,10 @@ public class RacesReloader {
       new ShieldUsageUpdater(),
       new ForbiddenFoodsUpdater(),
       new HandDamageUpdater(),
-      new RunningSpeedUpdater()
-  );
+      new RunningSpeedUpdater(),
+      new AntiKnockbackLevelUpdater()
 
+  );
 
   public static void reloadRaceForPlayer(Player player) {
     RaceManager raceManager = FDP_Races.getInstance().raceManager;

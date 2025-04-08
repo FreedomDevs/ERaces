@@ -14,6 +14,7 @@ public class Race {
   private boolean shieldUsage = true;
   private double regenerationPerSec = 0.0;
   private int runningSpeed = 0;
+  private int antiKnocbackLevel = 1;
   private List<String> forbiddenFoods = new ArrayList<>();
   private WeaponProficiency weaponProficiency;
 
@@ -34,9 +35,21 @@ public class Race {
     this.name = name;
   }
 
-  public void setRunningSpeed(int runningSpeed) { this.runningSpeed = runningSpeed; }
+  public void setRunningSpeed(int runningSpeed) {
+    this.runningSpeed = runningSpeed;
+  }
 
-  public int getRunningSpeed() { return runningSpeed; }
+  public int getRunningSpeed() {
+    return runningSpeed;
+  }
+
+  public void setAntiKnockbackLevel(int antiKnocbackLevel) {
+    this.antiKnocbackLevel = antiKnocbackLevel;
+  }
+
+  public int getAntiKnockbackLevel() {
+    return antiKnocbackLevel;
+  }
 
   public double getMaxHp() {
     return maxHp;
@@ -122,6 +135,8 @@ public class Race {
         ", additionalArmor=" + additionalArmor +
         ", shieldUsage=" + shieldUsage +
         ", regenerationPerSec=" + regenerationPerSec +
+        ", runningSpeed=" + runningSpeed +
+        ", antiKnocbackLevel=" + antiKnocbackLevel +
         ", forbiddenFoods=" + forbiddenFoods +
         ", weaponProficiency=" + weaponProficiency +
         '}';

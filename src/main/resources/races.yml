@@ -24,6 +24,7 @@ bear_beastman:
   name: "Зверолюд медведь"
   max_hp: 30
   additional_armor: 3
+  antiknockback_level: 99999
   weapon_proficiency:
     bow_damage_multiplier: 0.5  # Урон от лука уменьшается на 50%
     sword_damage_multiplier: 0.75 # Урон от меча уменьшается на 25%

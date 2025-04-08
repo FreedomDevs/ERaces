@@ -51,6 +51,10 @@ public class RacesConfigLoader {
       if (section.isList("forbidden_foods")) {
         race.setForbiddenFoods(section.getStringList("forbidden_foods"));
       }
+      
+      if (section.isList("biome_speed")){
+        race.setBiomeSpeed(section.getStringList("biome_speed"));
+      }
 
       WeaponProficiency wp = new WeaponProficiency();
 

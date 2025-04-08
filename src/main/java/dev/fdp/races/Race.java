@@ -16,6 +16,7 @@ public class Race {
   private int runningSpeed = 0;
   private int antiKnocbackLevel = 1;
   private List<String> forbiddenFoods = new ArrayList<>();
+  private List<String> biomeSpeed = new ArrayList<>();
   private WeaponProficiency weaponProficiency;
 
   // Геттеры и сеттеры
@@ -33,6 +34,14 @@ public class Race {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public List<String> getBiomeSpeed() {
+    return biomeSpeed;
+  }
+
+  public void setBiomeSpeed(List<String> biomeSpeed) {
+    this.biomeSpeed = biomeSpeed;
   }
 
   public void setRunningSpeed(int runningSpeed) {

@@ -19,7 +19,8 @@ public class RacesReloader {
       new ForbiddenFoodsUpdater(),
       new HandDamageUpdater(),
       new RunningSpeedUpdater(),
-      new AntiKnockbackLevelUpdater()
+      new AntiKnockbackLevelUpdater(),
+      new BiomeSpeedUpdator()
 
   );
 

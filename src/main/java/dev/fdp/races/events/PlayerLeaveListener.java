@@ -1,9 +1,6 @@
 package dev.fdp.races.events;
 
-import dev.fdp.races.updaters.ForbiddenFoodsUpdater;
-import dev.fdp.races.updaters.HandDamageUpdater;
-import dev.fdp.races.updaters.IUnloadable;
-import dev.fdp.races.updaters.ShieldUsageUpdater;
+import dev.fdp.races.updaters.*;
 
 import java.util.List;
 
@@ -20,8 +17,8 @@ public class PlayerLeaveListener implements Listener {
         List<IUnloadable> unloadable = List.of(
                 new ForbiddenFoodsUpdater(),
                 new HandDamageUpdater(),
-                new ShieldUsageUpdater()
-
+                new ShieldUsageUpdater(),
+                new BiomeSpeedUpdator()
         );
 
         for (IUnloadable i : unloadable) {

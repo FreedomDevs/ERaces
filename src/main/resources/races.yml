@@ -14,6 +14,11 @@ elf:
     - cooked_mutton
     - cooked_chicken
   # Нету пока ушей и скорости в лесу
+  biome_speed:
+    - FOREST
+    - BIRCH_FOREST
+    - DARK_FOREST
+    - TAIGA
 
 human:
   name: "Человек"

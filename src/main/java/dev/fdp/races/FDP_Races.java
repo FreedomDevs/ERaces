@@ -4,6 +4,7 @@ import java.util.Map;
 
 import dev.fdp.races.commands.RacesCommand;
 import dev.fdp.races.events.*;
+import dev.fdp.races.updaters.BiomeSpeedUpdator;
 import dev.fdp.races.updaters.ForbiddenFoodsUpdater;
 import dev.fdp.races.updaters.HandDamageUpdater;
 import dev.fdp.races.updaters.ShieldUsageUpdater;
@@ -16,6 +17,7 @@ public class FDP_Races extends JavaPlugin {
     public RaceManager raceManager;
     public MessageManager messageManager;
     private static FDP_Races instance;
+    private BiomeSpeedUpdator biomeSpeedUpdator;
 
     @Override
     public void onLoad() {
@@ -41,6 +43,8 @@ public class FDP_Races extends JavaPlugin {
 
         reloadConfig();
 
+        biomeSpeedUpdator = new BiomeSpeedUpdator();
+
         raceManager = new RaceManager(getDataFolder(), this);
 
         Listener[] listeners = {
@@ -54,6 +58,8 @@ public class FDP_Races extends JavaPlugin {
         for (Listener listener : listeners) {
             getServer().getPluginManager().registerEvents(listener, this);
         }
+
+        biomeSpeedUpdator.startTask(this);
 
         getCommand("races").setExecutor(new RacesCommand());
         getCommand("races").setTabCompleter(new RacesCommand());

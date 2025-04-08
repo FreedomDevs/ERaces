@@ -20,7 +20,9 @@ public class RacesReloader {
       new HandDamageUpdater(),
       new RunningSpeedUpdater(),
       new AntiKnockbackLevelUpdater(),
-      new BiomeSpeedUpdator()
+      new BiomeSpeedUpdator(),
+      new AxeDamageUpdator(),
+      new SwordDamageUpdator()
 
   );
 

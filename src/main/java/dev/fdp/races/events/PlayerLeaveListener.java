@@ -18,7 +18,9 @@ public class PlayerLeaveListener implements Listener {
                 new ForbiddenFoodsUpdater(),
                 new HandDamageUpdater(),
                 new ShieldUsageUpdater(),
-                new BiomeSpeedUpdator()
+                new BiomeSpeedUpdator(),
+                new AxeDamageUpdator(),
+                new SwordDamageUpdator()
         );
 
         for (IUnloadable i : unloadable) {

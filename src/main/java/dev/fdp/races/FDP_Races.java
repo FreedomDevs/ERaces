@@ -4,10 +4,7 @@ import java.util.Map;
 
 import dev.fdp.races.commands.RacesCommand;
 import dev.fdp.races.events.*;
-import dev.fdp.races.updaters.BiomeSpeedUpdator;
-import dev.fdp.races.updaters.ForbiddenFoodsUpdater;
-import dev.fdp.races.updaters.HandDamageUpdater;
-import dev.fdp.races.updaters.ShieldUsageUpdater;
+import dev.fdp.races.updaters.*;
 
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -53,6 +50,8 @@ public class FDP_Races extends JavaPlugin {
                 new ShieldUsageUpdater(),
                 new ForbiddenFoodsUpdater(),
                 new HandDamageUpdater(),
+                new AxeDamageUpdator(),
+                new SwordDamageUpdator()
         };
 
         for (Listener listener : listeners) {

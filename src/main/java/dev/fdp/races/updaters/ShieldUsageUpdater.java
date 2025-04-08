@@ -16,7 +16,7 @@ import dev.fdp.races.FDP_Races;
 import dev.fdp.races.Race;
 import dev.fdp.races.utils.ChatUtil;
 
-public class ShieldUsageUpdater implements Listener, IUpdater {
+public class ShieldUsageUpdater implements Listener, IUpdater, IUnloadable {
   private static Set<String> blockedShield = new HashSet<>();
 
   @EventHandler
@@ -50,5 +50,10 @@ public class ShieldUsageUpdater implements Listener, IUpdater {
     } else {
       blockedShield.add(playername);
     }
+  }
+
+  @Override
+  public void unload(Player player) {
+    blockedShield.remove(player.getName());
   }
 }

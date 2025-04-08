@@ -11,7 +11,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import java.util.HashMap;
 import java.util.Map;
 
-public class HandDamageUpdater implements Listener, IUpdater {
+public class HandDamageUpdater implements Listener, IUpdater, IUnloadable {
     private static Map<String, Double> playerHandDamage = new HashMap<>();
 
     @EventHandler
@@ -20,7 +20,7 @@ public class HandDamageUpdater implements Listener, IUpdater {
             String playerName = event.getDamager().getName();
             if (playerHandDamage.containsKey(playerName)) {
                 double originalDamage = event.getDamage();
-                double bonusDamage =  playerHandDamage.get(playerName);
+                double bonusDamage = playerHandDamage.get(playerName);
                 double incrementDamage = originalDamage + bonusDamage;
                 event.setDamage(incrementDamage);
 
@@ -30,8 +30,7 @@ public class HandDamageUpdater implements Listener, IUpdater {
                         target.getLocation(),
                         15,
                         0.5, 1, 0.5,
-                        0.1
-                );
+                        0.1);
             }
         }
     }
@@ -45,5 +44,10 @@ public class HandDamageUpdater implements Listener, IUpdater {
         } else {
             playerHandDamage.put(player.getName(), damageHand);
         }
+    }
+
+    @Override
+    public void unload(Player player) {
+        playerHandDamage.remove(player.getName());
     }
 }

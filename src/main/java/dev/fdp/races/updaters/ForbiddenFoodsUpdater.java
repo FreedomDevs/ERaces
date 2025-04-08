@@ -15,7 +15,7 @@ import dev.fdp.races.FDP_Races;
 import dev.fdp.races.Race;
 import dev.fdp.races.utils.ChatUtil;
 
-public class ForbiddenFoodsUpdater implements Listener, IUpdater {
+public class ForbiddenFoodsUpdater implements Listener, IUpdater, IUnloadable {
   private static Map<String, List<String>> forbiddenFoods = new HashMap<>();
 
   @EventHandler
@@ -51,5 +51,10 @@ public class ForbiddenFoodsUpdater implements Listener, IUpdater {
     } else {
       forbiddenFoods.put(playername, race.getForbiddenFoods());
     }
+  }
+
+  @Override
+  public void unload(Player player) {
+    forbiddenFoods.remove(player.getName());
   }
 }

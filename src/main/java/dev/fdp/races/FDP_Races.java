@@ -44,7 +44,8 @@ public class FDP_Races extends JavaPlugin {
         raceManager = new RaceManager(getDataFolder(), this);
 
         Listener[] listeners = {
-                new PlayerJoinListener(raceManager),
+                new PlayerJoinListener(),
+                new PlayerLeaveListener(),
                 new ShieldUsageUpdater(),
                 new ForbiddenFoodsUpdater(),
                 new HandDamageUpdater(),

@@ -14,7 +14,7 @@ public class FDP_Races extends JavaPlugin {
     public RaceManager raceManager;
     public MessageManager messageManager;
     private static FDP_Races instance;
-    private BiomeSpeedUpdater biomeSpeedUpdator;
+    private BiomeSpeedUpdater biomeSpeedUpdater;
     private PeacefulMobsAfraidUpdater peacefulMobsAfraidUpdater;
 
     @Override
@@ -41,9 +41,6 @@ public class FDP_Races extends JavaPlugin {
 
         reloadConfig();
 
-        biomeSpeedUpdator = new BiomeSpeedUpdater();
-        peacefulMobsAfraidUpdater = new PeacefulMobsAfraidUpdater();
-
         raceManager = new RaceManager(getDataFolder(), this);
 
         Listener[] listeners = {
@@ -62,8 +59,7 @@ public class FDP_Races extends JavaPlugin {
             getServer().getPluginManager().registerEvents(listener, this);
         }
 
-        biomeSpeedUpdator.startTask(this);
-        peacefulMobsAfraidUpdater.startTask(this);
+        startTasks();
 
         getCommand("races").setExecutor(new RacesCommand());
         getCommand("races").setTabCompleter(new RacesCommand());
@@ -76,4 +72,12 @@ public class FDP_Races extends JavaPlugin {
         getLogger().info(messageManager.getString("plugin.disabled", "Выключение😞"));
     }
 
+
+    private void startTasks() {
+        biomeSpeedUpdater = new BiomeSpeedUpdater();
+        peacefulMobsAfraidUpdater = new PeacefulMobsAfraidUpdater();
+
+        biomeSpeedUpdater.startTask(this);
+        peacefulMobsAfraidUpdater.startTask(this);
+    }
 }

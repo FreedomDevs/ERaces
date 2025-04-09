@@ -4,6 +4,8 @@ import java.util.Map;
 
 import dev.fdp.races.commands.RacesCommand;
 import dev.fdp.races.events.*;
+import dev.fdp.races.gui.RaceChangeGUI;
+import dev.fdp.races.items.RaceChangePotion;
 import dev.fdp.races.updaters.*;
 
 import org.bukkit.event.Listener;
@@ -43,6 +45,7 @@ public class FDP_Races extends JavaPlugin {
 
         raceManager = new RaceManager(getDataFolder(), this);
 
+
         Listener[] listeners = {
                 new PlayerJoinListener(),
                 new PlayerLeaveListener(),
@@ -52,7 +55,9 @@ public class FDP_Races extends JavaPlugin {
                 new HandDamageUpdater(),
                 new AxeDamageUpdater(),
                 new SwordDamageUpdater(),
-                new BowDamageUpdater()
+                new BowDamageUpdater(),
+                new RaceChangeGUI(),
+                new RaceChangePotion()
         };
 
         for (Listener listener : listeners) {

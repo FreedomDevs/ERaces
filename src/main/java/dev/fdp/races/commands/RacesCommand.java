@@ -22,6 +22,7 @@ public class RacesCommand implements TabExecutor {
     subCommands.put("regenerate_player_race", new RegeneratePlayerRaceSubCommand());
     subCommands.put("set_player_race", new SetPlayerRaceSubCommand());
     subCommands.put("get_player_race", new GetPlayerRace());
+    subCommands.put("get_change_potion", new GetChangePotion());
   }
 
   public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {

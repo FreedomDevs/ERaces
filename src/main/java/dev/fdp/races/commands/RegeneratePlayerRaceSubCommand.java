@@ -14,6 +14,12 @@ public class RegeneratePlayerRaceSubCommand extends AbstractSubCommand {
   public void onCommandExecute(CommandSender sender, String[] args) {
     String newRace = FDP_Races.getInstance().raceManager.getRandomRace();
 
+    if (!(sender instanceof Player) && args.length < 2) {
+      String consoleError = FDP_Races.getInstance().messageManager.getString("commands.regenerate_player_race.console_usage");
+      ChatUtil.message(sender, consoleError);
+      return;
+    }
+
     Player player = args.length == 1 ? (Player) sender : Bukkit.getPlayer(args[1]); // Если это вызовет консоль то бобо
     if (player == null) {
       String message = FDP_Races.getInstance().messageManager.getString("commands.regenerate_player_race.nick_error");

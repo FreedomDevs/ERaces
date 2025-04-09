@@ -13,6 +13,7 @@ commands:
     subcommand_is_null: "<red>Подкоманда: <yellow>{arg} <red>не существует"
 
   regenerate_player_race:
+    console_usage: "<red>Использование из консоли: /command <ник игрока>"
     nick_error: "<red>Неверно указан ник игрока"
     regenerate_success: "<green>Раса игрока <yellow>{player} <green>установлена на: <yellow>{race}"
 

@@ -15,6 +15,7 @@ public class Race {
   private double regenerationPerSec = 0.0;
   private int runningSpeed = 0;
   private int antiKnocbackLevel = 1;
+  private int slowdownLevel = 0;
   private List<String> forbiddenFoods = new ArrayList<>();
   private List<String> biomeSpeed = new ArrayList<>();
   private WeaponProficiency weaponProficiency;
@@ -34,6 +35,14 @@ public class Race {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public int getSlowdownLevel() {
+    return slowdownLevel;
+  }
+
+  public void setSlowdownLevel(int slowdownLevel) {
+    this.slowdownLevel = slowdownLevel;
   }
 
   public List<String> getBiomeSpeed() {

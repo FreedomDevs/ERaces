@@ -23,7 +23,8 @@ public class RacesReloader {
       new BiomeSpeedUpdater(),
       new AxeDamageUpdater(),
       new SwordDamageUpdater(),
-      new BowDamageUpdater()
+      new BowDamageUpdater(),
+      new SlowdownLevelUpdater()
   );
 
   public static void reloadRaceForPlayer(Player player) {

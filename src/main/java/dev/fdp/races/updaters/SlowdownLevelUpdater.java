@@ -5,24 +5,22 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-public class MineSpeedUpdater implements IUpdater {
+public class SlowdownLevelUpdater implements IUpdater {
+
     @Override
     public void update(Race race, Player player) {
-        double mineSpeed = race.getMineSpeed();
-        player.removePotionEffect(PotionEffectType.HASTE);
+        int slowdownLevel = race.getSlowdownLevel();
+        player.removePotionEffect(PotionEffectType.SLOWNESS);
 
-        if (mineSpeed != 1.0) {
-            int hasteLevel = (int) Math.round((mineSpeed - 1.0) * 5 - 1);
-
+        if (slowdownLevel != 0) {
             player.addPotionEffect(
                     new PotionEffect(
-                            PotionEffectType.HASTE,
+                            PotionEffectType.SLOWNESS,
                             Integer.MAX_VALUE,
-                            hasteLevel,
+                            (slowdownLevel - 1),
                             false,
                             false,
                             false));
         }
-
     }
 }

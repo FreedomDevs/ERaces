@@ -47,6 +47,7 @@ public class RacesConfigLoader {
       race.setRegenerationPerSec(section.getDouble("regeneration_per_sec", 0.0));
       race.setRunningSpeed(section.getInt("running_speed", 0));
       race.setAntiKnockbackLevel(section.getInt("antiknockback_level", 0));
+      race.setSlowdownLevel(section.getInt("slowdown_level",0));
 
       if (section.isList("forbidden_foods")) {
         race.setForbiddenFoods(section.getStringList("forbidden_foods"));

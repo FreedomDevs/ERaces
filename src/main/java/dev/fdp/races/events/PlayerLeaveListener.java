@@ -21,7 +21,9 @@ public class PlayerLeaveListener implements Listener {
                 new BiomeSpeedUpdater(),
                 new AxeDamageUpdater(),
                 new SwordDamageUpdater(),
-                new BowDamageUpdater()
+                new BowDamageUpdater(),
+                new BowSpeedUpdater()
+
         );
 
         for (IUnloadable i : unloadable) {

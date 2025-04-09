@@ -60,9 +60,7 @@ public class FDP_Races extends JavaPlugin {
         }
 
         startTasks();
-
-        getCommand("races").setExecutor(new RacesCommand());
-        getCommand("races").setTabCompleter(new RacesCommand());
+        registerCommand();
 
         RacesReloader.reloadRaceForAllPlayers();
     }
@@ -79,5 +77,11 @@ public class FDP_Races extends JavaPlugin {
 
         biomeSpeedUpdater.startTask(this);
         peacefulMobsAfraidUpdater.startTask(this);
+    }
+
+    private void registerCommand() {
+        RacesCommand racesCommand = new RacesCommand();
+        getCommand("races").setExecutor(racesCommand);
+        getCommand("races").setTabCompleter(racesCommand);
     }
 }

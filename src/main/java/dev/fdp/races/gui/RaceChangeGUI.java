@@ -1,55 +1,77 @@
 package dev.fdp.races.gui;
 
+import dev.fdp.races.FDP_Races;
+import dev.fdp.races.RacesReloader;
+import dev.fdp.races.items.RaceItems;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public class RaceChangeGUI implements Listener {
+    private static final Map<String, String> raceKeyByName = new HashMap<>();
+    private static final Set<Player> selectedPlayers = new HashSet<>();
+    static {
+        raceKeyByName.put("§aЭльф", "elf");
+        raceKeyByName.put("§eЧеловек", "human");
+        raceKeyByName.put("§6Зверолюд-медведь", "bear_beastman");
+        raceKeyByName.put("§7Зверолюд-волк", "wolf_beastman");
+        raceKeyByName.put("§6Зверолюд-тигр", "tiger_beastman");
+        raceKeyByName.put("§2Орк", "ork");
+    }
+
     public static void open(Player player) {
-        Inventory gui = Bukkit.createInventory(null, 54, "§5Меню смены рассы");
+        Inventory gui = Bukkit.createInventory(null, 54, centerTitle("§5Выбор Расы"));
 
-        ItemStack button1 = new ItemStack(Material.DIAMOND);
-        ItemMeta meta1 = button1.getItemMeta();
-        meta1.setDisplayName("§aНаграда 1");
-        button1.setItemMeta(meta1);
-        gui.setItem(3, button1);
+        String currentRace = FDP_Races.getInstance().raceManager.getPlayerRace(player.getName());
 
-        ItemStack button2 = new ItemStack(Material.EMERALD);
-        ItemMeta meta2 = button2.getItemMeta();
-        meta2.setDisplayName("§bНаграда 2");
-        button2.setItemMeta(meta2);
-        gui.setItem(5, button2);
+        gui.setItem(10, RaceItems.elf(currentRace));
+        gui.setItem(12, RaceItems.human(currentRace));
+        gui.setItem(14, RaceItems.bearBeastman(currentRace));
+        gui.setItem(16, RaceItems.wolfBeastman(currentRace));
+        gui.setItem(28, RaceItems.tigerBeastman(currentRace));
+        gui.setItem(30, RaceItems.ork(currentRace));
 
         player.openInventory(gui);
     }
 
     @EventHandler
-    public void onClick(InventoryClickEvent event) {
-        if (event.getView().getTitle().equals("§5Меню Зелья")) {
-            event.setCancelled(true);
-            Player player = (Player) event.getWhoClicked();
-            ItemStack clicked = event.getCurrentItem();
-            if (clicked == null || clicked.getType() == Material.AIR) return;
+    public void onClick(InventoryClickEvent event) { // Подтупливает чуток
+        String rawTitle = event.getView().getTitle().replaceAll(" ", "");
+        if (!rawTitle.contains("§5ВыборРасы")) return;
 
-            String name = clicked.getItemMeta().getDisplayName();
-            switch (name) {
-                case "§aНаграда 1":
-                    player.getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE));
-                    player.sendMessage("§aТы получил Награду 1!");
-                    break;
-                case "§bНаграда 2":
-                    player.getInventory().addItem(new ItemStack(Material.DIAMOND_SWORD));
-                    player.sendMessage("§bТы получил Награду 2!");
-                    break;
-            }
+        event.setCancelled(true);
+        Player player = (Player) event.getWhoClicked();
+        selectedPlayers.add(player);
+        ItemStack clicked = event.getCurrentItem();
+        if (clicked == null || !clicked.hasItemMeta() || !clicked.getItemMeta().hasDisplayName()) return;
+
+        String displayName = clicked.getItemMeta().getDisplayName();
+
+        if (raceKeyByName.containsKey(displayName)) {
+            String raceKey = raceKeyByName.get(displayName);
+
+            FDP_Races.getInstance().raceManager.setPlayerRace(player.getName(), raceKey);
+            RacesReloader.reloadRaceForPlayer(player);
+            player.sendMessage("§aВы выбрали расу: §f" + displayName);
 
             player.closeInventory();
         }
+    }
+
+    public static String centerTitle(String title) {
+        int maxLength = 32;
+        int spaceWidth = 2;
+        int titleLength = title.replaceAll("§.", "").length();
+        int spacesToAdd = (maxLength - titleLength) / spaceWidth;
+        return " ".repeat(Math.max(0, spacesToAdd)) + title;
     }
 }

@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
+import org.bukkit.util.Vector;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,7 +31,11 @@ public class BowSpeedUpdater implements Listener, IUpdater, IUnloadable {
     double multiplier = playerBowSpeedModifier.get(name);
     Arrow arrow = (Arrow) event.getEntity();
 
-    arrow.setVelocity(arrow.getVelocity().multiply(multiplier));
+    double originalSpeed = arrow.getVelocity().length();
+
+    Vector direction = player.getLocation().getDirection().normalize();
+
+    arrow.setVelocity(direction.multiply(originalSpeed * multiplier));
   }
 
   @Override

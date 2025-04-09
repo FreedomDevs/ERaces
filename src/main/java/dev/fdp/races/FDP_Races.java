@@ -45,7 +45,6 @@ public class FDP_Races extends JavaPlugin {
 
         raceManager = new RaceManager(getDataFolder(), this);
 
-
         Listener[] listeners = {
                 new PlayerJoinListener(),
                 new PlayerLeaveListener(),
@@ -57,7 +56,9 @@ public class FDP_Races extends JavaPlugin {
                 new SwordDamageUpdater(),
                 new BowDamageUpdater(),
                 new RaceChangeGUI(),
-                new RaceChangePotion()
+                new RaceChangePotion(),
+                new BowSpeedUpdater()
+
         };
 
         for (Listener listener : listeners) {
@@ -74,7 +75,6 @@ public class FDP_Races extends JavaPlugin {
     public void onDisable() {
         getLogger().info(messageManager.getString("plugin.disabled", "Выключение😞"));
     }
-
 
     private void startTasks() {
         biomeSpeedUpdater = new BiomeSpeedUpdater();

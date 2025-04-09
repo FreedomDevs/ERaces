@@ -27,7 +27,7 @@ public class HealthRegenUpdater implements IUpdater {
 
           if (player_arbuz != null && player_arbuz.isOnline()) {
             double newHealth = player_arbuz.getHealth() + amount;
-            player_arbuz.setHealth(newHealth);
+            player_arbuz.setHealth(Math.min(newHealth, player_arbuz.getMaxHealth()));
           } else {
             // Удаляем мусор
             it.remove();

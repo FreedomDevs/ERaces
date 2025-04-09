@@ -44,9 +44,9 @@ wolf_beastman:
   regeneration_per_sec: 0.25
   # Не сделано: и +2 урjyf если в радиусе  находится не менее 2 зверолюдов волков или обычных волков/собак
   running_speed: 1
-  # И то что мирные опасаются тоже нету
   shield_usage: false  # Зверолюды не могут использовать щиты
   additional_armor: 1
+  peaceful_mobs_afraid: true
 
 tiger_beastman:
   name: "Зверолюд тигр"

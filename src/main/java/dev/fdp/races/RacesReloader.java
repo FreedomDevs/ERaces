@@ -24,7 +24,8 @@ public class RacesReloader {
       new AxeDamageUpdater(),
       new SwordDamageUpdater(),
       new BowDamageUpdater(),
-      new SlowdownLevelUpdater()
+      new SlowdownLevelUpdater(),
+      new PeacefulMobsAfraidUpdater()
   );
 
   public static void reloadRaceForPlayer(Player player) {

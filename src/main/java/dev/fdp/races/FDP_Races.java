@@ -15,6 +15,7 @@ public class FDP_Races extends JavaPlugin {
     public MessageManager messageManager;
     private static FDP_Races instance;
     private BiomeSpeedUpdater biomeSpeedUpdator;
+    private PeacefulMobsAfraidUpdater peacefulMobsAfraidUpdater;
 
     @Override
     public void onLoad() {
@@ -41,6 +42,7 @@ public class FDP_Races extends JavaPlugin {
         reloadConfig();
 
         biomeSpeedUpdator = new BiomeSpeedUpdater();
+        peacefulMobsAfraidUpdater = new PeacefulMobsAfraidUpdater();
 
         raceManager = new RaceManager(getDataFolder(), this);
 
@@ -61,6 +63,7 @@ public class FDP_Races extends JavaPlugin {
         }
 
         biomeSpeedUpdator.startTask(this);
+        peacefulMobsAfraidUpdater.startTask(this);
 
         getCommand("races").setExecutor(new RacesCommand());
         getCommand("races").setTabCompleter(new RacesCommand());

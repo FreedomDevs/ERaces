@@ -16,6 +16,7 @@ public class Race {
   private int runningSpeed = 0;
   private int antiKnocbackLevel = 1;
   private int slowdownLevel = 0;
+  private boolean peacefulMobsAfraid = false;
   private List<String> forbiddenFoods = new ArrayList<>();
   private List<String> biomeSpeed = new ArrayList<>();
   private WeaponProficiency weaponProficiency;
@@ -159,4 +160,12 @@ public class Race {
         ", weaponProficiency=" + weaponProficiency +
         '}';
   }
+
+    public boolean isPeacefulMobsAfraid() {
+        return peacefulMobsAfraid;
+    }
+
+    public void setPeacefulMobsAfraid(boolean peacefulMobsAfraid) {
+        this.peacefulMobsAfraid = peacefulMobsAfraid;
+    }
 }

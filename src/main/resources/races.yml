@@ -29,7 +29,7 @@ human:
 
 bear_beastman:
   gui_config:
-    name: "§6Зверолюд медведь"
+    name: "§6Зверолюд-медведь"
   max_hp: 30
   additional_armor: 3
   antiknockback_level: 99999
@@ -42,7 +42,7 @@ bear_beastman:
 
 wolf_beastman:
   gui_config:
-    name: "§7Зверолюд волк"
+    name: "§7Зверолюд-волк"
   weapon_proficiency:
     hand_damage_additional: 3
   regeneration_per_sec: 0.25
@@ -54,7 +54,7 @@ wolf_beastman:
 
 tiger_beastman:
   gui_config:
-    name: "§6Зверолюд тигр"
+    name: "§6Зверолюд-тигр"
   max_hp: 25
   additional_armor: 2
   running_speed: 2
@@ -66,7 +66,7 @@ tiger_beastman:
 
 ork:
   gui_config:
-    name: "Орк"
+    name: "§2Орк"
   max_hp: 30
   slowdown_level: 1
   # Нету если носит жел броню или выше получает сопротивление урону 1 и сопротивление отбрасыванию если ниже то весь урон умножается на 1.75

@@ -1,6 +1,7 @@
 package dev.fdp.races.gui;
 
 import dev.fdp.races.FDP_Races;
+import dev.fdp.races.Race;
 import dev.fdp.races.RacesReloader;
 import dev.fdp.races.items.RaceItems;
 import org.bukkit.Bukkit;
@@ -20,12 +21,8 @@ public class RaceChangeGUI implements Listener {
     private static final Map<String, String> raceKeyByName = new HashMap<>();
     private static final Set<Player> selectedPlayers = new HashSet<>();
     static {
-        raceKeyByName.put("§aЭльф", "elf");
-        raceKeyByName.put("§eЧеловек", "human");
-        raceKeyByName.put("§6Зверолюд-медведь", "bear_beastman");
-        raceKeyByName.put("§7Зверолюд-волк", "wolf_beastman");
-        raceKeyByName.put("§6Зверолюд-тигр", "tiger_beastman");
-        raceKeyByName.put("§2Орк", "ork");
+        for (Race i : FDP_Races.getInstance().races.values())
+            raceKeyByName.put(i.getRaceGuiConfig().getName(), i.getId());
     }
 
     public static void open(Player player) {
@@ -46,13 +43,15 @@ public class RaceChangeGUI implements Listener {
     @EventHandler
     public void onClick(InventoryClickEvent event) { // Подтупливает чуток
         String rawTitle = event.getView().getTitle().replaceAll(" ", "");
-        if (!rawTitle.contains("§5ВыборРасы")) return;
+        if (!rawTitle.contains("§5ВыборРасы"))
+            return;
 
         event.setCancelled(true);
         Player player = (Player) event.getWhoClicked();
         selectedPlayers.add(player);
         ItemStack clicked = event.getCurrentItem();
-        if (clicked == null || !clicked.hasItemMeta() || !clicked.getItemMeta().hasDisplayName()) return;
+        if (clicked == null || !clicked.hasItemMeta() || !clicked.getItemMeta().hasDisplayName())
+            return;
 
         String displayName = clicked.getItemMeta().getDisplayName();
 

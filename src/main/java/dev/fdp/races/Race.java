@@ -5,7 +5,6 @@ import java.util.List;
 
 public class Race {
   private String id;
-  private String name;
   private double maxHp = 20.0;
   private double hungerLossMultiplier = 1.0;
   private double mineSpeed = 1.0;
@@ -20,6 +19,7 @@ public class Race {
   private List<String> forbiddenFoods = new ArrayList<>();
   private List<String> biomeSpeed = new ArrayList<>();
   private WeaponProficiency weaponProficiency;
+  private RaceGuiConfig raceGuiConfig;
 
   // Геттеры и сеттеры
   public String getId() {
@@ -28,14 +28,6 @@ public class Race {
 
   public void setId(String id) {
     this.id = id;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
   }
 
   public int getSlowdownLevel() {
@@ -142,11 +134,26 @@ public class Race {
     this.weaponProficiency = weaponProficiency;
   }
 
+  public RaceGuiConfig getRaceGuiConfig() {
+    return raceGuiConfig;
+  }
+
+  public void setRaceGuiConfig(RaceGuiConfig raceGuiConfig) {
+    this.raceGuiConfig = raceGuiConfig;
+  }
+
+  public boolean isPeacefulMobsAfraid() {
+    return peacefulMobsAfraid;
+  }
+
+  public void setPeacefulMobsAfraid(boolean peacefulMobsAfraid) {
+    this.peacefulMobsAfraid = peacefulMobsAfraid;
+  }
+
   @Override
   public String toString() {
     return "Race{" +
         "id='" + id + '\'' +
-        ", name='" + name + '\'' +
         ", maxHp=" + maxHp +
         ", hungerLossMultiplier=" + hungerLossMultiplier +
         ", mineSpeed=" + mineSpeed +
@@ -157,15 +164,10 @@ public class Race {
         ", runningSpeed=" + runningSpeed +
         ", antiKnocbackLevel=" + antiKnocbackLevel +
         ", forbiddenFoods=" + forbiddenFoods +
+        ", isPeacefulMobsAfraid=" + peacefulMobsAfraid +
         ", weaponProficiency=" + weaponProficiency +
+        ", raceGuiConfig=" + raceGuiConfig +
         '}';
   }
 
-    public boolean isPeacefulMobsAfraid() {
-        return peacefulMobsAfraid;
-    }
-
-    public void setPeacefulMobsAfraid(boolean peacefulMobsAfraid) {
-        this.peacefulMobsAfraid = peacefulMobsAfraid;
-    }
 }

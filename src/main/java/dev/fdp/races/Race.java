@@ -5,7 +5,6 @@ import java.util.List;
 
 public class Race {
   private String id;
-  private String name;
   private double maxHp = 20.0;
   private double hungerLossMultiplier = 1.0;
   private double mineSpeed = 1.0;
@@ -29,14 +28,6 @@ public class Race {
 
   public void setId(String id) {
     this.id = id;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
   }
 
   public int getSlowdownLevel() {
@@ -163,7 +154,6 @@ public class Race {
   public String toString() {
     return "Race{" +
         "id='" + id + '\'' +
-        ", name='" + name + '\'' +
         ", maxHp=" + maxHp +
         ", hungerLossMultiplier=" + hungerLossMultiplier +
         ", mineSpeed=" + mineSpeed +

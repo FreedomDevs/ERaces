@@ -50,7 +50,6 @@ public class RacesConfigLoader {
 
       race.setRaceGuiConfig(raceGuiConfig);
 
-      race.setName(section.getString("name", key));
       race.setMaxHp(section.getDouble("max_hp", 20.0));
       race.setHungerLossMultiplier(section.getDouble("hunger_loss_multiplier", 1.0));
       race.setMineSpeed(section.getDouble("mine_speed", 1.0));

@@ -1,5 +1,6 @@
 elf:
-  name: "Эльф"
+  gui_config:
+    name: "Эльф"
   max_hp: 15                              # Макс хп 15
   hunger_loss_multiplier: 0.75            # Голодают на 25% медленнее
   weapon_proficiency:
@@ -21,12 +22,14 @@ elf:
     - TAIGA
 
 human:
-  name: "Человек"
+  gui_config:
+    name: "Человек"
   mine_speed: 1.5        # 1.5x для скорости копки
   hand_distance-bonus: 1 # +1 к длинне руки 
 
 bear_beastman:
-  name: "Зверолюд медведь"
+  gui_config:
+    name: "Зверолюд медведь"
   max_hp: 30
   additional_armor: 3
   antiknockback_level: 99999
@@ -38,7 +41,8 @@ bear_beastman:
   shield_usage: false  # Зверолюды не могут использовать щиты
 
 wolf_beastman:
-  name: "Зверолюд волк"
+  gui_config:
+    name: "Зверолюд волк"
   weapon_proficiency:
     hand_damage_additional: 3
   regeneration_per_sec: 0.25
@@ -49,7 +53,8 @@ wolf_beastman:
   peaceful_mobs_afraid: true
 
 tiger_beastman:
-  name: "Зверолюд тигр"
+  gui_config:
+    name: "Зверолюд тигр"
   max_hp: 25
   additional_armor: 2
   running_speed: 2
@@ -60,7 +65,8 @@ tiger_beastman:
     bow_damage_multiplier: 0.75
 
 ork:
-  name: "Орк"
+  gui_config:
+    name: "Орк"
   max_hp: 30
   slowdown_level: 1
   # Нету если носит жел броню или выше получает сопротивление урону 1 и сопротивление отбрасыванию если ниже то весь урон умножается на 1.75

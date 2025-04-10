@@ -37,6 +37,19 @@ public class RacesConfigLoader {
 
       Race race = new Race();
       race.setId(key);
+
+      if (!section.isConfigurationSection("gui_config")) {
+        FDP_Races.getInstance().getLogger()
+            .warning("Race \"" + key + "\" does not have a gui_config section (loading failed)");
+        continue;
+      }
+
+      ConfigurationSection guiConfigSection = section.getConfigurationSection("gui_config");
+      RaceGuiConfig raceGuiConfig = new RaceGuiConfig();
+      raceGuiConfig.setName(guiConfigSection.getString("name", "name_undefined"));
+
+      race.setRaceGuiConfig(raceGuiConfig);
+
       race.setName(section.getString("name", key));
       race.setMaxHp(section.getDouble("max_hp", 20.0));
       race.setHungerLossMultiplier(section.getDouble("hunger_loss_multiplier", 1.0));
@@ -47,14 +60,14 @@ public class RacesConfigLoader {
       race.setRegenerationPerSec(section.getDouble("regeneration_per_sec", 0.0));
       race.setRunningSpeed(section.getInt("running_speed", 0));
       race.setAntiKnockbackLevel(section.getInt("antiknockback_level", 0));
-      race.setSlowdownLevel(section.getInt("slowdown_level",0));
+      race.setSlowdownLevel(section.getInt("slowdown_level", 0));
       race.setPeacefulMobsAfraid(section.getBoolean("peaceful_mobs_afraid", false));
 
       if (section.isList("forbidden_foods")) {
         race.setForbiddenFoods(section.getStringList("forbidden_foods"));
       }
-      
-      if (section.isList("biome_speed")){
+
+      if (section.isList("biome_speed")) {
         race.setBiomeSpeed(section.getStringList("biome_speed"));
       }
 

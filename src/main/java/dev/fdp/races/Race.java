@@ -20,6 +20,7 @@ public class Race {
   private List<String> forbiddenFoods = new ArrayList<>();
   private List<String> biomeSpeed = new ArrayList<>();
   private WeaponProficiency weaponProficiency;
+  private RaceGuiConfig raceGuiConfig;
 
   // Геттеры и сеттеры
   public String getId() {
@@ -142,6 +143,22 @@ public class Race {
     this.weaponProficiency = weaponProficiency;
   }
 
+  public RaceGuiConfig getRaceGuiConfig() {
+    return raceGuiConfig;
+  }
+
+  public void setRaceGuiConfig(RaceGuiConfig raceGuiConfig) {
+    this.raceGuiConfig = raceGuiConfig;
+  }
+
+  public boolean isPeacefulMobsAfraid() {
+    return peacefulMobsAfraid;
+  }
+
+  public void setPeacefulMobsAfraid(boolean peacefulMobsAfraid) {
+    this.peacefulMobsAfraid = peacefulMobsAfraid;
+  }
+
   @Override
   public String toString() {
     return "Race{" +
@@ -157,15 +174,10 @@ public class Race {
         ", runningSpeed=" + runningSpeed +
         ", antiKnocbackLevel=" + antiKnocbackLevel +
         ", forbiddenFoods=" + forbiddenFoods +
+        ", isPeacefulMobsAfraid=" + peacefulMobsAfraid +
         ", weaponProficiency=" + weaponProficiency +
+        ", raceGuiConfig=" + raceGuiConfig +
         '}';
   }
 
-    public boolean isPeacefulMobsAfraid() {
-        return peacefulMobsAfraid;
-    }
-
-    public void setPeacefulMobsAfraid(boolean peacefulMobsAfraid) {
-        this.peacefulMobsAfraid = peacefulMobsAfraid;
-    }
 }

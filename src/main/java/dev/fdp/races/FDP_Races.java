@@ -57,7 +57,8 @@ public class FDP_Races extends JavaPlugin {
                 new BowDamageUpdater(),
                 new RaceChangeGUI(),
                 new RaceChangePotion(),
-                new BowSpeedUpdater()
+                new BowSpeedUpdater(),
+                new MaceDamageUpdater()
 
         };
 

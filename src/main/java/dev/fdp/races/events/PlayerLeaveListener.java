@@ -22,7 +22,8 @@ public class PlayerLeaveListener implements Listener {
                 new AxeDamageUpdater(),
                 new SwordDamageUpdater(),
                 new BowDamageUpdater(),
-                new BowSpeedUpdater()
+                new BowSpeedUpdater(),
+                new MaceDamageUpdater()
 
         );
 

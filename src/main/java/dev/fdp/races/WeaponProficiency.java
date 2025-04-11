@@ -7,6 +7,7 @@ public class WeaponProficiency {
   private double axeDamageMultiplier = 1.0;
   private double maceDamageMultiplier = 1.0;
   private double handDamageAdditional = 0.0;
+  private double dualWeaponDamageAdditional = 0.0;
 
   // Геттеры и сеттеры
   public double getBowDamageMultiplier() {
@@ -57,6 +58,14 @@ public class WeaponProficiency {
     this.handDamageAdditional = handDamageAdditional;
   }
 
+  public double getDualWeaponDamageAdditional() {
+    return dualWeaponDamageAdditional;
+  }
+
+  public void setDualWeaponDamageAdditional(double dualWeaponDamageAdditional) {
+    this.dualWeaponDamageAdditional = dualWeaponDamageAdditional;
+  }
+
   @Override
   public String toString() {
     return "WeaponProficiency{" +
@@ -66,6 +75,7 @@ public class WeaponProficiency {
         ", axeDamageMultiplier=" + axeDamageMultiplier +
         ", maceDamageMultiplier=" + maceDamageMultiplier +
         ", handDamageAdditional=" + handDamageAdditional +
+        ", dualWeaponDamageAdditional=" + dualWeaponDamageAdditional +
         '}';
   }
 }

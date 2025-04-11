@@ -67,6 +67,8 @@ tiger_beastman:
 ork:
   gui_config:
     name: "§2Орк"
+  weapon_proficiency:
+    dual_weapon_damage_additional: 2
   max_hp: 30
   slowdown_level: 1
   # Нету если носит жел броню или выше получает сопротивление урону 1 и сопротивление отбрасыванию если ниже то весь урон умножается на 1.75

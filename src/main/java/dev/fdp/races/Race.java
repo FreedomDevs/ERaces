@@ -158,25 +158,4 @@ public class Race {
   public void setPeacefulMobsAfraid(boolean peacefulMobsAfraid) {
     this.peacefulMobsAfraid = peacefulMobsAfraid;
   }
-
-  @Override
-  public String toString() {
-    return "Race{" +
-        "id='" + id + '\'' +
-        ", maxHp=" + maxHp +
-        ", hungerLossMultiplier=" + hungerLossMultiplier +
-        ", mineSpeed=" + mineSpeed +
-        ", handDistanceBonus=" + handDistanceBonus +
-        ", additionalArmor=" + additionalArmor +
-        ", shieldUsage=" + shieldUsage +
-        ", regenerationPerSec=" + regenerationPerSec +
-        ", runningSpeed=" + runningSpeed +
-        ", antiKnocbackLevel=" + antiKnocbackLevel +
-        ", forbiddenFoods=" + forbiddenFoods +
-        ", isPeacefulMobsAfraid=" + peacefulMobsAfraid +
-        ", weaponProficiency=" + weaponProficiency +
-        ", raceGuiConfig=" + raceGuiConfig +
-        '}';
-  }
-
 }

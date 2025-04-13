@@ -65,17 +65,4 @@ public class WeaponProficiency {
   public void setDualWeaponDamageAdditional(double dualWeaponDamageAdditional) {
     this.dualWeaponDamageAdditional = dualWeaponDamageAdditional;
   }
-
-  @Override
-  public String toString() {
-    return "WeaponProficiency{" +
-        "bowDamageMultiplier=" + bowDamageMultiplier +
-        ", bowProjectileSpeedMultiplier=" + bowProjectileSpeedMultiplier +
-        ", swordDamageMultiplier=" + swordDamageMultiplier +
-        ", axeDamageMultiplier=" + axeDamageMultiplier +
-        ", maceDamageMultiplier=" + maceDamageMultiplier +
-        ", handDamageAdditional=" + handDamageAdditional +
-        ", dualWeaponDamageAdditional=" + dualWeaponDamageAdditional +
-        '}';
-  }
 }

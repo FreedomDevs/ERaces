@@ -10,7 +10,6 @@ import org.bukkit.entity.Player;
 public class RacesReloader {
 
   private static final List<IUpdater> updaters = List.of(
-      // new AttackRangeUpdater(),
       new HealthUpdater(),
       new MineSpeedUpdater(),
       new AdditionalArmorUpdater(),

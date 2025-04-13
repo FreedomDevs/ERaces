@@ -15,6 +15,7 @@ public class Race {
   private int runningSpeed = 0;
   private int antiKnocbackLevel = 1;
   private int slowdownLevel = 0;
+  private int damageResistanceLevel = 0;
   private boolean peacefulMobsAfraid = false;
   private List<String> forbiddenFoods = new ArrayList<>();
   private List<String> biomeSpeed = new ArrayList<>();
@@ -36,6 +37,14 @@ public class Race {
 
   public void setSlowdownLevel(int slowdownLevel) {
     this.slowdownLevel = slowdownLevel;
+  }
+
+  public int getDamageResistanceLevel() {
+    return damageResistanceLevel;
+  }
+
+  public void setDamageResistanceLevel(int damageResistanceLevel) {
+    this.damageResistanceLevel = damageResistanceLevel;
   }
 
   public List<String> getBiomeSpeed() {

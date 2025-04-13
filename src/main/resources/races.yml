@@ -14,7 +14,6 @@ elf:
     - cooked_pork
     - cooked_mutton
     - cooked_chicken
-  # Нету пока ушей
   biome_speed:
     - FOREST
     - BIRCH_FOREST
@@ -46,7 +45,6 @@ wolf_beastman:
   weapon_proficiency:
     hand_damage_additional: 3
   regeneration_per_sec: 0.25
-  # Не сделано: и +2 урjyf если в радиусе  находится не менее 2 зверолюдов волков или обычных волков/собак
   running_speed: 1
   shield_usage: false  # Зверолюды не могут использовать щиты
   additional_armor: 1
@@ -71,6 +69,4 @@ ork:
     dual_weapon_damage_additional: 2
   max_hp: 30
   slowdown_level: 1
-  # Нету если носит жел броню или выше получает сопротивление урону 1 и сопротивление отбрасыванию если ниже то весь урон умножается на 1.75
-  # Боец парным оружием
-  # при сражении с одинаковым оружием в обоих руках наносит урон +2 (если в броне ниже железной  получает x1.5 урон) при ношении щита получает замедление 1
+  damage_resistance_level: 1

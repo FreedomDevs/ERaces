@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.bukkit.Bukkit;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 
 import dev.fdp.races.FDP_Races;
@@ -27,7 +28,8 @@ public class HealthRegenUpdater implements IUpdater {
 
           if (player_arbuz != null && player_arbuz.isOnline()) {
             double newHealth = player_arbuz.getHealth() + amount;
-            player_arbuz.setHealth(Math.min(newHealth, player_arbuz.getMaxHealth()));
+            player_arbuz
+                .setHealth(Math.min(newHealth, player_arbuz.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()));
           } else {
             // Удаляем мусор
             it.remove();

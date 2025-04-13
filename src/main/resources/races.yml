@@ -43,7 +43,7 @@ wolf_beastman:
   gui_config:
     name: "§7Зверолюд-волк"
   weapon_proficiency:
-    hand_damage_additional: 3
+    damage_additional: 3
   regeneration_per_sec: 0.25
   running_speed: 1
   shield_usage: false  # Зверолюды не могут использовать щиты

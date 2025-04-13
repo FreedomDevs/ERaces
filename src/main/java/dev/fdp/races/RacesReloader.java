@@ -29,7 +29,8 @@ public class RacesReloader {
       new BowSpeedUpdater(),
       new MaceDamageUpdater(),
       new DualWeaponDamageUpdater(),
-      new DamageResistanceLevelUpdater()
+      new DamageResistanceLevelUpdater(),
+      new DamageUpdater()
 
   );
 

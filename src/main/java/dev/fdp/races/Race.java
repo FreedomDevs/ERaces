@@ -13,7 +13,8 @@ public class Race {
   private boolean shieldUsage = true;
   private double regenerationPerSec = 0.0;
   private int runningSpeed = 0;
-  private int antiKnocbackLevel = 1;
+  private int antiKnocbackLevel = 0;
+  private int antiKnocbackLevelWithIronArmorAndMore = 0;
   private int slowdownLevel = 0;
   private int damageResistanceLevel = 0;
   private boolean peacefulMobsAfraid = false;
@@ -29,6 +30,14 @@ public class Race {
 
   public void setId(String id) {
     this.id = id;
+  }
+
+  public int getAntiKnocbackLevelWithIronArmorAndMore() {
+    return antiKnocbackLevelWithIronArmorAndMore;
+  }
+
+  public void setAntiKnocbackLevelWithIronArmorAndMore(int antiKnocbackLevelWithIronArmorAndMore) {
+    this.antiKnocbackLevelWithIronArmorAndMore = antiKnocbackLevelWithIronArmorAndMore;
   }
 
   public int getSlowdownLevel() {

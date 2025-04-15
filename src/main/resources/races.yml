@@ -70,3 +70,4 @@ ork:
   max_hp: 30
   slowdown_level: 1
   damage_resistance_level: 1
+  knockback_resistance_level_with_iron_and_more_armor: 99999

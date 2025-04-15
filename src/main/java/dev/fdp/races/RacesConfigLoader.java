@@ -62,6 +62,8 @@ public class RacesConfigLoader {
       race.setSlowdownLevel(section.getInt("slowdown_level", 0));
       race.setDamageResistanceLevel(section.getInt("damage_resistance_level", 0));
       race.setPeacefulMobsAfraid(section.getBoolean("peaceful_mobs_afraid", false));
+      race.setAntiKnocbackLevelWithIronArmorAndMore(
+          section.getInt("knockback_resistance_level_with_iron_and_more_armor", 0));
 
       if (section.isList("forbidden_foods")) {
         race.setForbiddenFoods(section.getStringList("forbidden_foods"));

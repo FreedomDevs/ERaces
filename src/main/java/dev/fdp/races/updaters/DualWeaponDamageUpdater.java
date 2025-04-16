@@ -43,6 +43,6 @@ public class DualWeaponDamageUpdater implements Listener, IUpdater, IUnloadable 
 
     @Override
     public void unload(Player player) {
-        playerMaceDamage.remove(player.getName());
+        playerDualDamage.remove(player.getName());
     }
 }

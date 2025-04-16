@@ -29,7 +29,8 @@ public class RacesReloader {
       new MaceDamageUpdater(),
       new DualWeaponDamageUpdater(),
       new DamageResistanceLevelUpdater(),
-      new DamageUpdater()
+      new DamageUpdater(),
+      new AntiKnockbackLevelWithIronArmorAndMoreUpdater()
 
   );
 

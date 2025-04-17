@@ -23,7 +23,7 @@ java {
 
 tasks.processResources {
     filesMatching("plugin.yml") {
-        expand("version" to project.version)
+        expand(mapOf("version" to version))
     }
 }
 

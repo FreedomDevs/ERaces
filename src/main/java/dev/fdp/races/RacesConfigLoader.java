@@ -85,7 +85,8 @@ public class RacesConfigLoader {
         wp.setMaceDamageMultiplier(wpSection.getDouble("mace_damage_multiplier", wp.getMaceDamageMultiplier()));
         wp.setHandDamageAdditional(wpSection.getDouble("hand_damage_additional", wp.getHandDamageAdditional()));
         wp.setDamageAdditional(wpSection.getDouble("damage_additional", wp.getDamageAdditional()));
-        wp.setDamageAdditionalWithIronAndLowerArmor(wpSection.getDouble("damage_additional_with_iron_and_lower_armor:", wp.getDamageAdditionalWithIronAndLowerArmor(()));
+        wp.setDamageAdditionalWithIronAndLowerArmor(wpSection.getDouble("damage_additional_with_iron_and_lower_armor:",
+            wp.getDamageAdditionalWithIronAndLowerArmor()));
         wp.setHandDamageAdditional(
             wpSection.getDouble("dual_weapon_damage_additional", wp.getDualWeaponDamageAdditional()));
       }

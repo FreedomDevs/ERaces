@@ -67,6 +67,7 @@ ork:
     name: "§2Орк"
   weapon_proficiency:
     dual_weapon_damage_additional: 2
+    damage_additional_with_iron_and_lower_armor: 3
   max_hp: 30
   slowdown_level: 1
   damage_resistance_level: 1

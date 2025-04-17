@@ -8,6 +8,7 @@ public class WeaponProficiency {
   private double maceDamageMultiplier = 1.0;
   private double handDamageAdditional = 0.0;
   private double damageAdditional = 0.0;
+  private double damageAdditionalWithIronAndLowerArmor = 0.0;
   private double dualWeaponDamageAdditional = 0.0;
 
   // Геттеры и сеттеры
@@ -18,6 +19,15 @@ public class WeaponProficiency {
   public void setBowDamageMultiplier(double bowDamageMultiplier) {
     this.bowDamageMultiplier = bowDamageMultiplier;
   }
+
+    public double getDamageAdditionalWithIronAndLowerArmor() {
+    return damageAdditionalWithIronAndLowerArmor;
+  }
+
+  public void setDamageAdditionalWithIronAndLowerArmor(double damageAdditionalWithIronAndLowerArmor) {
+    this.damageAdditionalWithIronAndLowerArmor = damageAdditionalWithIronAndLowerArmor;
+  }
+
 
   public double getBowProjectileSpeedMultiplier() {
     return bowProjectileSpeedMultiplier;

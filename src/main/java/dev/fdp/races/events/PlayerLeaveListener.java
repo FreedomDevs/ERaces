@@ -1,5 +1,6 @@
 package dev.fdp.races.events;
 
+import dev.fdp.races.RacesReloader;
 import dev.fdp.races.updaters.*;
 
 import java.util.List;
@@ -32,5 +33,7 @@ public class PlayerLeaveListener implements Listener {
         for (IUnloadable i : unloadable) {
             i.unload(player);
         }
+
+        RacesReloader.reloadRaceForPlayer(event.getPlayer());
     }
 }

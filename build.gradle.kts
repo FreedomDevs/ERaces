@@ -1,6 +1,7 @@
 plugins {
     java
     `maven-publish`
+    kotlin("jvm")
 }
 
 group = "dev.fdp.races"
@@ -9,12 +10,14 @@ version = "0.5"
 repositories {
     maven {
         name = "papermc"
-        url = uri("https://repo.papermc.io/repository/maven-public/")
+         url = uri("https://repo.papermc.io/repository/maven-public/")
     }
+    mavenCentral()
 }
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21.1-R0.1-SNAPSHOT")
+    implementation(kotlin("stdlib-jdk8"))
 }
 
 java {

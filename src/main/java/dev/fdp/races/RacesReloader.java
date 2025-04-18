@@ -31,8 +31,8 @@ public class RacesReloader {
       new DamageResistanceLevelUpdater(),
       new DamageUpdater(),
       new AntiKnockbackLevelWithIronArmorAndMoreUpdater(),
-      new DamageAdditionalWithIronAndLowerArmorUpdater()
-
+      new DamageAdditionalWithIronAndLowerArmorUpdater(),
+      new BlockReachUpdater()
   );
 
   public static void reloadRaceForPlayer(Player player) {

@@ -30,7 +30,8 @@ public class RacesReloader {
       new DualWeaponDamageUpdater(),
       new DamageResistanceLevelUpdater(),
       new DamageUpdater(),
-      new AntiKnockbackLevelWithIronArmorAndMoreUpdater()
+      new AntiKnockbackLevelWithIronArmorAndMoreUpdater(),
+      new DamageAdditionalWithIronAndLowerArmorUpdater()
 
   );
 

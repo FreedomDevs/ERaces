@@ -9,6 +9,7 @@ public class WeaponProficiency {
   private double handDamageAdditional = 0.0;
   private double damageAdditional = 0.0;
   private double damageAdditionalWithIronAndLowerArmor = 0.0;
+  private double damageAdditionalWithWolfsNear = 0.0;
   private double dualWeaponDamageAdditional = 0.0;
 
   // Геттеры и сеттеры
@@ -20,7 +21,7 @@ public class WeaponProficiency {
     this.bowDamageMultiplier = bowDamageMultiplier;
   }
 
-    public double getDamageAdditionalWithIronAndLowerArmor() {
+  public double getDamageAdditionalWithIronAndLowerArmor() {
     return damageAdditionalWithIronAndLowerArmor;
   }
 
@@ -28,6 +29,13 @@ public class WeaponProficiency {
     this.damageAdditionalWithIronAndLowerArmor = damageAdditionalWithIronAndLowerArmor;
   }
 
+  public double getDamageAdditionalWithWolfsNear() {
+    return damageAdditionalWithWolfsNear;
+  }
+
+  public void setDamageAdditionalWithWolfsNear(double damageAdditionalWithWolfsNear) {
+    this.damageAdditionalWithWolfsNear = damageAdditionalWithWolfsNear;
+  }
 
   public double getBowProjectileSpeedMultiplier() {
     return bowProjectileSpeedMultiplier;

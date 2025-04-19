@@ -87,8 +87,11 @@ public class RacesConfigLoader {
         wp.setDamageAdditional(wpSection.getDouble("damage_additional", wp.getDamageAdditional()));
         wp.setDamageAdditionalWithIronAndLowerArmor(wpSection.getDouble("damage_additional_with_iron_and_lower_armor:",
             wp.getDamageAdditionalWithIronAndLowerArmor()));
-        wp.setHandDamageAdditional(
+        wp.setDamageAdditionalWithWolfsNear(
+            wpSection.getDouble("damage_additional_with_wolfs_near", wp.getDamageAdditionalWithWolfsNear()));
+        wp.setDualWeaponDamageAdditional(
             wpSection.getDouble("dual_weapon_damage_additional", wp.getDualWeaponDamageAdditional()));
+
       }
 
       race.setWeaponProficiency(wp);

@@ -46,6 +46,8 @@ public class FDP_Races extends JavaPlugin {
                 new PlayerJoinListener(),
                 new PlayerRespawnListener(),
                 new RacesReloader(),
+                new RaceChangeGUI(),
+                new RaceChangePotion()
         };
 
         for (Listener listener : listeners) {

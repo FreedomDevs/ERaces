@@ -3,64 +3,67 @@ package dev.fdp.races.updaters;
 import dev.fdp.races.FDP_Races;
 import dev.fdp.races.Race;
 
-import org.bukkit.entity.Entity;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Wolf;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.Objects;
 
 public class DamageWithWolfsNearUpdater implements Listener, IUpdater, IUnloadable {
-    private static Map<String, Double> playerDamage = new HashMap<>();
-    public static final double NEARBY_RADIUS = 8.5;
+    private static final ArrayList<String> wolvesOnline = new ArrayList<>();
+    private static final double nearby_radius = 15d;
+    private static final double base_group_damage = 2d; // урон, когда 1 волк рядом
+
+
+    private static float rsqrt(float x) { // это буквально 1/√x
+        final float x2 = 0.5f * x;
+
+        int i = Float.floatToIntBits(x);
+        i = 0x5f3759df - (i >> 1);          //тест на программиста xDD
+        float y = Float.intBitsToFloat(i);
+        y *= (1.5f - x2 * y * y);
+        return y;
+    }
 
     @EventHandler
     public void onEntityDamage(EntityDamageByEntityEvent event) {
-        if (event.getDamager() instanceof Player) {
-            String playerName = event.getDamager().getName();
-            Player player = ((Player) event.getDamager());
-            if (playerDamage.containsKey(playerName) && isWolfNearby(player, 8.5)) {
-                double originalDamage = event.getDamage();
-                double bonusDamage = playerDamage.get(playerName);
-                double incrementDamage = originalDamage + bonusDamage;
-                event.setDamage(incrementDamage);
-            }
+        if (!(event.getDamager() instanceof Player player)) return;
+        if (!(wolvesOnline.contains(player.getName()))) return;
+
+        int wolvesNearby = 0;
+
+        for(String nickname : wolvesOnline) {
+            if (nickname.equals(player.getName()))
+                continue;
+
+            if(Objects.requireNonNull(Bukkit.getServer().getPlayer(nickname)).getLocation().distance(player.getLocation()) <= nearby_radius)
+                wolvesNearby++;
         }
+
+        double additionalDamage = (2 - rsqrt(wolvesNearby)) * base_group_damage;
+        // доп дамаг f(x) в зависимости от количества волков неподалёку x выражается по формуле f(x) = (2-1/(√x)) * a,
+        // где а - базовый дополнительный урон. Таким образом, когда около игрока 1 волк, то доп. урон равен a.
+        // При этом при x → ∞ f(x) → 2*a, то есть максимальный дополнительный урон равен 2*a.
+
+        event.setDamage(event.getDamage() + additionalDamage);
     }
 
     @Override
     public void update(Race race, Player player) {
-        double damageHand = race.getWeaponProficiency().getDamageAdditionalWithWolfsNear();
 
-        if (damageHand == 0) {
-            playerDamage.remove(player.getName());
-        } else {
-            playerDamage.put(player.getName(), damageHand);
-        }
+        if (race.getId().equals("wolf_beastman"))
+            wolvesOnline.add(player.getName());
+        else
+            wolvesOnline.remove(player.getName());
+
     }
 
-    private boolean isWolfNearby(Player player, double radius) {
-        for (Entity entity : player.getNearbyEntities(radius, radius, radius)) {
-            if (entity instanceof Wolf) {
-                return true;
-            }
-
-            if (entity instanceof Player otherPlayer) {
-                String race = FDP_Races.getInstance().raceManager.getPlayerRace(otherPlayer.getName());
-                if (race.toLowerCase().contains("wolf")) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
 
     @Override
     public void unload(Player player) {
-        playerDamage.remove(player.getName());
+        wolvesOnline.remove(player.getName());
     }
 }

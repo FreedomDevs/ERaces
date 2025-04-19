@@ -16,7 +16,6 @@ public class FDP_Races extends JavaPlugin {
     public RaceManager raceManager;
     public MessageManager messageManager;
     private static FDP_Races instance;
-    private BiomeSpeedUpdater biomeSpeedUpdater;
     private PeacefulMobsAfraidUpdater peacefulMobsAfraidUpdater;
 
     @Override
@@ -68,10 +67,7 @@ public class FDP_Races extends JavaPlugin {
     }
 
     private void startTasks() {
-        biomeSpeedUpdater = new BiomeSpeedUpdater();
         peacefulMobsAfraidUpdater = new PeacefulMobsAfraidUpdater();
-
-        biomeSpeedUpdater.startTask(this);
         peacefulMobsAfraidUpdater.startTask(this);
     }
 

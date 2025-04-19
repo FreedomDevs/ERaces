@@ -1,6 +1,5 @@
 package dev.fdp.races.updaters;
 
-import dev.fdp.races.FDP_Races;
 import dev.fdp.races.Race;
 
 import org.bukkit.Bukkit;

@@ -7,7 +7,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import java.util.HashSet;
@@ -15,14 +14,17 @@ import java.util.Set;
 
 public class PeacefulMobsAfraidUpdater implements IUpdater, IUnloadable {
     private static Set<Player> peacefulMobsAfraid = new HashSet<>();
+    private static Integer taskid = null;
 
     @Override
     public void update(Race race, Player player) {
-        if (race.isPeacefulMobsAfraid()) {
+        if (taskid == null)
+            taskid = Bukkit.getScheduler().scheduleSyncRepeatingTask(FDP_Races.getInstance(), task, 0, 20);
+
+        if (race.isPeacefulMobsAfraid())
             peacefulMobsAfraid.add(player);
-        } else {
+        else
             peacefulMobsAfraid.remove(player);
-        }
     }
 
     @Override
@@ -30,19 +32,11 @@ public class PeacefulMobsAfraidUpdater implements IUpdater, IUnloadable {
         peacefulMobsAfraid.remove(player);
     }
 
-    public void startTask(FDP_Races plugin) {
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                for (Player player : Bukkit.getOnlinePlayers()) {
-                    if (peacefulMobsAfraid.contains(player)) {
-                        peacefulMobsAfraidFromPlayer(player);
-                    }
-                }
-            }
-        }.runTaskTimer(plugin, 0L, 20L);
-
-    }
+    Runnable task = () -> {
+        for (Player player : Bukkit.getOnlinePlayers())
+            if (peacefulMobsAfraid.contains(player))
+                peacefulMobsAfraidFromPlayer(player);
+    };
 
     private void peacefulMobsAfraidFromPlayer(Player player) {
         for (Entity entity : player.getNearbyEntities(10, 10, 10)) {
@@ -57,7 +51,8 @@ public class PeacefulMobsAfraidUpdater implements IUpdater, IUnloadable {
 
                 try {
                     mob.setAI(true);
-                } catch (NoSuchMethodError e) {}
+                } catch (NoSuchMethodError e) {
+                }
             }
         }
     }

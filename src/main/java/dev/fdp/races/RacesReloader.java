@@ -9,45 +9,45 @@ import org.bukkit.entity.Player;
 
 public class RacesReloader {
 
-  private static final List<IUpdater> updaters = List.of(
-      new HealthUpdater(),
-      new MineSpeedUpdater(),
-      new AdditionalArmorUpdater(),
-      new HealthRegenUpdater(),
-      new ShieldUsageUpdater(),
-      new ForbiddenFoodsUpdater(),
-      new HandDamageUpdater(),
-      new RunningSpeedUpdater(),
-      new AntiKnockbackLevelUpdater(),
-      new BiomeSpeedUpdater(),
-      new AxeDamageUpdater(),
-      new SwordDamageUpdater(),
-      new BowDamageUpdater(),
-      new SlowdownLevelUpdater(),
-      new PeacefulMobsAfraidUpdater(),
-      new BowSpeedUpdater(),
-      new MaceDamageUpdater(),
-      new DualWeaponDamageUpdater(),
-      new DamageResistanceLevelUpdater(),
-      new DamageUpdater(),
-      new AntiKnockbackLevelWithIronArmorAndMoreUpdater(),
-      new DamageAdditionalWithIronAndLowerArmorUpdater(),
-      new BlockReachUpdater()
-  );
+    private static final List<IUpdater> updaters = List.of(
+            new HealthUpdater(),
+            new MineSpeedUpdater(),
+            new AdditionalArmorUpdater(),
+            new HealthRegenUpdater(),
+            new ShieldUsageUpdater(),
+            new ForbiddenFoodsUpdater(),
+            new HandDamageUpdater(),
+            new RunningSpeedUpdater(),
+            new AntiKnockbackLevelUpdater(),
+            new BiomeSpeedUpdater(),
+            new AxeDamageUpdater(),
+            new SwordDamageUpdater(),
+            new BowDamageUpdater(),
+            new SlowdownLevelUpdater(),
+            new PeacefulMobsAfraidUpdater(),
+            new BowSpeedUpdater(),
+            new MaceDamageUpdater(),
+            new DualWeaponDamageUpdater(),
+            new DamageResistanceLevelUpdater(),
+            new DamageUpdater(),
+            new AntiKnockbackLevelWithIronArmorAndMoreUpdater(),
+            new DamageAdditionalWithIronAndLowerArmorUpdater(),
+            new BlockReachUpdater(),
+            new DamageWithWolfsNearUpdater());
 
-  public static void reloadRaceForPlayer(Player player) {
-    RaceManager raceManager = FDP_Races.getInstance().raceManager;
+    public static void reloadRaceForPlayer(Player player) {
+        RaceManager raceManager = FDP_Races.getInstance().raceManager;
 
-    for (IUpdater updater : updaters) {
-      updater.update(raceManager.getRaces().get(raceManager
-          .getPlayerRace(player.getName())),
-          player);
+        for (IUpdater updater : updaters) {
+            updater.update(raceManager.getRaces().get(raceManager
+                    .getPlayerRace(player.getName())),
+                    player);
+        }
     }
-  }
 
-  public static void reloadRaceForAllPlayers() {
-    for (Player i : Bukkit.getOnlinePlayers()) {
-      reloadRaceForPlayer(i);
+    public static void reloadRaceForAllPlayers() {
+        for (Player i : Bukkit.getOnlinePlayers()) {
+            reloadRaceForPlayer(i);
+        }
     }
-  }
 }

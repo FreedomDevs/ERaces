@@ -1,6 +1,5 @@
 package dev.fdp.races.events;
 
-import dev.fdp.races.RacesReloader;
 import dev.fdp.races.updaters.*;
 
 import java.util.List;
@@ -26,7 +25,9 @@ public class PlayerLeaveListener implements Listener {
                 new BowSpeedUpdater(),
                 new DualWeaponDamageUpdater(),
                 new AntiKnockbackLevelWithIronArmorAndMoreUpdater(),
-                new DamageAdditionalWithIronAndLowerArmorUpdater()
+                new DamageAdditionalWithIronAndLowerArmorUpdater(),
+                new BlockReachUpdater(),
+                new DamageWithWolfsNearUpdater()
 
         );
 

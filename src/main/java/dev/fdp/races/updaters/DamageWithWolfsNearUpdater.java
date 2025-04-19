@@ -1,5 +1,6 @@
 package dev.fdp.races.updaters;
 
+import dev.fdp.races.FDP_Races;
 import dev.fdp.races.Race;
 
 import org.bukkit.Bukkit;
@@ -14,7 +15,10 @@ import java.util.Objects;
 public class DamageWithWolfsNearUpdater implements Listener, IUpdater, IUnloadable {
     private static final ArrayList<String> wolvesOnline = new ArrayList<>();
     private static final double nearby_radius = 15d;
-    private static final double base_group_damage = 2d; // урон, когда 1 волк рядом
+
+    // урон, когда 1 волк рядом
+    private static final double base_group_damage = FDP_Races.getInstance().races.get("wolf_beastman").getWeaponProficiency().getDamageAdditionalWithWolfsNear();
+
 
 
     private static float rsqrt(float x) { // это буквально 1/√x
@@ -52,7 +56,6 @@ public class DamageWithWolfsNearUpdater implements Listener, IUpdater, IUnloadab
 
     @Override
     public void update(Race race, Player player) {
-
         if (race.getId().equals("wolf_beastman"))
             wolvesOnline.add(player.getName());
         else

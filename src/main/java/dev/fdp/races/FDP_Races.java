@@ -29,6 +29,7 @@ public class FDP_Races extends JavaPlugin {
     }
 
     public void reloadConfig() {
+        RacesConfigLoader.checkConfigExists(this);
         this.races = RacesConfigLoader.loadConfig(this);
         getLogger().info("Загружено: " + this.races.size() + " расс");
     }
@@ -38,8 +39,6 @@ public class FDP_Races extends JavaPlugin {
         messageManager = new MessageManager(this);
 
         getLogger().info(messageManager.getString("plugin.enabled"));
-
-        RacesConfigLoader.checkConfigExists(this);
 
         reloadConfig();
 

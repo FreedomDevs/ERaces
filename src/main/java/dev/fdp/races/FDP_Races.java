@@ -6,7 +6,6 @@ import dev.fdp.races.commands.RacesCommand;
 import dev.fdp.races.events.*;
 import dev.fdp.races.gui.RaceChangeGUI;
 import dev.fdp.races.items.RaceChangePotion;
-import dev.fdp.races.updaters.*;
 
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -16,7 +15,6 @@ public class FDP_Races extends JavaPlugin {
     public RaceManager raceManager;
     public MessageManager messageManager;
     private static FDP_Races instance;
-    private PeacefulMobsAfraidUpdater peacefulMobsAfraidUpdater;
 
     @Override
     public void onLoad() {
@@ -53,7 +51,6 @@ public class FDP_Races extends JavaPlugin {
         }
 
         RacesReloader.startListeners(this);
-        startTasks();
         registerCommand();
 
         RacesReloader.reloadRaceForAllPlayers();
@@ -64,11 +61,6 @@ public class FDP_Races extends JavaPlugin {
     @Override
     public void onDisable() {
         getLogger().info(messageManager.getString("plugin.disabled", "Выключение😞"));
-    }
-
-    private void startTasks() {
-        peacefulMobsAfraidUpdater = new PeacefulMobsAfraidUpdater();
-        peacefulMobsAfraidUpdater.startTask(this);
     }
 
     private void registerCommand() {

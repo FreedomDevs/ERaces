@@ -33,7 +33,5 @@ public class PlayerLeaveListener implements Listener {
         for (IUnloadable i : unloadable) {
             i.unload(player);
         }
-
-        RacesReloader.reloadRaceForPlayer(event.getPlayer());
     }
 }

@@ -17,14 +17,13 @@ public class DamageWithWolfsNearUpdater implements Listener, IUpdater, IUnloadab
 
 
 
-    private static float rsqrt(float x) { // это буквально 1/√x
-        final float x2 = 0.5f * x;
-
-        int i = Float.floatToIntBits(x);
-        i = 0x5f3759df - (i >> 1);          //тест на программиста xDD
-        float y = Float.intBitsToFloat(i);
-        y *= (1.5f - x2 * y * y);
-        return y;
+    public static double Q_rsqrt(double x) {
+        double xhalf = 0.5d * x;
+        long i = Double.doubleToLongBits(x);
+        i = 0x5fe6ec85e7de30daL - (i >> 1);
+        x = Double.longBitsToDouble(i);
+        x *= (1.5d - xhalf * x * x);
+        return x;
     }
 
     @EventHandler
@@ -42,7 +41,7 @@ public class DamageWithWolfsNearUpdater implements Listener, IUpdater, IUnloadab
                 wolvesNearby++;
         }
 
-        double additionalDamage = (2 - rsqrt(wolvesNearby)) * damageNicknames.get(player.getName());
+        double additionalDamage = (2 - Q_rsqrt((wolvesNearby)) * damageNicknames.get(player.getName()));
         // доп дамаг f(x) в зависимости от количества волков неподалёку x выражается по формуле f(x) = (2-1/(√x)) * a,
         // где а - базовый дополнительный урон. Таким образом, когда около игрока 1 волк, то доп. урон равен a.
         // При этом при x → ∞ f(x) → 2*a, то есть максимальный дополнительный урон равен 2*a.

@@ -38,6 +38,8 @@ public class FDP_Races extends JavaPlugin {
     public void onEnable() {
         messageManager = new MessageManager(this);
 
+        getLogger().info(messageManager.getString("plugin.enabled"));
+
         reloadConfig();
 
         raceManager = new RaceManager(getDataFolder(), this);
@@ -68,8 +70,6 @@ public class FDP_Races extends JavaPlugin {
         registerCommand();
 
         RacesReloader.reloadRaceForAllPlayers();
-
-        getLogger().info(messageManager.getString("plugin.enabled"));
     }
 
     @Override

@@ -44,6 +44,7 @@ wolf_beastman:
     name: "§7Зверолюд-волк"
   weapon_proficiency:
     damage_additional: 3
+    damage_additional_with_wolfs_near: 2
   regeneration_per_sec: 0.25
   running_speed: 1
   shield_usage: false  # Зверолюды не могут использовать щиты

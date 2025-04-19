@@ -56,6 +56,7 @@ public class RacesReloader implements Listener {
     }
 
     public static void startListeners(JavaPlugin plugin) { // Ищет все листенеры в updaters и включает их
+        Bukkit.getPluginManager().registerEvents(new RacesReloader(), plugin);
         for (IUpdater i : updaters) {
             if (i instanceof Listener) {
                 Bukkit.getPluginManager().registerEvents((Listener) i, plugin);

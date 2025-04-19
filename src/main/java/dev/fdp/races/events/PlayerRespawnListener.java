@@ -1,7 +1,6 @@
 package dev.fdp.races.events;
 
 import dev.fdp.races.RacesReloader;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerRespawnEvent;
@@ -9,8 +8,6 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 public class PlayerRespawnListener implements Listener {
     @EventHandler
     public void onPlayerRespawn(PlayerRespawnEvent event) {
-        Player player = event.getPlayer();
-
-        RacesReloader.reloadRaceForPlayer(player);
+        RacesReloader.reloadRaceForPlayer(event.getPlayer());
     }
 }

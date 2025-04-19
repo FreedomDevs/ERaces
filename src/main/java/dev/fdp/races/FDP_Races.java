@@ -46,24 +46,13 @@ public class FDP_Races extends JavaPlugin {
                 new PlayerJoinListener(),
                 new PlayerRespawnListener(),
                 new RacesReloader(),
-                new ShieldUsageUpdater(),
-                new ForbiddenFoodsUpdater(),
-                new HandDamageUpdater(),
-                new AxeDamageUpdater(),
-                new SwordDamageUpdater(),
-                new BowDamageUpdater(),
-                new RaceChangeGUI(),
-                new RaceChangePotion(),
-                new BowSpeedUpdater(),
-                new MaceDamageUpdater(),
-                new DualWeaponDamageUpdater()
-
         };
 
         for (Listener listener : listeners) {
             getServer().getPluginManager().registerEvents(listener, this);
         }
 
+        RacesReloader.startListeners(this);
         startTasks();
         registerCommand();
 

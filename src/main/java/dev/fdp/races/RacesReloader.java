@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.plugin.java.JavaPlugin;
 
 public class RacesReloader implements Listener {
 
@@ -51,6 +52,14 @@ public class RacesReloader implements Listener {
     public static void reloadRaceForAllPlayers() {
         for (Player i : Bukkit.getOnlinePlayers()) {
             reloadRaceForPlayer(i);
+        }
+    }
+
+    public static void startListeners(JavaPlugin plugin) { // Ищет все листенеры в updaters и включает их
+        for (IUpdater i : updaters) {
+            if (i instanceof Listener) {
+                Bukkit.getPluginManager().registerEvents((Listener) i, plugin);
+            }
         }
     }
 

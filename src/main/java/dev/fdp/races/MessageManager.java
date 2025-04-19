@@ -15,20 +15,18 @@ public class MessageManager {
     private final File messagesFile;
     private FileConfiguration messagesConfig;
 
-    public MessageManager(FDP_Races plugin){
+    public MessageManager(FDP_Races plugin) {
         this.plugin = plugin;
         this.messagesFile = new File(plugin.getDataFolder(), fileName);
         loadMessage();
     }
 
     private void loadMessage() {
-        if (!plugin.getDataFolder().exists()) {
+        if (!plugin.getDataFolder().exists())
             plugin.getDataFolder().mkdir();
-        }
 
-        if (!messagesFile.exists()) {
+        if (!messagesFile.exists())
             plugin.saveResource(fileName, false);
-        }
 
         messagesConfig = YamlConfiguration.loadConfiguration(messagesFile);
 
@@ -55,7 +53,7 @@ public class MessageManager {
         return messagesConfig.getString(path);
     }
 
-    public String getString(String path, String defaultValue ) {
+    public String getString(String path, String defaultValue) {
         return messagesConfig.getString(path, defaultValue);
     }
 
@@ -63,4 +61,3 @@ public class MessageManager {
         return messagesConfig.getStringList(path);
     }
 }
-

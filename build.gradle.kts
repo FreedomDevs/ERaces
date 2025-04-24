@@ -4,12 +4,13 @@ plugins {
 }
 
 group = "dev.fdp.races"
+
 version = "1.0"
 
 repositories {
     maven {
         name = "papermc"
-         url = uri("https://repo.papermc.io/repository/maven-public/")
+        url = uri("https://repo.papermc.io/repository/maven-public/")
     }
 }
 
@@ -19,15 +20,9 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok:1.18.30")
 }
 
-java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(21))
-}
+java { toolchain.languageVersion.set(JavaLanguageVersion.of(21)) }
 
-tasks.processResources {
-    filesMatching("plugin.yml") {
-        expand(mapOf("version" to version))
-    }
-}
+tasks.processResources { filesMatching("plugin.yml") { expand(mapOf("version" to version)) } }
 
 publishing {
     publications {

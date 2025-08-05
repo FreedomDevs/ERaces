@@ -15,8 +15,6 @@ public class DamageWithWolfsNearUpdater implements Listener, IUpdater, IUnloadab
     private static final HashMap<String, Double> damageNicknames = new HashMap<>();
     private static final double nearby_radius = 15d;
 
-
-
     public static double Q_rsqrt(double x) {
         double xhalf = 0.5d * x;
         long i = Double.doubleToLongBits(x);
@@ -37,10 +35,9 @@ public class DamageWithWolfsNearUpdater implements Listener, IUpdater, IUnloadab
             if (nickname.equals(player.getName()))
                 continue;
 
-            Player xyiZnaet = Bukkit.getServer().getPlayer(nickname);
-            if (xyiZnaet != null && xyiZnaet.isOnline() && xyiZnaet.getLocation().distance(player.getLocation()) <= nearby_radius) {
+            Player target = Bukkit.getServer().getPlayer(nickname);
+            if (target != null && target.getLocation().distance(player.getLocation()) <= nearby_radius)
                 wolvesNearby++;
-            }
         }
 
         double baseDamage = damageNicknames.get(player.getName());

@@ -26,7 +26,7 @@ public class HealthRegenUpdater implements IUpdater {
 
           Player player_arbuz = Bukkit.getPlayerExact(playerName);
 
-          if (player_arbuz != null && player_arbuz.isOnline()) {
+          if (player_arbuz != null && player_arbuz.isOnline() && !player_arbuz.isDead()) {
             double newHealth = player_arbuz.getHealth() + amount;
             player_arbuz
                 .setHealth(Math.min(newHealth, player_arbuz.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()));

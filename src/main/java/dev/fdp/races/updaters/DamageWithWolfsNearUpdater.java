@@ -37,14 +37,24 @@ public class DamageWithWolfsNearUpdater implements Listener, IUpdater, IUnloadab
             if (nickname.equals(player.getName()))
                 continue;
 
-            if(Objects.requireNonNull(Bukkit.getServer().getPlayer(nickname)).getLocation().distance(player.getLocation()) <= nearby_radius)
+            Player xyiZnaet = Bukkit.getServer().getPlayer(nickname);
+            if (xyiZnaet != null && xyiZnaet.isOnline() && xyiZnaet.getLocation().distance(player.getLocation()) <= nearby_radius) {
                 wolvesNearby++;
+            }
         }
 
-        double additionalDamage = (2 - Q_rsqrt((wolvesNearby)) * damageNicknames.get(player.getName()));
+        double baseDamage = damageNicknames.get(player.getName());
+        double additionalDamage;
         // доп дамаг f(x) в зависимости от количества волков неподалёку x выражается по формуле f(x) = (2-1/(√x)) * a,
         // где а - базовый дополнительный урон. Таким образом, когда около игрока 1 волк, то доп. урон равен a.
         // При этом при x → ∞ f(x) → 2*a, то есть максимальный дополнительный урон равен 2*a.
+
+        if (wolvesNearby == 0) {
+            additionalDamage = baseDamage;
+        } else {
+            additionalDamage = (2 - Q_rsqrt(wolvesNearby)) * baseDamage;
+        }
+
 
         event.setDamage(event.getDamage() + additionalDamage);
     }

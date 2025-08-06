@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 public class BiomeSpeedUpdater implements IUpdater, IUnloadable {
-    private static Map<String, List<String>> biomeSpeed = new HashMap<>();
+    private static final Map<String, List<String>> biomeSpeed = new HashMap<>();
     private static Integer taskid = null;
 
     @Override
@@ -23,7 +23,7 @@ public class BiomeSpeedUpdater implements IUpdater, IUnloadable {
         if (taskid == null)
             taskid = Bukkit.getScheduler().scheduleSyncRepeatingTask(FDP_Races.getInstance(), task, 0, 180);
 
-        if (race.getBiomeSpeed().size() == 0)
+        if (race.getBiomeSpeed().isEmpty())
             biomeSpeed.remove(playerName);
         else
             biomeSpeed.put(playerName, race.getBiomeSpeed());
@@ -34,7 +34,7 @@ public class BiomeSpeedUpdater implements IUpdater, IUnloadable {
         biomeSpeed.remove(player.getName());
     }
 
-    private Runnable task = () -> {
+    private final Runnable task = () -> {
         for (Map.Entry<String, List<String>> entry : biomeSpeed.entrySet()) {
             Player player = Bukkit.getPlayer(entry.getKey());
             if (player == null || !player.isOnline())

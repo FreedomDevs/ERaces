@@ -1,6 +1,7 @@
 package dev.fdp.races;
 
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.io.IOException;
@@ -79,6 +80,10 @@ public class RaceManager {
 
     public Map<String, Race> getRaces() {
         return plugin.races;
+    }
+
+    public Race getRaceForPlayer(Player player) {
+        return plugin.races.get(getPlayerRace(player.getName()));
     }
 
     public Map<String, String> getNameToRaceMap() {

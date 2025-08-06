@@ -17,7 +17,7 @@ import dev.fdp.races.Race;
 import dev.fdp.races.utils.ChatUtil;
 
 public class ShieldUsageUpdater implements Listener, IUpdater, IUnloadable {
-  private static Set<String> blockedShield = new HashSet<>();
+  private static final Set<String> blockedShield = new HashSet<>();
 
   @EventHandler
   public void onPlayerInteract(PlayerInteractEvent event) {

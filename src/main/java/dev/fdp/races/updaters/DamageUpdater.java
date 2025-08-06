@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DamageUpdater implements Listener, IUpdater, IUnloadable {
-    private static Map<String, Double> playerDamage = new HashMap<>();
+    private static final Map<String, Double> playerDamage = new HashMap<>();
 
     @EventHandler
     public void onEntityDamage(EntityDamageByEntityEvent event) {

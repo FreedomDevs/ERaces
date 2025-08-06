@@ -1,5 +1,6 @@
 package dev.fdp.races.commands;
 
+import dev.fdp.races.VisualsManager;
 import dev.fdp.races.utils.ChatUtil;
 import org.bukkit.command.CommandSender;
 
@@ -11,6 +12,7 @@ public class ReloadSubCommand extends AbstractSubCommand {
     FDP_Races.getInstance().reloadConfig();
     FDP_Races.getInstance().raceManager.loadData();
     RacesReloader.reloadRaceForAllPlayers();
+    VisualsManager.reloadVisualsForAllPlayer();
     String message = FDP_Races.getInstance().messageManager.getString("commands.reload.reload_success");
     ChatUtil.message(sender, message);
   }

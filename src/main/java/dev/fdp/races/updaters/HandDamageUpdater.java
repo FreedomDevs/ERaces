@@ -10,12 +10,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class HandDamageUpdater implements Listener, IUpdater, IUnloadable {
-    private static Map<String, Double> playerHandDamage = new HashMap<>();
+    private static final Map<String, Double> playerHandDamage = new HashMap<>();
 
     @EventHandler
     public void onEntityDamage(EntityDamageByEntityEvent event) {
-        if (event.getDamager() instanceof Player) {
-            Player player = ((Player) event.getDamager());
+        if (event.getDamager() instanceof Player player) {
             String playerName = event.getDamager().getName();
             if (playerHandDamage.containsKey(playerName)) {
                 if (player.getInventory().getItemInMainHand().isEmpty()) {

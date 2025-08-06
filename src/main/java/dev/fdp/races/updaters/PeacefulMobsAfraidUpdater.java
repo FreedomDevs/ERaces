@@ -13,7 +13,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class PeacefulMobsAfraidUpdater implements IUpdater, IUnloadable {
-    private static Set<Player> peacefulMobsAfraid = new HashSet<>();
+    private static final Set<Player> peacefulMobsAfraid = new HashSet<>();
     private static Integer taskid = null;
 
     @Override
@@ -51,7 +51,7 @@ public class PeacefulMobsAfraidUpdater implements IUpdater, IUnloadable {
 
                 try {
                     mob.setAI(true);
-                } catch (NoSuchMethodError e) {
+                } catch (NoSuchMethodError ignored) {
                 }
             }
         }

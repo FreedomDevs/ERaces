@@ -3,6 +3,7 @@ package dev.fdp.races.updaters;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Objects;
 
 import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attribute;
@@ -12,7 +13,7 @@ import dev.fdp.races.FDP_Races;
 import dev.fdp.races.Race;
 
 public class HealthRegenUpdater implements IUpdater {
-  private static Map<String, Double> playerToRegen = new HashMap<>();
+  private static final Map<String, Double> playerToRegen = new HashMap<>();
   private static Integer taskid = null;
 
   @Override
@@ -29,14 +30,14 @@ public class HealthRegenUpdater implements IUpdater {
           if (player_arbuz != null && player_arbuz.isOnline() && !player_arbuz.isDead()) {
             double newHealth = player_arbuz.getHealth() + amount;
             player_arbuz
-                .setHealth(Math.min(newHealth, player_arbuz.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()));
+                .setHealth(Math.min(newHealth, Objects.requireNonNull(player_arbuz.getAttribute(Attribute.GENERIC_MAX_HEALTH)).getValue()));
           } else {
             // Удаляем мусор
             it.remove();
           }
         }
 
-        if (playerToRegen.size() == 0) {
+        if (playerToRegen.isEmpty()) {
           Bukkit.getScheduler().cancelTask(taskid);
           taskid = null;
         }

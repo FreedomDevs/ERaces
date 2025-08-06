@@ -11,13 +11,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DualWeaponDamageUpdater implements Listener, IUpdater, IUnloadable {
-    private static Map<String, Double> playerDualDamage = new HashMap<>();
+    private static final Map<String, Double> playerDualDamage = new HashMap<>();
 
     @EventHandler
     public void onPlayerAttack(EntityDamageByEntityEvent event) {
-        if (event.getDamager() instanceof Player) {
+        if (event.getDamager() instanceof Player player) {
             String playerName = event.getDamager().getName();
-            Player player = (Player) event.getDamager();
             if (playerDualDamage.containsKey(playerName)) {
                 if (player.getInventory().getItemInMainHand().getType() == player.getInventory().getItemInOffHand()
                         .getType()) {

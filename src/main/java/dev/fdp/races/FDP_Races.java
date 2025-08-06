@@ -2,11 +2,13 @@ package dev.fdp.races;
 
 import java.util.Map;
 
+import dev.fdp.races.commands.GetOwnRaceCommand;
 import dev.fdp.races.commands.RacesCommand;
 import dev.fdp.races.events.*;
 import dev.fdp.races.gui.RaceChangeGUI;
 import dev.fdp.races.items.RaceChangePotion;
 
+import lombok.Getter;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -14,15 +16,12 @@ public class FDP_Races extends JavaPlugin {
     public Map<String, Race> races = null;
     public RaceManager raceManager;
     public MessageManager messageManager;
+    @Getter
     private static FDP_Races instance;
 
     @Override
     public void onLoad() {
         instance = this;
-    }
-
-    public static FDP_Races getInstance() {
-        return instance;
     }
 
     public void reloadConfig() {
@@ -67,5 +66,6 @@ public class FDP_Races extends JavaPlugin {
         RacesCommand racesCommand = new RacesCommand();
         getCommand("races").setExecutor(racesCommand);
         getCommand("races").setTabCompleter(racesCommand);
+        getCommand("myrace").setExecutor(new GetOwnRaceCommand());
     }
 }

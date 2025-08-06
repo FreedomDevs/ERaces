@@ -16,7 +16,7 @@ import dev.fdp.races.Race;
 import dev.fdp.races.utils.ChatUtil;
 
 public class ForbiddenFoodsUpdater implements Listener, IUpdater, IUnloadable {
-  private static Map<String, List<String>> forbiddenFoods = new HashMap<>();
+  private static final Map<String, List<String>> forbiddenFoods = new HashMap<>();
 
   @EventHandler
   public void onPlayerEat(PlayerItemConsumeEvent event) {
@@ -46,7 +46,7 @@ public class ForbiddenFoodsUpdater implements Listener, IUpdater, IUnloadable {
   public void update(Race race, Player player) {
     String playername = player.getName();
 
-    if (race.getForbiddenFoods().size() == 0) {
+    if (race.getForbiddenFoods().isEmpty()) {
       forbiddenFoods.remove(playername);
     } else {
       forbiddenFoods.put(playername, race.getForbiddenFoods());

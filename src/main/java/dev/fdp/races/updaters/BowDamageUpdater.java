@@ -1,32 +1,45 @@
 package dev.fdp.races.updaters;
 
 import dev.fdp.races.Race;
+import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.projectiles.ProjectileSource;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class BowDamageUpdater implements Listener, IUpdater, IUnloadable {
-    private static Map<String, Double> playerBowDamage = new HashMap<>();
+    private static final Map<String, Double> playerBowDamage = new HashMap<>();
+    private static final Set<UUID> bowArrows = new HashSet<>();
+
+    @EventHandler
+    public void onPlayerBowShoot(EntityShootBowEvent event) {
+        if (event.getEntity() instanceof Player && event.getBow() != null) {
+            if (event.getBow().getType() == Material.BOW && event.getProjectile() instanceof Arrow) {
+                bowArrows.add(event.getProjectile().getUniqueId());
+            }
+        }
+    }
 
     @EventHandler
     public void onPlayerShoot(EntityDamageByEntityEvent event){
-        if (event.getDamager() instanceof Arrow){
-            Arrow arrow = (Arrow) event.getDamager();
+        if (event.getDamager() instanceof Arrow arrow) {
+            if (!bowArrows.contains(arrow.getUniqueId())) return;
+
             ProjectileSource shooter = arrow.getShooter();
-            if (shooter instanceof Player) {
-                Player player = (Player) shooter;
-                if (playerBowDamage.containsKey(player.getName())) {
-                    double damage = event.getDamage();
-                    double newDamage = damage * playerBowDamage.get(player.getName());
+            if (shooter instanceof Player player) {
+                Double damage = playerBowDamage.get(player.getName());
+                if (damage != null) {
+                    double newDamage = event.getDamage() * damage;
                     event.setDamage(newDamage);
                 }
             }
+
+            bowArrows.remove(arrow.getUniqueId());
         }
     }
 

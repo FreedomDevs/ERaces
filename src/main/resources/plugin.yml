@@ -8,6 +8,10 @@ commands:
   races:
     description: "Коаманда на рассы типо"
     permission: fdp_races.races_command.use
+  myrace:
+    description: Показывает расу игрока
+    usage: /myrace
+
 
 permissions:
   fdp_races.races_command.use:

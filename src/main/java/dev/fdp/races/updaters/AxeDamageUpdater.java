@@ -10,13 +10,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AxeDamageUpdater implements Listener,IUpdater, IUnloadable {
-    private static Map<String, Double> playerAxeDamage = new HashMap<>();
+    private static final Map<String, Double> playerAxeDamage = new HashMap<>();
 
     @EventHandler
     public void onPlayerAttack(EntityDamageByEntityEvent event){
-        if (event.getDamager() instanceof Player) {
+        if (event.getDamager() instanceof Player player) {
             String playerName = event.getDamager().getName();
-            Player player = (Player) event.getDamager();
             if (playerAxeDamage.containsKey(playerName)) {
                 if (player.getInventory().getItemInMainHand().getType().toString().endsWith("_AXE")) {
                     double damage = event.getDamage();

@@ -19,6 +19,8 @@ elf:
     - BIRCH_FOREST
     - DARK_FOREST
     - TAIGA
+  visuals:
+    - ears
 
 human:
   gui_config:

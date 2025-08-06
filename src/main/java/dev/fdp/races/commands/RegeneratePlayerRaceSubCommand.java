@@ -1,5 +1,6 @@
 package dev.fdp.races.commands;
 
+import dev.fdp.races.VisualsManager;
 import dev.fdp.races.utils.ChatUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -29,6 +30,7 @@ public class RegeneratePlayerRaceSubCommand extends AbstractSubCommand {
 
     FDP_Races.getInstance().raceManager.setPlayerRace(player.getName(), newRace);
     RacesReloader.reloadRaceForPlayer(player);
+    VisualsManager.updateVisualsForPlayer(player);
     String message = FDP_Races.getInstance().messageManager.getString("commands.regenerate_player_race.regenerate_success");
     ChatUtil.message(sender, message,
         Map.of("{player}", player.getName(), "{race}", newRace));

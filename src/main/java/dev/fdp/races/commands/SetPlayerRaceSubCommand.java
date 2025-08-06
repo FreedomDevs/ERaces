@@ -1,12 +1,10 @@
 package dev.fdp.races.commands;
 
+import dev.fdp.races.*;
 import dev.fdp.races.utils.ChatUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import dev.fdp.races.FDP_Races;
-import dev.fdp.races.RacesReloader;
 
 import java.util.Map;
 
@@ -35,6 +33,7 @@ public class SetPlayerRaceSubCommand extends AbstractSubCommand {
 
     FDP_Races.getInstance().raceManager.setPlayerRace(player.getName(), newRace);
     RacesReloader.reloadRaceForPlayer(player);
+    VisualsManager.updateVisualsForPlayer(player);
     String message = FDP_Races.getInstance().messageManager.getString("commands.set_player_race.set_success");
     ChatUtil.message(sender, message,
         Map.of("{player}", player.getName(), "{race}", newRace));

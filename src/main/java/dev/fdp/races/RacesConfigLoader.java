@@ -94,6 +94,10 @@ public class RacesConfigLoader {
 
       }
 
+      if (section.isList("visuals")) {
+        race.setVisuals(section.getStringList("visuals"));
+      }
+
       race.setWeaponProficiency(wp);
       races.put(key, race);
     }

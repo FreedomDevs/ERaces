@@ -11,18 +11,19 @@ public class MineSpeedUpdater implements IUpdater {
         double mineSpeed = race.getMineSpeed();
         player.removePotionEffect(PotionEffectType.HASTE);
 
-        if (mineSpeed != 1.0) {
-            int hasteLevel = (int) Math.round((mineSpeed - 1.0) * 5 - 1);
+        if (mineSpeed > 1.0) {
+            int hasteLevel = (int) Math.round((mineSpeed - 1.0) / 0.2);
 
             player.addPotionEffect(
                     new PotionEffect(
                             PotionEffectType.HASTE,
                             Integer.MAX_VALUE,
-                            hasteLevel,
+                            hasteLevel - 1,
                             false,
                             false,
-                            false));
+                            false
+                    )
+            );
         }
-
     }
 }

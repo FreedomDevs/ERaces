@@ -66,8 +66,7 @@ public class RacesReloader implements Listener {
 
     private static void unloadPlayerData(Player player) { // Типо удаляет мусор из ОЗУ
         for (IUpdater i : updaters) {
-            if (i instanceof IUnloadable) {
-                IUnloadable unloadable = ((IUnloadable) i);
+            if (i instanceof IUnloadable unloadable) {
                 unloadable.unload(player);
             }
         }

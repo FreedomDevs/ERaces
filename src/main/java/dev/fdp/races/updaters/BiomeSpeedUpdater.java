@@ -47,7 +47,7 @@ public class BiomeSpeedUpdater implements IUpdater, IUnloadable {
                     player.getLocation().getBlockZ());
 
             if (biomes.contains(biome.name()))
-                player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 110, 1));
+                player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 220, 1));
             else
                 player.removePotionEffect(PotionEffectType.SPEED);
         }

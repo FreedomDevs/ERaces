@@ -3,7 +3,7 @@ package dev.fdp.races.updaters;
 import dev.fdp.races.Race;
 
 import org.bukkit.Material;
-import org.bukkit.entity.Arrow;
+import org.bukkit.entity.AbstractArrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -20,7 +20,7 @@ public class BowSpeedUpdater implements Listener, IUpdater, IUnloadable {
     @EventHandler
     public void onPlayerBowShoot(EntityShootBowEvent event) {
         if (event.getEntity() instanceof Player && event.getBow() != null) {
-            if (event.getBow().getType() == Material.BOW && event.getProjectile() instanceof Arrow) {
+            if (event.getBow().getType() == Material.BOW && event.getProjectile() instanceof AbstractArrow) {
                 bowArrows.add(event.getProjectile().getUniqueId());
             }
         }
@@ -28,7 +28,7 @@ public class BowSpeedUpdater implements Listener, IUpdater, IUnloadable {
 
     @EventHandler
     public void onProjectileLaunch(ProjectileLaunchEvent event) {
-        if (event.getEntity() instanceof Arrow arrow) {
+        if (event.getEntity() instanceof AbstractArrow arrow) {
             if (arrow.getShooter() instanceof Player player) {
                 if (bowArrows.contains(arrow.getUniqueId())) {
                     bowArrows.remove(arrow.getUniqueId());

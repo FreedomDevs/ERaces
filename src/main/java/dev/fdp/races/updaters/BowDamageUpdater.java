@@ -2,7 +2,7 @@ package dev.fdp.races.updaters;
 
 import dev.fdp.races.Race;
 import org.bukkit.Material;
-import org.bukkit.entity.Arrow;
+import org.bukkit.entity.AbstractArrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -19,16 +19,17 @@ public class BowDamageUpdater implements Listener, IUpdater, IUnloadable {
     @EventHandler
     public void onPlayerBowShoot(EntityShootBowEvent event) {
         if (event.getEntity() instanceof Player && event.getBow() != null) {
-            if (event.getBow().getType() == Material.BOW && event.getProjectile() instanceof Arrow) {
+            if (event.getBow().getType() == Material.BOW && event.getProjectile() instanceof AbstractArrow) {
                 bowArrows.add(event.getProjectile().getUniqueId());
             }
         }
     }
 
     @EventHandler
-    public void onPlayerShoot(EntityDamageByEntityEvent event){
-        if (event.getDamager() instanceof Arrow arrow) {
-            if (!bowArrows.contains(arrow.getUniqueId())) return;
+    public void onPlayerShoot(EntityDamageByEntityEvent event) {
+        if (event.getDamager() instanceof AbstractArrow arrow) {
+            if (!bowArrows.contains(arrow.getUniqueId()))
+                return;
 
             ProjectileSource shooter = arrow.getShooter();
             if (shooter instanceof Player player) {

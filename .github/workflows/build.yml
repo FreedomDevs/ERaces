@@ -10,35 +10,34 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       version_changed: ${{ steps.check.outputs.changed }}
-      version: ${{ steps.get_version.outputs.version }}
+      version_after: ${{ steps.check.outputs.version_after }}
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
 
-      - name: Check if version changed
+      - name: Check version change in build.gradle.kts
         id: check
         run: |
-          git fetch --depth=2
-          CHANGED_FILES=$(git diff --name-only HEAD HEAD~1)
-          echo "Changed files: $CHANGED_FILES"
+          # Получаем build.gradle.kts из предыдущего коммита
+          git show HEAD~1:build.gradle.kts > old_build.gradle.kts
 
-          if echo "$CHANGED_FILES" | grep -qE 'gradle\.properties|build\.gradle'; then
+          # Извлекаем версию из старого файла
+          version_before=$(grep -Po '(?<=version\s*=\s*")[^"]*' old_build.gradle.kts || echo "undefined")
+
+          # Извлекаем версию из текущего файла
+          version_after=$(grep -Po '(?<=version\s*=\s*")[^"]*' build.gradle.kts || echo "undefined")
+
+          echo "version_before=$version_before"
+          echo "version_after=$version_after"
+
+          if [ "$version_before" != "$version_after" ]; then
             echo "::set-output name=changed::true"
           else
             echo "::set-output name=changed::false"
           fi
 
-      - name: Get version from gradle.properties
-        id: get_version
-        run: |
-          VERSION_LINE=$(grep "^version=" gradle.properties || true)
-          if [ -z "$VERSION_LINE" ]; then
-            # если версия в build.gradle, надо парсить оттуда, но проще gradle task использовать
-            VERSION=$(./gradlew -q printVersion)
-          else
-            VERSION=${VERSION_LINE#version=}
-          fi
-          echo "Version is $VERSION"
-          echo "::set-output name=version::$VERSION"
+          echo "::set-output name=version_after::$version_after"
 
   build_and_release:
     needs: check-version-change
@@ -47,30 +46,30 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Set up JDK
+      - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
-          distribution: 'temurin'
-          java-version: '17'
+          distribution: temurin
+          java-version: 17
 
-      - name: Build with Gradle
+      - name: Build project with Gradle
         run: ./gradlew clean build
 
-      - name: Create Release
+      - name: Create GitHub Release
         id: create_release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: v${{ needs.check-version-change.outputs.version }}
-          name: Release v${{ needs.check-version-change.outputs.version }}
+          tag_name: v${{ needs.check-version-change.outputs.version_after }}
+          name: Release v${{ needs.check-version-change.outputs.version_after }}
           body: |
-            Автоматический релиз версии ${{ needs.check-version-change.outputs.version }}
+            Автоматический релиз версии ${{ needs.check-version-change.outputs.version_after }}
 
-            Changes:
-            $(git log --pretty=format:"- %s" HEAD~1..HEAD)
+            Последние коммиты:
+            $(git log --pretty=format:"- %s" HEAD~5..HEAD)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Upload Release Asset (JAR)
+      - name: Upload JAR artifacts to release
         uses: softprops/action-gh-release@v1
         with:
           files: build/libs/*.jar

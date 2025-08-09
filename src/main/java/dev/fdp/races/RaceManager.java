@@ -68,7 +68,7 @@ public class RaceManager {
     public void setPlayerRace(String nickname, String racename) {
         String loverNickname = nickname.toLowerCase();
         if (!plugin.races.containsKey(racename))
-            throw new RuntimeException("Данная расса не существует! (" + racename + ")");
+            throw new RuntimeException("Данная раса не существует! (" + racename + ")");
 
         nameToRaceMap.put(loverNickname, racename);
         saveData();
@@ -81,7 +81,7 @@ public class RaceManager {
                 .collect(Collectors.toList());
 
         if (raceIds.isEmpty())
-            return null;
+            throw new NullPointerException("Нету рас для рандомной выдачи");
 
         return raceIds.get(ThreadLocalRandom.current().nextInt(raceIds.size()));
     }

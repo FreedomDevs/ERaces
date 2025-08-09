@@ -5,7 +5,7 @@ plugins {
 
 group = "dev.fdp.races"
 
-version = "1.2.3"
+version = "1.2.3.4"
 
 repositories {
     maven {

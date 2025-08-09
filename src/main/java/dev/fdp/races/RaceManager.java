@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Level;
+import java.util.stream.Collectors;
 
 public class RaceManager {
     private final File dataFile;
@@ -74,7 +75,14 @@ public class RaceManager {
     }
 
     public String getRandomRace() {
-        List<String> raceIds = new ArrayList<>(plugin.races.keySet());
+        List<String> raceIds = plugin.races.entrySet().stream()
+                .filter(entry -> !entry.getValue().isExcludeFromRandom())
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
+
+        if (raceIds.isEmpty())
+            return null;
+
         return raceIds.get(ThreadLocalRandom.current().nextInt(raceIds.size()));
     }
 

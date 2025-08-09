@@ -23,6 +23,7 @@ public class Race {
     private int antiKnocbackLevelWithIronArmorAndMore = 0;
     private int slowdownLevel = 0;
     private int damageResistanceLevel = 0;
+    private boolean excludeFromRandom = false;
     private boolean peacefulMobsAfraid = false;
     private List<String> forbiddenFoods = new ArrayList<>();
     private List<String> biomeSpeed = new ArrayList<>();

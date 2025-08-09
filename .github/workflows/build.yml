@@ -1,0 +1,78 @@
+name: Build and Release on Version Change
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  check-version-change:
+    runs-on: ubuntu-latest
+    outputs:
+      version_changed: ${{ steps.check.outputs.changed }}
+      version: ${{ steps.get_version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Check if version changed
+        id: check
+        run: |
+          git fetch --depth=2
+          CHANGED_FILES=$(git diff --name-only HEAD HEAD~1)
+          echo "Changed files: $CHANGED_FILES"
+
+          if echo "$CHANGED_FILES" | grep -qE 'gradle\.properties|build\.gradle'; then
+            echo "::set-output name=changed::true"
+          else
+            echo "::set-output name=changed::false"
+          fi
+
+      - name: Get version from gradle.properties
+        id: get_version
+        run: |
+          VERSION_LINE=$(grep "^version=" gradle.properties || true)
+          if [ -z "$VERSION_LINE" ]; then
+            # если версия в build.gradle, надо парсить оттуда, но проще gradle task использовать
+            VERSION=$(./gradlew -q printVersion)
+          else
+            VERSION=${VERSION_LINE#version=}
+          fi
+          echo "Version is $VERSION"
+          echo "::set-output name=version::$VERSION"
+
+  build_and_release:
+    needs: check-version-change
+    if: needs.check-version-change.outputs.version_changed == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Build with Gradle
+        run: ./gradlew clean build
+
+      - name: Create Release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ needs.check-version-change.outputs.version }}
+          name: Release v${{ needs.check-version-change.outputs.version }}
+          body: |
+            Автоматический релиз версии ${{ needs.check-version-change.outputs.version }}
+
+            Changes:
+            $(git log --pretty=format:"- %s" HEAD~1..HEAD)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload Release Asset (JAR)
+        uses: softprops/action-gh-release@v1
+        with:
+          files: build/libs/*.jar
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

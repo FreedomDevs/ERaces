@@ -1,12 +1,12 @@
 name: FDP_Races
 version: ${version}
 main: dev.fdp.races.FDP_Races
-description: Просто плагин на рассы
+description: Просто плагин на расы
 api-version: '1.21.1'
 
 commands:
   races:
-    description: "Коаманда на рассы типо"
+    description: "Коаманда на расы типо"
     permission: fdp_races.races_command.use
   myrace:
     description: Показывает расу игрока

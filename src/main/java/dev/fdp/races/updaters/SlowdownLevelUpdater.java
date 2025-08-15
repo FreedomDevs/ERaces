@@ -6,7 +6,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 public class SlowdownLevelUpdater implements IUpdater {
-
+    // TODO: объединить с RunningSpeed
     @Override
     public void update(Race race, Player player) {
         int slowdownLevel = race.getSlowdownLevel();

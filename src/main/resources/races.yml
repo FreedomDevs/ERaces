@@ -4,12 +4,12 @@ elf:
   max_hp: 15                              # Макс хп 15
   hunger_loss_multiplier: 0.75            # Голодают на 25% медленнее
   weapon_proficiency:
-    bow_damage_multiplier: 2  # Урон от лука уменьшается на 50%
+    bow_damage_multiplier: 2  # Урон от лука увеличен на 100%
     bow_projectile_speed_multiplier: 2
-    sword_damage_multiplier: 0.5 # Урон от меча уменьшается на 25%
-    axe_damage_multiplier: 0.5  # Нормальный урон от топора
+    sword_damage_multiplier: 0.5 # Урон от меча уменьшен на 50%
+    axe_damage_multiplier: 0.5  # Урон от топора уменьшен на 50%
     mace_damage_multiplier: 0.5  # Урон от булавы увеличен на 50%
-  forbidden_foods:                        # Запрещённая еда для поедания
+  forbidden_foods: # Запрещённая еда для поедания
     - cooked_beef
     - cooked_pork
     - cooked_mutton
@@ -35,9 +35,8 @@ bear_beastman:
   additional_armor: 3
   antiknockback_level: 99999
   weapon_proficiency:
-    bow_damage_multiplier: 0.5  # Урон от лука уменьшается на 50%
-    sword_damage_multiplier: 0.75 # Урон от меча уменьшается на 25%
-    axe_damage_multiplier: 1.0  # Нормальный урон от топора
+    bow_damage_multiplier: 0.5  # Урон от лука уменьшен на 50%
+    sword_damage_multiplier: 0.75 # Урон от меча уменьшен на 25%
     mace_damage_multiplier: 1.5  # Урон от булавы увеличен на 50%
   shield_usage: false  # Зверолюды не могут использовать щиты
 

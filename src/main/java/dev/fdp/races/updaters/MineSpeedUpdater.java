@@ -6,6 +6,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 public class MineSpeedUpdater implements IUpdater {
+    // TODO: переписать через атрибут
     @Override
     public void update(Race race, Player player) {
         double mineSpeed = race.getMineSpeed();

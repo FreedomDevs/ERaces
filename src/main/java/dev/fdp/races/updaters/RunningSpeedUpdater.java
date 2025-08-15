@@ -6,7 +6,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 public class RunningSpeedUpdater implements IUpdater {
-
+    // TODO: переписать через атрибут
     @Override
     public void update(Race race, Player player) {
         int runningSpeed = race.getRunningSpeed();
@@ -17,7 +17,7 @@ public class RunningSpeedUpdater implements IUpdater {
                     new PotionEffect(
                             PotionEffectType.SPEED,
                             Integer.MAX_VALUE,
-                            runningSpeed,
+                            runningSpeed - 1,
                             false,
                             false,
                             false));

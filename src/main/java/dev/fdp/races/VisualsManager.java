@@ -1,5 +1,6 @@
 package dev.fdp.races;
 
+import dev.fdp.races.config.PlayerDataManager;
 import dev.fdp.races.visualUpdaters.EarsUpdater;
 import dev.fdp.races.visualUpdaters.IVisualUpdater;
 import org.bukkit.Bukkit;
@@ -13,8 +14,8 @@ public class VisualsManager {
     );
 
     public static void updateVisualsForPlayer(Player player) {
-        RaceManager raceManager = FDP_Races.getInstance().raceManager;
-        Race race = raceManager.getRaceForPlayer(player);
+        PlayerDataManager playerDataManager = FDP_Races.getInstance().getPlayerDataManager();
+        Race race = playerDataManager.getRaceForPlayer(player);
 
         for (IVisualUpdater updater : visualUpdaters) {
             updater.updateVisuals(player, race);

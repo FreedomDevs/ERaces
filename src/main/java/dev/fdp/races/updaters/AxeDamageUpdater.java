@@ -9,17 +9,16 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AxeDamageUpdater implements Listener,IUpdater, IUnloadable {
+public class AxeDamageUpdater implements Listener, IUpdater, IUnloadable {
     private static final Map<String, Double> playerAxeDamage = new HashMap<>();
 
     @EventHandler
-    public void onPlayerAttack(EntityDamageByEntityEvent event){
+    public void onPlayerAttack(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player player) {
             String playerName = event.getDamager().getName();
             if (playerAxeDamage.containsKey(playerName)) {
                 if (player.getInventory().getItemInMainHand().getType().toString().endsWith("_AXE")) {
-                    double damage = event.getDamage();
-                    double newDamage = damage * playerAxeDamage.get(playerName);
+                    double newDamage = event.getDamage() * playerAxeDamage.get(playerName);
                     event.setDamage(newDamage);
                 }
             }
@@ -28,12 +27,12 @@ public class AxeDamageUpdater implements Listener,IUpdater, IUnloadable {
 
     @Override
     public void update(Race race, Player player) {
-        double damageAxe = race.getWeaponProficiency().getAxeDamageMultiplier();
+        double damage = race.getWeaponProficiency().getAxeDamageMultiplier();
 
-        if (damageAxe == 1.0) {
+        if (damage == 1.0) {
             playerAxeDamage.remove(player.getName());
         } else {
-            playerAxeDamage.put(player.getName(), damageAxe);
+            playerAxeDamage.put(player.getName(), damage);
         }
     }
 

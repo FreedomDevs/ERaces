@@ -1,7 +1,6 @@
 package dev.fdp.races.updaters;
 
 import dev.fdp.races.Race;
-
 import org.bukkit.Material;
 import org.bukkit.entity.AbstractArrow;
 import org.bukkit.entity.Player;
@@ -36,9 +35,8 @@ public class BowSpeedUpdater implements Listener, IUpdater, IUnloadable {
                     Double multiplier = playerBowSpeedModifier.get(player.getName());
 
                     if (multiplier != null && multiplier != 0.0) {
-                        double originalSpeed = arrow.getVelocity().length();
-                        Vector direction = arrow.getVelocity().normalize();
-                        arrow.setVelocity(direction.multiply(originalSpeed * multiplier));
+                        Vector direction = arrow.getVelocity();
+                        arrow.setVelocity(direction.multiply(multiplier));
                     }
                 }
             }

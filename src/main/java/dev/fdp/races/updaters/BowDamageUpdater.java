@@ -46,12 +46,12 @@ public class BowDamageUpdater implements Listener, IUpdater, IUnloadable {
 
     @Override
     public void update(Race race, Player player) {
-        double damageAxe = race.getWeaponProficiency().getBowDamageMultiplier();
+        double damage = race.getWeaponProficiency().getBowDamageMultiplier();
 
-        if (damageAxe == 1.0) {
+        if (damage == 1.0) {
             playerBowDamage.remove(player.getName());
         } else {
-            playerBowDamage.put(player.getName(), damageAxe);
+            playerBowDamage.put(player.getName(), damage);
         }
     }
 

@@ -1,21 +1,26 @@
 package dev.fdp.races;
 
-import java.util.Map;
-
 import dev.fdp.races.commands.GetOwnRaceCommand;
 import dev.fdp.races.commands.RacesCommand;
-import dev.fdp.races.events.*;
+import dev.fdp.races.config.MessageManager;
+import dev.fdp.races.config.PlayerDataManager;
+import dev.fdp.races.config.RacesConfigManager;
+import dev.fdp.races.events.PlayerJoinListener;
+import dev.fdp.races.events.PlayerRespawnListener;
 import dev.fdp.races.gui.RaceChangeGUI;
 import dev.fdp.races.items.RaceChangePotion;
-
 import lombok.Getter;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class FDP_Races extends JavaPlugin {
-    public Map<String, Race> races = null;
-    public RaceManager raceManager;
-    public MessageManager messageManager;
+    @Getter
+    private PlayerDataManager playerDataManager;
+    @Getter
+    private MessageManager messageManager;
+    @Getter
+    private RacesConfigManager racesConfigManager;
+
     @Getter
     private static FDP_Races instance;
 
@@ -24,19 +29,11 @@ public class FDP_Races extends JavaPlugin {
         instance = this;
     }
 
-    public void reloadConfig() {
-        RacesConfigLoader.checkConfigExists(this);
-        this.races = RacesConfigLoader.loadConfig(this);
-        getLogger().info("Загружено: " + this.races.size() + " расс");
-    }
-
     @Override
     public void onEnable() {
         messageManager = new MessageManager(this);
-
-        reloadConfig();
-
-        raceManager = new RaceManager(getDataFolder(), this);
+        racesConfigManager = new RacesConfigManager(this);
+        playerDataManager = new PlayerDataManager(this);
 
         Listener[] listeners = {
                 new PlayerJoinListener(),
@@ -50,9 +47,7 @@ public class FDP_Races extends JavaPlugin {
         }
 
         RacesReloader.startListeners(this);
-        registerCommand();
-
-        RacesReloader.reloadRaceForAllPlayers();
+        registerCommands();
 
         getLogger().info(messageManager.getString("plugin.enabled"));
     }
@@ -62,7 +57,7 @@ public class FDP_Races extends JavaPlugin {
         getLogger().info(messageManager.getString("plugin.disabled", "Выключение😞"));
     }
 
-    private void registerCommand() {
+    private void registerCommands() {
         RacesCommand racesCommand = new RacesCommand();
         getCommand("races").setExecutor(racesCommand);
         getCommand("races").setTabCompleter(racesCommand);

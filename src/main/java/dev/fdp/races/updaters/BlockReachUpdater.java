@@ -2,20 +2,17 @@ package dev.fdp.races.updaters;
 
 import dev.fdp.races.Race;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
 
-public class BlockReachUpdater implements IUpdater, IUnloadable, Listener {
-    private static final Double defaultHandDistance = 4.5;
+public class BlockReachUpdater implements IUpdater {
+    private static final Double BASE_HAND_DISTANCE = 4.5;
 
     @Override
     public void update(Race race, Player player) {
         double handDistanceBonus = race.getHandDistanceBonus();
-        player.getAttribute(Attribute.PLAYER_BLOCK_INTERACTION_RANGE).setBaseValue(defaultHandDistance + handDistanceBonus);
-    }
-
-    @Override
-    public void unload(Player player) {
-        player.getAttribute(Attribute.PLAYER_BLOCK_INTERACTION_RANGE).setBaseValue(defaultHandDistance);
+        AttributeInstance attibute = player.getAttribute(Attribute.PLAYER_BLOCK_INTERACTION_RANGE);
+        if (attibute != null)
+            attibute.setBaseValue(BASE_HAND_DISTANCE + handDistanceBonus);
     }
 }

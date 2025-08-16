@@ -1,5 +1,6 @@
 package dev.fdp.races.updaters;
 
+import dev.fdp.races.Race;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
@@ -8,7 +9,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
-import dev.fdp.races.Race;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,6 +37,7 @@ public class AntiKnockbackLevelWithIronArmorAndMoreUpdater implements IUpdater, 
         playerAntiKnockbackLevelWithIronArmorAndMore.remove(player.getName());
     }
 
+    // TODO: ask about this
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
         if (!(event.getWhoClicked() instanceof Player player))

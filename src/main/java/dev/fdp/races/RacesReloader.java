@@ -1,15 +1,15 @@
 package dev.fdp.races;
 
+import dev.fdp.races.config.PlayerDataManager;
 import dev.fdp.races.updaters.*;
-
-import java.util.List;
-
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.List;
 
 public class RacesReloader implements Listener {
 
@@ -40,12 +40,10 @@ public class RacesReloader implements Listener {
             new DamageWithWolfsNearUpdater());
 
     public static void reloadRaceForPlayer(Player player) {
-        RaceManager raceManager = FDP_Races.getInstance().raceManager;
+        PlayerDataManager playerDataManager = FDP_Races.getInstance().getPlayerDataManager();
 
         for (IUpdater updater : updaters) {
-            updater.update(raceManager.getRaces().get(raceManager
-                    .getPlayerRace(player.getName())),
-                    player);
+            updater.update(playerDataManager.getRaceForPlayer(player), player);
         }
     }
 

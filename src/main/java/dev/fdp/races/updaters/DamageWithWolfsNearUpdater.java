@@ -1,7 +1,6 @@
 package dev.fdp.races.updaters;
 
 import dev.fdp.races.Race;
-
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -9,21 +8,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 import java.util.HashMap;
-import java.util.Objects;
 
 public class DamageWithWolfsNearUpdater implements Listener, IUpdater, IUnloadable {
     private static final HashMap<String, Double> damageNicknames = new HashMap<>();
     private static final double nearby_radius = 15d;
 
-    public static double Q_rsqrt(double x) {
-        double xhalf = 0.5d * x;
-        long i = Double.doubleToLongBits(x);
-        i = 0x5fe6ec85e7de30daL - (i >> 1);
-        x = Double.longBitsToDouble(i);
-        x *= (1.5d - xhalf * x * x);
-        return x;
-    }
-
+    // TODO: ask about wolves counting
     @EventHandler
     public void onEntityDamage(EntityDamageByEntityEvent event) {
         if (!(event.getDamager() instanceof Player player)) return;
@@ -31,7 +21,7 @@ public class DamageWithWolfsNearUpdater implements Listener, IUpdater, IUnloadab
 
         int wolvesNearby = 0;
 
-        for(String nickname : damageNicknames.keySet()) {
+        for (String nickname : damageNicknames.keySet()) {
             if (nickname.equals(player.getName()))
                 continue;
 
@@ -41,17 +31,11 @@ public class DamageWithWolfsNearUpdater implements Listener, IUpdater, IUnloadab
         }
 
         double baseDamage = damageNicknames.get(player.getName());
-        double additionalDamage;
-        // доп дамаг f(x) в зависимости от количества волков неподалёку x выражается по формуле f(x) = (2-1/(√x)) * a,
+        // доп дамаг f(x) в зависимости от количества волков неподалёку x выражается по формуле f(x) = a * 2x/(x+1),
         // где а - базовый дополнительный урон. Таким образом, когда около игрока 1 волк, то доп. урон равен a.
         // При этом при x → ∞ f(x) → 2*a, то есть максимальный дополнительный урон равен 2*a.
 
-        if (wolvesNearby == 0) {
-            additionalDamage = baseDamage;
-        } else {
-            additionalDamage = (2 - Q_rsqrt(wolvesNearby)) * baseDamage;
-        }
-
+        double additionalDamage = baseDamage * 2 * wolvesNearby / (wolvesNearby + 1);
 
         event.setDamage(event.getDamage() + additionalDamage);
     }

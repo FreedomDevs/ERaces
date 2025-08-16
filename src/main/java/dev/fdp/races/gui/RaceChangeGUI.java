@@ -20,15 +20,16 @@ import java.util.Set;
 public class RaceChangeGUI implements Listener {
     private static final Map<String, String> raceKeyByName = new HashMap<>();
     private static final Set<Player> selectedPlayers = new HashSet<>();
+
     static {
-        for (Race i : FDP_Races.getInstance().races.values())
+        for (Race i : FDP_Races.getInstance().getRacesConfigManager().getRaces().values())
             raceKeyByName.put(i.getRaceGuiConfig().getName(), i.getId());
     }
 
     public static void open(Player player) {
         Inventory gui = Bukkit.createInventory(null, 54, centerTitle("§5Выбор Расы"));
 
-        String currentRace = FDP_Races.getInstance().raceManager.getPlayerRace(player.getName());
+        String currentRace = FDP_Races.getInstance().getPlayerDataManager().getPlayerRace(player.getName());
 
         gui.setItem(10, RaceItems.elf(currentRace));
         gui.setItem(12, RaceItems.human(currentRace));
@@ -58,7 +59,7 @@ public class RaceChangeGUI implements Listener {
         if (raceKeyByName.containsKey(displayName)) {
             String raceKey = raceKeyByName.get(displayName);
 
-            FDP_Races.getInstance().raceManager.setPlayerRace(player.getName(), raceKey);
+            FDP_Races.getInstance().getPlayerDataManager().setPlayerRace(player.getName(), raceKey);
             RacesReloader.reloadRaceForPlayer(player);
             player.sendMessage("§aВы выбрали расу: §f" + displayName);
 

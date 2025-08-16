@@ -1,12 +1,12 @@
 package dev.fdp.races.updaters;
 
+import dev.fdp.races.Race;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
-import dev.fdp.races.Race;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,9 +29,8 @@ public class DamageAdditionalWithIronAndLowerArmorUpdater implements IUpdater, I
 
     @EventHandler
     public void onEntityDamage(EntityDamageByEntityEvent event) {
-        if (event.getDamager() instanceof Player) {
+        if (event.getDamager() instanceof Player player) {
             String playerName = event.getDamager().getName();
-            Player player = ((Player) event.getDamager());
             if (playerDamageAdditionalWithIronAndLowerArmor.containsKey(playerName) && hasFullRequiredArmor(player)) {
                 double originalDamage = event.getDamage();
                 double bonusDamage = playerDamageAdditionalWithIronAndLowerArmor.get(playerName);

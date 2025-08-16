@@ -17,14 +17,14 @@ public class GetOwnRaceCommand implements CommandExecutor {
             return true;
         }
 
-        String playerRace = FDP_Races.getInstance().raceManager.getPlayerRace(player.getName());
+        String playerRace = FDP_Races.getInstance().getPlayerDataManager().getPlayerRace(player.getName());
 
         if (playerRace == null || playerRace.isEmpty()) {
             ChatUtil.message(player, "У вас не выбрана раса.");
             return true;
         }
 
-        String message = FDP_Races.getInstance().messageManager.getString("commands.get_player_race.race_check_success_me");
+        String message = FDP_Races.getInstance().getMessageManager().getString("commands.get_player_race.race_check_success_me");
         ChatUtil.message(player, message, Map.of("{race}", playerRace));
         return true;
     }

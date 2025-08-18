@@ -1,6 +1,6 @@
 package dev.fdp.races.updaters;
 
-import dev.fdp.races.Race;
+import dev.fdp.races.datatypes.Race;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Player;

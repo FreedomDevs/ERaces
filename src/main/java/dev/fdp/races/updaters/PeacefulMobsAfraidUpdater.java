@@ -1,13 +1,12 @@
 package dev.fdp.races.updaters;
 
 import dev.fdp.races.FDP_Races;
-import dev.fdp.races.Race;
+import dev.fdp.races.datatypes.Race;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.*;
 import org.bukkit.util.Vector;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class PeacefulMobsAfraidUpdater implements IUpdater, IUnloadable {
@@ -28,7 +27,7 @@ public class PeacefulMobsAfraidUpdater implements IUpdater, IUnloadable {
         peacefulMobsAfraid.remove(player);
     }
 
-    Runnable task = () -> {
+    private final Runnable task = () -> {
         for (Player player : Bukkit.getOnlinePlayers())
             if (peacefulMobsAfraid.contains(player)) peacefulMobsAfraidFromPlayer(player);
     };

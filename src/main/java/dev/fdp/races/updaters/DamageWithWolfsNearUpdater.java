@@ -1,6 +1,6 @@
 package dev.fdp.races.updaters;
 
-import dev.fdp.races.Race;
+import dev.fdp.races.datatypes.Race;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -32,7 +32,7 @@ public class DamageWithWolfsNearUpdater implements Listener, IUpdater, IUnloadab
 
         double baseDamage = damageNicknames.get(player.getName());
         // доп дамаг f(x) в зависимости от количества волков неподалёку x выражается по формуле f(x) = a * 2x/(x+1),
-        // где а - базовый дополнительный урон. Таким образом, когда около игрока 1 волк, то доп. урон равен a.
+        // где a - базовый дополнительный урон. Таким образом, когда около игрока 1 волк, то доп. урон равен a.
         // При этом при x → ∞ f(x) → 2*a, то есть максимальный дополнительный урон равен 2*a.
 
         double additionalDamage = baseDamage * 2 * wolvesNearby / (wolvesNearby + 1);

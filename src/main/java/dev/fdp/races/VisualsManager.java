@@ -1,6 +1,7 @@
 package dev.fdp.races;
 
 import dev.fdp.races.config.PlayerDataManager;
+import dev.fdp.races.datatypes.Race;
 import dev.fdp.races.visualUpdaters.EarsUpdater;
 import dev.fdp.races.visualUpdaters.IVisualUpdater;
 import org.bukkit.Bukkit;

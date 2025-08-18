@@ -1,7 +1,6 @@
 package dev.fdp.races.updaters;
 
-import dev.fdp.races.Race;
-import org.bukkit.Material;
+import dev.fdp.races.datatypes.Race;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -55,19 +54,10 @@ public class DamageAdditionalWithIronAndLowerArmorUpdater implements IUpdater, I
     private boolean isIronOrBetter(ItemStack item) {
         if (item == null)
             return false;
-        Material type = item.getType();
-        switch (type) {
-            case LEATHER_HELMET:
-            case LEATHER_CHESTPLATE:
-            case LEATHER_LEGGINGS:
-            case LEATHER_BOOTS:
-            case CHAINMAIL_HELMET:
-            case CHAINMAIL_CHESTPLATE:
-            case CHAINMAIL_LEGGINGS:
-            case CHAINMAIL_BOOTS:
-                return true;
-            default:
-                return false;
-        }
+        return switch (item.getType()) {
+            case LEATHER_HELMET, LEATHER_CHESTPLATE, LEATHER_LEGGINGS, LEATHER_BOOTS, CHAINMAIL_HELMET, CHAINMAIL_CHESTPLATE, CHAINMAIL_LEGGINGS, CHAINMAIL_BOOTS ->
+                    true;
+            default -> false;
+        };
     }
 }

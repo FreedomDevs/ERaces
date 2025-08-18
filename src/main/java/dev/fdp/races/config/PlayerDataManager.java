@@ -1,7 +1,7 @@
 package dev.fdp.races.config;
 
 import dev.fdp.races.FDP_Races;
-import dev.fdp.races.Race;
+import dev.fdp.races.datatypes.Race;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 

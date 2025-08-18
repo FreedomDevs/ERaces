@@ -1,8 +1,8 @@
 package dev.fdp.races.gui;
 
 import dev.fdp.races.FDP_Races;
-import dev.fdp.races.Race;
 import dev.fdp.races.RacesReloader;
+import dev.fdp.races.datatypes.Race;
 import dev.fdp.races.items.RaceItems;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -13,13 +13,10 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 public class RaceChangeGUI implements Listener {
     private static final Map<String, String> raceKeyByName = new HashMap<>();
-    private static final Set<Player> selectedPlayers = new HashSet<>();
 
     static {
         for (Race i : FDP_Races.getInstance().getRacesConfigManager().getRaces().values())
@@ -49,7 +46,6 @@ public class RaceChangeGUI implements Listener {
 
         event.setCancelled(true);
         Player player = (Player) event.getWhoClicked();
-        selectedPlayers.add(player);
         ItemStack clicked = event.getCurrentItem();
         if (clicked == null || !clicked.hasItemMeta() || !clicked.getItemMeta().hasDisplayName())
             return;

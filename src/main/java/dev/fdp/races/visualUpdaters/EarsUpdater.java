@@ -1,7 +1,7 @@
 package dev.fdp.races.visualUpdaters;
 
-import dev.fdp.races.Race;
 import dev.fdp.races.FDP_Races;
+import dev.fdp.races.datatypes.Race;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Particle;

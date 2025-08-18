@@ -26,7 +26,7 @@ human:
   gui_config:
     name: "§eЧеловек"
   mine_speed: 1.5        # 1.5x для скорости копки
-  hand_distance-bonus: 1 # +1 к длинне руки 
+  hand_distance_bonus: 1 # +1 к длинне руки
 
 bear_beastman:
   gui_config:
@@ -73,4 +73,4 @@ ork:
   max_hp: 30
   slowdown_level: 1
   damage_resistance_level: 1
-  knockback_resistance_level_with_iron_and_more_armor: 99999
+  antiknockback_level_with_iron_and_more_armor: 99999

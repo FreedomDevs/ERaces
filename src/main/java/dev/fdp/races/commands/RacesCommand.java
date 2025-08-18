@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
+import org.bukkit.entity.Player;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -13,10 +14,9 @@ import java.util.List;
 import java.util.Map;
 
 public class RacesCommand implements TabExecutor {
-    Map<String, AbstractSubCommand> subCommands;
+    private final Map<String, AbstractSubCommand> subCommands = new HashMap<>();
 
-    public RacesCommand() {
-        subCommands = new HashMap<>();
+    {
         subCommands.put("reload", new ReloadSubCommand());
         subCommands.put("regenerate_player_race", new RegeneratePlayerRaceSubCommand());
         subCommands.put("set_player_race", new SetPlayerRaceSubCommand());
@@ -54,7 +54,7 @@ public class RacesCommand implements TabExecutor {
             if (sub.equals("set_player_race") || sub.equals("regenerate_player_race") || sub.equals("get_player_race")) {
                 String input = args[1].toLowerCase();
                 return Bukkit.getOnlinePlayers().stream()
-                        .map(player -> player.getName())
+                        .map(Player::getName)
                         .filter(name -> name.toLowerCase().startsWith(input))
                         .sorted()
                         .toList();

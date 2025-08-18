@@ -1,6 +1,5 @@
 package dev.fdp.races.config;
 
-import dev.fdp.races.FDP_Races;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -9,7 +8,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.NoSuchFileException;
 import java.util.logging.Level;
 
 public class YamlManager {

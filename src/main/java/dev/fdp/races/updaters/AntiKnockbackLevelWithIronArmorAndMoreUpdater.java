@@ -1,7 +1,6 @@
 package dev.fdp.races.updaters;
 
-import dev.fdp.races.Race;
-import org.bukkit.Material;
+import dev.fdp.races.datatypes.Race;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Player;
@@ -71,23 +70,10 @@ public class AntiKnockbackLevelWithIronArmorAndMoreUpdater implements IUpdater, 
     private boolean isIronOrBetter(ItemStack item) {
         if (item == null)
             return false;
-        Material type = item.getType();
-        switch (type) {
-            case IRON_HELMET:
-            case IRON_CHESTPLATE:
-            case IRON_LEGGINGS:
-            case IRON_BOOTS:
-            case DIAMOND_HELMET:
-            case DIAMOND_CHESTPLATE:
-            case DIAMOND_LEGGINGS:
-            case DIAMOND_BOOTS:
-            case NETHERITE_HELMET:
-            case NETHERITE_CHESTPLATE:
-            case NETHERITE_LEGGINGS:
-            case NETHERITE_BOOTS:
-                return true;
-            default:
-                return false;
-        }
+        return switch (item.getType()) {
+            case IRON_HELMET, IRON_CHESTPLATE, IRON_LEGGINGS, IRON_BOOTS, DIAMOND_HELMET, DIAMOND_CHESTPLATE, DIAMOND_LEGGINGS, DIAMOND_BOOTS, NETHERITE_HELMET, NETHERITE_CHESTPLATE, NETHERITE_LEGGINGS, NETHERITE_BOOTS ->
+                    true;
+            default -> false;
+        };
     }
 }

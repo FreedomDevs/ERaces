@@ -1,10 +1,11 @@
-package dev.fdp.races;
+package dev.fdp.races.datatypes;
 
 import lombok.Data;
 
 @Data
 public class RaceGuiConfig {
-    private String name = "";
+    @RaceProperty(path = "name", type = FieldType.STRING)
+    String name = "name_undefined";
 
     @Override
     public String toString() {

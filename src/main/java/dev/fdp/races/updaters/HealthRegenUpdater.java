@@ -1,7 +1,7 @@
 package dev.fdp.races.updaters;
 
 import dev.fdp.races.FDP_Races;
-import dev.fdp.races.Race;
+import dev.fdp.races.datatypes.Race;
 import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
@@ -15,7 +15,6 @@ public class HealthRegenUpdater implements IUpdater, IUnloadable {
     private static final Map<String, Double> playerToRegen = new HashMap<>();
     private static Integer taskid = null;
 
-    // TODO: зачем итератор?
     @Override
     public void update(Race race, Player player) {
         if (taskid == null) {

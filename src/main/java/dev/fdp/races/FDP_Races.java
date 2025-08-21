@@ -7,7 +7,7 @@ import dev.fdp.races.config.PlayerDataManager;
 import dev.fdp.races.config.RacesConfigManager;
 import dev.fdp.races.events.PlayerJoinListener;
 import dev.fdp.races.events.PlayerRespawnListener;
-import dev.fdp.races.gui.RaceChangeGUI;
+import dev.fdp.races.events.RaceChangeGuiListener;
 import dev.fdp.races.items.RaceChangePotion;
 import lombok.Getter;
 import org.bukkit.event.Listener;
@@ -38,7 +38,7 @@ public class FDP_Races extends JavaPlugin {
         Listener[] listeners = {
                 new PlayerJoinListener(),
                 new PlayerRespawnListener(),
-                new RaceChangeGUI(),
+                new RaceChangeGuiListener(),
                 new RaceChangePotion()
         };
 

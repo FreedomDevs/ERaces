@@ -19,7 +19,7 @@ public class RaceChangeGui implements Listener, InventoryHolder {
         int[] ids = {10, 12, 14, 16, 28, 30, 32, 34};
         this.inventory = Bukkit.createInventory(this, 54, ChatUtil.text(centerTitle("Выбор Расы"), NamedTextColor.DARK_PURPLE));
 
-        Race currentRace = FDP_Races.getInstance().getPlayerDataManager().getRaceForPlayer(player);
+        Race currentRace = FDP_Races.getInstance().getPlayerDataManager().getPlayerRace(player.getName());
 
         int i = 0;
         for (Race r : FDP_Races.getInstance().getRacesConfigManager().getRaces().values()) {

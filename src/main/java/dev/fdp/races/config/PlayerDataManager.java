@@ -3,7 +3,6 @@ package dev.fdp.races.config;
 import dev.fdp.races.FDP_Races;
 import dev.fdp.races.datatypes.Race;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.List;
@@ -47,7 +46,7 @@ public class PlayerDataManager {
         cfgManager.saveConfig(racesData);
     }
 
-    public String getPlayerRace(String nickname) {
+    public String getPlayerRaceId(String nickname) {
         if (!nameToRaceMap.containsKey(nickname)) {
             nameToRaceMap.put(nickname, getRandomRace());
             saveData();
@@ -55,11 +54,15 @@ public class PlayerDataManager {
         return nameToRaceMap.get(nickname);
     }
 
-    public void setPlayerRace(String nickname, String racename) {
-        if (!plugin.getRacesConfigManager().getRaces().containsKey(racename))
-            throw new RuntimeException("Данная раса не существует! (" + racename + ")");
+    public Race getPlayerRace(String nickname) {
+        return plugin.getRacesConfigManager().getRaces().get(getPlayerRaceId(nickname));
+    }
 
-        nameToRaceMap.put(nickname, racename);
+    public void setPlayerRace(String nickname, String raceId) {
+        if (!plugin.getRacesConfigManager().getRaces().containsKey(raceId))
+            throw new RuntimeException("Данная раса не существует! (" + raceId + ")");
+
+        nameToRaceMap.put(nickname, raceId);
         saveData();
     }
 
@@ -73,9 +76,5 @@ public class PlayerDataManager {
             throw new NullPointerException("Нету рас для рандомной выдачи");
 
         return raceIds.get(ThreadLocalRandom.current().nextInt(raceIds.size()));
-    }
-
-    public Race getRaceForPlayer(Player player) {
-        return plugin.getRacesConfigManager().getRaces().get(getPlayerRace(player.getName()));
     }
 }

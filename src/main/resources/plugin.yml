@@ -9,7 +9,7 @@ commands:
     description: "Коаманда на расы типо"
     permission: fdp_races.races_command.use
   myrace:
-    description: Показывает расу игрока
+    description: "Показывает расу игрока"
     usage: /myrace
 
 

@@ -16,7 +16,7 @@ public class VisualsManager {
 
     public static void updateVisualsForPlayer(Player player) {
         PlayerDataManager playerDataManager = FDP_Races.getInstance().getPlayerDataManager();
-        Race race = playerDataManager.getRaceForPlayer(player);
+        Race race = playerDataManager.getPlayerRace(player.getName());
 
         for (IVisualUpdater updater : visualUpdaters) {
             updater.updateVisuals(player, race);

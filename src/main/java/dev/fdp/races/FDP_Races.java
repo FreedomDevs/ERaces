@@ -1,14 +1,15 @@
 package dev.fdp.races;
 
-import dev.fdp.races.commands.GetOwnRaceCommand;
+import dev.fdp.races.commands.MyraceCommand;
 import dev.fdp.races.commands.RacesCommand;
 import dev.fdp.races.config.MessageManager;
 import dev.fdp.races.config.PlayerDataManager;
 import dev.fdp.races.config.RacesConfigManager;
 import dev.fdp.races.events.PlayerJoinListener;
 import dev.fdp.races.events.PlayerRespawnListener;
-import dev.fdp.races.gui.RaceChangeGUI;
+import dev.fdp.races.events.RaceChangeGuiListener;
 import dev.fdp.races.items.RaceChangePotion;
+import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import lombok.Getter;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -38,7 +39,7 @@ public class FDP_Races extends JavaPlugin {
         Listener[] listeners = {
                 new PlayerJoinListener(),
                 new PlayerRespawnListener(),
-                new RaceChangeGUI(),
+                new RaceChangeGuiListener(),
                 new RaceChangePotion()
         };
 
@@ -58,9 +59,9 @@ public class FDP_Races extends JavaPlugin {
     }
 
     private void registerCommands() {
-        RacesCommand racesCommand = new RacesCommand();
-        getCommand("races").setExecutor(racesCommand);
-        getCommand("races").setTabCompleter(racesCommand);
-        getCommand("myrace").setExecutor(new GetOwnRaceCommand());
+        this.getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS, commands -> {
+            commands.registrar().register(new MyraceCommand().getCmd());
+            commands.registrar().register(new RacesCommand().getCmd());
+        });
     }
 }

@@ -4,13 +4,10 @@ import lombok.Data;
 
 @Data
 public class RaceGuiConfig {
-    @RaceProperty(path = "name", type = FieldType.STRING)
+    @RaceProperty(path = "name")
     String name = "name_undefined";
-
-    @Override
-    public String toString() {
-        return "RaceGuiConfig{" +
-                "name=" + name +
-                '}';
-    }
+    @RaceProperty(path = "lore")
+    String lore = "";
+    @RaceProperty(path = "icon")
+    String icon = "DIRT";
 }

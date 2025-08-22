@@ -43,7 +43,7 @@ public class RacesReloader implements Listener {
         PlayerDataManager playerDataManager = FDP_Races.getInstance().getPlayerDataManager();
 
         for (IUpdater updater : updaters) {
-            updater.update(playerDataManager.getRaceForPlayer(player), player);
+            updater.update(playerDataManager.getPlayerRace(player.getName()), player);
         }
     }
 

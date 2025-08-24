@@ -60,6 +60,8 @@ wolf_beastman:
   shield_usage: false  # Зверолюды не могут использовать щиты
   additional_armor: 1
   peaceful_mobs_afraid: true
+  afraid_mobs_exceptions:
+    - WOLF
 
 tiger_beastman:
   gui_config:

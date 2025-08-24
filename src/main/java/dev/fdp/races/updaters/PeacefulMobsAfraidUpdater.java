@@ -28,30 +28,32 @@ public class PeacefulMobsAfraidUpdater implements IUpdater, IUnloadable {
     }
 
     private final Runnable task = () -> {
-        for (Player player : Bukkit.getOnlinePlayers())
-            if (peacefulMobsAfraid.contains(player)) peacefulMobsAfraidFromPlayer(player);
+        for (Player player : peacefulMobsAfraid)
+            if (player.isOnline())
+                peacefulMobsAfraidFromPlayer(player);
     };
 
     private void peacefulMobsAfraidFromPlayer(Player player) {
         for (Entity entity : player.getNearbyEntities(10, 10, 10)) {
-            if (isPeacefulMob(entity)) {
-                // TODO: reasonable panic mode
-                LivingEntity mob = (LivingEntity) entity;
+            if (!isPeacefulMob(entity, FDP_Races.getInstance().getPlayerDataManager().getPlayerRace(player.getName())))
+                continue;
 
-                Vector direction = mob.getLocation().toVector().subtract(player.getLocation().toVector());
+            // TODO: reasonable panic mode
+            LivingEntity mob = (LivingEntity) entity;
 
-                direction.normalize().multiply(0.5);
+            Vector direction = mob.getLocation().toVector().subtract(player.getLocation().toVector());
+
+            direction.normalize().multiply(1);
+            try {
+                direction.checkFinite();
                 mob.setVelocity(direction);
-
-                try {
-                    mob.setAI(true);
-                } catch (NoSuchMethodError ignored) {
-                }
+            } catch (IllegalArgumentException ignored) {
             }
         }
     }
 
-    private boolean isPeacefulMob(Entity entity) {
-        return (entity instanceof Animals && !(entity instanceof Enemy));
+    private boolean isPeacefulMob(Entity entity, Race race) {
+        return !race.getAfraidMobsExceptions().contains(entity.getType().toString())
+                && (entity instanceof Animals && !(entity instanceof Enemy));
     }
 }

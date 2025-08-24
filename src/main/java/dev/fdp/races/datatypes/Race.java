@@ -46,6 +46,9 @@ public class Race {
     List<String> biomeSpeed = new ArrayList<>();
     @RaceProperty(path = "visuals", type = FieldType.LIST)
     List<String> visuals = new ArrayList<>();
+    @RaceProperty(path = "afraid_mobs_exceptions", type = FieldType.LIST)
+    List<String> afraidMobsExceptions = new ArrayList<>();
+
     @RaceProperty(path = "weapon_proficiency", type = FieldType.SUBGROUP)
     WeaponProficiency weaponProficiency = new WeaponProficiency();
     @RaceProperty(path = "gui_config", type = FieldType.SUBGROUP)

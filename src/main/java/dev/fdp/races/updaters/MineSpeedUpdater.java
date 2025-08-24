@@ -6,25 +6,13 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 public class MineSpeedUpdater implements IUpdater {
-    // TODO: переписать через атрибут
     @Override
     public void update(Race race, Player player) {
-        double mineSpeed = race.getMineSpeed();
+        int hasteLevel = race.getHasteLevel();
         player.removePotionEffect(PotionEffectType.HASTE);
 
-        if (mineSpeed > 1.0) {
-            int hasteLevel = (int) Math.round((mineSpeed - 1.0) / 0.2);
-
-            player.addPotionEffect(
-                    new PotionEffect(
-                            PotionEffectType.HASTE,
-                            Integer.MAX_VALUE,
-                            hasteLevel - 1,
-                            false,
-                            false,
-                            false
-                    )
-            );
+        if (hasteLevel > 1) {
+            PotionEffectType.HASTE.createEffect(PotionEffect.INFINITE_DURATION, hasteLevel - 1).apply(player);
         }
     }
 }

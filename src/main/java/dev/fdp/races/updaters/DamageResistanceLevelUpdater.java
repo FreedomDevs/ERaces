@@ -9,11 +9,11 @@ public class DamageResistanceLevelUpdater implements IUpdater {
 
     @Override
     public void update(Race race, Player player) {
-        int slowdownLevel = race.getDamageResistanceLevel();
+        int resistanceLevel = race.getDamageResistanceLevel();
         player.removePotionEffect(PotionEffectType.RESISTANCE);
 
-        if (slowdownLevel != 0) {
-            PotionEffectType.RESISTANCE.createEffect(PotionEffect.INFINITE_DURATION, slowdownLevel - 1).apply(player);
+        if (resistanceLevel != 0) {
+            PotionEffectType.RESISTANCE.createEffect(PotionEffect.INFINITE_DURATION, resistanceLevel - 1).apply(player);
         }
     }
 }

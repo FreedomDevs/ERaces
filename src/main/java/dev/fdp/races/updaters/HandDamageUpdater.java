@@ -1,10 +1,12 @@
 package dev.fdp.races.updaters;
 
 import dev.fdp.races.datatypes.Race;
+import dev.fdp.races.utils.ItemChecker;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,7 +19,8 @@ public class HandDamageUpdater implements Listener, IUpdater, IUnloadable {
         if (event.getDamager() instanceof Player player) {
             String playerName = event.getDamager().getName();
             if (playerHandDamage.containsKey(playerName)) {
-                if (player.getInventory().getItemInMainHand().isEmpty()) {
+                ItemStack item = player.getInventory().getItemInMainHand();
+                if (!ItemChecker.isTool(item.getType())) {
                     double originalDamage = event.getDamage();
                     double bonusDamage = playerHandDamage.get(playerName);
                     double incrementDamage = originalDamage + bonusDamage;

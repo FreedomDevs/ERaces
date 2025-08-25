@@ -2,11 +2,10 @@ package dev.fdp.races.updaters;
 
 import dev.fdp.races.FDP_Races;
 import dev.fdp.races.datatypes.Race;
+import dev.fdp.races.utils.MovementUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
 import java.util.HashMap;
 import java.util.List;
@@ -41,15 +40,9 @@ public class BiomeSpeedUpdater implements IUpdater, IUnloadable {
                 continue;
 
             List<String> biomes = entry.getValue();
-            Biome biome = player.getLocation().getWorld().getBiome(
-                    player.getLocation().getBlockX(),
-                    player.getLocation().getBlockY(),
-                    player.getLocation().getBlockZ());
+            Biome biome = player.getLocation().getWorld().getBiome(player.getLocation());
 
-            if (biomes.contains(biome.name()))
-                player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 220, 1));
-            else
-                player.removePotionEffect(PotionEffectType.SPEED);
+            MovementUtils.setSpeedAttributeLevel(player, biomes.contains(biome.name()) ? 2 : 0);
         }
     };
 }

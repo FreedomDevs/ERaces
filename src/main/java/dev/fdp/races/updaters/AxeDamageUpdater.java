@@ -1,6 +1,7 @@
 package dev.fdp.races.updaters;
 
 import dev.fdp.races.datatypes.Race;
+import dev.fdp.races.utils.ItemChecker;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -17,7 +18,7 @@ public class AxeDamageUpdater implements Listener, IUpdater, IUnloadable {
         if (event.getDamager() instanceof Player player) {
             String playerName = event.getDamager().getName();
             if (playerAxeDamage.containsKey(playerName)) {
-                if (player.getInventory().getItemInMainHand().getType().toString().endsWith("_AXE")) {
+                if (ItemChecker.isToolType(player.getInventory().getItemInMainHand().getType(), ItemChecker.ToolTypes.AXE)) {
                     double newDamage = event.getDamage() * playerAxeDamage.get(playerName);
                     event.setDamage(newDamage);
                 }

@@ -1,6 +1,7 @@
 package dev.fdp.races.updaters;
 
 import dev.fdp.races.datatypes.Race;
+import dev.fdp.races.utils.ItemChecker;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -17,7 +18,7 @@ public class SwordDamageUpdater implements Listener, IUpdater, IUnloadable {
         if (event.getDamager() instanceof Player player) {
             String playerName = event.getDamager().getName();
             if (playerSwordDamage.containsKey(playerName)) {
-                if (player.getInventory().getItemInMainHand().getType().toString().endsWith("_SWORD")) {
+                if (ItemChecker.isToolType(player.getInventory().getItemInMainHand().getType(), ItemChecker.ToolTypes.SWORD)) {
                     double damage = event.getDamage();
                     double newDamage = damage * playerSwordDamage.get(playerName);
                     event.setDamage(newDamage);

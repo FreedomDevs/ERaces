@@ -16,8 +16,8 @@ public class Race {
     double maxHp = 20.0;
     @RaceProperty(path = "hunger_loss_multiplier", type = FieldType.DOUBLE)
     double hungerLossMultiplier = 1.0;
-    @RaceProperty(path = "mine_speed", type = FieldType.DOUBLE)
-    double mineSpeed = 1.0;
+    @RaceProperty(path = "haste_level", type = FieldType.INT)
+    int hasteLevel = 1;
     @RaceProperty(path = "hand_distance_bonus", type = FieldType.INT)
     int handDistanceBonus = 0;
     @RaceProperty(path = "additional_armor", type = FieldType.DOUBLE)
@@ -26,14 +26,12 @@ public class Race {
     boolean shieldUsage = true;
     @RaceProperty(path = "regeneration_per_sec", type = FieldType.DOUBLE)
     double regenerationPerSec = 0.0;
-    @RaceProperty(path = "running_speed", type = FieldType.INT)
-    int runningSpeed = 0;
+    @RaceProperty(path = "movement_speed_level", type = FieldType.INT)
+    int movementSpeedLevel = 0;
     @RaceProperty(path = "antiknockback_level", type = FieldType.INT)
     int antiKnockbackLevel = 0;
     @RaceProperty(path = "antiknockback_level_with_iron_and_more_armor", type = FieldType.INT)
     int antiKnocbackLevelWithIronArmorAndMore = 0;
-    @RaceProperty(path = "slowdown_level", type = FieldType.INT)
-    int slowdownLevel = 0;
     @RaceProperty(path = "damage_resistance_level", type = FieldType.INT)
     int damageResistanceLevel = 0;
     @RaceProperty(path = "exclude_from_random", type = FieldType.BOOLEAN)
@@ -46,6 +44,9 @@ public class Race {
     List<String> biomeSpeed = new ArrayList<>();
     @RaceProperty(path = "visuals", type = FieldType.LIST)
     List<String> visuals = new ArrayList<>();
+    @RaceProperty(path = "afraid_mobs_exceptions", type = FieldType.LIST)
+    List<String> afraidMobsExceptions = new ArrayList<>();
+
     @RaceProperty(path = "weapon_proficiency", type = FieldType.SUBGROUP)
     WeaponProficiency weaponProficiency = new WeaponProficiency();
     @RaceProperty(path = "gui_config", type = FieldType.SUBGROUP)

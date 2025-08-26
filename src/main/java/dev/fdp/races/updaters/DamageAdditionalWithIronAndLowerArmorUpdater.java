@@ -16,13 +16,13 @@ public class DamageAdditionalWithIronAndLowerArmorUpdater implements IUpdater, I
 
     @Override
     public void update(Race race, Player player) {
-        double antiKnockbackLevelWithIronArmorAndMore = race.getWeaponProficiency()
+        double damage = race.getWeaponProficiency()
                 .getDamageAdditionalWithIronAndLowerArmor();
 
-        if (antiKnockbackLevelWithIronArmorAndMore == 0) {
+        if (damage == 0) {
             playerDamageAdditionalWithIronAndLowerArmor.remove(player.getName());
         } else {
-            playerDamageAdditionalWithIronAndLowerArmor.put(player.getName(), antiKnockbackLevelWithIronArmorAndMore);
+            playerDamageAdditionalWithIronAndLowerArmor.put(player.getName(), damage);
         }
     }
 

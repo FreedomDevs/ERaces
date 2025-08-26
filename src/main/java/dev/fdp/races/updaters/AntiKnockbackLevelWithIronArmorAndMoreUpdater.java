@@ -4,9 +4,7 @@ import dev.fdp.races.datatypes.Race;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
@@ -36,17 +34,6 @@ public class AntiKnockbackLevelWithIronArmorAndMoreUpdater implements IUpdater, 
         playerAntiKnockbackLevelWithIronArmorAndMore.remove(player.getName());
     }
 
-    // TODO: ask about this
-    @EventHandler
-    public void onInventoryClick(InventoryClickEvent event) {
-        if (!(event.getWhoClicked() instanceof Player player))
-            return;
-
-        if (playerAntiKnockbackLevelWithIronArmorAndMore.containsKey(player.getName())) {
-            updateKnockbackAttribute(player);
-        }
-
-    }
 
     private void updateKnockbackAttribute(Player player) {
         int level = playerAntiKnockbackLevelWithIronArmorAndMore.get(player.getName());

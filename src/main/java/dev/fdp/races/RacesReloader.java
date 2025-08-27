@@ -34,9 +34,10 @@ public class RacesReloader implements Listener {
             new DamageResistanceLevelUpdater(),
             new DamageUpdater(),
             new AntiKnockbackLevelWithIronArmorAndMoreUpdater(),
-            new DamageAdditionalWithIronAndLowerArmorUpdater(),
+            new DamageAdditionalWithLowerThanIronArmorUpdater(),
             new BlockReachUpdater(),
-            new DamageWithWolfsNearUpdater());
+            new DamageWithWolfsNearUpdater()
+    );
 
     public static void reloadRaceForPlayer(Player player) {
         PlayerDataManager playerDataManager = FDP_Races.getInstance().getPlayerDataManager();

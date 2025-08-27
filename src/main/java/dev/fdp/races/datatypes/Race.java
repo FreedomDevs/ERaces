@@ -46,6 +46,10 @@ public class Race {
     List<String> visuals = new ArrayList<>();
     @RaceProperty(path = "afraid_mobs_exceptions", type = FieldType.LIST)
     List<String> afraidMobsExceptions = new ArrayList<>();
+    @RaceProperty(path = "exhaustion_multiplier", type = FieldType.DOUBLE)
+    double exhaustionMultiplier = 1;
+    @RaceProperty(path = "slowness_with_iron_and_more_armor", type = FieldType.INT)
+    int slownessWithIronAndMoreArmor = 0;
 
     @RaceProperty(path = "weapon_proficiency", type = FieldType.SUBGROUP)
     WeaponProficiency weaponProficiency = new WeaponProficiency();

@@ -5,9 +5,7 @@ import dev.fdp.races.commands.RacesCommand;
 import dev.fdp.races.config.MessageManager;
 import dev.fdp.races.config.PlayerDataManager;
 import dev.fdp.races.config.RacesConfigManager;
-import dev.fdp.races.events.PlayerJoinListener;
-import dev.fdp.races.events.PlayerRespawnListener;
-import dev.fdp.races.events.RaceChangeGuiListener;
+import dev.fdp.races.events.*;
 import dev.fdp.races.items.RaceChangePotion;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import lombok.Getter;
@@ -40,7 +38,9 @@ public class FDP_Races extends JavaPlugin {
                 new PlayerJoinListener(),
                 new PlayerRespawnListener(),
                 new RaceChangeGuiListener(),
-                new RaceChangePotion()
+                new RaceChangePotion(),
+                new SaturationUpdater(),
+                new SlownessWithIronAndMoreArmorListener()
         };
 
         for (Listener listener : listeners) {

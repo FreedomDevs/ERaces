@@ -1,11 +1,11 @@
 package dev.fdp.races.updaters;
 
 import dev.fdp.races.datatypes.Race;
+import dev.fdp.races.utils.ArmorChecker;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,33 +34,16 @@ public class AntiKnockbackLevelWithIronArmorAndMoreUpdater implements IUpdater, 
         playerAntiKnockbackLevelWithIronArmorAndMore.remove(player.getName());
     }
 
-
+    // TODO: добавить в планировщик
     private void updateKnockbackAttribute(Player player) {
         int level = playerAntiKnockbackLevelWithIronArmorAndMore.get(player.getName());
         AttributeInstance attr = player.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE);
         if (attr != null) {
-            if (hasFullRequiredArmor(player)) {
+            if (ArmorChecker.allArmorGEQ(player, ArmorChecker.ArmorType.IRON)) {
                 attr.setBaseValue(level);
             } else {
                 attr.setBaseValue(0.0);
             }
         }
-    }
-
-    private boolean hasFullRequiredArmor(Player player) {
-        return isIronOrBetter(player.getInventory().getHelmet()) &&
-                isIronOrBetter(player.getInventory().getChestplate()) &&
-                isIronOrBetter(player.getInventory().getLeggings()) &&
-                isIronOrBetter(player.getInventory().getBoots());
-    }
-
-    private boolean isIronOrBetter(ItemStack item) {
-        if (item == null)
-            return false;
-        return switch (item.getType()) {
-            case IRON_HELMET, IRON_CHESTPLATE, IRON_LEGGINGS, IRON_BOOTS, DIAMOND_HELMET, DIAMOND_CHESTPLATE, DIAMOND_LEGGINGS, DIAMOND_BOOTS, NETHERITE_HELMET, NETHERITE_CHESTPLATE, NETHERITE_LEGGINGS, NETHERITE_BOOTS ->
-                    true;
-            default -> false;
-        };
     }
 }

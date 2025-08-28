@@ -18,7 +18,7 @@ public class SlownessWithIronAndMoreArmorListener implements Listener {
         int new_speed = 0;
         Player player = event.getPlayer();
         if (!ArmorChecker.allArmorLess(player, ArmorChecker.ArmorType.IRON)) {
-            new_speed = -FDP_Races.getInstance().getPlayerDataManager().getPlayerRace(player.getName()).getSlownessWithIronAndMoreArmor();
+            new_speed = -FDP_Races.getPlayerMng().getPlayerRace(player).getSlownessWithIronAndMoreArmor();
         }
         mod.set(player, new_speed);
     }

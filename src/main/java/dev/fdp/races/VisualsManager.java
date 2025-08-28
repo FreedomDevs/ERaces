@@ -1,6 +1,5 @@
 package dev.fdp.races;
 
-import dev.fdp.races.config.PlayerDataManager;
 import dev.fdp.races.datatypes.Race;
 import dev.fdp.races.visualUpdaters.EarsUpdater;
 import dev.fdp.races.visualUpdaters.IVisualUpdater;
@@ -15,11 +14,10 @@ public class VisualsManager {
     );
 
     public static void updateVisualsForPlayer(Player player) {
-        PlayerDataManager playerDataManager = FDP_Races.getInstance().getPlayerDataManager();
-        Race race = playerDataManager.getPlayerRace(player.getName());
+        Race race = FDP_Races.getPlayerMng().getPlayerRace(player);
 
         for (IVisualUpdater updater : visualUpdaters) {
-            updater.updateVisuals(player, race);
+            updater.updateVisuals(race, player);
         }
     }
 

@@ -34,7 +34,7 @@ public class SetPlayerRaceExec {
     }
 
     private CompletableFuture<Suggestions> suggest(final CommandContext<CommandSourceStack> ctx, final SuggestionsBuilder builder) {
-        FDP_Races.getInstance().getRacesConfigManager().getRaces()
+        FDP_Races.getRacesMng().getRaces()
                 .keySet().stream()
                 .filter(key -> key.toLowerCase().startsWith(builder.getRemainingLowerCase()))
                 .forEach(builder::suggest);
@@ -43,18 +43,18 @@ public class SetPlayerRaceExec {
 
     private int exec(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
         Player player = ctx.getArgument("target", PlayerSelectorArgumentResolver.class).resolve(ctx.getSource()).getFirst();
-
         String newRace = ctx.getArgument("raceId", String.class);
-        if (!FDP_Races.getInstance().getRacesConfigManager().getRaces().containsKey(newRace)) {
-            String message = FDP_Races.getInstance().getMessageManager().getString("commands.set_player_race.race_not_found");
+
+        if (!FDP_Races.getRacesMng().getRaces().containsKey(newRace)) {
+            String message = FDP_Races.getMsgMng().getString("commands.set_player_race.race_not_found");
             ChatUtil.message(ctx.getSource().getSender(), message);
             return Command.SINGLE_SUCCESS;
         }
 
-        FDP_Races.getInstance().getPlayerDataManager().setPlayerRace(player.getName(), newRace);
+        FDP_Races.getPlayerMng().setPlayerRace(player, newRace);
         RacesReloader.reloadRaceForPlayer(player);
         VisualsManager.updateVisualsForPlayer(player);
-        String message = FDP_Races.getInstance().getMessageManager().getString("commands.set_player_race.set_success");
+        String message = FDP_Races.getMsgMng().getString("commands.set_player_race.set_success");
         ChatUtil.message(ctx.getSource().getSender(), message, Map.of("{player}", player.getName(), "{race}", newRace));
         return Command.SINGLE_SUCCESS;
     }

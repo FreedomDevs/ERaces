@@ -35,13 +35,15 @@ public class PeacefulMobsAfraidUpdater implements IUpdater, IUnloadable {
     };
 
     private void peacefulMobsAfraidFromPlayer(Player player) {
-        for (Entity entity : player.getNearbyEntities(10, 10, 10))
-            if (isPeacefulMob(entity, FDP_Races.getInstance().getPlayerDataManager().getPlayerRace(player.getName())))
-                ((LivingEntity) entity).damage(0, DamageSource.builder(DamageType.PLAYER_ATTACK).build());
+        Race race = FDP_Races.getPlayerMng().getPlayerRace(player);
+        for (Entity entity : player.getNearbyEntities(10, 10, 10)) {
+            if (isPeacefulMob(entity, race))
+                ((Damageable) entity).damage(0, DamageSource.builder(DamageType.PLAYER_ATTACK).build());
+        }
     }
 
     private boolean isPeacefulMob(Entity entity, Race race) {
-        return !race.getAfraidMobsExceptions().contains(entity.getType().toString())
-                && (entity instanceof Animals && !(entity instanceof Enemy));
+        return (entity instanceof Animals && !(entity instanceof Enemy))
+                && !race.getAfraidMobsExceptions().contains(entity.getType().toString());
     }
 }

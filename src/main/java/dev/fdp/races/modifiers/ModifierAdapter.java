@@ -5,8 +5,8 @@ import org.bukkit.entity.Player;
 import java.util.UUID;
 
 public class ModifierAdapter<K> {
-    UUID key;
-    Modifier<K> target;
+    final UUID key;
+    final Modifier<K> target;
 
     ModifierAdapter(UUID key, Modifier<K> target) {
         this.key = key;

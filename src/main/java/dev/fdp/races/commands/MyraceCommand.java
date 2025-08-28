@@ -24,14 +24,14 @@ public class MyraceCommand {
                         ChatUtil.message(executor, "Эту команду может использовать только игрок.");
                         return Command.SINGLE_SUCCESS;
                     }
-                    String playerRace = FDP_Races.getInstance().getPlayerDataManager().getPlayerRaceId(player.getName());
+                    String playerRace = FDP_Races.getPlayerMng().getPlayerRaceId(player);
 
                     if (playerRace == null || playerRace.isEmpty()) {
                         ChatUtil.message(player, "У вас не выбрана раса.");
                         return Command.SINGLE_SUCCESS;
                     }
 
-                    String message = FDP_Races.getInstance().getMessageManager().getString("commands.get_player_race.race_check_success_me");
+                    String message = FDP_Races.getMsgMng().getString("commands.get_player_race.race_check_success_me");
                     ChatUtil.message(player, message, Map.of("{race}", playerRace));
                     return Command.SINGLE_SUCCESS;
                 }).build();

@@ -25,7 +25,7 @@ public class ForbiddenFoodsUpdater implements Listener, IUpdater, IUnloadable {
             if (forbiddenFoods.get(event.getPlayer().getName()).contains(item)) {
                 event.getPlayer()
                         .sendActionBar(
-                                ChatUtil.format(FDP_Races.getInstance().getMessageManager().getString("forbidden_foods"), Map.of()));
+                                ChatUtil.format(FDP_Races.getMsgMng().getString("forbidden_foods"), Map.of()));
 
                 event.getPlayer().playSound(
                         event.getPlayer().getLocation(),

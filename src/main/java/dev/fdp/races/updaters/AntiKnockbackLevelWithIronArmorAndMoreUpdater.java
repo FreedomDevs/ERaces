@@ -1,10 +1,12 @@
 package dev.fdp.races.updaters;
 
+import com.destroystokyo.paper.event.player.PlayerArmorChangeEvent;
 import dev.fdp.races.datatypes.Race;
 import dev.fdp.races.utils.ArmorChecker;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 import java.util.HashMap;
@@ -23,10 +25,6 @@ public class AntiKnockbackLevelWithIronArmorAndMoreUpdater implements IUpdater, 
         } else {
             playerAntiKnockbackLevelWithIronArmorAndMore.put(player.getName(), antiKnockbackLevelWithIronArmorAndMore);
         }
-
-        if (playerAntiKnockbackLevelWithIronArmorAndMore.containsKey(player.getName())) {
-            updateKnockbackAttribute(player);
-        }
     }
 
     @Override
@@ -34,8 +32,11 @@ public class AntiKnockbackLevelWithIronArmorAndMoreUpdater implements IUpdater, 
         playerAntiKnockbackLevelWithIronArmorAndMore.remove(player.getName());
     }
 
-    // TODO: добавить в планировщик
-    private void updateKnockbackAttribute(Player player) {
+    @EventHandler
+    public void onArmorChange(PlayerArmorChangeEvent event) {
+        Player player = event.getPlayer();
+        if (!playerAntiKnockbackLevelWithIronArmorAndMore.containsKey(player.getName())) return;
+
         int level = playerAntiKnockbackLevelWithIronArmorAndMore.get(player.getName());
         AttributeInstance attr = player.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE);
         if (attr != null) {

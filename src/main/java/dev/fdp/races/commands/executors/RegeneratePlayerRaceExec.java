@@ -31,11 +31,11 @@ public class RegeneratePlayerRaceExec {
         CommandSender sender = ctx.getSource().getSender();
         Player player = ctx.getArgument("target", PlayerSelectorArgumentResolver.class).resolve(ctx.getSource()).getFirst();
 
-        String newRace = FDP_Races.getInstance().getPlayerDataManager().getRandomRace();
-        FDP_Races.getInstance().getPlayerDataManager().setPlayerRace(player.getName(), newRace);
+        String newRace = FDP_Races.getPlayerMng().getRandomRaceId();
+        FDP_Races.getPlayerMng().setPlayerRace(player, newRace);
         RacesReloader.reloadRaceForPlayer(player);
         VisualsManager.updateVisualsForPlayer(player);
-        String message = FDP_Races.getInstance().getMessageManager().getString("commands.regenerate_player_race.regenerate_success");
+        String message = FDP_Races.getMsgMng().getString("commands.regenerate_player_race.regenerate_success");
         ChatUtil.message(sender, message, Map.of("{player}", player.getName(), "{race}", newRace));
 
         return Command.SINGLE_SUCCESS;

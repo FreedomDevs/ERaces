@@ -2,6 +2,8 @@ package dev.fdp.races.updaters;
 
 import dev.fdp.races.FDP_Races;
 import dev.fdp.races.datatypes.Race;
+import dev.fdp.races.updaters.base.IUnloadable;
+import dev.fdp.races.updaters.base.IUpdater;
 import org.bukkit.Bukkit;
 import org.bukkit.damage.DamageSource;
 import org.bukkit.damage.DamageType;

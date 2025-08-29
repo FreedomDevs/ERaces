@@ -4,6 +4,12 @@ import dev.fdp.races.datatypes.Race;
 import dev.fdp.races.events.*;
 import dev.fdp.races.items.RaceChangePotion;
 import dev.fdp.races.updaters.*;
+import dev.fdp.races.updaters.base.IUnloadable;
+import dev.fdp.races.updaters.base.IUpdater;
+import dev.fdp.races.updaters.damage.*;
+import dev.fdp.races.updaters.speed.BiomeSpeedUpdater;
+import dev.fdp.races.updaters.speed.MovementSpeedUpdater;
+import dev.fdp.races.updaters.speed.SlownessWithIronAndMoreArmorListener;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -37,14 +43,15 @@ public class RacesReloader implements Listener {
             new DamageAdditionalWithLowerThanIronArmorUpdater(),
             new BlockReachUpdater(),
             new DamageWithWolfsNearUpdater(),
+            new SaturationUpdater(),
+            new SlownessWithIronAndMoreArmorListener(),
 
             new PlayerJoinListener(),
             new PlayerQuitListener(),
             new PlayerRespawnListener(),
             new RaceChangeGuiListener(),
             new RaceChangePotion(),
-            new SaturationUpdater(),
-            new SlownessWithIronAndMoreArmorListener()
+            new PlayerShootBowEventListener()
     );
 
     public static void reloadRaceForPlayer(Player player) {

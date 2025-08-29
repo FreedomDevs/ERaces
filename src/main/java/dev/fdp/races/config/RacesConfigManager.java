@@ -15,7 +15,7 @@ public class RacesConfigManager {
     private static final String FILE_NAME = "races.yml";
 
     @Getter
-    private Map<String, Race> races = null;
+    private final Map<String, Race> races = new HashMap<>();
 
     private final YamlManager cfgManager;
     private final JavaPlugin plugin;
@@ -28,12 +28,12 @@ public class RacesConfigManager {
 
 
     public void reloadConfig() {
-        races = loadConfig();
+        loadConfig();
         plugin.getLogger().info("Загружено: " + races.size() + " рас");
     }
 
-    private Map<String, Race> loadConfig() {
-        Map<String, Race> races = new HashMap<>();
+    private void loadConfig() {
+        races.clear();
         YamlConfiguration config = cfgManager.getConfig();
 
         for (String key : config.getKeys(false)) {
@@ -53,6 +53,5 @@ public class RacesConfigManager {
 
             races.put(key, race);
         }
-        return races;
     }
 }

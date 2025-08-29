@@ -1,4 +1,4 @@
-package dev.fdp.races.events;
+package dev.fdp.races.updaters.speed;
 
 import com.destroystokyo.paper.event.player.PlayerArmorChangeEvent;
 import dev.fdp.races.FDP_Races;

@@ -1,4 +1,4 @@
-package dev.fdp.races.updaters;
+package dev.fdp.races.updaters.base;
 
 import dev.fdp.races.datatypes.Race;
 import org.bukkit.entity.Player;

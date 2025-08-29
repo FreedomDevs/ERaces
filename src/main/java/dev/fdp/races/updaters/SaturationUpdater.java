@@ -1,4 +1,4 @@
-package dev.fdp.races.events;
+package dev.fdp.races.updaters;
 
 import dev.fdp.races.FDP_Races;
 import org.bukkit.entity.Player;

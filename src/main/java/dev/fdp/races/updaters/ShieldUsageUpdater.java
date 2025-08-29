@@ -2,6 +2,8 @@ package dev.fdp.races.updaters;
 
 import dev.fdp.races.FDP_Races;
 import dev.fdp.races.datatypes.Race;
+import dev.fdp.races.updaters.base.IUnloadable;
+import dev.fdp.races.updaters.base.IUpdater;
 import dev.fdp.races.utils.ChatUtil;
 import org.bukkit.Material;
 import org.bukkit.Sound;

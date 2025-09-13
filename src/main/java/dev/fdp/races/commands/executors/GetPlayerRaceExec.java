@@ -30,14 +30,14 @@ public class GetPlayerRaceExec {
         Player player = ctx.getArgument("target", PlayerSelectorArgumentResolver.class).resolve(ctx.getSource()).getFirst();
         String playerName = player.getName();
 
-        String playerRace = FDP_Races.getInstance().getPlayerDataManager().getPlayerRaceId(playerName);
+        String playerRace = FDP_Races.getPlayerMng().getPlayerRaceId(player);
 
         if (sender.getName().equals(playerName)) {
-            String message = FDP_Races.getInstance().getMessageManager().getString("commands.get_player_race.race_check_success_me");
+            String message = FDP_Races.getMsgMng().getString("commands.get_player_race.race_check_success_me");
             ChatUtil.message(sender, message,
                     Map.of("{race}", playerRace));
         } else {
-            String message = FDP_Races.getInstance().getMessageManager().getString("commands.get_player_race.race_check_success");
+            String message = FDP_Races.getMsgMng().getString("commands.get_player_race.race_check_success");
             ChatUtil.message(sender, message,
                     Map.of("{player}", playerName, "{race}", playerRace));
         }

@@ -18,7 +18,7 @@ public class WeaponProficiency {
     double handDamageAdditional = 0.0;
     @RaceProperty(path = "damage_additional", type = FieldType.DOUBLE)
     double damageAdditional = 0.0;
-    @RaceProperty(path = "damage_additional_with_iron_and_lower_armor", type = FieldType.DOUBLE)
+    @RaceProperty(path = "damage_additional_with_lower_than_iron_armor", type = FieldType.DOUBLE)
     double damageAdditionalWithIronAndLowerArmor = 0.0;
     @RaceProperty(path = "damage_additional_with_wolfs_near", type = FieldType.DOUBLE)
     double damageAdditionalWithWolfsNear = 0.0;

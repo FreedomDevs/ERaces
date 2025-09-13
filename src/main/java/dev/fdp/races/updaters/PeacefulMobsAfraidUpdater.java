@@ -2,6 +2,8 @@ package dev.fdp.races.updaters;
 
 import dev.fdp.races.FDP_Races;
 import dev.fdp.races.datatypes.Race;
+import dev.fdp.races.updaters.base.IUnloadable;
+import dev.fdp.races.updaters.base.IUpdater;
 import org.bukkit.Bukkit;
 import org.bukkit.damage.DamageSource;
 import org.bukkit.damage.DamageType;
@@ -35,13 +37,15 @@ public class PeacefulMobsAfraidUpdater implements IUpdater, IUnloadable {
     };
 
     private void peacefulMobsAfraidFromPlayer(Player player) {
-        for (Entity entity : player.getNearbyEntities(10, 10, 10))
-            if (isPeacefulMob(entity, FDP_Races.getInstance().getPlayerDataManager().getPlayerRace(player.getName())))
-                ((LivingEntity) entity).damage(0, DamageSource.builder(DamageType.PLAYER_ATTACK).build());
+        Race race = FDP_Races.getPlayerMng().getPlayerRace(player);
+        for (Entity entity : player.getNearbyEntities(10, 10, 10)) {
+            if (isPeacefulMob(entity, race))
+                ((Damageable) entity).damage(0, DamageSource.builder(DamageType.PLAYER_ATTACK).build());
+        }
     }
 
     private boolean isPeacefulMob(Entity entity, Race race) {
-        return !race.getAfraidMobsExceptions().contains(entity.getType().toString())
-                && (entity instanceof Animals && !(entity instanceof Enemy));
+        return (entity instanceof Animals && !(entity instanceof Enemy))
+                && !race.getAfraidMobsExceptions().contains(entity.getType().toString());
     }
 }

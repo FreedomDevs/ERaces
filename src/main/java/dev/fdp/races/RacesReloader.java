@@ -1,19 +1,25 @@
 package dev.fdp.races;
 
-import dev.fdp.races.config.PlayerDataManager;
+import dev.fdp.races.datatypes.Race;
+import dev.fdp.races.events.*;
+import dev.fdp.races.items.RaceChangePotion;
 import dev.fdp.races.updaters.*;
+import dev.fdp.races.updaters.base.IUnloadable;
+import dev.fdp.races.updaters.base.IUpdater;
+import dev.fdp.races.updaters.damage.*;
+import dev.fdp.races.updaters.speed.BiomeSpeedUpdater;
+import dev.fdp.races.updaters.speed.MovementSpeedUpdater;
+import dev.fdp.races.updaters.speed.SlownessWithIronAndMoreArmorListener;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.List;
 
 public class RacesReloader implements Listener {
 
-    private static final List<IUpdater> updaters = List.of(
+    private static final List<Object> updaters = List.of(
             new HealthUpdater(),
             new MineSpeedUpdater(),
             new AdditionalArmorUpdater(),
@@ -34,15 +40,25 @@ public class RacesReloader implements Listener {
             new DamageResistanceLevelUpdater(),
             new DamageUpdater(),
             new AntiKnockbackLevelWithIronArmorAndMoreUpdater(),
-            new DamageAdditionalWithIronAndLowerArmorUpdater(),
+            new DamageAdditionalWithLowerThanIronArmorUpdater(),
             new BlockReachUpdater(),
-            new DamageWithWolfsNearUpdater());
+            new DamageWithWolfsNearUpdater(),
+            new SaturationUpdater(),
+            new SlownessWithIronAndMoreArmorListener(),
+
+            new PlayerJoinListener(),
+            new PlayerQuitListener(),
+            new PlayerRespawnListener(),
+            new RaceChangeGuiListener(),
+            new RaceChangePotion(),
+            new PlayerShootBowEventListener()
+    );
 
     public static void reloadRaceForPlayer(Player player) {
-        PlayerDataManager playerDataManager = FDP_Races.getInstance().getPlayerDataManager();
-
-        for (IUpdater updater : updaters) {
-            updater.update(playerDataManager.getPlayerRace(player.getName()), player);
+        Race race = FDP_Races.getPlayerMng().getPlayerRace(player);
+        for (Object obj : updaters) {
+            if (obj instanceof IUpdater upd)
+                upd.update(race, player);
         }
     }
 
@@ -53,24 +69,14 @@ public class RacesReloader implements Listener {
     }
 
     public static void startListeners(JavaPlugin plugin) { // Ищет все листенеры в updaters и включает их
-        Bukkit.getPluginManager().registerEvents(new RacesReloader(), plugin);
-        for (IUpdater i : updaters) {
-            if (i instanceof Listener) {
-                Bukkit.getPluginManager().registerEvents((Listener) i, plugin);
-            }
-        }
+        for (Object obj : updaters)
+            if (obj instanceof Listener lis)
+                Bukkit.getPluginManager().registerEvents(lis, plugin);
     }
 
-    private static void unloadPlayerData(Player player) { // Типо удаляет мусор из ОЗУ
-        for (IUpdater i : updaters) {
-            if (i instanceof IUnloadable unloadable) {
-                unloadable.unload(player);
-            }
-        }
-    }
-
-    @EventHandler
-    public void onPlayerQuit(PlayerQuitEvent event) {
-        unloadPlayerData(event.getPlayer());
+    public static void unloadPlayerData(Player player) { // Типо удаляет мусор из ОЗУ
+        for (Object obj : updaters)
+            if (obj instanceof IUnloadable unl)
+                unl.unload(player);
     }
 }

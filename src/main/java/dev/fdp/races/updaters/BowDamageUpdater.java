@@ -1,62 +1,28 @@
 package dev.fdp.races.updaters;
 
 import dev.fdp.races.datatypes.Race;
-import org.bukkit.Material;
+import dev.fdp.races.events.PlayerShootBowEvent;
+import dev.fdp.races.updaters.base.RaceAttributeMapStorage;
 import org.bukkit.entity.AbstractArrow;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityShootBowEvent;
-import org.bukkit.projectiles.ProjectileSource;
 
-import java.util.*;
-
-public class BowDamageUpdater implements Listener, IUpdater, IUnloadable {
-    private static final Map<String, Double> playerBowDamage = new HashMap<>();
-    private static final Set<UUID> bowArrows = new HashSet<>();
-
+public class BowDamageUpdater extends RaceAttributeMapStorage<Double> implements Listener {
     @EventHandler
-    public void onPlayerBowShoot(EntityShootBowEvent event) {
-        if (event.getEntity() instanceof Player && event.getBow() != null) {
-            if (event.getBow().getType() == Material.BOW && event.getProjectile() instanceof AbstractArrow) {
-                bowArrows.add(event.getProjectile().getUniqueId());
-            }
-        }
-    }
-
-    @EventHandler
-    public void onPlayerShoot(EntityDamageByEntityEvent event) {
-        if (event.getDamager() instanceof AbstractArrow arrow) {
-            if (!bowArrows.contains(arrow.getUniqueId()))
-                return;
-
-            ProjectileSource shooter = arrow.getShooter();
-            if (shooter instanceof Player player) {
-                Double damage = playerBowDamage.get(player.getName());
-                if (damage != null) {
-                    double newDamage = event.getDamage() * damage;
-                    event.setDamage(newDamage);
-                }
-            }
-
-            bowArrows.remove(arrow.getUniqueId());
-        }
+    public void onPlayerBowShoot(PlayerShootBowEvent event) {
+        Double param = getParam(event.getPlayer());
+        if (param == null) return;
+        AbstractArrow arrow = event.getArrow();
+        arrow.setDamage(arrow.getDamage() * param);
     }
 
     @Override
-    public void update(Race race, Player player) {
-        double damage = race.getWeaponProficiency().getBowDamageMultiplier();
-
-        if (damage == 1.0) {
-            playerBowDamage.remove(player.getName());
-        } else {
-            playerBowDamage.put(player.getName(), damage);
-        }
+    protected Double getAttribute(Race race) {
+        return race.getWeaponProficiency().getBowDamageMultiplier();
     }
 
     @Override
-    public void unload(Player player) {
-        playerBowDamage.remove(player.getName());
+    protected boolean putCheck(Double att) {
+        return att != 1;
     }
 }

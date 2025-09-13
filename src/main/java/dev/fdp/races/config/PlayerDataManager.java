@@ -3,71 +3,76 @@ package dev.fdp.races.config;
 import dev.fdp.races.FDP_Races;
 import dev.fdp.races.datatypes.Race;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class PlayerDataManager {
     private static final String FILE_NAME = "playerData.yml";
     private final YamlManager cfgManager;
-    private YamlConfiguration racesData;
-    private final Map<String, String> nameToRaceMap = new HashMap<>();
+    private YamlConfiguration playerDataYaml;
+    private final Map<UUID, Race> playerRaceMap = new HashMap<>();
+    private final Map<String, Race> races;
     private final FDP_Races plugin;
 
 
     public PlayerDataManager(FDP_Races plugin) {
         this.plugin = plugin;
         this.cfgManager = new YamlManager(plugin, FILE_NAME, false);
+        this.races = FDP_Races.getRacesMng().getRaces();
         loadData();
     }
 
     public void loadData() {
-        racesData = cfgManager.getConfig();
-        for (String nickname : racesData.getKeys(false)) {
-            String racename = racesData.getString(nickname);
+        playerDataYaml = cfgManager.getConfig();
+        for (String uuid : playerDataYaml.getKeys(false)) {
+            String raceId = playerDataYaml.getString(uuid);
 
-            if (!plugin.getRacesConfigManager().getRaces().containsKey(racename)) {
-                plugin.getLogger().severe("ВНИМАНИЕ: РАСА: " + racename + " КУДАТ ПРОПАЛА (перегенерация...)");
-                racename = getRandomRace();
+            if (!this.races.containsKey(raceId)) {
+                plugin.getLogger().severe("ВНИМАНИЕ: РАСА: " + raceId + " КУДАТ ПРОПАЛА (перегенерация...)");
+                raceId = getRandomRaceId();
             }
-            nameToRaceMap.put(nickname, racename);
+            playerRaceMap.put(UUID.fromString(uuid), this.races.get(raceId));
         }
     }
 
     private void saveData() {
-        FDP_Races.getInstance().getLogger().info("Сохранене " + nameToRaceMap.size() + " записей");
+        plugin.getLogger().info("Сохранене " + playerRaceMap.size() + " записей");
 
-        for (Map.Entry<String, String> entry : nameToRaceMap.entrySet()) {
-            racesData.set(entry.getKey(), entry.getValue());
+        for (Map.Entry<UUID, Race> entry : playerRaceMap.entrySet()) {
+            playerDataYaml.set(entry.getKey().toString(), entry.getValue().getId());
         }
 
-        cfgManager.saveConfig(racesData);
+        cfgManager.saveConfig(playerDataYaml);
     }
 
-    public String getPlayerRaceId(String nickname) {
-        if (!nameToRaceMap.containsKey(nickname)) {
-            nameToRaceMap.put(nickname, getRandomRace());
+    public String getPlayerRaceId(Player player) {
+        return getPlayerRace(player).getId();
+    }
+
+    public Race getPlayerRace(Player player) {
+        UUID uuid = player.getUniqueId();
+        if (!playerRaceMap.containsKey(uuid)) {
+            playerRaceMap.put(uuid, this.races.get(getRandomRaceId()));
             saveData();
         }
-        return nameToRaceMap.get(nickname);
+        return playerRaceMap.get(player.getUniqueId());
     }
 
-    public Race getPlayerRace(String nickname) {
-        return plugin.getRacesConfigManager().getRaces().get(getPlayerRaceId(nickname));
-    }
-
-    public void setPlayerRace(String nickname, String raceId) {
-        if (!plugin.getRacesConfigManager().getRaces().containsKey(raceId))
+    public void setPlayerRace(Player player, String raceId) {
+        if (!this.races.containsKey(raceId))
             throw new RuntimeException("Данная раса не существует! (" + raceId + ")");
 
-        nameToRaceMap.put(nickname, raceId);
+        playerRaceMap.put(player.getUniqueId(), this.races.get(raceId));
         saveData();
     }
 
-    public String getRandomRace() {
-        List<String> raceIds = plugin.getRacesConfigManager().getRaces().entrySet().stream()
+    public String getRandomRaceId() {
+        List<String> raceIds = this.races.entrySet().stream()
                 .filter(entry -> !entry.getValue().isExcludeFromRandom())
                 .map(Map.Entry::getKey)
                 .toList();

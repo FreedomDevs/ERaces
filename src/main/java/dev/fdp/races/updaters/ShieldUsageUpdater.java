@@ -2,6 +2,8 @@ package dev.fdp.races.updaters;
 
 import dev.fdp.races.FDP_Races;
 import dev.fdp.races.datatypes.Race;
+import dev.fdp.races.updaters.base.IUnloadable;
+import dev.fdp.races.updaters.base.IUpdater;
 import dev.fdp.races.utils.ChatUtil;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -27,7 +29,7 @@ public class ShieldUsageUpdater implements Listener, IUpdater, IUnloadable {
                     && event.getItem().getType() == Material.SHIELD) {
 
                 event.getPlayer()
-                        .sendActionBar(ChatUtil.format(FDP_Races.getInstance().getMessageManager().getString("shield_block"), Map.of()));
+                        .sendActionBar(ChatUtil.format(FDP_Races.getMsgMng().getString("shield_block"), Map.of()));
 
                 event.getPlayer().playSound(
                         event.getPlayer().getLocation(),

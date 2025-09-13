@@ -18,7 +18,7 @@ public class EarsUpdater implements IVisualUpdater {
     private final Map<UUID, BukkitRunnable> tasks = new HashMap<>();
 
     @Override
-    public void updateVisuals(Player player, Race race) {
+    public void updateVisuals(Race race, Player player) {
         if (race.getVisuals().contains("ears")) {
             if (tasks.containsKey(player.getUniqueId())) return;
 

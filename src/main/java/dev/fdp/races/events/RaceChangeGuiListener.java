@@ -31,7 +31,7 @@ public class RaceChangeGuiListener implements Listener {
         String raceKey = pdc.get(RaceItems.RACE_GUI_ITEM_KEY, PersistentDataType.STRING);
 
         Player player = (Player) event.getWhoClicked();
-        FDP_Races.getInstance().getPlayerDataManager().setPlayerRace(player.getName(), raceKey);
+        FDP_Races.getPlayerMng().setPlayerRace(player, raceKey);
         RacesReloader.reloadRaceForPlayer(player);
         VisualsManager.updateVisualsForPlayer(player);
         player.sendMessage("§aВы выбрали расу: §f" + raceKey);

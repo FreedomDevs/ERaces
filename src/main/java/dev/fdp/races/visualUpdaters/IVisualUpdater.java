@@ -4,7 +4,7 @@ import dev.fdp.races.datatypes.Race;
 import org.bukkit.entity.Player;
 
 public interface IVisualUpdater {
-    void updateVisuals(Player player, Race race);
+    void updateVisuals(Race race, Player player);
 
     void unloadVisuals(Player player);
 }

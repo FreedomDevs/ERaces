@@ -2,6 +2,7 @@ package dev.fdp.races.utils;
 
 import org.bukkit.attribute.Attributable;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.potion.PotionEffectType;
 
 public class MovementUtils {
@@ -15,6 +16,8 @@ public class MovementUtils {
     }
 
     public static void setSpeedAttributeLevel(Attributable entity, int effectLevel) {
-        entity.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(getSpeedAttributeValue(effectLevel));
+        AttributeInstance attribute = entity.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED);
+        if (attribute != null)
+            attribute.setBaseValue(getSpeedAttributeValue(effectLevel));
     }
 }

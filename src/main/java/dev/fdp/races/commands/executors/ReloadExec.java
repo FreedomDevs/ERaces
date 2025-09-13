@@ -20,11 +20,11 @@ public class ReloadExec {
     }
 
     private int exec(CommandContext<CommandSourceStack> ctx) {
-        FDP_Races.getInstance().getRacesConfigManager().reloadConfig();
-        FDP_Races.getInstance().getPlayerDataManager().loadData();
+        FDP_Races.getRacesMng().reloadConfig();
+        FDP_Races.getPlayerMng().loadData();
         RacesReloader.reloadRaceForAllPlayers();
         VisualsManager.reloadVisualsForAllPlayer();
-        String message = FDP_Races.getInstance().getMessageManager().getString("commands.reload.reload_success");
+        String message = FDP_Races.getMsgMng().getString("commands.reload.reload_success");
         ChatUtil.message(ctx.getSource().getSender(), message);
         return Command.SINGLE_SUCCESS;
     }

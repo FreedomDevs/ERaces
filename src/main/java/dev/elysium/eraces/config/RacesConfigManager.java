@@ -1,0 +1,57 @@
+package dev.elysium.eraces.config;
+
+import dev.elysium.eraces.datatypes.Race;
+import dev.elysium.eraces.datatypes.ReflectionUtils;
+import lombok.Getter;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+
+public class RacesConfigManager {
+    private static final String FILE_NAME = "races.yml";
+
+    @Getter
+    private final Map<String, Race> races = new HashMap<>();
+
+    private final YamlManager cfgManager;
+    private final JavaPlugin plugin;
+
+    public RacesConfigManager(JavaPlugin plugin) {
+        this.plugin = plugin;
+        this.cfgManager = new YamlManager(this.plugin, FILE_NAME, true);
+        reloadConfig();
+    }
+
+
+    public void reloadConfig() {
+        loadConfig();
+        plugin.getLogger().info("Загружено: " + races.size() + " рас");
+    }
+
+    private void loadConfig() {
+        races.clear();
+        YamlConfiguration config = cfgManager.getConfig();
+
+        for (String key : config.getKeys(false)) {
+            ConfigurationSection section = config.getConfigurationSection(key);
+            if (section == null)
+                continue;
+
+            Race race = new Race();
+            race.setId(key);
+
+            try {
+                ReflectionUtils.loadSection(race, section);
+            } catch (Exception e) {
+                plugin.getLogger().log(Level.SEVERE, "[%s] race config failed to load".formatted(key), e);
+                continue;
+            }
+
+            races.put(key, race);
+        }
+    }
+}

@@ -1,0 +1,33 @@
+- gui_config - конфигурация отображаемых имён и описания:
+    - name - имя расы
+    - lore - описание расы
+    - icon - айди предмета который будет выступать иконкой, например: "OAK_SAPLING"
+- max_hp - максимальный хп в единицах (обычно у игрока максимум 20 хп)
+- hunger_loss_multiplier - скорость голодания например 0.75 значит замедление голодания на 25% (стандартное значение 1)
+- weapon_proficiency - эффективность оружий:
+    - bow_damage_multiplier - множитель урона от лука
+    - bow_projectile_speed_multiplier - множитель скорости стрел
+    - sword_damage_multiplier - множитель урона от меча
+    - axe_damage_multiplier - множитель урона от топора
+    - mace_damage_multiplier - множитель урона от булавы
+    - hand_damage_additional - бонусный урон от руки (без оружия)
+    - damage_additional - плоский бонус к урону
+    - damage_additional_with_wolfs_near - бонус урона при нахождении рядом союзных волков
+    - dual_weapon_damage_additional - бонус урона при ношении двух оружий
+    - damage_additional_with_lower_than_iron_armor - штраф/бонус при броне ниже железной
+- forbidden_foods - список запрещённых предметов-ед (айди предметов)
+- biome_speed - список биомов, где действует ускорение
+- visuals - список визуальных особенностей (например, ears)
+- exhaustion_multiplier - множитель истощения (быстрее или медленнее тратятся стамина/голод)
+- slowness_with_iron_and_more_armor - уровень эффекта замедления при ношении брони ≥ железной
+- additional_armor - добавочные единицы брони
+- antiknockback_level - уровень иммунитета к отбрасыванию
+- antiknockback_level_with_iron_and_more_armor - уровень иммунитета к отбрасыванию при ношении брони ≥ железной
+- shield_usage - можно ли использовать щиты (true/false)
+- regeneration_per_sec - регенерация здоровья в HP/сек
+- movement_speed_level - уровень эффекта скорости (отрицательные значения = замедление)
+- peaceful_mobs_afraid - мирные мобы убегают от персонажа (true/false)
+- afraid_mobs_exceptions - исключения мобов, которые не боятся
+- haste_level - уровень эффекта "Спешка" (ускорение копки)
+- hand_distance_bonus - бонус к длине руки (дальности взаимодействия)
+- damage_resistance_level - уровень эффекта сопротивления урону

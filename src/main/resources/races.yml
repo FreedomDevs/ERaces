@@ -58,7 +58,7 @@ wolf_beastman:
     damage_additional_with_wolfs_near: 2
   regeneration_per_sec: 0.25
   movement_speed_level: 1
-  shield_usage: false  # Зверолюды не могут использовать щиты
+  shield_usage: false # Зверолюды не могут использовать щиты
   additional_armor: 1
   peaceful_mobs_afraid: true
   afraid_mobs_exceptions:

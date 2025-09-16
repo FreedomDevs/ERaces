@@ -17,6 +17,16 @@ public class ReflectionUtils {
         TYPE_HANDLERS.put(FieldType.BOOLEAN, section -> section::getBoolean);
         TYPE_HANDLERS.put(FieldType.LIST, section -> section::getStringList);
         TYPE_HANDLERS.put(FieldType.STRING, section -> section::getString);
+        TYPE_HANDLERS.put(FieldType.MAP_STRING_INT, section -> s -> {
+            ConfigurationSection mapSection = section.getConfigurationSection(s);
+            if (mapSection == null) return null;
+
+            Map<String, Integer> map = new HashMap<>();
+            for (String key : mapSection.getKeys(false)) {
+                map.put(key, mapSection.getInt(key));
+            }
+            return map;
+        });
     }
 
     public static void loadSection(Object obj, ConfigurationSection section) throws IllegalAccessException {

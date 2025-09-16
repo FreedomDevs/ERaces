@@ -5,6 +5,7 @@ public enum FieldType {
     DOUBLE,
     BOOLEAN,
     STRING,
+    MAP_STRING_INT,
     LIST,
     SUBGROUP
 }

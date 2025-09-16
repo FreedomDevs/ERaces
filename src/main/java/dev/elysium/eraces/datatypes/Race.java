@@ -55,4 +55,6 @@ public class Race {
     WeaponProficiency weaponProficiency = new WeaponProficiency();
     @RaceProperty(path = "gui_config", type = FieldType.SUBGROUP)
     RaceGuiConfig raceGuiConfig = new RaceGuiConfig();
+    @RaceProperty(path = "effects_with", type = FieldType.SUBGROUP)
+    EffectsWith effectsWith = new EffectsWith();
 }

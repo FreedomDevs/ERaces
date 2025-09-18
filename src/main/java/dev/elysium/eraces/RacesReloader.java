@@ -48,6 +48,7 @@ public class RacesReloader implements Listener {
             new DamageWithWolfsNearUpdater(),
             new SaturationUpdater(),
             new SlownessWithIronAndMoreArmorListener(),
+            new EffectsUpdater(),
 
             new PlayerJoinListener(),
             new PlayerQuitListener(),

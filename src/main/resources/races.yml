@@ -31,7 +31,9 @@ human:
     name: "§eЧеловек"
     lore: "§eСильны духом, ловки руками. Прирождённые шахтёры.\n\n§eБонусы:\n§7»  Ускоренная добыча блоков (x1.5).\n§7»  Увеличенная досягаемость (+1 блок).\n§7\n§cМинусы: отсутствуют.\n\n§7Для выбора нажмите: §f[ПКМ]"
     icon: "BOOK"
-  haste_level: 3        # 1.5x для скорости копки
+  effects_with:
+    global:
+      minecraft:haste: 3
   hand_distance_bonus: 1 # +1 к длинне руки
 
 bear_beastman:
@@ -57,7 +59,9 @@ wolf_beastman:
     damage_additional: 3
     damage_additional_with_wolfs_near: 2
   regeneration_per_sec: 0.25
-  movement_speed_level: 1
+  effects_with:
+    global:
+      minecraft:speed: 1
   shield_usage: false # Зверолюды не могут использовать щиты
   additional_armor: 1
   peaceful_mobs_afraid: true
@@ -71,7 +75,9 @@ tiger_beastman:
     icon: "ORANGE_WOOL"
   max_hp: 24
   additional_armor: 2
-  movement_speed_level: 2
+  effects_with:
+    global:
+      minecraft:speed: 2
   shield_usage: false  # Зверолюды не могут использовать щиты
   weapon_proficiency:
     hand_damage_additional: 6
@@ -87,7 +93,9 @@ ork:
     dual_weapon_damage_additional: 2
     damage_additional_with_lower_than_iron_armor: 3
   max_hp: 30
-  movement_speed_level: -1
+  effects_with:
+    global:
+      minecraft:slowness: 2
   damage_resistance_level: 1
   antiknockback_level_with_iron_and_more_armor: 99999
 
@@ -97,7 +105,11 @@ warrior:
     lore: ""
     icon: "MACE"
   max_hp: 14
+  effects_with:
+    global:
+      minecraft:strength: 1
   exclude_from_random: true
+
 
   #TODO Способности:
   #
@@ -107,7 +119,6 @@ warrior:
   #При использовании получает сопративление 3 на 5 сек
 
   #TODO запрет лука
-  #TODO эффекты сила 1
 
 vandal:
   gui_config:
@@ -115,6 +126,11 @@ vandal:
     lore: ""
     icon: "MACE"
   max_hp: 18
+  effects_with:
+    global:
+      minecraft:strength: 1
+      minecraft:regeneration: 1
+      minecraft:resistance: 1
   exclude_from_random: true
 
   #TODO Способности
@@ -133,7 +149,6 @@ vandal:
   # Поглощение в размере 2 сердец (4 хп)
 
 
-  #TODO эффекты: Сила 1, сопративление 1, регенерация 1
   #TODO Не может использовать: Лук и меч.
   #TODO Может использовать ТОЛЬКО: Булаву и топор
 
@@ -143,6 +158,11 @@ berserk:
     lore: ""
     icon: "MACE"
   max_hp: 24
+  effects_with:
+    global:
+      minecraft:strength: 2
+      minecraft:regeneration: 1
+      minecraft:resistance: 2
   exclude_from_random: true
 
   #TODO Способности
@@ -172,7 +192,6 @@ berserk:
   # Скорость 2 на 2мин
   # Ночное зрение
 
-  #TODO Сила 2, сопративление 2, регенерация 1
   #TODO Не может использовать: Лук и меч.
   #TODO Может использовать ТОЛЬКО: Булаву и топор
 
@@ -182,6 +201,9 @@ berserk:
     lore: ""
     icon: "MACE"
   max_hp: 15
+  effects_with:
+    global:
+      minecraft:fire_resistance: 255
   exclude_from_random: true
 
   #TODO Способности
@@ -201,6 +223,9 @@ crap:
     lore: ""
     icon: "MACE"
   max_hp: 18
+  effects_with:
+    global:
+      minecraft:fire_resistance: 255
   exclude_from_random: true
 
   #TODO Способности
@@ -213,7 +238,6 @@ crap:
   # Область 3 блока от того кто кастует
   # При использование моментально поджигает как землю, так и игроков вокруг.
 
-  #TODO Постоянная огнестойкость
   #TODO Адские мобы нейтральны
   #TODO Получает урон от воды (1 сердце)
   #TODO Получает раз в 35 минут слепоты на 5 сек если в оверворолде
@@ -224,6 +248,9 @@ demon:
     lore: ""
     icon: "MACE"
   max_hp: 20
+  effects_with:
+    global:
+      minecraft:fire_resistance: 255
   exclude_from_random: true
 
   #TODO Способности
@@ -241,7 +268,6 @@ demon:
   # При использование призывает двух блейзов
   # (Блейзы живут 30 сек после чего умирают)
 
-  #TODO Постоянная огнестойкость
   #TODO Адские мобы нейтральны
   #TODO Получает урон от воды (пол-сердца)
   #TODO Получает раз в 45 минут слепоты на 5 сек если в оверворолде
@@ -252,6 +278,9 @@ arch-demon:
     lore: ""
     icon: "MACE"
   max_hp: 23
+  effects_with:
+    global:
+      minecraft:fire_resistance: 255
   exclude_from_random: true
 
   #TODO Способности
@@ -276,7 +305,6 @@ arch-demon:
   # 8 урона.
   # (Во время каста также замедление из за которого нельзя двигаться)
 
-  #TODO Постоянная огнестойкость
   #TODO Адские мобы Дружелюбны
   #TODO Получает раз в 60 минут слепоты на 5 сек если в оверворолде
 
@@ -301,10 +329,12 @@ maga:
     lore: ""
     icon: "MACE"
   max_hp: 14
+  effects_with:
+    global:
+      minecraft:regeneration: 1
+      minecraft:night_vision: 255
   exclude_from_random: true
 
-  # Регенерация 1 
-  # Ночное зрение
   # Призыватель нейтрален
   # Не может использовать Булаву
   #
@@ -325,10 +355,12 @@ volshebkin:
     lore: ""
     icon: "MACE"
   max_hp: 18
+  effects_with:
+    global:
+      minecraft:regeneration: 1
+      minecraft:night_vision: 255
   exclude_from_random: true
 
-  # Регенерация 1 
-  # Ночное зрение
   # Призыватель нейтрален 
   # Не может использовать Булаву
   #
@@ -692,12 +724,12 @@ assasin:
     lore: ""
     icon: "MACE"
   max_hp: 16
+  effects_with:
+    global:
+      minecraft:strength: 1
+      minecraft:speed: 2
   exclude_from_random: true
 
-  # Плюсы:
-  #Сила 1
-  #Скорость 2
-  #
   #Минусы:
   #Не может использовать лук
   #Может использовать ТОЛЬКО: Меч
@@ -724,12 +756,12 @@ killer:
     lore: ""
     icon: "MACE"
   max_hp: 18
+  effects_with:
+    global:
+      minecraft:strength: 2
+      minecraft:speed: 3
   exclude_from_random: true
 
-  # Плюсы:
-  #Сила 2
-  #Скорость 3
-  #
   #Минусы:
   #Не может использовать лук
   #Может использовать ТОЛЬКО: Меч

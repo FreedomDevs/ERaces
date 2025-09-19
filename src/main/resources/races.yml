@@ -16,13 +16,17 @@ elf:
     - COOKED_PORK
     - COOKED_MUTTON
     - COOKED_CHICKEN
-  biome_speed:
-    - FOREST
-    - BIRCH_FOREST
-    - DARK_FOREST
-    - TAIGA
   visuals:
     - ears
+  effects_with:
+    in_biome:
+      - biomes:
+          - forest
+          - birch_forest
+          - dark_forest
+          - taiga
+        effects:
+          speed: 1
   exhaustion_multiplier: 0.75
   slowness_with_iron_and_more_armor: 1
 
@@ -33,7 +37,7 @@ human:
     icon: "BOOK"
   effects_with:
     global:
-      minecraft:haste: 3
+      haste: 3
   hand_distance_bonus: 1 # +1 к длинне руки
 
 bear_beastman:
@@ -61,7 +65,7 @@ wolf_beastman:
   regeneration_per_sec: 0.25
   effects_with:
     global:
-      minecraft:speed: 1
+      speed: 1
   shield_usage: false # Зверолюды не могут использовать щиты
   additional_armor: 1
   peaceful_mobs_afraid: true
@@ -77,7 +81,7 @@ tiger_beastman:
   additional_armor: 2
   effects_with:
     global:
-      minecraft:speed: 2
+      speed: 2
   shield_usage: false  # Зверолюды не могут использовать щиты
   weapon_proficiency:
     hand_damage_additional: 6
@@ -95,7 +99,7 @@ ork:
   max_hp: 30
   effects_with:
     global:
-      minecraft:slowness: 2
+      slowness: 1
   damage_resistance_level: 1
   antiknockback_level_with_iron_and_more_armor: 99999
 
@@ -107,7 +111,7 @@ warrior:
   max_hp: 14
   effects_with:
     global:
-      minecraft:strength: 1
+      strength: 1
   exclude_from_random: true
 
 
@@ -128,9 +132,9 @@ vandal:
   max_hp: 18
   effects_with:
     global:
-      minecraft:strength: 1
-      minecraft:regeneration: 1
-      minecraft:resistance: 1
+      strength: 1
+      regeneration: 1
+      resistance: 1
   exclude_from_random: true
 
   #TODO Способности
@@ -203,7 +207,7 @@ berserk:
   max_hp: 15
   effects_with:
     global:
-      minecraft:fire_resistance: 255
+      fire_resistance: 255
   exclude_from_random: true
 
   #TODO Способности
@@ -225,7 +229,7 @@ crap:
   max_hp: 18
   effects_with:
     global:
-      minecraft:fire_resistance: 255
+      fire_resistance: 255
   exclude_from_random: true
 
   #TODO Способности
@@ -250,7 +254,7 @@ demon:
   max_hp: 20
   effects_with:
     global:
-      minecraft:fire_resistance: 255
+      fire_resistance: 255
   exclude_from_random: true
 
   #TODO Способности
@@ -280,7 +284,7 @@ arch-demon:
   max_hp: 23
   effects_with:
     global:
-      minecraft:fire_resistance: 255
+      fire_resistance: 255
   exclude_from_random: true
 
   #TODO Способности
@@ -331,8 +335,8 @@ maga:
   max_hp: 14
   effects_with:
     global:
-      minecraft:regeneration: 1
-      minecraft:night_vision: 255
+      regeneration: 1
+      night_vision: 255
   exclude_from_random: true
 
   # Призыватель нейтрален
@@ -357,8 +361,8 @@ volshebkin:
   max_hp: 18
   effects_with:
     global:
-      minecraft:regeneration: 1
-      minecraft:night_vision: 255
+      regeneration: 1
+      night_vision: 255
   exclude_from_random: true
 
   # Призыватель нейтрален 
@@ -627,12 +631,16 @@ dark_elf:
     lore: ""
     icon: "MACE"
   max_hp: 12
+  effects_with:
+    in_biome:
+      - biomes:
+          - deep_dark
+          - pale_garden
+        effects:
+          speed: 2
+          regeneration: 1
   exclude_from_random: true
 
-  # Плюсы:
-  #Получает скорость 2 и регенарацию 1 в биомах:
-  #Дипдарк, лес скрипуна.
-  #
   #Минусы:
   #Получает урон от зелья исцеления и регенарации
   #
@@ -653,11 +661,15 @@ drow:
     icon: "MACE"
   max_hp: 12
   exclude_from_random: true
+  effects_with:
+    in_biome:
+      - biomes:
+          - deep_dark
+          - pale_garden
+        effects:
+          speed: 3
+          regeneration: 2
 
-  # Плюсы:
-  #Получает скорость 3 и регенарацию 2 в биомах:
-  #Дипдарк, лес скрипуна.
-  #
   #Минусы:
   #Получает урон от зелья исцеления и регенарации
   #
@@ -683,11 +695,15 @@ dark_elf_king:
     icon: "MACE"
   max_hp: 20
   exclude_from_random: true
+  effects_with:
+    in_biome:
+      - biomes:
+          - deep_dark
+          - pale_garden
+        effects:
+          speed: 3
+          regeneration: 3
 
-  # Плюсы:
-  #Получает скорость 3 и регенарацию 3 в биомах:
-  #Дипдарк, лес скрипуна.
-  #
   #Минусы:
   #Получает урон от зелья исцеления и регенарации
   #
@@ -795,19 +811,31 @@ gentleman:
     icon: "MACE"
   max_hp: 14
   exclude_from_random: true
+  effects_with:
+    in_biome:
+      - biomes:
+          - forest
+          - birch_forest
+          - taiga
+        effects:
+          speed: 2
+          regeneration: 1
+      - biomes:
+          - deep_dark
+          - pale_garden
+          - dark_forest
+        effects:
+          nausea: 1
+          blindness: 1
+  forbidden_foods:
+    - COOKED_BEEF
+    - COOKED_PORK
+    - COOKED_MUTTON
+    - COOKED_CHICKEN
+  weapon_proficiency:
+    bow_damage_multiplier: 1.15
+    bow_projectile_speed_multiplier: 1.15
 
-  # Плюсы:
-  #Получает скорость 2 и регенерацию 1 в биоме
-  #Любого леса кроме: лес скрипуна, тёмный лес
-  #Урон и скорость стрелы x1.15
-  #
-  #Минусы:
-  #Не могут есть мясо
-  #Получают тошноту и слепоту в биомах:
-  #Дипдарк
-  #Лес скрипуна
-  #Тёмный лес
-  #
   #Способности:
   #
   #Дух леса:
@@ -825,19 +853,31 @@ true_blood_elf:
     icon: "MACE"
   max_hp: 16
   exclude_from_random: true
+  effects_with:
+    in_biome:
+      - biomes:
+          - forest
+          - birch_forest
+          - taiga
+        effects:
+          speed: 2
+          regeneration: 1
+      - biomes:
+          - deep_dark
+          - pale_garden
+          - dark_forest
+        effects:
+          nausea: 1
+          blindness: 1
+  forbidden_foods:
+    - COOKED_BEEF
+    - COOKED_PORK
+    - COOKED_MUTTON
+    - COOKED_CHICKEN
+  weapon_proficiency:
+    bow_damage_multiplier: 1.25
+    bow_projectile_speed_multiplier: 1.25
 
-  # Плюсы:
-  #Получает скорость 2 и регенерацию 1 в биоме
-  #Любого леса кроме: лес скрипуна, тёмный лес
-  #Урон и скорость стрелы x1.25
-  #
-  #Минусы:
-  #Не могут есть мясо
-  #Получают тошноту и слепоту в биомах:
-  #Дипдарк
-  #Лес скрипуна
-  #Тёмный лес
-  #
   #Способности:
   #
   #Дух леса:
@@ -862,17 +902,31 @@ elf_king:
     icon: "MACE"
   max_hp: 18
   exclude_from_random: true
+  effects_with:
+    in_biome:
+      - biomes:
+          - forest
+          - birch_forest
+          - taiga
+        effects:
+          speed: 2
+          regeneration: 1
+      - biomes:
+          - deep_dark
+          - pale_garden
+          - dark_forest
+        effects:
+          nausea: 1
+          blindness: 1
+  forbidden_foods:
+    - COOKED_BEEF
+    - COOKED_PORK
+    - COOKED_MUTTON
+    - COOKED_CHICKEN
+  weapon_proficiency:
+    bow_damage_multiplier: 1.5
+    bow_projectile_speed_multiplier: 1.5
 
-  # Получает скорость 2 и регенерацию 1 в биоме
-  #Любого леса кроме: лес скрипуна, тёмный лес
-  #Урон и скорость стрелы x1.5
-  #Минусы:
-  #Не могут есть мясо
-  #Получают тошноту и слепоту в биомах:
-  #Дипдарк
-  #Лес скрипуна
-  #Тёмный лес
-  #
   #Способности:
   #
   #Дух леса:

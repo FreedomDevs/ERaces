@@ -3,7 +3,9 @@ package dev.elysium.eraces.datatypes;
 import org.bukkit.configuration.ConfigurationSection;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -28,7 +30,6 @@ public class ReflectionUtils {
             return map;
         });
     }
-
     public static void loadSection(Object obj, ConfigurationSection section) throws IllegalAccessException {
         for (Field field : obj.getClass().getDeclaredFields()) {
             RaceProperty prop = field.getAnnotation(RaceProperty.class);
@@ -41,6 +42,22 @@ public class ReflectionUtils {
             if (prop.type() == FieldType.SUBGROUP) {
                 value = field.get(obj);
                 loadSection(value, section.getConfigurationSection(path));
+            } else if (prop.type() == FieldType.LIST_SUBGROUP) { // СКОРЕЕ ВСЕГО ЭТО НЕ РАБОТАЕТ ВООБЩЕ, ПИСАЛА НЕЙРОНКА
+                List<?> list = section.getList(path);
+                List<Object> loadedList = new ArrayList<>();
+                Class<?> fieldType = field.getType().getComponentType();
+                for (Object item : list) {
+                    if (item instanceof ConfigurationSection) {
+                        try {
+                            Object subgroup = fieldType.getDeclaredConstructor().newInstance();
+                            loadSection(subgroup, (ConfigurationSection) item);
+                            loadedList.add(subgroup);
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                }
+                value = loadedList;
             } else {
                 value = TYPE_HANDLERS.get(prop.type()).apply(section).apply(path);
             }

@@ -7,5 +7,6 @@ public enum FieldType {
     STRING,
     MAP_STRING_INT,
     LIST,
+    LIST_SUBGROUP,
     SUBGROUP
 }

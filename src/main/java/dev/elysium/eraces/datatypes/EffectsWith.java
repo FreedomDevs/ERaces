@@ -13,4 +13,6 @@ public class EffectsWith {
     Map<String, Integer> global = new HashMap<>();
     @RaceProperty(path = "in_biome", type = FieldType.LIST_SUBGROUP)
     List<EffectsWithBiome> effectsWithBiomes = new ArrayList<>();
+    @RaceProperty(path = "at_light", type = FieldType.LIST_SUBGROUP)
+    List<EffectsWithLight> effectsWithLights = new ArrayList<>();
 }

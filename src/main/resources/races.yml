@@ -488,20 +488,24 @@ self:
     icon: "MACE"
   max_hp: 30
   exclude_from_random: true
+  effects_with:
+    at_light:
+      - light_type: "sky"
+        max: 7
+        effects:
+          haste: 4
+          regeneration: 2
+          strength: 2
+          resistance: 2
+      - light_type: "sky"
+        min: 13
+        effects:
+          weakness: 2
+          slowness: 2
+          mining_fatigue: 1
 
   #Варден, мобы энда, скрипун нейтральны
-  #Находясь во тьме получает 
-#Спешку 4
-#Регенерацию 2
-#Силу 2
-#Сопротивление 2
-#НА скалке получает скорость 5
-#Минусы
-#Находясь на свету (больше 13)
-#Получает
-#Слабость 2
-#Медлительность 1
-#Замедление 2
+#НА скалке получает скорость 53
 #Способности
 #
 #Всевидящее око
@@ -520,31 +524,32 @@ essence:
     icon: "MACE"
   max_hp: 32
   exclude_from_random: true
+  effects_with:
+    at_light:
+      - light_type: "sky"
+        max: 7
+        effects:
+          haste: 4
+          regeneration: 2
+          strength: 2
+          resistance: 2
+      - light_type: "sky"
+        min: 13
+        effects:
+          weakness: 1
+          slowness: 1
+          mining_fatigue: 1
+          speed: 5
+          night_vision: 255
+          regeneration: 1
 
   # Варден, скрипун- нейтральный
   #Мобы энда- дружелюбные
-  #Находясь во тьме-
-  #Спешка 4
-  #Регенерация 2
-  #Сила 2
-  #Сопротивление 2
-  #
   #На скалке получает-
   #Скорость 4
   #Ночное зрение
   #Регенерация 1
   #Сопротивление 1
-  #
-  #Минусы-
-  #Находясь на свету (больше 13)
-  #Получает
-  #Слабость 1
-  #Медлительность 1
-  #Замедление 1
-  #Скорость 5
-  #Ночное зрение
-  #Регенерация 1
-  #
   #Способности:
   #
   #Древнее заражение
@@ -571,26 +576,28 @@ ancient:
     icon: "MACE"
   max_hp: 35
   exclude_from_random: true
+  effects_with:
+    at_light:
+      - light_type: "sky"
+        max: 7
+        effects:
+          haste: 4
+          regeneration: 3
+          strength: 3
+          resistance: 3
+      - light_type: "sky"
+        min: 13
+        effects:
+          slowness: 1
+          mining_fatigue: 1
+          nausea: 1
 
   # Варден, скрипун и мобы энда- дружелюбны
-  #Находясь во тьме-
-  #Спешка 4
-  #Регенерация 3
-  #Сила 3
-  #Сопротивление 3
-  #
   #На скалке получает-
   #Скорость 5
   #Ночное зрение
   #Регенерация 2
   #Сопротивление 1
-  #
-  #Минусы-
-  #Находясь на свету (больше 13)
-  #Получает
-  #Слабость 1
-  #Тошнота 1
-  #Медлительность 1
   #Способности:
   #
   #Всевидящее око

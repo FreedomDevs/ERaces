@@ -15,7 +15,6 @@ public class AntiKnockbackLevelWithIronArmorAndMoreUpdater implements Listener {
         Player player = event.getPlayer();
         int param = ERaces.getPlayerMng().getPlayerRace(player).getAntiKnocbackLevelWithIronArmorAndMore();
         if (param == 0) return;
-
         AttributeInstance attr = player.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE);
         if (attr != null) {
             if (ArmorChecker.allArmorGEQ(player, ArmorChecker.ArmorType.IRON)) {

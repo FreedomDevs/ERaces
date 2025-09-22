@@ -41,6 +41,7 @@ public class RacesReloader implements Listener {
             new SaturationUpdater(),
             new SlownessWithIronAndMoreArmorListener(),
             new EffectsUpdater(),
+            new NeutralMobsUpdater(),
 
             new PlayerJoinListener(),
             new PlayerQuitListener(),

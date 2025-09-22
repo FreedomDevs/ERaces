@@ -57,4 +57,6 @@ public class Race {
     RaceGuiConfig raceGuiConfig = new RaceGuiConfig();
     @RaceProperty(path = "effects_with", type = FieldType.SUBGROUP)
     EffectsWith effectsWith = new EffectsWith();
+    @RaceProperty(path = "neutral_mobs", type = FieldType.LIST)
+    public List<String> neutralMobs = new ArrayList<>();
 }

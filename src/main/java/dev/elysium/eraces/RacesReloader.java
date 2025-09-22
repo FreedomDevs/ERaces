@@ -4,14 +4,9 @@ import dev.elysium.eraces.datatypes.Race;
 import dev.elysium.eraces.events.*;
 import dev.elysium.eraces.updaters.*;
 import dev.elysium.eraces.updaters.damage.*;
-import dev.elysium.eraces.events.*;
 import dev.elysium.eraces.items.RaceChangePotion;
-import dev.elysium.eraces.updaters.*;
 import dev.elysium.eraces.updaters.base.IUnloadable;
 import dev.elysium.eraces.updaters.base.IUpdater;
-import dev.elysium.eraces.updaters.damage.*;
-import dev.elysium.eraces.updaters.speed.BiomeSpeedUpdater;
-import dev.elysium.eraces.updaters.speed.MovementSpeedUpdater;
 import dev.elysium.eraces.updaters.speed.SlownessWithIronAndMoreArmorListener;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -30,9 +25,7 @@ public class RacesReloader implements Listener {
             new ShieldUsageUpdater(),
             new ForbiddenFoodsUpdater(),
             new HandDamageUpdater(),
-            new MovementSpeedUpdater(),
             new AntiKnockbackLevelUpdater(),
-            new BiomeSpeedUpdater(),
             new AxeDamageUpdater(),
             new SwordDamageUpdater(),
             new BowDamageUpdater(),
@@ -40,7 +33,6 @@ public class RacesReloader implements Listener {
             new BowSpeedUpdater(),
             new MaceDamageUpdater(),
             new DualWeaponDamageUpdater(),
-            new DamageResistanceLevelUpdater(),
             new DamageUpdater(),
             new AntiKnockbackLevelWithIronArmorAndMoreUpdater(),
             new DamageAdditionalWithLowerThanIronArmorUpdater(),

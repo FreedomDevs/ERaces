@@ -100,7 +100,7 @@ ork:
   effects_with:
     global:
       slowness: 1
-  damage_resistance_level: 1
+      resistance: 1
   antiknockback_level_with_iron_and_more_armor: 99999
 
 warrior:

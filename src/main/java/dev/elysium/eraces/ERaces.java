@@ -6,7 +6,6 @@ import dev.elysium.eraces.config.MessageManager;
 import dev.elysium.eraces.config.PlayerDataManager;
 import dev.elysium.eraces.config.RacesConfigManager;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
-import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class ERaces extends JavaPlugin {
@@ -14,8 +13,10 @@ public class ERaces extends JavaPlugin {
     private RacesConfigManager racesConfigManager;
     private PlayerDataManager playerDataManager;
 
-    @Getter
     private static ERaces instance;
+    public static ERaces getInstance() {
+        return instance;
+    }
 
     public static MessageManager getMsgMng() {
         return instance.messageManager;

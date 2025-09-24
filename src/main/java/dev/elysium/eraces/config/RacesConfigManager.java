@@ -7,12 +7,17 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 
 public class RacesConfigManager {
     private static final String FILE_NAME = "races.yml";
+    private static final String DIRECTORY_NAME = "races.d";
 
     @Getter
     private final Map<String, Race> races = new HashMap<>();
@@ -34,12 +39,45 @@ public class RacesConfigManager {
 
     private void loadConfig() {
         races.clear();
-        YamlConfiguration config = cfgManager.getConfig();
+        loadFromConfig(cfgManager.getConfig());
 
+        File dir = new File(plugin.getDataFolder(), DIRECTORY_NAME);
+        if (!dir.exists()) {
+            boolean result = dir.mkdirs();
+            if (!result){
+                plugin.getLogger().severe("Не удалось создать папку races.d");
+                return;
+            }
+
+            String[] defaults = {"race1.yml", "race2.yml"}; // все файлы-шаблоны
+            for (String f : defaults) {
+                try (InputStream in = plugin.getResource(DIRECTORY_NAME + "/" + f)) {
+                    if (in != null) {
+                        Files.copy(in, new File(dir, f).toPath());
+                    }
+                } catch (IOException e) {
+                    plugin.getLogger().log(Level.SEVERE, "Не удалось скопировать " + f, e);
+                }
+            }
+        }
+
+        if (dir.isDirectory()) {
+            File[] files = dir.listFiles((d, name) -> (name.endsWith(".yml") || name.endsWith(".yaml")));
+            if (files != null) {
+                for (File file : files) {
+                    plugin.getLogger().info("Загрузка конфига: "+file.getName());
+                    int racesLoaded = loadFromConfig(YamlConfiguration.loadConfiguration(file));
+                    plugin.getLogger().info("Из конфига: "+file.getName()+" загружено "+racesLoaded+" рас");
+                }
+            }
+        }
+    }
+
+    private int loadFromConfig(YamlConfiguration config) {
+        int racesLoaded = 0;
         for (String key : config.getKeys(false)) {
             ConfigurationSection section = config.getConfigurationSection(key);
-            if (section == null)
-                continue;
+            if (section == null) continue;
 
             Race race = new Race();
             race.setId(key);
@@ -51,7 +89,14 @@ public class RacesConfigManager {
                 continue;
             }
 
+            if(races.containsKey(key)){
+                plugin.getLogger().severe("Не удалось загрузить расу "+key+", раса уже объявлена в другом конфиге");
+                continue;
+            }
+
             races.put(key, race);
+            racesLoaded++;
         }
+        return racesLoaded;
     }
 }

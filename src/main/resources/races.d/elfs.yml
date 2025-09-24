@@ -1,0 +1,286 @@
+elf:
+  gui_config:
+    name: "§aЭльф"
+    lore: "§aЛесной народ, в гармонии с природой.\n\n§eБонусы:\n§7»  Скорость II в лесах и равнинах.\n§7»  Удвоенный урон и скорость стрел из лука.\n§7»  Метаболизм: расход голода на 25% меньше.\n\n§cМинусы:\n§7»  Только 15 HP (7.5 сердечек).\n§7»  Штраф за ношение брони выше железной — замедление I.\n§7»  Не может есть мясо (вегетарианец).\n§7»  Урон ближнего боя x0.5.\n\n§7Для выбора нажмите: §f[ПКМ]"
+    icon: "OAK_SAPLING"
+  max_hp: 16                              # Макс хп 15
+  hunger_loss_multiplier: 0.75            # Голодают на 25% медленнее
+  weapon_proficiency:
+    bow_damage_multiplier: 2  # Урон от лука увеличен на 100%
+    bow_projectile_speed_multiplier: 2
+    sword_damage_multiplier: 0.5 # Урон от меча уменьшен на 50%
+    axe_damage_multiplier: 0.5  # Урон от топора уменьшен на 50%
+    mace_damage_multiplier: 0.5  # Урон от булавы увеличен на 50%
+  forbidden_foods: # Запрещённая еда для поедания
+    - COOKED_BEEF
+    - COOKED_PORK
+    - COOKED_MUTTON
+    - COOKED_CHICKEN
+  visuals:
+    - ears
+  effects_with:
+    in_biome:
+      - biomes:
+          - forest
+          - birch_forest
+          - dark_forest
+          - taiga
+        effects:
+          speed: 1
+  exhaustion_multiplier: 0.75
+  slowness_with_iron_and_more_armor: 1
+
+
+dark_elf:
+  gui_config:
+    name: "Тёмный эльф"
+    lore: ""
+    icon: "MACE"
+  max_hp: 12
+  effects_with:
+    in_biome:
+      - biomes:
+          - deep_dark
+          - pale_garden
+        effects:
+          speed: 2
+          regeneration: 1
+  exclude_from_random: true
+
+  #Минусы:
+  #Получает урон от зелья исцеления и регенарации
+  #
+  #Способности:
+  #
+  #Арсенал
+  #Кд 5 минут
+  #При использование выдаёт 16 штук одних из стрел:
+  #Отравление 1
+  #Тошнота 1
+  #Замедление 1
+  #Слепота 1
+
+drow:
+  gui_config:
+    name: "Дроу"
+    lore: ""
+    icon: "MACE"
+  max_hp: 12
+  exclude_from_random: true
+  effects_with:
+    in_biome:
+      - biomes:
+          - deep_dark
+          - pale_garden
+        effects:
+          speed: 3
+          regeneration: 2
+
+  #Минусы:
+  #Получает урон от зелья исцеления и регенарации
+  #
+  #Способности:
+  #
+  #Арсенал
+  #Кд 5 минут
+  #При использование выдаёт 16 штук одних из стрел:
+  #Отравление 2
+  #Тошнота 2
+  #Замедление 2
+  #Слепота 2
+  #
+  #Обстрел:
+  #Кд 10 минут
+  #При использование с неба летят стрелы разных дебаффов
+  #Радиус обстрела 5 на 5 блоков
+
+dark_elf_king:
+  gui_config:
+    name: "Высший тёмный эльф"
+    lore: ""
+    icon: "MACE"
+  max_hp: 20
+  exclude_from_random: true
+  effects_with:
+    in_biome:
+      - biomes:
+          - deep_dark
+          - pale_garden
+        effects:
+          speed: 3
+          regeneration: 3
+
+  #Минусы:
+  #Получает урон от зелья исцеления и регенарации
+  #
+  #Способности:
+  #
+  #Арсенал
+  #Кд 5 минут
+  #При использование выдаёт 16 штук одних из стрел:
+  #Отравление 2
+  #Тошнота 2
+  #Замедление 2
+  #Слепота 2
+  #
+  #Обстрел:
+  #Кд 10 минут
+  #При использование с неба летят стрелы разных дебаффов
+  #Радиус обстрела 5 на 5 блоков
+  #
+  #Засада
+  #Кд 20 минут
+  #При использование игрок получает на минуту:
+  #Невидимость
+  #Скорость 3
+  #Прыгучесть 2
+  #НО также в области применения появляется дым и тот кто зайдет в него не из тёмных эльфов получит:
+  #Тьма 2
+  #Отравление 1
+  #Тошнота 1
+  #На 20 сек
+
+
+gentleman:
+  gui_config:
+    name: "Эльф дворянин"
+    lore: ""
+    icon: "MACE"
+  max_hp: 14
+  exclude_from_random: true
+  effects_with:
+    in_biome:
+      - biomes:
+          - forest
+          - birch_forest
+          - taiga
+        effects:
+          speed: 2
+          regeneration: 1
+      - biomes:
+          - deep_dark
+          - pale_garden
+          - dark_forest
+        effects:
+          nausea: 1
+          blindness: 1
+  forbidden_foods:
+    - COOKED_BEEF
+    - COOKED_PORK
+    - COOKED_MUTTON
+    - COOKED_CHICKEN
+  weapon_proficiency:
+    bow_damage_multiplier: 1.15
+    bow_projectile_speed_multiplier: 1.15
+
+  #Способности:
+  #
+  #Дух леса:
+  #КД- 10 минут
+  #Длительность: 2 минуты
+  #При использование, наклыдывает на владельца:
+  #Регенерация 2
+  #Ночное зрение
+  #Сопротивление 1
+
+true_blood_elf:
+  gui_config:
+    name: "Эльф истинной крови"
+    lore: ""
+    icon: "MACE"
+  max_hp: 16
+  exclude_from_random: true
+  effects_with:
+    in_biome:
+      - biomes:
+          - forest
+          - birch_forest
+          - taiga
+        effects:
+          speed: 2
+          regeneration: 1
+      - biomes:
+          - deep_dark
+          - pale_garden
+          - dark_forest
+        effects:
+          nausea: 1
+          blindness: 1
+  forbidden_foods:
+    - COOKED_BEEF
+    - COOKED_PORK
+    - COOKED_MUTTON
+    - COOKED_CHICKEN
+  weapon_proficiency:
+    bow_damage_multiplier: 1.25
+    bow_projectile_speed_multiplier: 1.25
+
+  #Способности:
+  #
+  #Дух леса:
+  #КД- 9 минут
+  #Длительность: 2 минуты
+  #При использование, наклыдывает на владельца:
+  #Регенерация 2
+  #Ночное зрение
+  #Сопротивление 2
+  #
+  #Кровь первых:
+  #Кд- 15 минут
+  #Длительность 2 минуты
+  #При использование владелец получает скорость 3,
+  # но также теперь игрок может в течение 2 минут нажимая ЛКМ выстреливать сверхбыстрыми стрелами
+  # (Обычные партиклы без стрел, но если попадают то наносят урон в размере 1 сердце)
+
+elf_king:
+  gui_config:
+    name: "Высший эльф"
+    lore: ""
+    icon: "MACE"
+  max_hp: 18
+  exclude_from_random: true
+  effects_with:
+    in_biome:
+      - biomes:
+          - forest
+          - birch_forest
+          - taiga
+        effects:
+          speed: 2
+          regeneration: 1
+      - biomes:
+          - deep_dark
+          - pale_garden
+          - dark_forest
+        effects:
+          nausea: 1
+          blindness: 1
+  forbidden_foods:
+    - COOKED_BEEF
+    - COOKED_PORK
+    - COOKED_MUTTON
+    - COOKED_CHICKEN
+  weapon_proficiency:
+    bow_damage_multiplier: 1.5
+    bow_projectile_speed_multiplier: 1.5
+
+  #Способности:
+  #
+  #Дух леса:
+  #КД- 8 минут
+  #Длительность: 2 минуты
+  #При использование, наклыдывает на владельца:
+  #Регенерация 2
+  #Ночное зрение
+  #Сопротивление 2
+  #
+  #Кровь первых:
+  #Кд- 15 минут
+  #Длительность 2 минуты
+  #При использование владелец получает скорость 3, но также теперь игрок может в течение 2 минут нажимая ЛКМ выстреливать сверхбыстрыми стрелами (Обычные партиклы без стрел, но если попадают то наносят урон в размере 1 сердце)
+  #
+  #Мастер леса:
+  #Длительность 30 секунд
+  #Область 3x3
+  #КД 30 минут
+  #При использование владелец создаёт под собой область 3x3 в которой любой игрок получает регенерацию 2, а также насыщенность.

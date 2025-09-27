@@ -2,24 +2,30 @@ package dev.elysium.eraces;
 
 import dev.elysium.eraces.commands.MyraceCommand;
 import dev.elysium.eraces.commands.RacesCommand;
+import dev.elysium.eraces.config.GlobalConfigManager;
 import dev.elysium.eraces.config.MessageManager;
 import dev.elysium.eraces.config.PlayerDataManager;
 import dev.elysium.eraces.config.RacesConfigManager;
+import dev.elysium.eraces.datatypes.configs.MessageConfigData;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class ERaces extends JavaPlugin {
+    private static ERaces instance;
+
     private MessageManager messageManager;
     private RacesConfigManager racesConfigManager;
     private PlayerDataManager playerDataManager;
+    private GlobalConfigManager globalConfigManager;
+    private String lang;
+    private MessageConfigData msg;
 
-    private static ERaces instance;
     public static ERaces getInstance() {
         return instance;
     }
 
-    public static MessageManager getMsgMng() {
-        return instance.messageManager;
+    public static MessageConfigData getMsgMng() {
+        return instance.messageManager.getData();
     }
 
     public static RacesConfigManager getRacesMng() {
@@ -33,9 +39,19 @@ public class ERaces extends JavaPlugin {
     @Override
     public void onLoad() {
         instance = this;
-        messageManager = new MessageManager(this);
+
         racesConfigManager = new RacesConfigManager(this);
         playerDataManager = new PlayerDataManager(this);
+
+        try {
+            globalConfigManager = new GlobalConfigManager(this);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+
+        lang = globalConfigManager.getData().getLang();
+        messageManager = new MessageManager(this, lang);
+        msg = messageManager.getData();
     }
 
     @Override
@@ -43,12 +59,12 @@ public class ERaces extends JavaPlugin {
         RacesReloader.startListeners(this);
         registerCommands();
 
-        getLogger().info(messageManager.getString("plugin.enabled"));
+        getLogger().info(msg.getPluginEnabled());
     }
 
     @Override
     public void onDisable() {
-        getLogger().info(messageManager.getString("plugin.disabled", "Выключение😞"));
+        getLogger().info(msg.getPluginDisabled());
     }
 
     private void registerCommands() {

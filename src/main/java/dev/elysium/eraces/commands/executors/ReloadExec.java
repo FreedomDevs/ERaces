@@ -24,7 +24,7 @@ public class ReloadExec {
         ERaces.getPlayerMng().loadData();
         RacesReloader.reloadRaceForAllPlayers();
         VisualsManager.reloadVisualsForAllPlayer();
-        String message = ERaces.getMsgMng().getString("commands.reload.reload_success");
+        String message = ERaces.getMsgMng().getReloadSuccess();
         ChatUtil.message(ctx.getSource().getSender(), message);
         return Command.SINGLE_SUCCESS;
     }

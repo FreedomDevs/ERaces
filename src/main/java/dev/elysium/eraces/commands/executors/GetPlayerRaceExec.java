@@ -33,11 +33,11 @@ public class GetPlayerRaceExec {
         String playerRace = ERaces.getPlayerMng().getPlayerRaceId(player);
 
         if (sender.getName().equals(playerName)) {
-            String message = ERaces.getMsgMng().getString("commands.get_player_race.race_check_success_me");
+            String message = ERaces.getMsgMng().getGetPlayerRaceSuccessMe();
             ChatUtil.message(sender, message,
                     Map.of("{race}", playerRace));
         } else {
-            String message = ERaces.getMsgMng().getString("commands.get_player_race.race_check_success");
+            String message = ERaces.getMsgMng().getGetPlayerRaceSuccess();
             ChatUtil.message(sender, message,
                     Map.of("{player}", playerName, "{race}", playerRace));
         }

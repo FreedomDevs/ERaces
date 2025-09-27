@@ -46,7 +46,7 @@ public class SetPlayerRaceExec {
         String newRace = ctx.getArgument("raceId", String.class);
 
         if (!ERaces.getRacesMng().getRaces().containsKey(newRace)) {
-            String message = ERaces.getMsgMng().getString("commands.set_player_race.race_not_found");
+            String message = ERaces.getMsgMng().getSetPlayerRaceNotFound();
             ChatUtil.message(ctx.getSource().getSender(), message);
             return Command.SINGLE_SUCCESS;
         }
@@ -54,7 +54,7 @@ public class SetPlayerRaceExec {
         ERaces.getPlayerMng().setPlayerRace(player, newRace);
         RacesReloader.reloadRaceForPlayer(player);
         VisualsManager.updateVisualsForPlayer(player);
-        String message = ERaces.getMsgMng().getString("commands.set_player_race.set_success");
+        String message = ERaces.getMsgMng().getSetPlayerRaceSuccess();
         ChatUtil.message(ctx.getSource().getSender(), message, Map.of("{player}", player.getName(), "{race}", newRace));
         return Command.SINGLE_SUCCESS;
     }

@@ -31,7 +31,7 @@ public class MyraceCommand {
                         return Command.SINGLE_SUCCESS;
                     }
 
-                    String message = ERaces.getMsgMng().getString("commands.get_player_race.race_check_success_me");
+                    String message = ERaces.getMsgMng().getGetPlayerRaceSuccessMe();
                     ChatUtil.message(player, message, Map.of("{race}", playerRace));
                     return Command.SINGLE_SUCCESS;
                 }).build();

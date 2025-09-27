@@ -29,7 +29,7 @@ public class ShieldUsageUpdater implements Listener, IUpdater, IUnloadable {
                     && event.getItem().getType() == Material.SHIELD) {
 
                 event.getPlayer()
-                        .sendActionBar(ChatUtil.format(ERaces.getMsgMng().getString("shield_block"), Map.of()));
+                        .sendActionBar(ChatUtil.format(ERaces.getMsgMng().getShieldBlock(), Map.of()));
 
                 event.getPlayer().playSound(
                         event.getPlayer().getLocation(),

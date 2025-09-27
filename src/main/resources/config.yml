@@ -1,0 +1,4 @@
+plugin:
+  prefix: "<green>[ERaces] "
+  debug: false
+  lang: "ru"

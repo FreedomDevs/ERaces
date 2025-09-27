@@ -10,6 +10,8 @@ import dev.elysium.eraces.datatypes.configs.MessageConfigData;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.logging.Level;
+
 public class ERaces extends JavaPlugin {
     private static ERaces instance;
 
@@ -58,6 +60,10 @@ public class ERaces extends JavaPlugin {
     public void onEnable() {
         RacesReloader.startListeners(this);
         registerCommands();
+
+        if (globalConfigManager.getData().isDebug()) {
+            getLogger().setLevel(Level.FINE);
+        }
 
         getLogger().info(msg.getPluginEnabled());
     }

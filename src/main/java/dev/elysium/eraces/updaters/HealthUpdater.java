@@ -11,7 +11,7 @@ public class HealthUpdater implements IUpdater {
     public void update(Race race, Player player) {
         double maxHealth = race.getMaxHp();
 
-        AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+        AttributeInstance attribute = player.getAttribute(Attribute.MAX_HEALTH);
         if (attribute != null)
             attribute.setBaseValue(maxHealth);
     }

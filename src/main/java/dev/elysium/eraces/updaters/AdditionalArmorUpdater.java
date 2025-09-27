@@ -11,8 +11,8 @@ public class AdditionalArmorUpdater implements IUpdater {
     public void update(Race race, Player player) {
         double additionalArmor = race.getAdditionalArmor();
 
-        AttributeInstance attibute = player.getAttribute(Attribute.GENERIC_ARMOR);
-        if (attibute != null)
-            attibute.setBaseValue(additionalArmor);
+        AttributeInstance attribute = player.getAttribute(Attribute.ARMOR);
+        if (attribute != null)
+            attribute.setBaseValue(additionalArmor);
     }
 }

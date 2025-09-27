@@ -5,13 +5,19 @@ import dev.elysium.eraces.datatypes.*;
 import dev.elysium.eraces.updaters.base.IUpdater;
 import dev.elysium.eraces.utils.EffectUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.NamespacedKey;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
+import java.util.Objects;
+
 public class EffectsUpdater implements IUpdater {
+    @SuppressWarnings({"FieldCanBeLocal", "unused"})
     private final int biomeTask;
+    @SuppressWarnings({"FieldCanBeLocal", "unused"})
     private final int lightTask;
+    @SuppressWarnings({"FieldCanBeLocal", "unused"})
     private final int blockTask;
 
     public enum LightType {
@@ -55,7 +61,8 @@ public class EffectsUpdater implements IUpdater {
             Biome currentBiome = player.getWorld().getBiome(player.getLocation());
 
             for (EffectsWithBiome effectConfig : race.getEffectsWith().getEffectsWithBiomes()) {
-                if (effectConfig.getBiomes().stream().anyMatch(b -> b.equalsIgnoreCase(currentBiome.name()))) {
+                if (effectConfig.getBiomes().stream().map(NamespacedKey::fromString)
+                        .anyMatch(biomeKey -> Objects.equals(biomeKey, currentBiome.getKey()))) {
                     EffectUtils.applyEffects(player, effectConfig.getEffects(), 23);
                 }
             }
@@ -85,7 +92,7 @@ public class EffectsUpdater implements IUpdater {
             Block block = player.getLocation().getBlock();
 
             for (EffectsWithBlock effectConfig : race.getEffectsWith().getEffectsWithBlocks()) {
-                if (effectConfig.getBlocks().contains(block.getType())) {
+                if (effectConfig.getBlocks().contains(block.getType().name())) {
                     EffectUtils.applyEffects(player, effectConfig.getEffects(), 20);
                 }
             }

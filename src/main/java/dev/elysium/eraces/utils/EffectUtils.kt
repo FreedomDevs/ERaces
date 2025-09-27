@@ -12,12 +12,11 @@ import org.bukkit.potion.PotionEffectType
 object EffectUtils {
     @JvmStatic
     fun getPotionEffectType(keyStr: String): PotionEffectType {
-        val namespacedKeyStr = if (keyStr.contains(":")) keyStr else "minecraft:$keyStr"
-        val key = NamespacedKey.fromString(namespacedKeyStr)
-            ?: throw IllegalArgumentException("NamespacedKey is null for $namespacedKeyStr")
+        val key = NamespacedKey.fromString(keyStr)
+            ?: throw IllegalArgumentException("NamespacedKey is null for $keyStr")
 
         return Registry.POTION_EFFECT_TYPE[key]
-            ?: throw IllegalArgumentException("PotionEffectType not found for key $namespacedKeyStr")
+            ?: throw IllegalArgumentException("PotionEffectType not found for key $keyStr")
 
     }
 
@@ -40,8 +39,8 @@ object EffectUtils {
         val type = EffectsUpdater.LightType.fromString(lightType)
         val lightLevel = when (type) {
             EffectsUpdater.LightType.SUM -> block.lightLevel
-            EffectsUpdater.LightType.SKY -> block.getLightFromSky()
-            EffectsUpdater.LightType.BLOCK -> block.getLightFromBlocks()
+            EffectsUpdater.LightType.SKY -> block.lightFromSky
+            EffectsUpdater.LightType.BLOCK -> block.lightFromBlocks
         }
         return lightLevel in min..max
     }

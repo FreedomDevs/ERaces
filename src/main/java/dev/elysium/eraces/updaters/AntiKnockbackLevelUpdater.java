@@ -11,7 +11,7 @@ public class AntiKnockbackLevelUpdater implements IUpdater {
     public void update(Race race, Player player) {
         int antiKnockbackLevel = race.getAntiKnockbackLevel();
 
-        AttributeInstance attribute = player.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE);
+        AttributeInstance attribute = player.getAttribute(Attribute.KNOCKBACK_RESISTANCE);
         if (attribute != null)
             attribute.setBaseValue(antiKnockbackLevel);
     }

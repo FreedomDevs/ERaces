@@ -19,9 +19,9 @@ public class ERaces extends JavaPlugin {
     private RacesConfigManager racesConfigManager;
     private PlayerDataManager playerDataManager;
     private GlobalConfigManager globalConfigManager;
-    private String lang;
     private MessageConfigData msg;
 
+    @SuppressWarnings("FieldMayHaveGetter")
     public static ERaces getInstance() {
         return instance;
     }
@@ -51,7 +51,7 @@ public class ERaces extends JavaPlugin {
             throw new RuntimeException(e);
         }
 
-        lang = globalConfigManager.getData().getLang();
+        String lang = globalConfigManager.getData().getLang();
         messageManager = new MessageManager(this, lang);
         msg = messageManager.getData();
     }

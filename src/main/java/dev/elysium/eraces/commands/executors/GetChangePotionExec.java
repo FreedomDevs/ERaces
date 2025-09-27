@@ -14,6 +14,7 @@ public class GetChangePotionExec {
 
     public GetChangePotionExec() {
         this.cmd = Commands.literal("get_change_potion")
+                .requires(source -> source.getSender() instanceof Player)
                 .executes(ctx -> {
                     ((Player) ctx.getSource().getSender()).getInventory().addItem(RaceChangePotion.createCustomPotion());
                     return Command.SINGLE_SUCCESS;

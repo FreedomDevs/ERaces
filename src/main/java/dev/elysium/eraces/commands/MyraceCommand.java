@@ -7,7 +7,6 @@ import dev.elysium.eraces.utils.ChatUtil;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import lombok.Getter;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 import java.util.Map;
@@ -18,22 +17,22 @@ public class MyraceCommand {
 
     public MyraceCommand() {
         this.cmd = Commands.literal("myrace")
+                .requires(source -> source.getSender() instanceof Player)
                 .executes(ctx -> {
-                    Entity executor = ctx.getSource().getExecutor();
-                    if (!(executor instanceof Player player)) {
-                        ChatUtil.message(executor, "Эту команду может использовать только игрок.");
-                        return Command.SINGLE_SUCCESS;
-                    }
-                    String playerRace = ERaces.getPlayerMng().getPlayerRaceId(player);
-
-                    if (playerRace == null || playerRace.isEmpty()) {
-                        ChatUtil.message(player, "У вас не выбрана раса.");
-                        return Command.SINGLE_SUCCESS;
-                    }
-
-                    String message = ERaces.getMsgMng().getGetPlayerRaceSuccessMe();
-                    ChatUtil.message(player, message, Map.of("{race}", playerRace));
+                    myraceCommandLogic((Player) ctx.getSource().getSender());
                     return Command.SINGLE_SUCCESS;
                 }).build();
+    }
+
+    private static void myraceCommandLogic(Player player) {
+        String playerRace = ERaces.getPlayerMng().getPlayerRaceId(player);
+
+        if (playerRace == null || playerRace.isEmpty()) {
+            ChatUtil.message(player, ERaces.getMsgMng().getRaceNotSelected());
+            return;
+        }
+
+        String message = ERaces.getMsgMng().getGetPlayerRaceSuccessMe();
+        ChatUtil.message(player, message, Map.of("{race}", playerRace));
     }
 }

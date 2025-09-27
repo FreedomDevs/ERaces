@@ -26,5 +26,8 @@ commands:
   reload:
     reload_success: "<green>Конфиг перезагружен"
 
+  myrace:
+    race_not_selected: "<red>У вас не выбрана раса"
+
 shield_block: "<red>Ваша раса не умеет использовать щиты"
 forbidden_foods: "<red>Ваша раса не приемлет данную еду"

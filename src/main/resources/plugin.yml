@@ -2,12 +2,12 @@ name: FDP_Races
 version: ${version}
 main: dev.elysium.eraces.ERaces
 description: Просто плагин на расы
-api-version: '1.21.1'
+api-version: '1.21.8'
 
 commands:
   races:
     description: "Коаманда на расы типо"
-    permission: fdp_races.races_command.use
+    permission: eraces.races_command.use
   myrace:
     description: "Показывает расу игрока"
     usage: /myrace

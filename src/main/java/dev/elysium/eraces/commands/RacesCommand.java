@@ -13,7 +13,7 @@ public class RacesCommand {
 
     public RacesCommand() {
         this.cmd = Commands.literal("races")
-                .requires(sender -> sender.getSender().hasPermission("fdp_races.races_command.use"))
+                .requires(sender -> sender.getSender().hasPermission("eraces.races_command.use"))
                 .then(new ReloadExec().getCmd())
                 .then(new RegeneratePlayerRaceExec().getCmd())
                 .then(new GetPlayerRaceExec().getCmd())

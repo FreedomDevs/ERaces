@@ -51,6 +51,9 @@ public class MessageConfigData {
     @ConfigsProperty(path = "commands.reload.reload_success", defaultString = "<green>Конфиг перезагружен")
     private String reloadSuccess;
 
+    @ConfigsProperty(path = "commands.myrace.race_not_selected", defaultString = "<red>У вас не выбрана раса")
+    private String raceNotSelected;
+
     @ConfigsProperty(path = "shield_block", defaultString = "<red>Ваша раса не умеет использовать щиты")
     private String shieldBlock;
 

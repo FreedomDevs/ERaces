@@ -41,6 +41,7 @@ public class SetPlayerRaceExec {
         return builder.buildFuture();
     }
 
+    @SuppressWarnings("SameReturnValue")
     private int exec(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
         Player player = ctx.getArgument("target", PlayerSelectorArgumentResolver.class).resolve(ctx.getSource()).getFirst();
         String newRace = ctx.getArgument("raceId", String.class);

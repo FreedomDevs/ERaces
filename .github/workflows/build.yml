@@ -22,22 +22,20 @@ jobs:
           # Получаем build.gradle.kts из предыдущего коммита
           git show HEAD~1:build.gradle.kts > old_build.gradle.kts
 
-          # Извлекаем версию из старого файла
+          # Извлекаем версию
           version_before=$(grep -Po '(?<=version\s*=\s*")[^"]*' old_build.gradle.kts || echo "undefined")
-
-          # Извлекаем версию из текущего файла
           version_after=$(grep -Po '(?<=version\s*=\s*")[^"]*' build.gradle.kts || echo "undefined")
 
-          echo "version_before=$version_before"
-          echo "version_after=$version_after"
+          echo "Old version: $version_before"
+          echo "New version: $version_after"
 
-          if [ "$version_before" != "$version_after" ]; then
-            echo "::set-output name=changed::true"
+          if [ "$version_before" != "$version_after" ] && [ "$version_after" != "undefined" ]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
           else
-            echo "::set-output name=changed::false"
+            echo "changed=false" >> "$GITHUB_OUTPUT"
           fi
 
-          echo "::set-output name=version_after::$version_after"
+          echo "version_after=$version_after" >> "$GITHUB_OUTPUT"
 
   build_and_release:
     needs: check-version-change
@@ -50,13 +48,23 @@ jobs:
         uses: actions/setup-java@v3
         with:
           distribution: temurin
-          java-version: 17
+          java-version: 21
 
       - name: Build project with Gradle
         run: ./gradlew clean build
 
-      - name: Create GitHub Release
-        id: create_release
+      - name: Get commits since previous release
+        id: commits
+        run: |
+          # Получаем последний тег перед текущим
+          PREV_TAG=$(git describe --tags --abbrev=0 HEAD^)
+          echo "Previous tag: $PREV_TAG"
+
+          # Берем все коммиты с предыдущего тега
+          COMMITS=$(git log $PREV_TAG..HEAD --pretty=format:"- %s")
+          echo "commits=$COMMITS" >> "$GITHUB_OUTPUT"
+
+      - name: Create GitHub Release with artifacts
         uses: softprops/action-gh-release@v1
         with:
           tag_name: v${{ needs.check-version-change.outputs.version_after }}
@@ -65,13 +73,7 @@ jobs:
             Автоматический релиз версии ${{ needs.check-version-change.outputs.version_after }}
 
             Последние коммиты:
-            $(git log --pretty=format:"- %s" HEAD~5..HEAD)
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Upload JAR artifacts to release
-        uses: softprops/action-gh-release@v1
-        with:
+            ${{ steps.commits.outputs.commits }}
           files: build/libs/*.jar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

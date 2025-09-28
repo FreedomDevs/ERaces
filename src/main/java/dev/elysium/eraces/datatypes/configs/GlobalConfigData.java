@@ -14,8 +14,11 @@ public class GlobalConfigData {
     @ConfigsProperty(path = "plugin.debug", type = FieldType.BOOLEAN, defaultBoolean = false)
     private boolean debug;
 
-    @ConfigsProperty(path = "plugin.lang", type = FieldType.STRING, defaultString = "ru")
-    private String lang;
+    @ConfigsProperty(path = "plugin.translator", type = FieldType.STRING, defaultString = "paper")
+    private String translator;
+
+    @ConfigsProperty(path = "plugin.lang", type = FieldType.STRING, defaultString = "ru_RU")
+    private String defaultLang;
 
     public GlobalConfigData() {}
 }

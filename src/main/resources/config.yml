@@ -1,4 +1,7 @@
 plugin:
   prefix: "<green>[ERaces] "
   debug: false
-  lang: "ru"
+
+  # only_default/paper/resource_pack
+  translator: "paper"
+  default_lang: "ru_RU"

@@ -1,0 +1,28 @@
+{
+  "plugin.enabled": "Plugin enabled!",
+  "plugin.disabled": "Plugin disabled",
+
+  "commands.get_player_race.race_check_error": "<red>You did not specify a player to get the race",
+  "commands.get_player_race.race_check_success": "<green>Player <yellow>{player} <green>has the race <yellow>{race}",
+  "commands.get_player_race.race_check_success_me": "<green>Your race is <yellow>{race}",
+
+  "commands.races.subcommand_error": "<red>No subcommand specified",
+  "commands.races.subcommand_is_null": "<red>Subcommand: <yellow>{arg} <red>does not exist",
+
+  "commands.regenerate_player_race.console_usage": "<red>Usage from console: /command <player name>",
+  "commands.regenerate_player_race.nick_error": "<red>Incorrect player name",
+  "commands.regenerate_player_race.regenerate_success": "<green>Player <yellow>{player} <green>race set to: <yellow>{race}",
+
+  "commands.set_player_race.small_args": "<red>Not enough arguments",
+  "commands.set_player_race.race_not_found": "<red>That race does not exist",
+  "commands.set_player_race.nick_null": "<red>Incorrect player name",
+  "commands.set_player_race.set_success": "<green>Player <yellow>{player} <green>race set to: <yellow>{race}",
+
+  "commands.reload.reload_success": "<green>Config reloaded",
+  "commands.myrace.race_not_selected": "<red>You have not selected a race",
+
+  "translations.reloaded": "<green>Reloaded translations for  {0}",
+
+  "shield_block": "<red>Your race cannot use shields",
+  "forbidden_foods": "<red>Your race cannot eat this food"
+}

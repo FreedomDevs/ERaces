@@ -6,7 +6,6 @@ import dev.elysium.eraces.config.GlobalConfigManager;
 import dev.elysium.eraces.config.MessageManager;
 import dev.elysium.eraces.config.PlayerDataManager;
 import dev.elysium.eraces.config.RacesConfigManager;
-import dev.elysium.eraces.datatypes.configs.MessageConfigData;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -19,15 +18,9 @@ public class ERaces extends JavaPlugin {
     private RacesConfigManager racesConfigManager;
     private PlayerDataManager playerDataManager;
     private GlobalConfigManager globalConfigManager;
-    private MessageConfigData msg;
-
     @SuppressWarnings("FieldMayHaveGetter")
     public static ERaces getInstance() {
         return instance;
-    }
-
-    public static MessageConfigData getMsgMng() {
-        return instance.messageManager.getData();
     }
 
     public static RacesConfigManager getRacesMng() {
@@ -36,6 +29,10 @@ public class ERaces extends JavaPlugin {
 
     public static PlayerDataManager getPlayerMng() {
         return instance.playerDataManager;
+    }
+
+    public static GlobalConfigManager getGlobalCfg() {
+        return instance.globalConfigManager;
     }
 
     @Override
@@ -51,9 +48,7 @@ public class ERaces extends JavaPlugin {
             throw new RuntimeException(e);
         }
 
-        String lang = globalConfigManager.getData().getLang();
-        messageManager = new MessageManager(this, lang);
-        msg = messageManager.getData();
+        messageManager = new MessageManager();
     }
 
     @Override

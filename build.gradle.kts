@@ -21,6 +21,7 @@ repositories {
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21.8-R0.1-SNAPSHOT")
+    compileOnly("org.xerial:sqlite-jdbc:3.50.3.0")
     implementation(kotlin("stdlib"))
     compileOnly("org.projectlombok:lombok:1.18.30")
     annotationProcessor("org.projectlombok:lombok:1.18.30")
@@ -37,7 +38,7 @@ java {
 
 tasks {
     runServer {
-        minecraftVersion("1.21.1")
+        minecraftVersion("1.21.8")
     }
 
     // jar = shadowJar

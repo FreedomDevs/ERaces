@@ -7,9 +7,12 @@ import dev.elysium.eraces.config.MessageManager;
 import dev.elysium.eraces.config.PlayerDataManager;
 import dev.elysium.eraces.config.RacesConfigManager;
 import dev.elysium.eraces.datatypes.configs.MessageConfigData;
+import dev.elysium.eraces.utils.SqliteDatabase;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 
 public class ERaces extends JavaPlugin {
@@ -20,6 +23,7 @@ public class ERaces extends JavaPlugin {
     private PlayerDataManager playerDataManager;
     private GlobalConfigManager globalConfigManager;
     private MessageConfigData msg;
+    private SqliteDatabase database;
 
     @SuppressWarnings("FieldMayHaveGetter")
     public static ERaces getInstance() {
@@ -43,7 +47,8 @@ public class ERaces extends JavaPlugin {
         instance = this;
 
         racesConfigManager = new RacesConfigManager(this);
-        playerDataManager = new PlayerDataManager(this);
+        database = new SqliteDatabase();
+        playerDataManager = new PlayerDataManager(database);
 
         try {
             globalConfigManager = new GlobalConfigManager(this);
@@ -58,6 +63,18 @@ public class ERaces extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        database.connect(this.getDataPath().toAbsolutePath()+"database_sqlite.db");
+        try (Statement stmt = database.getConnection().createStatement()) {
+            stmt.executeUpdate("""
+                    CREATE TABLE IF NOT EXISTS races (
+                        uuid TEXT PRIMARY KEY,
+                        race_id TEXT
+                    );
+                """);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
         RacesReloader.startListeners(this);
         registerCommands();
 

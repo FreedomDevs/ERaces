@@ -9,6 +9,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
 
 import java.util.Objects;
 
@@ -101,6 +102,10 @@ public class EffectsUpdater implements IUpdater {
 
     @Override
     public void update(Race race, Player player) {
+        for (PotionEffect effect : player.getActivePotionEffects())
+            if (effect.getDuration() >= 20 * 60 * 60 * 24 * 356) // Удаляем эффекты с длительностью больше года
+                player.removePotionEffect(effect.getType());
+
         EffectUtils.applyEffects(player, race.getEffectsWith().getGlobal(), Integer.MAX_VALUE);
     }
 }

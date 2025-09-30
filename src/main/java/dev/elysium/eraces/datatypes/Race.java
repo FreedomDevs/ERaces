@@ -58,5 +58,18 @@ public class Race {
     @RaceProperty(path = "effects_with", type = FieldType.SUBGROUP)
     EffectsWith effectsWith = new EffectsWith();
     @RaceProperty(path = "neutral_mobs", type = FieldType.LIST)
-    public List<String> neutralMobs = new ArrayList<>();
+    List<String> neutralMobs = new ArrayList<>();
+
+    @RaceProperty(path = "abilities", type = FieldType.LIST)
+    List<String> abilities = new ArrayList<>();
+
+
+    //    Kotlin getters/setters
+    public List<String> getAbilsKT() {
+        return abilities;
+    }
+
+    public List<String> getNeutralMobsKT() {
+        return neutralMobs;
+    }
 }

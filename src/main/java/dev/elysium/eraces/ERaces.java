@@ -1,5 +1,6 @@
 package dev.elysium.eraces;
 
+import dev.elysium.eraces.abilities.AbilsManager;
 import dev.elysium.eraces.commands.MyraceCommand;
 import dev.elysium.eraces.commands.RacesCommand;
 import dev.elysium.eraces.config.GlobalConfigManager;
@@ -20,6 +21,7 @@ public class ERaces extends JavaPlugin {
     private PlayerDataManager playerDataManager;
     private GlobalConfigManager globalConfigManager;
     private MessageConfigData msg;
+    private AbilsManager abilsManager;
 
     @SuppressWarnings("FieldMayHaveGetter")
     public static ERaces getInstance() {
@@ -38,12 +40,17 @@ public class ERaces extends JavaPlugin {
         return instance.playerDataManager;
     }
 
+    public static AbilsManager getABM() {
+        return instance.abilsManager;
+    }
+
     @Override
     public void onLoad() {
         instance = this;
 
         racesConfigManager = new RacesConfigManager(this);
         playerDataManager = new PlayerDataManager(this);
+        abilsManager = new AbilsManager(this);
 
         try {
             globalConfigManager = new GlobalConfigManager(this);
@@ -60,6 +67,8 @@ public class ERaces extends JavaPlugin {
     public void onEnable() {
         RacesReloader.startListeners(this);
         registerCommands();
+
+        abilsManager.init();
 
         if (globalConfigManager.getData().isDebug()) {
             getLogger().setLevel(Level.FINE);

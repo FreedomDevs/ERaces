@@ -11,6 +11,8 @@ commands:
   myrace:
     description: "Показывает расу игрока"
     usage: /myrace
+  abils:
+    usage: /abils <id>
 
 
 permissions:

@@ -1,28 +1,35 @@
 package dev.elysium.eraces.commands
 
+import com.mojang.brigadier.Command
+import com.mojang.brigadier.arguments.StringArgumentType
+import com.mojang.brigadier.tree.LiteralCommandNode
 import dev.elysium.eraces.ERaces
-import org.bukkit.command.Command
-import org.bukkit.command.CommandSender
+import io.papermc.paper.command.brigadier.CommandSourceStack
+import io.papermc.paper.command.brigadier.Commands
 import org.bukkit.entity.Player
 
-class AbilsCommand() : Command("abils") {
-    init {
-        description = "Использовать способности"
-        usageMessage = "/abils <id>"
-    }
+class AbilsCommand {
 
-    override fun execute(sender: CommandSender, label: String, args: Array<out String>): Boolean {
-        if (sender !is Player) {
-            sender.sendMessage("§cТолько игрок может использовать способности")
-            return true
-        }
+    val cmd: LiteralCommandNode<CommandSourceStack> = Commands.literal("abils")
+        .requires { source -> source.sender is Player }
+        .then(
+            Commands.argument("id", StringArgumentType.word())
+                .executes { context ->
+                    val sender = context.source.sender
+                    if (sender !is Player) {
+                        sender.sendMessage("§cТолько игрок может использовать способности")
+                        return@executes Command.SINGLE_SUCCESS
+                    }
 
-        if (args.isEmpty()) {
+                    val id = StringArgumentType.getString(context, "id")
+                    ERaces.getABM().activate(sender, id)
+                    Command.SINGLE_SUCCESS
+                }
+        )
+        .executes { context ->
+            val sender = context.source.sender
             sender.sendMessage("§eИспользование: /abils <id>")
-            return true
+            Command.SINGLE_SUCCESS
         }
-
-        ERaces.getABM().activate(sender, args[0])
-        return true
-    }
+        .build()
 }

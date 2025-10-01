@@ -1,7 +1,9 @@
 package dev.elysium.eraces.abilities
 
 import dev.elysium.eraces.ERaces
+import dev.elysium.eraces.abilities.abils.BlockAbility
 import dev.elysium.eraces.abilities.abils.FireballAbility
+import dev.elysium.eraces.abilities.abils.RageModeAbility
 import org.bukkit.entity.Player
 import java.util.logging.Level
 
@@ -28,7 +30,9 @@ class AbilsManager(private val plugin: ERaces) {
         instance = this
 
         val allAbilities: List<IAbility> = listOf(
-            FireballAbility()
+            FireballAbility(),
+            BlockAbility(),
+            RageModeAbility()
         )
 
         register(*allAbilities.toTypedArray())

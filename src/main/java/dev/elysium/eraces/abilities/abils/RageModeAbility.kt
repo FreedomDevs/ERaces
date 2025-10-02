@@ -74,7 +74,7 @@ class RageModeAbility : IAbility {
         cfg.set("power_level", 3)
 
         cfg.set("regeneration_duration", 60)
-        cfg.set("regeneration_level", 20)
+        cfg.set("regeneration_level", 2)
 
         cfg.set("absorption_duration", 300)
         cfg.set("absorption_level", 1)

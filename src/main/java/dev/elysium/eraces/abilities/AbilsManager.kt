@@ -4,6 +4,7 @@ import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.abilities.abils.BlockAbility
 import dev.elysium.eraces.abilities.abils.BossRushAbility
 import dev.elysium.eraces.abilities.abils.FireballAbility
+import dev.elysium.eraces.abilities.abils.ForestSpiritAbility
 import dev.elysium.eraces.abilities.abils.RageModeAbility
 import org.bukkit.entity.Player
 import java.util.logging.Level
@@ -34,7 +35,8 @@ class AbilsManager(private val plugin: ERaces) {
             FireballAbility(),
             BlockAbility(),
             RageModeAbility(),
-            BossRushAbility()
+            BossRushAbility(),
+            ForestSpiritAbility()
         )
 
         register(*allAbilities.toTypedArray())

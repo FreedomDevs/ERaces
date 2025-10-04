@@ -43,8 +43,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Полная история, все теги
 
-      - name: Set up JDK 17
+
+      - name: Set up JDK 21
         uses: actions/setup-java@v3
         with:
           distribution: temurin

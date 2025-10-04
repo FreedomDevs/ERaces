@@ -1,4 +1,6 @@
 name: Build and Release on Version Change
+permissions:
+  contents: write
 
 on:
   push:

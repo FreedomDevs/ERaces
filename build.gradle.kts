@@ -9,7 +9,7 @@ plugins {
 
 group = "dev.elysium.eraces"
 
-version = "1.7.5"
+version = "1.7.6"
 
 repositories {
     maven {

@@ -23,8 +23,8 @@ jobs:
           git show HEAD~1:build.gradle.kts > old_build.gradle.kts
 
           # Извлекаем версию
-          version_before=$(grep -Po '(?<=version\s*=\s*")[^"]*' old_build.gradle.kts || echo "undefined")
-          version_after=$(grep -Po '(?<=version\s*=\s*")[^"]*' build.gradle.kts || echo "undefined")
+          version_before=$(grep 'version' old_build.gradle.kts | sed -E 's/.*version *= *"(.*)"/\1/' || echo "undefined")
+          version_after=$(grep 'version' build.gradle.kts | sed -E 's/.*version *= *"(.*)"/\1/' || echo "undefined")
 
           echo "Old version: $version_before"
           echo "New version: $version_after"

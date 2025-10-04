@@ -65,7 +65,12 @@ jobs:
 
           # Берем все коммиты с предыдущего тега
           COMMITS=$(git log $PREV_TAG..HEAD --pretty=format:"- %s")
-          echo "commits=$COMMITS" >> "$GITHUB_OUTPUT"
+
+          # Безопасная запись в GITHUB_OUTPUT
+          echo "commits<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$COMMITS" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
+
 
       - name: Create GitHub Release with artifacts
         uses: softprops/action-gh-release@v1

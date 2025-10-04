@@ -1,87 +1,56 @@
 package dev.elysium.eraces.abilities.abils
 
 import dev.elysium.eraces.abilities.IAbility
+import dev.elysium.eraces.abilities.ICooldownAbility
+import dev.elysium.eraces.utils.TimeParser
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.entity.Player
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
+import java.sql.Time
 
-class RageModeAbility : IAbility {
+class RageModeAbility : IAbility, ICooldownAbility {
     override val id: String = "ragemode"
-    private var cooldown: Int = 30
+    private var cooldown: String = "30m"
 
-    private var resistant: EffectData = EffectData(60, 3)
-    private var power = EffectData(120, 3)
-    private var regeneration = EffectData(60, 2)
-    private var absorption = EffectData(300, 1)
+    private val effectsMap = linkedMapOf(
+        "resistant" to EffectData("1m", 3, PotionEffectType.RESISTANCE),
+        "power" to EffectData("2m", 3, PotionEffectType.STRENGTH),
+        "regeneration" to EffectData("1m", 2, PotionEffectType.REGENERATION),
+        "absorption" to EffectData("5m", 1, PotionEffectType.ABSORPTION)
+    )
 
     override fun activate(player: Player) {
-        val effects = listOf(
-            PotionEffect(
-                PotionEffectType.RESISTANCE,
-                resistant.duration,
-                resistant.level,
-                false,
-                true
-            ),
-            PotionEffect(
-                PotionEffectType.STRENGTH,
-                power.duration,
-                power.level,
-                false,
-                true
-            ),
-            PotionEffect(
-                PotionEffectType.REGENERATION,
-                regeneration.duration,
-                regeneration.level,
-                false,
-                true
-            ),
-            PotionEffect(
-                PotionEffectType.ABSORPTION,
-                absorption.duration,
-                absorption.level,
-                false,
-                true
-            )
-        )
+        val effects = effectsMap.values.map { it.toPotionEffect() }
         player.addPotionEffects(effects)
     }
 
     override fun loadParams(cfg: YamlConfiguration) {
-        cooldown = cfg.getInt("cooldown", 30)
-        resistant.duration = cfg.getInt("resistant_duration", 60)
-        resistant.level = cfg.getInt("resistant_level", 3)
+        cooldown = cfg.getString("cooldown", cooldown)!!
 
-        power.duration = cfg.getInt("power_duration", 120)
-        power.level = cfg.getInt("power_level", 3)
-
-        regeneration.duration = cfg.getInt("regeneration_duration", 60)
-        regeneration.level = cfg.getInt("regeneration_level", 2)
-
-        absorption.duration = cfg.getInt("absorption_duration", 300)
-        absorption.level = cfg.getInt("absorption_level", 1)
+        for ((name, effect) in effectsMap) {
+            effect.duration = cfg.getString("${name}_duration", effect.duration)!!
+            effect.level = cfg.getInt("${name}_level", effect.level)
+        }
     }
 
     override fun writeDefaultParams(cfg: YamlConfiguration) {
-        cfg.set("cooldown", 30)
+        cfg.set("cooldown", cooldown)
 
-        cfg.set("resistant_duration", 60)
-        cfg.set("resistant_level", 3)
-
-        cfg.set("power_duration", 120)
-        cfg.set("power_level", 3)
-
-        cfg.set("regeneration_duration", 60)
-        cfg.set("regeneration_level", 2)
-
-        cfg.set("absorption_duration", 300)
-        cfg.set("absorption_level", 1)
+        for ((name, effect) in effectsMap) {
+            cfg.set("${name}_duration", effect.duration)
+            cfg.set("${name}_level", effect.level)
+        }
     }
 
-    data class EffectData(
-        var duration: Int,
-        var level: Int
-    )
+    override fun getCooldown(): Long {
+        return TimeParser.parseToSeconds(cooldown)
+    }
+
+    data class EffectData(var duration: String, var level: Int, val type: PotionEffectType) {
+        fun toPotionEffect(): PotionEffect {
+            val ticks = TimeParser.parseToTicks(duration).toInt()
+            return PotionEffect(type, ticks, level, false, true)
+        }
+    }
 }

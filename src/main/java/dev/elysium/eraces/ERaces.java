@@ -26,7 +26,6 @@ public class ERaces extends JavaPlugin {
     private GlobalConfigManager globalConfigManager;
     private MessageConfigData msg;
     private SqliteDatabase database;
-    private AbilsManager abilsManager;
 
     @SuppressWarnings("FieldMayHaveGetter")
     public static ERaces getInstance() {
@@ -92,9 +91,7 @@ public class ERaces extends JavaPlugin {
 
     private void initManagers() {
         racesConfigManager = new RacesConfigManager(this);
-        playerDataManager = new PlayerDataManager(this);
         playerDataManager = new PlayerDataManager(database);
-        abilsManager = new AbilsManager(this);
         try {
             globalConfigManager = new GlobalConfigManager(this);
         } catch (IllegalAccessException e) {

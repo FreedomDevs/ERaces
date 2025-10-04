@@ -9,9 +9,12 @@ import dev.elysium.eraces.config.MessageManager;
 import dev.elysium.eraces.config.PlayerDataManager;
 import dev.elysium.eraces.config.RacesConfigManager;
 import dev.elysium.eraces.datatypes.configs.MessageConfigData;
+import dev.elysium.eraces.utils.SqliteDatabase;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 
 public class ERaces extends JavaPlugin {
@@ -22,6 +25,8 @@ public class ERaces extends JavaPlugin {
     private PlayerDataManager playerDataManager;
     private GlobalConfigManager globalConfigManager;
     private MessageConfigData msg;
+    private SqliteDatabase database;
+    private AbilsManager abilsManager;
 
     @SuppressWarnings("FieldMayHaveGetter")
     public static ERaces getInstance() {
@@ -48,12 +53,25 @@ public class ERaces extends JavaPlugin {
     @Override
     public void onLoad() {
         instance = this;
+        database = new SqliteDatabase();
         initManagers();
         loadConfigs();
     }
 
     @Override
     public void onEnable() {
+        database.connect(this.getDataPath().toAbsolutePath()+"database_sqlite.db");
+        try (Statement stmt = database.getConnection().createStatement()) {
+            stmt.executeUpdate("""
+                    CREATE TABLE IF NOT EXISTS races (
+                        uuid TEXT PRIMARY KEY,
+                        race_id TEXT
+                    );
+                """);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
         RacesReloader.startListeners(this);
         registerCommands();
 
@@ -63,17 +81,20 @@ public class ERaces extends JavaPlugin {
             getLogger().setLevel(Level.FINE);
         }
 
-        logInfo(msg.getPluginEnabled());
+        getLogger().info(msg.getPluginEnabled());
     }
 
     @Override
     public void onDisable() {
-        logInfo(msg.getPluginDisabled());
+        getLogger().info(msg.getPluginDisabled());
+        database.close();
     }
 
     private void initManagers() {
         racesConfigManager = new RacesConfigManager(this);
         playerDataManager = new PlayerDataManager(this);
+        playerDataManager = new PlayerDataManager(database);
+        abilsManager = new AbilsManager(this);
         try {
             globalConfigManager = new GlobalConfigManager(this);
         } catch (IllegalAccessException e) {

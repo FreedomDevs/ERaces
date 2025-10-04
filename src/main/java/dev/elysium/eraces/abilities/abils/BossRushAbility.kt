@@ -1,131 +1,58 @@
 package dev.elysium.eraces.abilities.abils
 
 import dev.elysium.eraces.abilities.IAbility
-import dev.elysium.eraces.abilities.abils.RageModeAbility.EffectData
+import dev.elysium.eraces.abilities.ICooldownAbility
+import dev.elysium.eraces.utils.TimeParser
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.entity.Player
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
-import kotlin.time.toDuration
 
-class BossRushAbility : IAbility {
+class BossRushAbility : IAbility, ICooldownAbility {
     override val id: String = "bossrush"
-    private var cooldown: Int = 60
+    private var cooldown: String = "1h"
 
-    private var healing: EffectData = EffectData(60, 3)
-    private var resistant: EffectData = EffectData(120, 3)
-    private var power = EffectData(120, 3)
-    private var regeneration = EffectData(120, 2)
-    private var absorption = EffectData(300, 2)
-    private var speed = EffectData(120, 2)
-    private var nightvision = EffectData(1200, 255)
+    private val effectsMap = linkedMapOf(
+        "healing" to EffectData("60s", 3, PotionEffectType.HEALTH_BOOST),
+        "resistant" to EffectData("2m", 3, PotionEffectType.RESISTANCE),
+        "power" to EffectData("2m", 3, PotionEffectType.STRENGTH),
+        "regeneration" to EffectData("2m", 2, PotionEffectType.REGENERATION),
+        "absorption" to EffectData("5m", 2, PotionEffectType.ABSORPTION),
+        "speed" to EffectData("2m", 2, PotionEffectType.SPEED),
+        "nightvision" to EffectData("20m", 255, PotionEffectType.NIGHT_VISION)
+    )
 
     override fun activate(player: Player) {
-        val effects = listOf(
-            PotionEffect(
-                PotionEffectType.HEALTH_BOOST,
-                healing.duration,
-                healing.level,
-                false,
-                true
-            ),
-            PotionEffect(
-                PotionEffectType.RESISTANCE,
-                resistant.duration,
-                resistant.level,
-                false,
-                true
-            ),
-            PotionEffect(
-                PotionEffectType.STRENGTH,
-                power.duration,
-                power.level,
-                false,
-                true
-            ),
-            PotionEffect(
-                PotionEffectType.REGENERATION,
-                regeneration.duration,
-                regeneration.level,
-                false,
-                true
-            ),
-            PotionEffect(
-                PotionEffectType.ABSORPTION,
-                absorption.duration,
-                absorption.level,
-                false,
-                true
-            ),
-            PotionEffect(
-                PotionEffectType.SPEED,
-                speed.duration,
-                speed.duration,
-                false,
-                true
-            ),
-            PotionEffect(
-                PotionEffectType.NIGHT_VISION,
-                nightvision.duration,
-                nightvision.level,
-                false,
-                true
-            )
-        )
+        val effects = effectsMap.values.map { it.toPotionEffect() }
         player.addPotionEffects(effects)
     }
 
     override fun loadParams(cfg: YamlConfiguration) {
-        cooldown = cfg.getInt("cooldown", 60)
-        healing.duration = cfg.getInt("healihg_duration", 60)
-        healing.level = cfg.getInt("healing_level", 3)
+        cooldown = cfg.getString("cooldown", cooldown)!!
 
-        resistant.duration = cfg.getInt("resistant_duration", 120)
-        resistant.level = cfg.getInt("resistant_level", 3)
-
-        power.duration = cfg.getInt("power_duration", 120)
-        power.level = cfg.getInt("power_level", 3)
-
-        regeneration.duration = cfg.getInt("regeneration_duration", 120)
-        regeneration.level = cfg.getInt("regeneration_level", 2)
-
-        speed.duration = cfg.getInt("speed_duration", 120)
-        speed.level = cfg.getInt("speed_level")
-
-        absorption.duration = cfg.getInt("absorption_duration", 300)
-        absorption.level = cfg.getInt("absorption_level", 2)
-
-        nightvision.duration = cfg.getInt("nightvision_duration", 1200)
-        nightvision.level = cfg.getInt("nightvision_level", 255)
-
+        for ((name, effect) in effectsMap) {
+            effect.duration = cfg.getString("${name}_duration", effect.duration)!!
+            effect.level = cfg.getInt("${name}_level", effect.level)
+        }
     }
 
     override fun writeDefaultParams(cfg: YamlConfiguration) {
-        cfg.set("cooldown", 30)
+        cfg.set("cooldown", cooldown)
 
-        cfg.set("healing_duration", 60)
-        cfg.set("healing_level", 3)
-
-        cfg.set("resistant_duration", 120)
-        cfg.set("resistant_level", 3)
-
-        cfg.set("power_duration", 120)
-        cfg.set("power_level", 3)
-
-        cfg.set("regeneration_duration", 120)
-        cfg.set("regeneration_level", 2)
-
-        cfg.set("absorption_duration", 300)
-        cfg.set("absorption_level", 2)
-
-        cfg.set("nightvision_duration", 1200)
-        cfg.set("nightvision_level", 255)
-
+        for ((name, effect) in effectsMap) {
+            cfg.set("${name}_duration", effect.duration)
+            cfg.set("${name}_level", effect.level)
+        }
     }
 
-    data class EffectData(
-        var duration: Int,
-        var level: Int)
+    override fun getCooldown(): Long {
+        return TimeParser.parseToSeconds(cooldown)
+    }
 
-
+    data class EffectData(var duration: String, var level: Int, val type: PotionEffectType) {
+        fun toPotionEffect(): PotionEffect {
+            val ticks = TimeParser.parseToTicks(duration).toInt()
+            return PotionEffect(type, ticks, level, false, true)
+        }
+    }
 }

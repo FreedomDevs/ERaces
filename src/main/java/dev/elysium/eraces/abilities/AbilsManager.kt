@@ -130,7 +130,7 @@ class AbilsManager private constructor(private val plugin: ERaces) {
     }
 
     /**
-     * Получает способность по её ID.
+     * Возвращяет способность по её ID.
      */
     fun getAbility(id: String): IAbility? = abilities[id]
 

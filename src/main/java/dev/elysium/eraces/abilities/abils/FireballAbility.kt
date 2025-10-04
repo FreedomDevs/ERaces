@@ -1,17 +1,17 @@
 package dev.elysium.eraces.abilities.abils
 
 import dev.elysium.eraces.ERaces
-import dev.elysium.eraces.abilities.IAbility
+import dev.elysium.eraces.abilities.abils.base.BaseCooldownAbility
 import org.bukkit.Particle
-import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.entity.Player
 import org.bukkit.scheduler.BukkitRunnable
 import org.bukkit.util.Vector
+import org.bukkit.configuration.file.YamlConfiguration
 
-class FireballAbility() : IAbility {
-    override val id: String = "fireball"
-
-    private var cooldown: Int = 10
+class FireballAbility : BaseCooldownAbility(
+    id = "fireball",
+    defaultCooldown = "10m"
+) {
     private var power: Double = 2.0
     private val speed: Double = 0.5
     private val durationTicks = 40L
@@ -55,14 +55,11 @@ class FireballAbility() : IAbility {
         }.runTaskTimer(ERaces.getInstance(), 0L, 1L)
     }
 
-    override fun loadParams(cfg: YamlConfiguration) {
-        cooldown = cfg.getInt("cooldown", 10)
+    override fun loadCustomParams(cfg: YamlConfiguration) {
         power = cfg.getDouble("power", 2.0)
     }
 
-    override fun writeDefaultParams(cfg: YamlConfiguration) {
-        cfg.set("cooldown", 10)
+    override fun writeCustomDefaults(cfg: YamlConfiguration) {
         cfg.set("power", 2.0)
     }
-
 }

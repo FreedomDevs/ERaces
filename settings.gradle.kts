@@ -1,1 +1,1 @@
-rootProject.name = "FDP_Races"
+rootProject.name = "ERaces"

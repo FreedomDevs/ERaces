@@ -47,7 +47,7 @@ public class ERaces extends JavaPlugin {
     }
 
     public static AbilsManager getABM() {
-        return getInstance().abilsManager;
+        return AbilsManager.getInstance();
     }
 
     @Override
@@ -74,7 +74,8 @@ public class ERaces extends JavaPlugin {
 
         RacesReloader.startListeners(this);
         registerCommands();
-        abilsManager.init();
+
+        AbilsManager.init(this);
 
         if (globalConfigManager.getData().isDebug()) {
             getLogger().setLevel(Level.FINE);
@@ -91,6 +92,7 @@ public class ERaces extends JavaPlugin {
 
     private void initManagers() {
         racesConfigManager = new RacesConfigManager(this);
+        playerDataManager = new PlayerDataManager(this);
         playerDataManager = new PlayerDataManager(database);
         abilsManager = new AbilsManager(this);
         try {

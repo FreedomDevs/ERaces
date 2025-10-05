@@ -55,7 +55,8 @@ class AbilsManager private constructor(private val plugin: ERaces) {
             BossRushAbility(),
             BurnAbility(),
             ForestSpiritAbility(),
-            RageModeAbility()
+            RageModeAbility(),
+            BurnAbility()
         )
         register(*defaultAbilities.toTypedArray())
         plugin.logger.info("&aЗарегистрировано способностей: ${abilities.size}")

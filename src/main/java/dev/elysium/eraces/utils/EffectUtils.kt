@@ -1,6 +1,7 @@
 package dev.elysium.eraces.utils
 
 import dev.elysium.eraces.ERaces
+import dev.elysium.eraces.abilities.abils.base.BaseEffectsAbility
 import dev.elysium.eraces.updaters.EffectsUpdater
 import org.bukkit.NamespacedKey
 import org.bukkit.Registry
@@ -43,5 +44,32 @@ object EffectUtils {
             EffectsUpdater.LightType.BLOCK -> block.lightFromBlocks
         }
         return lightLevel in min..max
+    }
+
+//    Надо для BaseEffectAbility
+
+    @JvmStatic
+    fun giveEffectsToPlayer(player: Player, effects: Collection<BaseEffectsAbility.EffectData>) {
+        for (effect in effects) {
+            try {
+                val potionEffect = effectDataToPotionEffect(effect)
+                player.addPotionEffect(potionEffect)
+            } catch (ex: Exception) {
+                ERaces.getInstance().logger.warning(
+                    "Ошибка при применении эффекта ${effect.type}: ${ex.message}"
+                )
+            }
+        }
+    }
+
+    @JvmStatic
+    fun effectDataToPotionEffect(effect: BaseEffectsAbility.EffectData): PotionEffect {
+        val ticks = TimeParser.parseToTicks(effect.duration).toInt()
+        val type = try {
+            getPotionEffectType(effect.type.key.key)
+        } catch (_: Exception) {
+            effect.type
+        }
+        return PotionEffect(type, ticks, effect.level, false, true)
     }
 }

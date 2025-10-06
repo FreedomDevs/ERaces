@@ -1,6 +1,7 @@
 package dev.elysium.eraces.abilities.abils.base
 
 import dev.elysium.eraces.abilities.ICooldownAbility
+import dev.elysium.eraces.utils.EffectUtils
 import dev.elysium.eraces.utils.TimeParser
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.entity.Player
@@ -20,8 +21,7 @@ abstract class BaseEffectsAbility(
     protected val effectsMap: MutableMap<String, EffectData> = defaultEffects.toMutableMap()
 
     override fun activate(player: Player) {
-        val effects = effectsMap.values.map { it.toPotionEffect() }
-        player.addPotionEffects(effects)
+        EffectUtils.giveEffectsToPlayer(player, effectsMap.values)
     }
 
     override fun loadParams(cfg: YamlConfiguration) {
@@ -50,10 +50,5 @@ abstract class BaseEffectsAbility(
         return cooldown?.let { TimeParser.parseToSeconds(it) } ?: 0L
     }
 
-    data class EffectData(var duration: String, var level: Int, val type: PotionEffectType) {
-        fun toPotionEffect(): PotionEffect {
-            val ticks = TimeParser.parseToTicks(duration).toInt()
-            return PotionEffect(type, ticks, level, false, true)
-        }
-    }
+    data class EffectData(var duration: String, var level: Int, val type: PotionEffectType)
 }

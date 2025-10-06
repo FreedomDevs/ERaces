@@ -116,7 +116,7 @@ class Target private constructor(
             this.distance = config.distance
             this.step = config.step
             this.filters = filters
-            this.onStep = config.onStep
+            this.onStep = config.onStep!!
             this.onHit = config.onHit
         })
         caster?.let {

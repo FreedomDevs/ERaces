@@ -14,7 +14,7 @@ object TargetTrail {
         val step: Double = 0.3,
         val particle: Particle? = null,
         val stopAtBlock: Boolean = true,
-        val onStep: (Location) -> Unit = {},
+        val onStep: ((Location) -> Unit)? = {},
         val onHit: (LivingEntity) -> Unit = {}
     )
 
@@ -27,7 +27,7 @@ object TargetTrail {
             config.particle?.let {
                 player.world.spawnParticle(it, loc, 2, 0.02, 0.02, 0.02, 0.0)
             }
-            config.onStep(loc)
+            config.onStep?.let { it(loc) }
             if (config.stopAtBlock && loc.block.type.isSolid) break
         }
     }

@@ -5,6 +5,7 @@ import org.bukkit.entity.Player
 import dev.elysium.eraces.utils.targetUtils.Target
 import dev.elysium.eraces.utils.targetUtils.target.TargetFilter
 import dev.elysium.eraces.utils.targetUtils.target.TargetTrail
+import org.bukkit.Location
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.entity.LivingEntity
 
@@ -20,10 +21,12 @@ abstract class BaseTargetTrailAbility(
     protected open var particle: Particle = Particle.FLAME
     protected open var step: Double = 0.25
     protected open var stopAtBlock: Boolean = true
+    protected open var useBaseParticle: Boolean = true
 
     protected abstract fun onHitTarget(player: Player, target: LivingEntity)
 
     protected open val customOnHit: ((LivingEntity) -> Unit)? = null
+    protected open val customOnStep: ((Location) -> Unit)? = null
 
     override fun activate(player: Player) {
         Target.from(player)
@@ -32,8 +35,9 @@ abstract class BaseTargetTrailAbility(
                 TargetTrail.Config(
                     distance = distance,
                     step = step,
-                    particle = particle,
+                    particle = if (useBaseParticle) particle else null,
                     stopAtBlock = stopAtBlock,
+                    onStep = customOnStep,
                     onHit = customOnHit ?: { target -> onHitTarget(player, target) }
                 )
             )

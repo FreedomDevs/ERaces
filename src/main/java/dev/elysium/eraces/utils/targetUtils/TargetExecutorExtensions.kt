@@ -51,6 +51,9 @@ fun LivingEntity.knockback(power: Double) = TargetExecutor.knockback(this, power
  */
 fun LivingEntity.safeHeal(amount: Double) = TargetExecutor.heal(this, amount)
 
+/**
+ * Расширения для TargetFilter.
+ */
 
 /**
  * Проверяет, включен ли фильтр ENTITIES в набор фильтров.

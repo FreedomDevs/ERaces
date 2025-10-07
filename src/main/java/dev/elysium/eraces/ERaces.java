@@ -4,10 +4,7 @@ import dev.elysium.eraces.abilities.AbilsManager;
 import dev.elysium.eraces.commands.AbilsCommand;
 import dev.elysium.eraces.commands.MyraceCommand;
 import dev.elysium.eraces.commands.RacesCommand;
-import dev.elysium.eraces.config.GlobalConfigManager;
-import dev.elysium.eraces.config.MessageManager;
-import dev.elysium.eraces.config.PlayerDataManager;
-import dev.elysium.eraces.config.RacesConfigManager;
+import dev.elysium.eraces.config.*;
 import dev.elysium.eraces.datatypes.configs.MessageConfigData;
 import dev.elysium.eraces.utils.SqliteDatabase;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
@@ -23,6 +20,7 @@ public class ERaces extends JavaPlugin {
     private MessageManager messageManager;
     private RacesConfigManager racesConfigManager;
     private PlayerDataManager playerDataManager;
+    private SpecializationsManager specializationsManager;
     private GlobalConfigManager globalConfigManager;
     private MessageConfigData msg;
     private SqliteDatabase database;
@@ -45,6 +43,10 @@ public class ERaces extends JavaPlugin {
         return getInstance().playerDataManager;
     }
 
+    public static SpecializationsManager getSpecializationMng() {
+        return getInstance().specializationsManager;
+    }
+
     public static AbilsManager getABM() {
         return AbilsManager.getInstance();
     }
@@ -59,14 +61,25 @@ public class ERaces extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        database.connect(this.getDataPath().toAbsolutePath()+"database_sqlite.db");
+        database.connect(this.getDataPath().toAbsolutePath() + "database_sqlite.db");
         try (Statement stmt = database.getConnection().createStatement()) {
             stmt.executeUpdate("""
-                    CREATE TABLE IF NOT EXISTS races (
-                        uuid TEXT PRIMARY KEY,
-                        race_id TEXT
-                    );
-                """);
+                        CREATE TABLE IF NOT EXISTS races (
+                            uuid TEXT PRIMARY KEY, -- UUID игрока
+                            race_id TEXT           -- ID расы
+                        );
+                    """);
+            stmt.executeUpdate("""
+                        CREATE TABLE IF NOT EXISTS specialization_levels (
+                              uuid TEXT PRIMARY KEY,  -- UUID игрока
+                              level INTEGER NOT NULL, -- уровень
+                              xp INTEGER NOT NULL,    -- опыт
+                              int REAL NOT NULL,      -- сила интеллекта
+                              str REAL NOT NULL,      -- сила
+                              agi REAL NOT NULL,      -- ловкость
+                              vit REAL NOT NULL       -- выносливость
+                          );
+                    """);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -92,6 +105,7 @@ public class ERaces extends JavaPlugin {
     private void initManagers() {
         racesConfigManager = new RacesConfigManager(this);
         playerDataManager = new PlayerDataManager(database);
+        specializationsManager = new SpecializationsManager(this, database);
         try {
             globalConfigManager = new GlobalConfigManager(this);
         } catch (IllegalAccessException e) {

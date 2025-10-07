@@ -21,6 +21,7 @@ public class ReloadExec {
 
     private int exec(CommandContext<CommandSourceStack> ctx) {
         ERaces.getRacesMng().reloadConfig();
+        ERaces.getSpecializationMng().reloadConfig();
         RacesReloader.reloadRaceForAllPlayers();
         VisualsManager.reloadVisualsForAllPlayer();
 

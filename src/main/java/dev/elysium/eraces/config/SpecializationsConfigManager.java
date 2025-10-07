@@ -1,14 +1,13 @@
 package dev.elysium.eraces.config;
 
+import dev.elysium.eraces.ERaces;
 import dev.elysium.eraces.datatypes.ReflectionUtils;
 import dev.elysium.eraces.datatypes.configs.SpecializationData;
 import dev.elysium.eraces.datatypes.configs.SpecializationsConfigData;
 import lombok.Getter;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.luaj.vm2.Globals;
-import org.luaj.vm2.LoadState;
-import org.luaj.vm2.LuaValue;
+import org.luaj.vm2.*;
 import org.luaj.vm2.compiler.LuaC;
 import org.luaj.vm2.lib.Bit32Lib;
 import org.luaj.vm2.lib.StringLib;
@@ -16,7 +15,9 @@ import org.luaj.vm2.lib.TableLib;
 import org.luaj.vm2.lib.jse.JseBaseLib;
 import org.luaj.vm2.lib.jse.JseMathLib;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 
 public class SpecializationsConfigManager {
@@ -65,5 +66,56 @@ public class SpecializationsConfigManager {
         this.xpNextFormula = luaGlobals.load(specializationsConfigData.getXpNextFormula());
         this.pointsPerLevelFormula = luaGlobals.load(specializationsConfigData.getPointsPerLevel());
         this.specializations = specializationsConfigData.getSpecializations();
+
+        pointsPerLevelCache.clear();
+        xpNextCache.clear();
+    }
+
+    private final Map<Long, Long> xpNextCache = new HashMap<>();
+    public long getXpNext(long level) {
+        return xpNextCache.computeIfAbsent(level, this::calculateXpNext);
+    }
+    private long calculateXpNext(long level) {
+        luaGlobals.set("level", LuaValue.valueOf(level));
+
+        try {
+            LuaValue result = xpNextFormula.call();
+            long xpNext = result.checklong();
+            if (xpNext < 1) {
+                ERaces.getInstance().getLogger().warning("При вычислении xpNext для уровня " + level + " было получено отрицательное число или 0(засчитано как 1)");
+                return 1;
+            }
+
+            return xpNext;
+        } catch (LuaError error) {
+            ERaces.getInstance().getLogger().log(Level.SEVERE, "Не удалось расчитать xpNext для уровня " + level, error);
+            return Long.MAX_VALUE;
+        } finally {
+            luaGlobals.set("level", LuaValue.NIL);
+        }
+    }
+
+    private final Map<Long, Long> pointsPerLevelCache = new HashMap<>();
+    public long getPointsPerLevel(long level) {
+        return pointsPerLevelCache.computeIfAbsent(level, this::calculatePointsPerLevel);
+    }
+    private long calculatePointsPerLevel(long level) {
+        luaGlobals.set("level", LuaValue.valueOf(level));
+
+        try {
+            LuaValue result = xpNextFormula.call();
+            long xpNext = result.checklong();
+            if (xpNext < 1) {
+                ERaces.getInstance().getLogger().warning("При вычислении xpNext для уровня " + level + " было получено отрицательное число или 0(засчитано как 1)");
+                return 1;
+            }
+
+            return xpNext;
+        } catch (LuaError error) {
+            ERaces.getInstance().getLogger().log(Level.SEVERE, "Не удалось расчитать xpNext для уровня " + level, error);
+            return Long.MAX_VALUE;
+        } finally {
+            luaGlobals.set("level", LuaValue.NIL);
+        }
     }
 }

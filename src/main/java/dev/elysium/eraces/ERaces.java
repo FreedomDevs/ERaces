@@ -6,6 +6,8 @@ import dev.elysium.eraces.abilities.AbilsManager;
 import dev.elysium.eraces.commands.AbilsCommand;
 import dev.elysium.eraces.commands.MyraceCommand;
 import dev.elysium.eraces.commands.RacesCommand;
+import dev.elysium.eraces.config.*;
+import dev.elysium.eraces.datatypes.configs.MessageConfigData;
 import dev.elysium.eraces.config.GlobalConfigManager;
 import dev.elysium.eraces.config.MessageManager;
 import dev.elysium.eraces.config.PlayerDataManager;
@@ -25,6 +27,7 @@ public class ERaces extends JavaPlugin {
     private static ERaces instance;
 
     private PluginContext context;
+    private SpecializationsManager specializationsManager;
 
     public static ERaces getInstance() {
         if (instance == null) throw new IllegalStateException("ERaces не инициализирован!");
@@ -33,6 +36,9 @@ public class ERaces extends JavaPlugin {
 
     public PluginContext getContext() {
         return context;
+    }
+    public static SpecializationsManager getSpecializationMng() {
+        return getInstance().specializationsManager;
     }
 
     @Override
@@ -71,6 +77,7 @@ public class ERaces extends JavaPlugin {
     /* ------------------- Initialization Helpers ------------------- */
 
     private void initManagers() {
+        specializationsManager = new SpecializationsManager(this, database);
         try {
             GlobalConfigManager globalConfig = new GlobalConfigManager(this);
             context.setGlobalConfigManager(globalConfig);
@@ -102,6 +109,17 @@ public class ERaces extends JavaPlugin {
                             uuid TEXT PRIMARY KEY,
                             race_id TEXT
                         );
+                    """);
+            stmt.executeUpdate("""
+                        CREATE TABLE IF NOT EXISTS specialization_levels (
+                              uuid TEXT PRIMARY KEY,  -- UUID игрока
+                              level INTEGER NOT NULL, -- уровень
+                              xp INTEGER NOT NULL,    -- опыт
+                              int REAL NOT NULL,      -- сила интеллекта
+                              str REAL NOT NULL,      -- сила
+                              agi REAL NOT NULL,      -- ловкость
+                              vit REAL NOT NULL       -- выносливость
+                          );
                     """);
         } catch (SQLException e) {
             throw new RuntimeException("Не удалось создать таблицы БД", e);

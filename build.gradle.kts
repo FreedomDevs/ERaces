@@ -23,6 +23,7 @@ dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21.8-R0.1-SNAPSHOT")
     compileOnly("org.xerial:sqlite-jdbc:3.50.3.0")
     implementation(kotlin("stdlib"))
+    implementation("org.luaj:luaj-jse:3.0.1")
     compileOnly("org.projectlombok:lombok:1.18.30")
     annotationProcessor("org.projectlombok:lombok:1.18.30")
 }
@@ -44,6 +45,10 @@ tasks {
     // jar = shadowJar
     build {
         dependsOn("shadowJar")
+    }
+
+    shadowJar {
+        archiveClassifier.set("") // чтобы jar назывался как обычно, без "-all"
     }
 
     processResources {

@@ -19,6 +19,7 @@ public class RacesCommand {
                 .then(new GetPlayerRaceExec().getCmd())
                 .then(new SetPlayerRaceExec().getCmd())
                 .then(new GetChangePotionExec().getCmd())
+                .then(new AddXpExec().getCmd())
                 .build();
     }
 }

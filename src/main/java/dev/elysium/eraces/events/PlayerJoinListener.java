@@ -14,5 +14,6 @@ public class PlayerJoinListener implements Listener {
         Player player = event.getPlayer();
         RacesReloader.reloadRaceForPlayer(player);
         VisualsManager.updateVisualsForPlayer(player);
+        ERaces.getSpecializationMng().ensurePlayerInitialized(event.getPlayer());
     }
 }

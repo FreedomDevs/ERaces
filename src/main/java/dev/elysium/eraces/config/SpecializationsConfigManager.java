@@ -2,6 +2,7 @@ package dev.elysium.eraces.config;
 
 import dev.elysium.eraces.ERaces;
 import dev.elysium.eraces.datatypes.ReflectionUtils;
+import dev.elysium.eraces.datatypes.configs.SpecializationConfigData;
 import dev.elysium.eraces.datatypes.configs.SpecializationData;
 import dev.elysium.eraces.datatypes.configs.SpecializationsConfigData;
 import lombok.Getter;
@@ -16,7 +17,6 @@ import org.luaj.vm2.lib.jse.JseBaseLib;
 import org.luaj.vm2.lib.jse.JseMathLib;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 
@@ -29,7 +29,7 @@ public class SpecializationsConfigManager {
     @Getter
     private LuaValue pointsPerLevelFormula;
     @Getter
-    List<SpecializationData> specializations;
+    HashMap<String, SpecializationData> specializations;
 
     private final YamlManager cfgManager;
     private final JavaPlugin plugin;
@@ -65,7 +65,18 @@ public class SpecializationsConfigManager {
 
         this.xpNextFormula = luaGlobals.load(specializationsConfigData.getXpNextFormula());
         this.pointsPerLevelFormula = luaGlobals.load(specializationsConfigData.getPointsPerLevel());
-        this.specializations = specializationsConfigData.getSpecializations();
+
+        this.specializations = new HashMap<>();
+        for (SpecializationConfigData i : specializationsConfigData.getSpecializations()) {
+            SpecializationData data = new SpecializationData();
+            data.setStrength(data.getStrength());
+            data.setIntelligent(data.getIntelligent());
+            data.setAgility(data.getAgility());
+            data.setVitality(data.getVitality());
+            this.specializations.put(i.getName(), data);
+        }
+
+        this.specializations.put("", new SpecializationData());
 
         pointsPerLevelCache.clear();
         xpNextCache.clear();

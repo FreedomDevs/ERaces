@@ -18,5 +18,5 @@ public class SpecializationsConfigData {
     String pointsPerLevel = "points_per_level = 5+(level/10)";
 
     @RaceProperty(path = "spec", type = FieldType.LIST_SUBGROUP)
-    List<SpecializationData> specializations = new ArrayList<>();
+    List<SpecializationConfigData> specializations = new ArrayList<>();
 }

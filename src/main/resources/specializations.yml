@@ -2,22 +2,22 @@ xp_next: "return 100*pow(level, 1.5)+50*level"
 points_per_level: "return 5+(level/10)"
 
 spec:
-  warrior:
+  - name: warrior
     STR: 48
     INT: 10
     AGI: 10
     VIT: 32
-  mage:
+  - name: mage
     STR: 10
     INT: 48
     AGI: 32
     VIT: 10
-  archer:
+  - name: archer
     STR: 10
     INT: 10
     AGI: 48
     VIT: 32
-  support:
+  - name: support
     STR: 20
     INT: 32
     AGI: 24

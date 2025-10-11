@@ -113,6 +113,7 @@ public class ERaces extends JavaPlugin {
             stmt.executeUpdate("""
                         CREATE TABLE IF NOT EXISTS specialization_levels (
                               uuid TEXT PRIMARY KEY,  -- UUID игрока
+                              specialization TEXT,    -- Выбранная специализация
                               level INTEGER NOT NULL, -- уровень
                               xp INTEGER NOT NULL,    -- опыт
                               int REAL NOT NULL,      -- сила интеллекта

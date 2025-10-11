@@ -4,6 +4,7 @@ import lombok.Data;;
 
 @Data
 public class SpecializationPlayerData {
+    String specialization;
     long level;
     long xp;
     double INT;

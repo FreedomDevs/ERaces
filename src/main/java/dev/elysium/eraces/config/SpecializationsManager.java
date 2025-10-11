@@ -1,8 +1,12 @@
 package dev.elysium.eraces.config;
 
+import dev.elysium.eraces.ERaces;
 import dev.elysium.eraces.datatypes.SpecializationPlayerData;
+import dev.elysium.eraces.datatypes.configs.SpecializationData;
 import dev.elysium.eraces.utils.SqliteDatabase;
 import lombok.Getter;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.sql.Connection;
@@ -13,13 +17,14 @@ import java.util.*;
 
 public class SpecializationsManager {
     @Getter
-    private final SpecializationsConfigManager specializationsConfigManager;
+    private final SpecializationsConfigManager config;
     private final SqliteDatabase database;
 
     private final Map<UUID, SpecializationPlayerData> specPlayersData = new HashMap<>();
     private final Set<UUID> updatedPlayers = new HashSet<>();
 
     private final Object flushPlayerDataLock = new Object();
+
     public void flushPlayerDataCache() {
         synchronized (flushPlayerDataLock) {
             if (!updatedPlayers.isEmpty()) {
@@ -51,6 +56,7 @@ public class SpecializationsManager {
             }
         }
     }
+
     private void addPlayerToUpdated(UUID uuid) {
         synchronized (flushPlayerDataLock) {
             updatedPlayers.add(uuid);
@@ -58,17 +64,63 @@ public class SpecializationsManager {
     }
 
     public SpecializationsManager(JavaPlugin plugin, SqliteDatabase database) {
-        specializationsConfigManager = new SpecializationsConfigManager(plugin);
+        config = new SpecializationsConfigManager(plugin);
         this.database = database;
         reloadConfig();
+        loadSpecPlayerData();
     }
 
     public void reloadConfig() {
-        specializationsConfigManager.reloadConfig();
+        config.reloadConfig();
+    }
+
+    private void upgradeLevel(UUID uuid, SpecializationPlayerData data) {
+        long points = config.getPointsPerLevel(data.getLevel());
+        SpecializationData spec = config.specializations.getOrDefault(data.getSpecialization(), new SpecializationData());
+        if (!config.specializations.containsKey(data.getSpecialization()))
+            ERaces.getInstance().getLogger().warning("Unknown specialization: " + data.getSpecialization());
+
+        data.setSTR(data.getSTR() + points * (spec.getStrength() / 100.0));
+        data.setINT(data.getINT() + points * (spec.getIntelligent() / 100.0));
+        data.setAGI(data.getAGI() + points * (spec.getAgility() / 100.0));
+        data.setVIT(data.getVIT() + points * (spec.getVitality() / 100.0));
+
+        data.setXp(data.getXp() - config.getXpNext(data.getLevel()));
+        data.setLevel(data.getLevel() + 1);
+        addPlayerToUpdated(uuid);
+    }
+
+    private void tryToUpgradeLevel(UUID uuid, SpecializationPlayerData data) {
+        while (data.getXp() >= config.getXpNext(data.getLevel()))
+            upgradeLevel(uuid, data);
+    }
+
+    public void ensurePlayerInitialized(OfflinePlayer player) {
+        UUID uuid = player.getUniqueId();
+        if (!specPlayersData.containsKey(uuid)) {
+            SpecializationPlayerData data = new SpecializationPlayerData();
+            data.setSpecialization("");
+            data.setLevel(1);
+            data.setXp(0);
+            data.setINT(0);
+            data.setSTR(0);
+            data.setAGI(0);
+            data.setVIT(0);
+
+            specPlayersData.put(uuid, data);
+            addPlayerToUpdated(uuid);
+        }
+    }
+
+    public void addXp(OfflinePlayer player, long xp) {
+        SpecializationPlayerData data = specPlayersData.get(player.getUniqueId());
+        data.setXp(data.getXp() + xp);
+        addPlayerToUpdated(player.getUniqueId());
+        tryToUpgradeLevel(player.getUniqueId(), data);
     }
 
     private void loadSpecPlayerData() {
-        String query = "SELECT uuid, level, xp, int, str, agi, vit FROM players";
+        String query = "SELECT uuid, specialization, level, xp, int, str, agi, vit FROM players";
 
         try (Connection conn = database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query);
@@ -78,6 +130,7 @@ public class SpecializationsManager {
                 UUID uuid = UUID.fromString(rs.getString("uuid"));
 
                 SpecializationPlayerData data = new SpecializationPlayerData();
+                data.setSpecialization(rs.getString("specialization"));
                 data.setLevel(rs.getLong("level"));
                 data.setXp(rs.getLong("xp"));
                 data.setINT(rs.getDouble("int"));
@@ -86,6 +139,7 @@ public class SpecializationsManager {
                 data.setVIT(rs.getDouble("vit"));
 
                 specPlayersData.put(uuid, data);
+                tryToUpgradeLevel(uuid, data);
             }
 
         } catch (SQLException e) {

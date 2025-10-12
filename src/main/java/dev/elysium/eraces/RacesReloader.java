@@ -43,7 +43,7 @@ public class RacesReloader implements Listener {
             new EffectsUpdater(),
             new NeutralMobsUpdater(),
 
-            new PlayerJoinListener(),
+//            new PlayerJoinListener(), -- мусор
             new PlayerQuitListener(),
             new PlayerRespawnListener(),
             new RaceChangeGuiListener(),
@@ -53,6 +53,10 @@ public class RacesReloader implements Listener {
 
     public static void reloadRaceForPlayer(Player player) {
         Race race = ERaces.getPlayerMng().getPlayerRace(player);
+        if (race == null) {
+            return;
+        }
+
         for (Object obj : updaters) {
             if (obj instanceof IUpdater upd)
                 upd.update(race, player);

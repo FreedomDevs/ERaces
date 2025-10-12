@@ -51,10 +51,10 @@ public class PlayerDataManager {
                     rs.close();
                     return raceId;
                 } else {
-                    String randomRaceId = getRandomRaceId();
+//                    String randomRaceId = getRandomRaceId();
                     rs.close();
-                    setPlayerRaceAsync(player, randomRaceId);
-                    return randomRaceId;
+//                    setPlayerRaceAsync(player, randomRaceId);
+                    return null; // Чтобы мы могли открыть гуи
                 }
             } catch (SQLException e) {
                 throw new RuntimeException(e);

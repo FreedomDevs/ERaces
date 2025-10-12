@@ -1,5 +1,6 @@
 package dev.elysium.eraces;
 
+import dev.elysium.eraces.events.RaceSelectListener;
 import dev.elysium.eraces.abilities.AbilsManager;
 import dev.elysium.eraces.commands.AbilsCommand;
 import dev.elysium.eraces.commands.MyraceCommand;
@@ -9,9 +10,11 @@ import dev.elysium.eraces.config.MessageManager;
 import dev.elysium.eraces.config.PlayerDataManager;
 import dev.elysium.eraces.config.RacesConfigManager;
 import dev.elysium.eraces.datatypes.configs.MessageConfigData;
+import dev.elysium.eraces.gui.RaceSelectMenu;
 import dev.elysium.eraces.utils.SqliteDatabase;
 import dev.elysium.eraces.utils.targetUtils.PluginAccessor;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.sql.SQLException;
@@ -27,6 +30,7 @@ public class ERaces extends JavaPlugin {
     private GlobalConfigManager globalConfigManager;
     private MessageConfigData msg;
     private SqliteDatabase database;
+    RaceSelectMenu RaceSelectMenu;
 
     @SuppressWarnings("FieldMayHaveGetter")
     public static ERaces getInstance() {
@@ -82,6 +86,9 @@ public class ERaces extends JavaPlugin {
         }
 
         PluginAccessor.INSTANCE.init(this);
+
+        dev.elysium.eraces.gui.RaceSelectMenu.Companion.registerDefaults();
+        Bukkit.getPluginManager().registerEvents(RaceSelectListener.INSTANCE, this);
 
         getLogger().info(msg.getPluginEnabled());
     }

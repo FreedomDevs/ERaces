@@ -30,7 +30,6 @@ public class ERaces extends JavaPlugin {
     private GlobalConfigManager globalConfigManager;
     private MessageConfigData msg;
     private SqliteDatabase database;
-    RaceSelectMenu RaceSelectMenu;
 
     @SuppressWarnings("FieldMayHaveGetter")
     public static ERaces getInstance() {

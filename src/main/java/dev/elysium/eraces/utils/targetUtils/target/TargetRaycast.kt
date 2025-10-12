@@ -1,10 +1,8 @@
 package dev.elysium.eraces.utils.targetUtils.target
 
-import dev.elysium.eraces.utils.CollectionsUtils
-import dev.elysium.eraces.utils.targetUtils.shouldCollectEntities
-import dev.elysium.eraces.utils.targetUtils.stopsAtBlock
 import dev.elysium.eraces.utils.vectors.Vec3
 import dev.elysium.eraces.utils.vectors.Vec3Utils
+import org.bukkit.World
 import org.bukkit.block.Block
 import org.bukkit.entity.LivingEntity
 
@@ -16,51 +14,31 @@ import org.bukkit.entity.LivingEntity
  * Работает на божьей помощи.
  */
 object TargetRaycast {
-    fun raycast(
-        player: LivingEntity,
-        distance: Double,
-        step: Double,
-        filters: Set<TargetFilter>
-    ): Pair<List<LivingEntity>, List<Block>> {
 
-        val world = player.world
-        val eyePos = Vec3(player.location.x, player.location.y + player.eyeHeight, player.location.z)
-        val dir = Vec3Utils.fromPlayerLook(player)
+    fun raycast(origin: Vec3, direction: Vec3, distance: Double, step: Double, world: World): List<RaycastHit> {
+        val hits = mutableListOf<RaycastHit>()
+        var current = origin.copy()
+        val iterations = (distance / step).toInt().coerceAtLeast(1)
 
-        val blockCollector = CollectionsUtils.TargetCollector<Block>()
-        val entityCollector = CollectionsUtils.TargetCollector<LivingEntity>()
-
-        var currentPos = eyePos
-        val iterations = (distance / step).toInt()
-
-        for (i in 0 until iterations) {
-            currentPos += dir * step
-            val block = world.getBlockAt(currentPos.x.toInt(), currentPos.y.toInt(), currentPos.z.toInt())
-            val dist = currentPos.distance(eyePos)
-
-            if (TargetFilter.BLOCKS in filters) blockCollector.add(block, dist)
-
-            if (filters.stopsAtBlock() && block.isSolid) break
-
-            if (filters.shouldCollectEntities()) {
-                for (entity in world.getEntities()) {
-                    if (entity !is LivingEntity || entity == player) continue
-                    if (entityCollector.contains(entity)) continue
-                    if (Vec3Utils.isInsideEntity(entity, currentPos)) {
-                        val toEntity = Vec3(
-                            entity.location.x - eyePos.x,
-                            entity.location.y + entity.eyeHeight - eyePos.y,
-                            entity.location.z - eyePos.z
-                        )
-                        val score = dist - dir.dot(toEntity.normalize())
-                        entityCollector.add(entity, score)
-
-                        if (TargetFilter.FIRST_ENTITY in filters) break
-                    }
-                }
-            }
+        repeat(iterations) {
+            current = advance(current, direction, step)
+            val block = getBlockAt(world, current)
+            val entities = getEntitiesAt(world, current)
+            hits.add(RaycastHit(current.copy(), block?.takeIf { it.type.isSolid }, entities))
         }
 
-        return entityCollector.getSortedByDistance() to blockCollector.getSortedByDistance()
+        return hits
     }
+
+    // ----------------- helpers -----------------
+
+    private fun advance(pos: Vec3, dir: Vec3, step: Double): Vec3 =
+        Vec3(pos.x + dir.x * step, pos.y + dir.y * step, pos.z + dir.z * step)
+
+    private fun getBlockAt(world: World, pos: Vec3): Block? =
+        try { world.getBlockAt(pos.x.toInt(), pos.y.toInt(), pos.z.toInt()) }
+        catch (_: Exception) { null }
+
+    private fun getEntitiesAt(world: World, pos: Vec3, radius: Double = 0.3): List<LivingEntity> =
+        world.entities.filterIsInstance<LivingEntity>().filter { Vec3Utils.isInsideEntity(it, pos, radius) }
 }

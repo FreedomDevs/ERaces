@@ -10,6 +10,7 @@ import dev.elysium.eraces.config.PlayerDataManager;
 import dev.elysium.eraces.config.RacesConfigManager;
 import dev.elysium.eraces.datatypes.configs.MessageConfigData;
 import dev.elysium.eraces.utils.SqliteDatabase;
+import dev.elysium.eraces.utils.targetUtils.PluginAccessor;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -79,6 +80,8 @@ public class ERaces extends JavaPlugin {
         if (globalConfigManager.getData().isDebug()) {
             getLogger().setLevel(Level.FINE);
         }
+
+        PluginAccessor.INSTANCE.init(this);
 
         getLogger().info(msg.getPluginEnabled());
     }

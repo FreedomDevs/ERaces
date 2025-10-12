@@ -1,34 +1,51 @@
 package dev.elysium.eraces.utils.targetUtils.target
 
-import org.bukkit.Location
+import dev.elysium.eraces.utils.vectors.Vec3
+import dev.elysium.eraces.utils.vectors.Vec3Utils
 import org.bukkit.Particle
 import org.bukkit.entity.LivingEntity
-import org.bukkit.entity.Player
 
 /**
  * Визуализация луча
  */
 object TargetTrail {
+
     data class Config(
         val distance: Double = 30.0,
         val step: Double = 0.3,
         val particle: Particle? = null,
         val stopAtBlock: Boolean = true,
-        val onStep: ((Location) -> Unit)? = {},
-        val onHit: (LivingEntity) -> Unit = {}
+        val onStep: ((Vec3) -> Unit)? = null,
+        val onHit: ((LivingEntity) -> Unit)? = null
     )
 
-    fun cast(player: Player, config: Config) {
-        val loc = player.eyeLocation.clone()
-        val dir = loc.direction.normalize()
-        val iterations = (config.distance / config.step).toInt()
-        for (i in 0..iterations) {
-            loc.add(dir.clone().multiply(config.step))
-            config.particle?.let {
-                player.world.spawnParticle(it, loc, 2, 0.02, 0.02, 0.02, 0.0)
-            }
-            config.onStep?.let { it(loc) }
-            if (config.stopAtBlock && loc.block.type.isSolid) break
+    fun trail(caster: LivingEntity, config: Config) {
+        val origin = Vec3(caster.location.x, caster.location.y + caster.eyeHeight, caster.location.z)
+        val direction = Vec3Utils.fromPlayerLook(caster)
+        val hits = TargetRaycast.raycast(origin, direction, config.distance, config.step, caster.world)
+
+        for (hit in hits) {
+            spawnParticle(caster, hit, config.particle)
+            config.onStep?.invoke(hit.position)
+            hit.hitEntities.forEach { config.onHit?.invoke(it) }
+
+            if (shouldStop(hit, config.stopAtBlock)) break
         }
     }
+
+    // ----------------- helpers -----------------
+
+    private fun spawnParticle(caster: LivingEntity, hit: RaycastHit, particle: Particle?) {
+        if (particle == null) return
+        caster.world.spawnParticle(
+            particle,
+            hit.position.x,
+            hit.position.y,
+            hit.position.z,
+            1
+        )
+    }
+
+    private fun shouldStop(hit: RaycastHit, stopAtBlock: Boolean): Boolean =
+        stopAtBlock && hit.hitBlock != null || hit.hitEntities.isNotEmpty()
 }

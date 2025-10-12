@@ -38,9 +38,7 @@ object CollectionsUtils {
 
         fun getSortedByDistance(descending: Boolean = true): List<T> {
             val sorted = items.toMutableList()
-            insertionSort(sorted) { a, b ->
-                if (descending) a.second > b.second else a.second < b.second
-            }
+            insertionSort(sorted) { a, b -> if (descending) a.second > b.second else a.second < b.second }
             return sorted.map { it.first }
         }
     }

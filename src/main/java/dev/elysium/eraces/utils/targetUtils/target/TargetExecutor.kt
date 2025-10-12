@@ -7,7 +7,7 @@ import org.bukkit.potion.PotionEffectType
 /**
  * Универсальные действия для LivingEntity с безопасными проверками.
  *
- * ⚠️ Не вызывать напрямую! Использовать через расширения LivingEntity:
+ * Не вызывать напрямую! Использовать через расширения LivingEntity:
  * ignite(), safeDamage(), slow(), knockback(), safeHeal()
  *
  * Все методы гарантируют, что параметры не будут отрицательными

@@ -5,6 +5,7 @@ import org.bukkit.entity.Player
 import dev.elysium.eraces.utils.targetUtils.Target
 import dev.elysium.eraces.utils.targetUtils.target.TargetFilter
 import dev.elysium.eraces.utils.targetUtils.target.TargetTrail
+import dev.elysium.eraces.utils.targetUtils.toBukkitLocation
 import org.bukkit.Location
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.entity.LivingEntity
@@ -37,7 +38,7 @@ abstract class BaseTargetTrailAbility(
                     step = step,
                     particle = if (useBaseParticle) particle else null,
                     stopAtBlock = stopAtBlock,
-                    onStep = customOnStep,
+                    onStep = { loc -> customOnStep?.invoke(loc.toBukkitLocation(player.world)) },
                     onHit = customOnHit ?: { target -> onHitTarget(player, target) }
                 )
             )
@@ -59,4 +60,3 @@ abstract class BaseTargetTrailAbility(
         cfg.set("stopAtBlock", stopAtBlock)
     }
 }
-

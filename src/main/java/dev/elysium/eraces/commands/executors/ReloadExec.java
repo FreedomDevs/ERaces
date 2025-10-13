@@ -23,7 +23,7 @@ public class ReloadExec {
         var context = ERaces.getInstance().getContext();
 
         context.getRacesConfigManager().reloadConfig();
-        ERaces.getSpecializationMng().reloadConfig();
+        context.getSpecializationsManager().reloadConfig();
         RacesReloader.reloadRaceForAllPlayers();
 
         VisualsManager.reloadVisualsForAllPlayer();

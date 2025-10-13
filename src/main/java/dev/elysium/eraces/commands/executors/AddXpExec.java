@@ -28,7 +28,7 @@ public class AddXpExec {
         Player player = ctx.getArgument("target", PlayerSelectorArgumentResolver.class).resolve(ctx.getSource()).getFirst();
         long count = ctx.getArgument("count", long.class);
 
-        ERaces.getSpecializationMng().addXp(player, count);
+        ERaces.getInstance().getContext().getSpecializationsManager().addXp(player, count);
         return Command.SINGLE_SUCCESS;
     }
 }

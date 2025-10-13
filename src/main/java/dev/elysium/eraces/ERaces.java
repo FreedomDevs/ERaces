@@ -27,7 +27,6 @@ public class ERaces extends JavaPlugin {
     private static ERaces instance;
 
     private PluginContext context;
-    private SpecializationsManager specializationsManager;
 
     public static ERaces getInstance() {
         if (instance == null) throw new IllegalStateException("ERaces не инициализирован!");
@@ -36,9 +35,6 @@ public class ERaces extends JavaPlugin {
 
     public PluginContext getContext() {
         return context;
-    }
-    public static SpecializationsManager getSpecializationMng() {
-        return getInstance().specializationsManager;
     }
 
     @Override
@@ -77,7 +73,6 @@ public class ERaces extends JavaPlugin {
     /* ------------------- Initialization Helpers ------------------- */
 
     private void initManagers() {
-        specializationsManager = new SpecializationsManager(this, database);
         try {
             GlobalConfigManager globalConfig = new GlobalConfigManager(this);
             context.setGlobalConfigManager(globalConfig);
@@ -85,6 +80,7 @@ public class ERaces extends JavaPlugin {
             throw new RuntimeException("Не удалось инициализировать GlobalConfigManager", e);
         }
 
+        context.setSpecializationsManager(new SpecializationsManager(this, context.getDatabase()));
         context.setRacesConfigManager(new RacesConfigManager(this));
         context.setPlayerDataManager(new PlayerDataManager(context.getRacesConfigManager().getRaces(), context.getDatabase()));
     }

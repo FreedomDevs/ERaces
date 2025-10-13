@@ -20,6 +20,7 @@ public class SpecializationsManager {
     private final SpecializationsConfigManager config;
     private final SqliteDatabase database;
 
+    @Getter
     private final Map<UUID, SpecializationPlayerData> specPlayersData = new HashMap<>();
     private final Set<UUID> updatedPlayers = new HashSet<>();
 
@@ -120,7 +121,7 @@ public class SpecializationsManager {
     }
 
     private void loadSpecPlayerData() {
-        String query = "SELECT uuid, specialization, level, xp, int, str, agi, vit FROM players";
+        String query = "SELECT uuid, specialization, level, xp, int, str, agi, vit FROM specialization_levels";
 
         try (Connection conn = database.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query);

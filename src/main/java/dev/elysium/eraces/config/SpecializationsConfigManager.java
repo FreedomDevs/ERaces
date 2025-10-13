@@ -15,6 +15,7 @@ import org.luaj.vm2.lib.StringLib;
 import org.luaj.vm2.lib.TableLib;
 import org.luaj.vm2.lib.jse.JseBaseLib;
 import org.luaj.vm2.lib.jse.JseMathLib;
+import org.luaj.vm2.lib.jse.JsePlatform;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -40,10 +41,10 @@ public class SpecializationsConfigManager {
         this.luaGlobals = new Globals();
 
         luaGlobals.load(new JseBaseLib());
-        luaGlobals.load(new Bit32Lib());
-        luaGlobals.load(new TableLib());
-        luaGlobals.load(new StringLib());
-        luaGlobals.load(new JseMathLib());
+        //luaGlobals.load(new Bit32Lib());
+        //luaGlobals.load(new TableLib());
+        //luaGlobals.load(new StringLib());
+        //luaGlobals.load(new JseMathLib());
 
         LoadState.install(luaGlobals);
         LuaC.install(luaGlobals);

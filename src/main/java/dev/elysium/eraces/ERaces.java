@@ -43,15 +43,15 @@ public class ERaces extends JavaPlugin {
 
         SqliteDatabase database = new SqliteDatabase();
         context = new PluginContext(database);
-
-        initManagers();
-        loadConfigs();
     }
 
     @Override
     public void onEnable() {
         connectDatabase();
         createTables();
+
+        initManagers();
+        loadConfigs();
 
         AbilsManager.init(this);
         PluginAccessor.INSTANCE.init(this);

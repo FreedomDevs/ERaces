@@ -40,9 +40,10 @@ public class ReflectionUtils {
 
             Object value;
             if (prop.type() == FieldType.SUBGROUP) {
+                field.setAccessible(true);
                 value = field.get(obj);
                 loadSection(value, section.getConfigurationSection(path));
-            } else if (prop.type() == FieldType.LIST_SUBGROUP) { // СКОРЕЕ ВСЕГО ЭТО НЕ РАБОТАЕТ ВООБЩЕ, ПИСАЛА НЕЙРОНКА
+            } else if (prop.type() == FieldType.LIST_SUBGROUP) {
                 List<?> list = section.getList(path);
                 List<Object> loadedList = new ArrayList<>();
                 Class<?> fieldType = field.getType().getComponentType();

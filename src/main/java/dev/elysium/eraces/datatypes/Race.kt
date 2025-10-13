@@ -1,75 +1,78 @@
-package dev.elysium.eraces.datatypes;
+package dev.elysium.eraces.datatypes
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+class Race {
+    var id: String? = null
 
-import java.util.ArrayList;
-import java.util.List;
-
-@ToString
-@Getter
-@Setter
-public class Race {
-    String id;
     @RaceProperty(path = "max_hp", type = FieldType.DOUBLE)
-    double maxHp = 20.0;
+    var maxHp: Double = 20.0
+
     @RaceProperty(path = "hunger_loss_multiplier", type = FieldType.DOUBLE)
-    double hungerLossMultiplier = 1.0;
+    var hungerLossMultiplier: Double = 1.0
+
     @RaceProperty(path = "haste_level", type = FieldType.INT)
-    int hasteLevel = 1;
+    var hasteLevel: Int = 1
+
     @RaceProperty(path = "hand_distance_bonus", type = FieldType.INT)
-    int handDistanceBonus = 0;
+    var handDistanceBonus: Int = 0
+
     @RaceProperty(path = "additional_armor", type = FieldType.DOUBLE)
-    double additionalArmor = 0.0;
+    var additionalArmor: Double = 0.0
+
     @RaceProperty(path = "shield_usage", type = FieldType.BOOLEAN)
-    boolean shieldUsage = true;
+    var shieldUsage: Boolean = true
+
     @RaceProperty(path = "regeneration_per_sec", type = FieldType.DOUBLE)
-    double regenerationPerSec = 0.0;
+    var regenerationPerSec: Double = 0.0
+
     @RaceProperty(path = "movement_speed_level", type = FieldType.INT)
-    int movementSpeedLevel = 0;
+    var movementSpeedLevel: Int = 0
+
     @RaceProperty(path = "antiknockback_level", type = FieldType.INT)
-    int antiKnockbackLevel = 0;
+    var antiKnockbackLevel: Int = 0
+
     @RaceProperty(path = "antiknockback_level_with_iron_and_more_armor", type = FieldType.INT)
-    int antiKnocbackLevelWithIronArmorAndMore = 0;
+    var antiKnocbackLevelWithIronArmorAndMore: Int = 0
+
     @RaceProperty(path = "damage_resistance_level", type = FieldType.INT)
-    int damageResistanceLevel = 0;
+    var damageResistanceLevel: Int = 0
+
     @RaceProperty(path = "exclude_from_random", type = FieldType.BOOLEAN)
-    boolean excludeFromRandom = false;
+    @get:JvmName("isExcludeFromRandom")
+    var excludeFromRandom: Boolean = false
+
     @RaceProperty(path = "peaceful_mobs_afraid", type = FieldType.BOOLEAN)
-    boolean peacefulMobsAfraid = false;
+    var peacefulMobsAfraid: Boolean = false
+
     @RaceProperty(path = "forbidden_foods", type = FieldType.LIST)
-    List<String> forbiddenFoods = new ArrayList<>();
+    var forbiddenFoods: MutableList<String> = mutableListOf()
+
     @RaceProperty(path = "biome_speed", type = FieldType.LIST)
-    List<String> biomeSpeed = new ArrayList<>();
+    var biomeSpeed: MutableList<String> = mutableListOf()
+
     @RaceProperty(path = "visuals", type = FieldType.LIST)
-    List<String> visuals = new ArrayList<>();
+    var visuals: MutableList<String> = mutableListOf()
+
     @RaceProperty(path = "afraid_mobs_exceptions", type = FieldType.LIST)
-    List<String> afraidMobsExceptions = new ArrayList<>();
+    var afraidMobsExceptions: MutableList<String> = mutableListOf()
+
     @RaceProperty(path = "exhaustion_multiplier", type = FieldType.DOUBLE)
-    double exhaustionMultiplier = 1;
+    var exhaustionMultiplier: Double = 1.0
+
     @RaceProperty(path = "slowness_with_iron_and_more_armor", type = FieldType.INT)
-    int slownessWithIronAndMoreArmor = 0;
+    var slownessWithIronAndMoreArmor: Int = 0
 
     @RaceProperty(path = "weapon_proficiency", type = FieldType.SUBGROUP)
-    WeaponProficiency weaponProficiency = new WeaponProficiency();
+    var weaponProficiency: WeaponProficiency = WeaponProficiency()
+
     @RaceProperty(path = "gui_config", type = FieldType.SUBGROUP)
-    RaceGuiConfig raceGuiConfig = new RaceGuiConfig();
+    var raceGuiConfig: RaceGuiConfig = RaceGuiConfig()
+
     @RaceProperty(path = "effects_with", type = FieldType.SUBGROUP)
-    EffectsWith effectsWith = new EffectsWith();
+    var effectsWith: EffectsWith = EffectsWith()
+
     @RaceProperty(path = "neutral_mobs", type = FieldType.LIST)
-    List<String> neutralMobs = new ArrayList<>();
+    var neutralMobs: MutableList<String> = mutableListOf()
 
     @RaceProperty(path = "abilities", type = FieldType.LIST)
-    List<String> abilities = new ArrayList<>();
-
-
-    //    Kotlin getters/setters
-    public List<String> getAbilsKT() {
-        return abilities;
-    }
-
-    public List<String> getNeutralMobsKT() {
-        return neutralMobs;
-    }
+    var abilities: MutableList<String> = mutableListOf()
 }

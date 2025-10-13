@@ -46,7 +46,7 @@ public class ShieldUsageUpdater implements Listener, IUpdater, IUnloadable {
     public void update(Race race, Player player) {
         String playername = player.getName();
 
-        if (race.isShieldUsage()) {
+        if (race.getShieldUsage()) {
             blockedShield.remove(playername);
         } else {
             blockedShield.add(playername);

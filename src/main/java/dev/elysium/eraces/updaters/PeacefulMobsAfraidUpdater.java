@@ -21,7 +21,7 @@ public class PeacefulMobsAfraidUpdater implements IUpdater, IUnloadable {
         if (taskid == null)
             taskid = Bukkit.getScheduler().scheduleSyncRepeatingTask(ERaces.getInstance(), task, 0, 45);
 
-        if (race.isPeacefulMobsAfraid()) peacefulMobsAfraid.add(player);
+        if (race.getPeacefulMobsAfraid()) peacefulMobsAfraid.add(player);
         else peacefulMobsAfraid.remove(player);
     }
 

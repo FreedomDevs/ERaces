@@ -102,7 +102,7 @@ class AbilsManager private constructor(private val plugin: ERaces) {
                 return
             }
 
-            !race.abilsKT.contains(id) -> {
+            !race.abilities.contains(id) -> {
                 ChatUtil.legacyMessage(player, "&cТвоя раса не умеет использовать способность &e$id")
                 return
             }

@@ -15,7 +15,7 @@ data class RacePage(
 ) {
     fun toItem(): ItemStack {
         return ItemStack(material).apply {
-            val meta: ItemMeta = itemMeta ?: return@apply
+            val meta = itemMeta ?: return@apply
 
             meta.displayName(Component.text(displayName, TextColor.color(0xFFFF55)))
             meta.lore(lore?.map { Component.text(it, TextColor.color(0xAAAAAA)) })
@@ -23,5 +23,6 @@ data class RacePage(
             itemMeta = meta
         }
     }
+
 }
 

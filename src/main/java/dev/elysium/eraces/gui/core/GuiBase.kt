@@ -1,5 +1,6 @@
 package dev.elysium.eraces.gui.core
 
+import net.kyori.adventure.text.Component
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
@@ -13,7 +14,7 @@ abstract class GuiBase(
     title: String,
     size: Int = 54
 ) {
-    val inv: Inventory = Bukkit.createInventory(null, size, title)
+    val inv: Inventory = Bukkit.createInventory(null, size, Component.text(title))
     private val buttons = mutableMapOf<Int, GuiButton>()
 
     /** Если true, игрок не сможет закрыть меню вручную */

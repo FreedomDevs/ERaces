@@ -1,5 +1,6 @@
 package dev.elysium.eraces.utils.targetUtils.target
 
+import org.bukkit.attribute.Attribute
 import org.bukkit.entity.LivingEntity
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
@@ -73,8 +74,10 @@ object TargetExecutor {
     fun heal(entity: LivingEntity, amount: Double) {
         val safeAmount = amount.coerceAtLeast(0.0)
         if (safeAmount > 0.0) {
-            val newHealth = (entity.health + safeAmount).coerceAtMost(entity.maxHealth)
+            val maxHealth = entity.getAttribute(Attribute.MAX_HEALTH)?.value ?: 20.0
+            val newHealth = (entity.health + safeAmount).coerceAtMost(maxHealth)
             entity.health = newHealth
         }
     }
+
 }

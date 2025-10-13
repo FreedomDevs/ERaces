@@ -1,6 +1,6 @@
 package dev.elysium.eraces.datatypes;
 
-public enum FieldType {
+enum class FieldType {
     INT,
     DOUBLE,
     BOOLEAN,

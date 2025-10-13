@@ -37,10 +37,11 @@ public class PeacefulMobsAfraidUpdater implements IUpdater, IUnloadable {
     };
 
     private void peacefulMobsAfraidFromPlayer(Player player) {
-        Race race = ERaces.getPlayerMng().getPlayerRace(player);
+        Race race = ERaces.getInstance().getContext().getPlayerDataManager().getPlayerRace(player);
         for (Entity entity : player.getNearbyEntities(10, 10, 10)) {
-            if (isPeacefulMob(entity, race))
+            if (isPeacefulMob(entity, race)) {
                 ((Damageable) entity).damage(0, DamageSource.builder(DamageType.PLAYER_ATTACK).build());
+            }
         }
     }
 

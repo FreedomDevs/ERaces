@@ -18,15 +18,17 @@ public class RaceChangeGui implements InventoryHolder {
         int[] ids = {10, 12, 14, 16, 28, 30, 32, 34};
         this.inventory = Bukkit.createInventory(this, 54, ChatUtil.text(centerTitle("Выбор Расы"), NamedTextColor.DARK_PURPLE));
 
-        Race currentRace = ERaces.getPlayerMng().getPlayerRace(player);
+        var context = ERaces.getInstance().getContext();
+        Race currentRace = context.getPlayerDataManager().getPlayerRace(player);
 
         int i = 0;
-        for (Race r : ERaces.getRacesMng().getRaces().values()) {
-            boolean b = r == currentRace;
-            this.inventory.setItem(ids[i], RaceItems.getItem(r, b));
+        for (Race r : context.getRacesConfigManager().getRaces().values()) {
+            boolean selected = r == currentRace;
+            this.inventory.setItem(ids[i], RaceItems.getItem(r, selected));
             i++;
         }
     }
+
 
     public static void open(Player player) {
         player.openInventory(new RaceChangeGui(player).getInventory());

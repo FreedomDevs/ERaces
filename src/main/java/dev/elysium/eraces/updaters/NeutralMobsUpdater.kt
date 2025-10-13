@@ -12,7 +12,7 @@ class NeutralMobsUpdater : Listener {
     fun onEntityTarget(event: EntityTargetEvent) {
         val target = event.target
         if (target !is Player) return
-        val race = ERaces.getPlayerMng().getPlayerRace(target)
+        val race = ERaces.getInstance().context.playerDataManager.getPlayerRace(target)
 
         val neutralMobNames = race.neutralMobsKT
 

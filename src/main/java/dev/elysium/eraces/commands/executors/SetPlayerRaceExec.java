@@ -34,7 +34,7 @@ public class SetPlayerRaceExec {
     }
 
     private CompletableFuture<Suggestions> suggest(final CommandContext<CommandSourceStack> ctx, final SuggestionsBuilder builder) {
-        ERaces.getRacesMng().getRaces()
+        ERaces.getInstance().getContext().getRacesConfigManager().getRaces()
                 .keySet().stream()
                 .filter(key -> key.toLowerCase().startsWith(builder.getRemainingLowerCase()))
                 .forEach(builder::suggest);
@@ -43,20 +43,28 @@ public class SetPlayerRaceExec {
 
     @SuppressWarnings("SameReturnValue")
     private int exec(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
-        Player player = ctx.getArgument("target", PlayerSelectorArgumentResolver.class).resolve(ctx.getSource()).getFirst();
+        Player player = ctx.getArgument("target", PlayerSelectorArgumentResolver.class)
+                .resolve(ctx.getSource())
+                .getFirst();
         String newRace = ctx.getArgument("raceId", String.class);
 
-        if (!ERaces.getRacesMng().getRaces().containsKey(newRace)) {
-            String message = ERaces.getMsgMng().getSetPlayerRaceNotFound();
+        var context = ERaces.getInstance().getContext();
+
+        if (!context.getRacesConfigManager().getRaces().containsKey(newRace)) {
+            String message = context.getMessageManager().getData().getSetPlayerRaceNotFound();
             ChatUtil.message(ctx.getSource().getSender(), message);
             return Command.SINGLE_SUCCESS;
         }
 
-        ERaces.getPlayerMng().setPlayerRace(player, newRace);
+        context.getPlayerDataManager().setPlayerRace(player, newRace);
         RacesReloader.reloadRaceForPlayer(player);
         VisualsManager.updateVisualsForPlayer(player);
-        String message = ERaces.getMsgMng().getSetPlayerRaceSuccess();
-        ChatUtil.message(ctx.getSource().getSender(), message, Map.of("{player}", player.getName(), "{race}", newRace));
+
+        String message = context.getMessageManager().getData().getSetPlayerRaceSuccess();
+        ChatUtil.message(ctx.getSource().getSender(),
+                message,
+                Map.of("{player}", player.getName(), "{race}", newRace));
+
         return Command.SINGLE_SUCCESS;
     }
 }

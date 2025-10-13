@@ -14,7 +14,7 @@ public class VisualsManager {
     );
 
     public static void updateVisualsForPlayer(Player player) {
-        Race race = ERaces.getPlayerMng().getPlayerRace(player);
+        Race race = ERaces.getInstance().getContext().playerDataManager.getPlayerRace(player);
 
         for (IVisualUpdater updater : visualUpdaters) {
             updater.updateVisuals(race, player);

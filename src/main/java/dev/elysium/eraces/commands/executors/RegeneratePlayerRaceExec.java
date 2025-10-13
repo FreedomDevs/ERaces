@@ -29,15 +29,22 @@ public class RegeneratePlayerRaceExec {
 
     private int exec(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
         CommandSender sender = ctx.getSource().getSender();
-        Player player = ctx.getArgument("target", PlayerSelectorArgumentResolver.class).resolve(ctx.getSource()).getFirst();
+        Player player = ctx.getArgument("target", PlayerSelectorArgumentResolver.class)
+                .resolve(ctx.getSource())
+                .getFirst();
 
-        String newRace = ERaces.getPlayerMng().getRandomRaceId();
-        ERaces.getPlayerMng().setPlayerRace(player, newRace);
+        var playerDataManager = ERaces.getInstance().getContext().getPlayerDataManager();
+
+        String newRace = playerDataManager.getRandomRaceId();
+        playerDataManager.setPlayerRace(player, newRace);
+
         RacesReloader.reloadRaceForPlayer(player);
         VisualsManager.updateVisualsForPlayer(player);
-        String message = ERaces.getMsgMng().getRegenerateSuccess();
+
+        String message = ERaces.getInstance().getContext().getMessageManager().getData().getRegenerateSuccess();
         ChatUtil.message(sender, message, Map.of("{player}", player.getName(), "{race}", newRace));
 
         return Command.SINGLE_SUCCESS;
     }
+
 }

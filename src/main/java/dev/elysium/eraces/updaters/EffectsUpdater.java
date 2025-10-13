@@ -58,7 +58,7 @@ public class EffectsUpdater implements IUpdater {
 
     private void applyBiomeEffects() {
         for (Player player : Bukkit.getOnlinePlayers()) {
-            Race race = ERaces.getPlayerMng().getPlayerRace(player);
+            Race race = ERaces.getInstance().getContext().playerDataManager.getPlayerRace(player);
             Biome currentBiome = player.getWorld().getBiome(player.getLocation());
 
             for (EffectsWithBiome effectConfig : race.getEffectsWith().getEffectsWithBiomes()) {
@@ -72,7 +72,7 @@ public class EffectsUpdater implements IUpdater {
 
     private void applyLightEffects() {
         for (Player player : Bukkit.getOnlinePlayers()) {
-            Race race = ERaces.getPlayerMng().getPlayerRace(player);
+            Race race = ERaces.getInstance().getContext().playerDataManager.getPlayerRace(player);
             Block block = player.getLocation().getBlock();
 
             for (EffectsWithLight effectConfig : race.getEffectsWith().getEffectsWithLights()) {
@@ -89,7 +89,7 @@ public class EffectsUpdater implements IUpdater {
 
     private void applyBlockEffects() {
         for (Player player : Bukkit.getOnlinePlayers()) {
-            Race race = ERaces.getPlayerMng().getPlayerRace(player);
+            Race race = ERaces.getInstance().getContext().playerDataManager.getPlayerRace(player);
             Block block = player.getLocation().getBlock();
 
             for (EffectsWithBlock effectConfig : race.getEffectsWith().getEffectsWithBlocks()) {

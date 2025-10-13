@@ -93,7 +93,7 @@ class AbilsManager private constructor(private val plugin: ERaces) {
      * Активация способности игроком.
      */
     fun activate(player: Player, id: String) {
-        val race = ERaces.getPlayerMng().getPlayerRace(player)
+        val race = ERaces.getInstance().context.playerDataManager.getPlayerRace(player)
         val ability = abilities[id]
 
         when {

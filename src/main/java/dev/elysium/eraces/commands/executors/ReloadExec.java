@@ -20,12 +20,15 @@ public class ReloadExec {
     }
 
     private int exec(CommandContext<CommandSourceStack> ctx) {
-        ERaces.getRacesMng().reloadConfig();
-        RacesReloader.reloadRaceForAllPlayers();
-        VisualsManager.reloadVisualsForAllPlayer();
+        var context = ERaces.getInstance().getContext();
 
-        String message = ERaces.getMsgMng().getReloadSuccess();
+        context.getRacesConfigManager().reloadConfig();
+        RacesReloader.reloadRaceForAllPlayers();
+
+        VisualsManager.reloadVisualsForAllPlayer();
+        String message = context.getMessageManager().getData().getReloadSuccess();
         ChatUtil.message(ctx.getSource().getSender(), message);
+
         return Command.SINGLE_SUCCESS;
     }
 }

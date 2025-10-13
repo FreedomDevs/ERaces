@@ -16,7 +16,7 @@ object RaceSelectListener : Listener {
     @EventHandler
     fun onPlayerJoin(event: PlayerJoinEvent) {
         val player = event.player
-        val raceId = ERaces.getPlayerMng().getPlayerRaceId(player)
+        val raceId = ERaces.getInstance().context.playerDataManager.getPlayerRaceId(player)
 
         if (raceId.isNullOrEmpty()) {
             val menu = RaceSelectMenu(player)

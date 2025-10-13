@@ -10,7 +10,14 @@ public class SaturationUpdater implements Listener {
 
     @EventHandler
     public void onPlayerExhaust(EntityExhaustionEvent event) {
-        double coeff = ERaces.getPlayerMng().getPlayerRace((Player) event.getEntity()).getExhaustionMultiplier();
+        if (!(event.getEntity() instanceof Player player)) return;
+
+        double coeff = ERaces.getInstance()
+                .getContext()
+                .getPlayerDataManager()
+                .getPlayerRace(player)
+                .getExhaustionMultiplier();
+
         event.setExhaustion((float) (event.getExhaustion() * coeff));
     }
 }

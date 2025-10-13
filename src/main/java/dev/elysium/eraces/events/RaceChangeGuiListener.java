@@ -21,22 +21,21 @@ public class RaceChangeGuiListener implements Listener {
         event.setCancelled(true);
 
         ItemStack clicked = event.getCurrentItem();
-        if (clicked == null || !clicked.hasItemMeta())
-            return;
-
+        if (clicked == null || !clicked.hasItemMeta()) return;
 
         PersistentDataContainer pdc = clicked.getItemMeta().getPersistentDataContainer();
         if (!pdc.has(RaceItems.RACE_GUI_ITEM_KEY, PersistentDataType.STRING)) return;
 
         String raceKey = pdc.get(RaceItems.RACE_GUI_ITEM_KEY, PersistentDataType.STRING);
-
         Player player = (Player) event.getWhoClicked();
-        ERaces.getPlayerMng().setPlayerRace(player, raceKey);
+
+        var context = ERaces.getInstance().getContext();
+        context.getPlayerDataManager().setPlayerRace(player, raceKey);
+
         RacesReloader.reloadRaceForPlayer(player);
         VisualsManager.updateVisualsForPlayer(player);
+
         player.sendMessage("§aВы выбрали расу: §f" + raceKey);
-
         player.closeInventory();
-
     }
 }

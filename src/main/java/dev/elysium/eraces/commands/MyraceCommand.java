@@ -25,14 +25,17 @@ public class MyraceCommand {
     }
 
     private static void myraceCommandLogic(Player player) {
-        String playerRace = ERaces.getPlayerMng().getPlayerRaceId(player);
+        var context = ERaces.getInstance().getContext();
+
+        String playerRace = context.getPlayerDataManager().getPlayerRaceId(player);
 
         if (playerRace == null || playerRace.isEmpty()) {
-            ChatUtil.message(player, ERaces.getMsgMng().getRaceNotSelected());
+            ChatUtil.message(player, context.getMessageManager().getData().getRaceNotSelected());
             return;
         }
 
-        String message = ERaces.getMsgMng().getGetPlayerRaceSuccessMe();
+        String message = context.getMessageManager().getData().getGetPlayerRaceSuccessMe();
         ChatUtil.message(player, message, Map.of("{race}", playerRace));
     }
 }
+

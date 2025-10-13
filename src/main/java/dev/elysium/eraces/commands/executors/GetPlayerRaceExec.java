@@ -5,6 +5,7 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import dev.elysium.eraces.ERaces;
+import dev.elysium.eraces.datatypes.Race;
 import dev.elysium.eraces.utils.ChatUtil;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
@@ -30,14 +31,15 @@ public class GetPlayerRaceExec {
         Player player = ctx.getArgument("target", PlayerSelectorArgumentResolver.class).resolve(ctx.getSource()).getFirst();
         String playerName = player.getName();
 
-        String playerRace = ERaces.getPlayerMng().getPlayerRaceId(player);
+        String playerRace = ERaces.getInstance().getContext().playerDataManager.getPlayerRaceId(player);
 
         if (sender.getName().equals(playerName)) {
-            String message = ERaces.getMsgMng().getGetPlayerRaceSuccessMe();
+            String message = ERaces.getInstance().getContext().getMessageManager().getData().getGetPlayerRaceSuccessMe();
+
             ChatUtil.message(sender, message,
                     Map.of("{race}", playerRace));
         } else {
-            String message = ERaces.getMsgMng().getGetPlayerRaceSuccess();
+            String message = ERaces.getInstance().getContext().getMessageManager().getData().getGetPlayerRaceSuccess();
             ChatUtil.message(sender, message,
                     Map.of("{player}", playerName, "{race}", playerRace));
         }

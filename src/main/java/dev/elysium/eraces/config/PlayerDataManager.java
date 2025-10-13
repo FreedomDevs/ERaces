@@ -3,19 +3,15 @@ package dev.elysium.eraces.config;
 import dev.elysium.eraces.ERaces;
 import dev.elysium.eraces.datatypes.Race;
 import dev.elysium.eraces.utils.SqliteDatabase;
-import lombok.SneakyThrows;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class PlayerDataManager {
@@ -23,9 +19,9 @@ public class PlayerDataManager {
     private final SqliteDatabase database;
 
 
-    public PlayerDataManager(SqliteDatabase database) {
+    public PlayerDataManager(Map<String, Race> races, SqliteDatabase database) {
         this.database = database;
-        this.races = ERaces.getRacesMng().getRaces();
+        this.races = ERaces.getInstance().getContext().racesConfigManager.getRaces();
     }
 
     public String getPlayerRaceId(Player player) {

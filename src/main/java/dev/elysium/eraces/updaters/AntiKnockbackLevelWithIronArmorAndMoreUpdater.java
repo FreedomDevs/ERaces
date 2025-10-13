@@ -10,11 +10,18 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 public class AntiKnockbackLevelWithIronArmorAndMoreUpdater implements Listener {
+
     @EventHandler
     public void onArmorChange(PlayerArmorChangeEvent event) {
         Player player = event.getPlayer();
-        int param = ERaces.getPlayerMng().getPlayerRace(player).getAntiKnocbackLevelWithIronArmorAndMore();
+        int param = ERaces.getInstance()
+                .getContext()
+                .playerDataManager
+                .getPlayerRace(player)
+                .getAntiKnocbackLevelWithIronArmorAndMore();
+
         if (param == 0) return;
+
         AttributeInstance attr = player.getAttribute(Attribute.KNOCKBACK_RESISTANCE);
         if (attr != null) {
             if (ArmorChecker.allArmorGEQ(player, ArmorChecker.ArmorType.IRON)) {

@@ -52,7 +52,7 @@ public class RacesReloader implements Listener {
     );
 
     public static void reloadRaceForPlayer(Player player) {
-        Race race = ERaces.getPlayerMng().getPlayerRace(player);
+        Race race = ERaces.getInstance().getContext().playerDataManager.getPlayerRace(player);
         if (race == null) {
             return;
         }

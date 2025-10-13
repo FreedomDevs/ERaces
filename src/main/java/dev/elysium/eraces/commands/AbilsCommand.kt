@@ -3,7 +3,6 @@ package dev.elysium.eraces.commands
 import com.mojang.brigadier.Command
 import com.mojang.brigadier.arguments.StringArgumentType
 import com.mojang.brigadier.tree.LiteralCommandNode
-import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.abilities.AbilsManager
 import io.papermc.paper.command.brigadier.CommandSourceStack
 import io.papermc.paper.command.brigadier.Commands

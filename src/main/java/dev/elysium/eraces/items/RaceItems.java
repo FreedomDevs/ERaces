@@ -12,6 +12,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 public class RaceItems {
     public static final NamespacedKey RACE_GUI_ITEM_KEY = new NamespacedKey(ERaces.getInstance(), "race_gui_item");
@@ -24,7 +25,7 @@ public class RaceItems {
         ItemMeta meta = item.getItemMeta();
         meta.displayName(ChatUtil.legacyFormat(cfg.getName()));
         meta.lore(Arrays.stream(cfg.getLore().split("\n")).map(ChatUtil::legacyFormat).toList());
-        meta.getPersistentDataContainer().set(RACE_GUI_ITEM_KEY, PersistentDataType.STRING, race.getId());
+        meta.getPersistentDataContainer().set(RACE_GUI_ITEM_KEY, PersistentDataType.STRING, Objects.requireNonNull(race.getId()));
         item.setItemMeta(meta);
 
         if (isCurrent) setHighlighted(item);

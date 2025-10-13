@@ -14,23 +14,23 @@ public class YamlManager {
     private final String filename;
     private final JavaPlugin plugin;
     private final boolean haveDefault;
-    private final File filedata;
+    private final File fileData;
 
     public YamlManager(JavaPlugin plugin, String filename, boolean haveDefault) {
         this.filename = filename;
         this.plugin = plugin;
         this.haveDefault = haveDefault;
-        this.filedata = new File(plugin.getDataFolder(), this.filename);
+        this.fileData = new File(plugin.getDataFolder(), this.filename);
     }
 
     public YamlConfiguration getConfig() {
-        if (filedata.exists()) {
-            return YamlConfiguration.loadConfiguration(filedata);
+        if (fileData.exists()) {
+            return YamlConfiguration.loadConfiguration(fileData);
         }
 
         if (haveDefault) {
             plugin.saveResource(filename, false);
-            return YamlConfiguration.loadConfiguration(filedata);
+            return YamlConfiguration.loadConfiguration(fileData);
         }
 
         return new YamlConfiguration();
@@ -47,7 +47,7 @@ public class YamlManager {
 
     public void saveConfig(YamlConfiguration config) {
         try {
-            config.save(filedata);
+            config.save(fileData);
         } catch (IOException e) {
             plugin.getLogger().log(Level.SEVERE, "Failed to save config file: " + filename, e);
         }

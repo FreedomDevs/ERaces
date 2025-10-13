@@ -44,12 +44,12 @@ public class ShieldUsageUpdater implements Listener, IUpdater, IUnloadable {
 
     @Override
     public void update(Race race, Player player) {
-        String playername = player.getName();
+        String playerName = player.getName();
 
         if (race.getShieldUsage()) {
-            blockedShield.remove(playername);
+            blockedShield.remove(playerName);
         } else {
-            blockedShield.add(playername);
+            blockedShield.add(playerName);
         }
     }
 

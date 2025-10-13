@@ -12,12 +12,12 @@ public class SaturationUpdater implements Listener {
     public void onPlayerExhaust(EntityExhaustionEvent event) {
         if (!(event.getEntity() instanceof Player player)) return;
 
-        double coeff = ERaces.getInstance()
+        double cuff = ERaces.getInstance()
                 .getContext()
                 .getPlayerDataManager()
                 .getPlayerRace(player)
                 .getExhaustionMultiplier();
 
-        event.setExhaustion((float) (event.getExhaustion() * coeff));
+        event.setExhaustion((float) (event.getExhaustion() * cuff));
     }
 }

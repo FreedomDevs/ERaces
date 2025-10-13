@@ -9,6 +9,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.lang.reflect.Field;
 import java.util.List;
+import java.util.logging.Level;
 
 public class MessageManager {
 
@@ -17,16 +18,17 @@ public class MessageManager {
     private final YamlManager cfgManager;
     private YamlConfiguration config;
     private YamlConfiguration defaultConfig;
-    private final File file;
 
     @Getter
     private MessageConfigData data;
 
     public MessageManager(ERaces plugin, String selectedLang) {
         File folder = new File(plugin.getDataFolder(), FOLDER_NAME);
-        if (!folder.exists()) folder.mkdirs();
+        if (!folder.exists() && !folder.mkdirs()) {
+            plugin.getLogger().warning("Failed to create messages folder: " + folder.getAbsolutePath());
+        }
 
-        this.file = new File(folder, selectedLang.toLowerCase() + ".yml");
+        File file = new File(folder, selectedLang.toLowerCase() + ".yml");
         this.cfgManager = new YamlManager(plugin, FOLDER_NAME + "/" + file.getName(), false);
 
         loadMessage();
@@ -53,7 +55,9 @@ public class MessageManager {
                     field.set(data, config.getStringList(path));
                 }
             } catch (IllegalAccessException e) {
-                e.printStackTrace();
+                ERaces.getInstance().getLogger().log(Level.SEVERE,
+                        "Failed to set field '" + field.getName() + "' in MessageConfigData", e);
+
             }
         }
     }

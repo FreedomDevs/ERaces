@@ -1,6 +1,5 @@
 package dev.elysium.eraces.config;
 
-import dev.elysium.eraces.ERaces;
 import dev.elysium.eraces.datatypes.Race;
 import dev.elysium.eraces.utils.SqliteDatabase;
 import org.bukkit.entity.Player;
@@ -21,7 +20,7 @@ public class PlayerDataManager {
 
     public PlayerDataManager(Map<String, Race> races, SqliteDatabase database) {
         this.database = database;
-        this.races = ERaces.getInstance().getContext().racesConfigManager.getRaces();
+        this.races = races;
     }
 
     public String getPlayerRaceId(Player player) {
@@ -47,9 +46,7 @@ public class PlayerDataManager {
                     rs.close();
                     return raceId;
                 } else {
-//                    String randomRaceId = getRandomRaceId();
                     rs.close();
-//                    setPlayerRaceAsync(player, randomRaceId);
                     return null; // Чтобы мы могли открыть гуи
                 }
             } catch (SQLException e) {

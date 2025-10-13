@@ -12,8 +12,8 @@ public class BlockReachUpdater implements IUpdater {
     @Override
     public void update(Race race, Player player) {
         double handDistanceBonus = race.getHandDistanceBonus();
-        AttributeInstance attibute = player.getAttribute(Attribute.BLOCK_INTERACTION_RANGE);
-        if (attibute != null)
-            attibute.setBaseValue(BASE_HAND_DISTANCE + handDistanceBonus);
+        AttributeInstance attribute = player.getAttribute(Attribute.BLOCK_INTERACTION_RANGE);
+        if (attribute != null)
+            attribute.setBaseValue(BASE_HAND_DISTANCE + handDistanceBonus);
     }
 }

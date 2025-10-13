@@ -19,7 +19,6 @@ public class RacesReloader implements Listener {
 
     private static final List<Object> updaters = List.of(
             new HealthUpdater(),
-            new MineSpeedUpdater(),
             new AdditionalArmorUpdater(),
             new HealthRegenUpdater(),
             new ShieldUsageUpdater(),

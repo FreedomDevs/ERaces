@@ -7,10 +7,7 @@ class Race {
     var maxHp: Double = 20.0
 
     @RaceProperty(path = "hunger_loss_multiplier", type = FieldType.DOUBLE)
-    var hungerLossMultiplier: Double = 1.0
-
-    @RaceProperty(path = "haste_level", type = FieldType.INT)
-    var hasteLevel: Int = 1
+    var hungerLossMultiplier: Double = 1.0  //- хз ни где не юзается но вроде и небыло упоминания что он вырезан поэтому оставлю от греха подальше
 
     @RaceProperty(path = "hand_distance_bonus", type = FieldType.INT)
     var handDistanceBonus: Int = 0
@@ -24,17 +21,11 @@ class Race {
     @RaceProperty(path = "regeneration_per_sec", type = FieldType.DOUBLE)
     var regenerationPerSec: Double = 0.0
 
-    @RaceProperty(path = "movement_speed_level", type = FieldType.INT)
-    var movementSpeedLevel: Int = 0
-
     @RaceProperty(path = "antiknockback_level", type = FieldType.INT)
     var antiKnockbackLevel: Int = 0
 
     @RaceProperty(path = "antiknockback_level_with_iron_and_more_armor", type = FieldType.INT)
     var antiKnocbackLevelWithIronArmorAndMore: Int = 0
-
-    @RaceProperty(path = "damage_resistance_level", type = FieldType.INT)
-    var damageResistanceLevel: Int = 0
 
     @RaceProperty(path = "exclude_from_random", type = FieldType.BOOLEAN)
     @get:JvmName("isExcludeFromRandom")
@@ -45,9 +36,6 @@ class Race {
 
     @RaceProperty(path = "forbidden_foods", type = FieldType.LIST)
     var forbiddenFoods: MutableList<String> = mutableListOf()
-
-    @RaceProperty(path = "biome_speed", type = FieldType.LIST)
-    var biomeSpeed: MutableList<String> = mutableListOf()
 
     @RaceProperty(path = "visuals", type = FieldType.LIST)
     var visuals: MutableList<String> = mutableListOf()

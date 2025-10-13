@@ -1,0 +1,42 @@
+package dev.elysium.eraces.gui.raceSelect
+
+import dev.elysium.eraces.gui.core.GuiBase
+import dev.elysium.eraces.gui.core.GuiButton
+import org.bukkit.Material
+import org.bukkit.entity.Player
+
+class RaceSelectMenu(player: Player) : GuiBase(player, "Выбор расы") {
+
+    private var currentIndex = 0
+
+    init {
+        preventClose = true
+        closeMessage = "<red>Ты должен выбрать расу, прежде чем продолжить!"
+
+    }
+
+    override fun setup() {
+        val pages = RaceSelectMenuPages.pages
+        val race = pages[currentIndex]
+
+        setButton(22, GuiButton(race.toItem()) { })
+
+        setButton(31, GuiButton.of(Material.EMERALD_BLOCK, "§aВыбрать расу") {
+            RaceConfirmMenu(player, race).open()
+        })
+
+        if (currentIndex > 0) {
+            setButton(45, GuiButton.of(Material.ARROW, "§eПредыдущая") {
+                currentIndex--
+                open()
+            })
+        }
+
+        if (currentIndex < pages.size - 1) {
+            setButton(53, GuiButton.of(Material.ARROW, "§eСледующая") {
+                currentIndex++
+                open()
+            })
+        }
+    }
+}

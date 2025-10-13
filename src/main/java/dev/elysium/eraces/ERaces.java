@@ -10,7 +10,6 @@ import dev.elysium.eraces.config.GlobalConfigManager;
 import dev.elysium.eraces.config.MessageManager;
 import dev.elysium.eraces.config.PlayerDataManager;
 import dev.elysium.eraces.config.RacesConfigManager;
-import dev.elysium.eraces.datatypes.configs.MessageConfigData;
 import dev.elysium.eraces.utils.SqliteDatabase;
 import dev.elysium.eraces.utils.targetUtils.PluginAccessor;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;

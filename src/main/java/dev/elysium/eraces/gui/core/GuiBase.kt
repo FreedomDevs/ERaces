@@ -17,13 +17,11 @@ abstract class GuiBase(
     val inv: Inventory = Bukkit.createInventory(null, size, Component.text(title))
     private val buttons = mutableMapOf<Int, GuiButton>()
 
-    /** Если true, игрок не сможет закрыть меню вручную */
     var preventClose: Boolean = false
-
-    /** Сообщение, которое будет показано при попытке закрытия меню */
     var closeMessage: String? = null
 
-    /** Настройка меню — сюда добавляешь кнопки */
+    internal var programmaticOpen: Boolean = false
+
     abstract fun setup()
 
     fun setButton(slot: Int, button: GuiButton) {
@@ -33,6 +31,7 @@ abstract class GuiBase(
 
     fun open() {
         setup()
+        programmaticOpen = true
         player.openInventory(inv)
         GuiManager.setOpenMenu(player, this)
     }
@@ -47,10 +46,7 @@ abstract class GuiBase(
         inv.clear()
     }
 
-    /**
-     * Вызывается при закрытии инвентаря.
-     * Возвращает true, если меню должно быть снова открыто.
-     */
-    open fun onClose(): Boolean = preventClose
+    open fun onClose(): Boolean {
+        return preventClose && !programmaticOpen
+    }
 }
-

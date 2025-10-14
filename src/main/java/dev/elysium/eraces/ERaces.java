@@ -139,6 +139,8 @@ public class ERaces extends JavaPlugin {
 
     private void registerEventListeners() {
         Bukkit.getPluginManager().registerEvents(RaceSelectListener.INSTANCE, this);
+
+        GuiListener.INSTANCE.init(this);
         Bukkit.getPluginManager().registerEvents(GuiListener.INSTANCE, this);
     }
 

@@ -24,7 +24,7 @@ class RaceSelectMenu(player: Player) : GuiBase(player, "Выбор расы") {
         }
 
         if (pages.isEmpty()) {
-            player.sendMessage("§cОшибка: список рас пуст. Сообщи администратору!")
+            ChatUtil.message(player, "<red>Ошибка: список рас пуст. Сообщи администратору!")
             player.closeInventory()
             return
         }
@@ -39,8 +39,11 @@ class RaceSelectMenu(player: Player) : GuiBase(player, "Выбор расы") {
         setButton(22, GuiButton(race.toItem()) { })
 
         setButton(31, GuiButton.of(Material.EMERALD_BLOCK, "§aВыбрать расу") {
-            RaceConfirmMenu(player, race).open()
+            val confirmMenu = RaceConfirmMenu(player, race)
+            confirmMenu.programmaticOpen = true
+            confirmMenu.open()
         })
+
 
         if (currentIndex > 0) {
             setButton(45, GuiButton.of(Material.ARROW, "§eПредыдущая") {

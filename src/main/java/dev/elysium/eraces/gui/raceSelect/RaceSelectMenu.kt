@@ -40,6 +40,7 @@ class RaceSelectMenu(player: Player) : GuiBase(player, "Выбор расы") {
         setButton(22, GuiButton(race.toItem()) { })
 
         setButton(31, GuiButton.of(Material.EMERALD_BLOCK, "§aВыбрать расу") {
+            GuiManager.getOpenMenu(player)?.preventClose = false
             GuiManager.close(player)
             player.closeInventory()
             RaceConfirmMenu(player, race).open()

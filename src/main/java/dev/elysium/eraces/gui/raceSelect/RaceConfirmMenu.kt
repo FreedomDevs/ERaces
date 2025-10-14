@@ -31,10 +31,10 @@ class RaceConfirmMenu(
         })
 
         setButton(15, GuiButton.of(Material.RED_WOOL, "§cНет, вернуться") {
+            GuiManager.getOpenMenu(player)?.preventClose = false
             GuiManager.close(player)
             player.closeInventory()
             RaceSelectMenu(player).open()
         })
-
     }
 }

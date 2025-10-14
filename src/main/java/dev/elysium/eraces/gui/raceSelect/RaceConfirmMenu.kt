@@ -23,6 +23,8 @@ class RaceConfirmMenu(
 
     override fun setup() {
         setButton(11, GuiButton.of(Material.LIME_WOOL, "§aДа, выбрать ${race.displayName}") {
+            GuiManager.getOpenMenu(player)?.preventClose = false
+            GuiManager.close(player)
             player.closeInventory()
             ChatUtil.sendAction(player, "<green>Ты выбрал расу: <gold>${race.displayName}")
             ERaces.getInstance().context.playerDataManager.setPlayerRace(player, race.id)

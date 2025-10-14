@@ -5,6 +5,7 @@ import dev.elysium.eraces.RacesReloader
 import dev.elysium.eraces.VisualsManager
 import dev.elysium.eraces.gui.core.GuiBase
 import dev.elysium.eraces.gui.core.GuiButton
+import dev.elysium.eraces.gui.core.GuiManager
 import dev.elysium.eraces.utils.ChatUtil
 import org.bukkit.Material
 import org.bukkit.entity.Player
@@ -30,7 +31,10 @@ class RaceConfirmMenu(
         })
 
         setButton(15, GuiButton.of(Material.RED_WOOL, "§cНет, вернуться") {
+            GuiManager.close(player)
+            player.closeInventory()
             RaceSelectMenu(player).open()
         })
+
     }
 }

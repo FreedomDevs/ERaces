@@ -2,6 +2,7 @@ package dev.elysium.eraces.gui.raceSelect
 
 import dev.elysium.eraces.gui.core.GuiBase
 import dev.elysium.eraces.gui.core.GuiButton
+import dev.elysium.eraces.gui.core.GuiManager
 import dev.elysium.eraces.utils.ChatUtil
 import org.bukkit.Material
 import org.bukkit.entity.Player
@@ -39,10 +40,11 @@ class RaceSelectMenu(player: Player) : GuiBase(player, "Выбор расы") {
         setButton(22, GuiButton(race.toItem()) { })
 
         setButton(31, GuiButton.of(Material.EMERALD_BLOCK, "§aВыбрать расу") {
-            val confirmMenu = RaceConfirmMenu(player, race)
-            confirmMenu.programmaticOpen = true
-            confirmMenu.open()
+            GuiManager.close(player)
+            player.closeInventory()
+            RaceConfirmMenu(player, race).open()
         })
+
 
 
         if (currentIndex > 0) {

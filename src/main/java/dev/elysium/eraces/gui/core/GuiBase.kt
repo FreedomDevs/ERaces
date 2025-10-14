@@ -42,6 +42,11 @@ abstract class GuiBase(
         buttons[event.slot]?.onClick?.invoke(event)
     }
 
+    fun clearButtons() {
+        buttons.clear()
+        inv.clear()
+    }
+
     /**
      * Вызывается при закрытии инвентаря.
      * Возвращает true, если меню должно быть снова открыто.

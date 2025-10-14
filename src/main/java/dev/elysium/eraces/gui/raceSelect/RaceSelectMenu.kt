@@ -24,10 +24,15 @@ class RaceSelectMenu(player: Player) : GuiBase(player, "Выбор расы") {
         }
 
         if (pages.isEmpty()) {
-            ChatUtil.message(player, "<red>Ошибка: список рас пуст. Сообщи администратору!")
+            player.sendMessage("§cОшибка: список рас пуст. Сообщи администратору!")
             player.closeInventory()
             return
         }
+
+        clearButtons()
+
+        if (currentIndex < 0) currentIndex = 0
+        if (currentIndex >= pages.size) currentIndex = pages.size - 1
 
         val race = pages[currentIndex]
 

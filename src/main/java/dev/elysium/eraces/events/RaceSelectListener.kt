@@ -17,8 +17,9 @@ object RaceSelectListener : Listener {
     fun onPlayerJoin(event: PlayerJoinEvent) {
         val player = event.player
         val raceId = ERaces.getInstance().context.playerDataManager.getPlayerRaceId(player)
+        val defaultRaceId = "default"
 
-        if (raceId.isNullOrEmpty()) {
+        if (raceId.isNullOrEmpty() || raceId == defaultRaceId) {
             val menu = RaceSelectMenu(player)
             menu.open()
         } else {
@@ -26,6 +27,7 @@ object RaceSelectListener : Listener {
             VisualsManager.updateVisualsForPlayer(player)
         }
     }
+
 
     @EventHandler
     fun onPlayerDamage(event: EntityDamageEvent) {

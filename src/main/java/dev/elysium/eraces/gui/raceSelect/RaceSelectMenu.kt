@@ -2,6 +2,7 @@ package dev.elysium.eraces.gui.raceSelect
 
 import dev.elysium.eraces.gui.core.GuiBase
 import dev.elysium.eraces.gui.core.GuiButton
+import dev.elysium.eraces.utils.ChatUtil
 import org.bukkit.Material
 import org.bukkit.entity.Player
 
@@ -17,6 +18,17 @@ class RaceSelectMenu(player: Player) : GuiBase(player, "Выбор расы") {
 
     override fun setup() {
         val pages = RaceSelectMenuPages.pages
+
+        if (pages.isEmpty()) {
+            RaceSelectMenuPages.registerDefaults()
+        }
+
+        if (pages.isEmpty()) {
+            ChatUtil.message(player, "<red>Ошибка: список рас пуст. Сообщи администратору!")
+            player.closeInventory()
+            return
+        }
+
         val race = pages[currentIndex]
 
         setButton(22, GuiButton(race.toItem()) { })

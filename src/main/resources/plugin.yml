@@ -1,4 +1,4 @@
-name: FDP_Races
+name: ERaces
 version: ${version}
 main: dev.elysium.eraces.ERaces
 description: Просто плагин на расы

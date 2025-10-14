@@ -2,6 +2,7 @@ package dev.elysium.eraces.gui.raceSelect
 
 import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.RacesReloader
+import dev.elysium.eraces.VisualsManager
 import dev.elysium.eraces.gui.core.GuiBase
 import dev.elysium.eraces.gui.core.GuiButton
 import dev.elysium.eraces.utils.ChatUtil
@@ -25,6 +26,7 @@ class RaceConfirmMenu(
             ChatUtil.sendAction(player, "<green>Ты выбрал расу: <gold>${race.displayName}")
             ERaces.getInstance().context.playerDataManager.setPlayerRace(player, race.id)
             RacesReloader.reloadRaceForPlayer(player)
+            VisualsManager.updateVisualsForPlayer(player)
         })
 
         setButton(15, GuiButton.of(Material.RED_WOOL, "§cНет, вернуться") {

@@ -47,7 +47,7 @@ public class PlayerDataManager {
                     return raceId;
                 } else {
                     rs.close();
-                    return null; // Чтобы мы могли открыть гуи
+                    return "default";
                 }
             } catch (SQLException e) {
                 throw new RuntimeException(e);

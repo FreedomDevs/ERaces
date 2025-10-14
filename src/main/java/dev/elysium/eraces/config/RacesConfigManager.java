@@ -39,7 +39,9 @@ public class RacesConfigManager {
 
     private void loadConfig() {
         races.clear();
-        races.put("default", new Race());
+        Race defaultRace = new Race();
+        defaultRace.setId("default");
+        races.put("default", defaultRace);
         loadFromConfig(cfgManager.getConfig());
 
         File dir = new File(plugin.getDataFolder(), DIRECTORY_NAME);

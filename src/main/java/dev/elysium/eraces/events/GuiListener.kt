@@ -42,8 +42,6 @@ object GuiListener : Listener {
         val player = event.player as? Player ?: return
         val menu = GuiManager.getOpenMenu(player) ?: return
 
-        menu.programmaticOpen = false
-
         if (menu.onClose()) {
             menu.closeMessage?.let { ChatUtil.sendAction(player, it) }
 

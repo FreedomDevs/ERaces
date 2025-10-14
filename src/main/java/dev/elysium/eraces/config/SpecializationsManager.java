@@ -123,8 +123,8 @@ public class SpecializationsManager {
     private void loadSpecPlayerData() {
         String query = "SELECT uuid, specialization, level, xp, int, str, agi, vit FROM specialization_levels";
 
-        try (Connection conn = database.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query);
+        Connection conn = database.getConnection();
+        try (PreparedStatement stmt = conn.prepareStatement(query);
              ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {

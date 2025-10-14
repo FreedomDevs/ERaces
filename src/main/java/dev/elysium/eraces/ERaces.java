@@ -94,6 +94,7 @@ public class ERaces extends JavaPlugin {
     /* ------------------- Database Helpers ------------------- */
 
     private void connectDatabase() {
+        getDataFolder().mkdirs();
         Path dbPath = getDataFolder().toPath().resolve("database_sqlite.db");
         context.getDatabase().connect(dbPath.toString());
     }

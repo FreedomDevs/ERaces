@@ -34,12 +34,21 @@ saint:
   effects_with:
     global:
       regeneration: 1 # 1
+    at_time:
+#      Ночью
+      - from: 12000
+        to: 24000
+        effects:
+          weakness: 1
+#      Днём
+      - from: 0
+        to: 12000
+        effects:
+          strength: 1
 
   exclude_from_random: true
-#  TODO: Слабость (Эффект) - 1 (Только Ночью)
 
 #  TODO: Регенерация Маны +10% (Без Условий
-#  TODO: Сила (Эффект) - 1 (Только Днем)
 
 angel:
   gui_config:
@@ -48,12 +57,22 @@ angel:
     icon: "MACE"
 
   max_hp: 20
+  effects_with:
+    at_time:
+#      Ночью
+      - from: 12000
+        to: 24000
+        effects:
+          weakness: 2
+#      Днём
+      - from: 0
+        to: 12000
+        effects:
+          strength: 2
+          regeneration: 3
   exclude_from_random: true
 #  TODO: Доп ушерб от проклятого оружия 2
-#  TODO: Слабость (Эффект) - 2 (Только Ночью)
 
-#  TODO: Сила (Эффект) - 2 (Только Днем и НЕ в Незере)
-#  TODO: Регенерация (Эффект) - 3 (Только Днем и НЕ в Незере)
 #  TODO: Регенерация Маны +25% (Только Днем и НЕ в Незере)
 #  TODO: Доп урон при использовании святого оружия
 
@@ -84,12 +103,22 @@ archangel:
     icon: "MACE"
 
   max_hp: 24
+  effects_with:
+    at_time:
+      #      Ночью
+      - from: 12000
+        to: 24000
+        effects:
+          weakness: 1
+      #      Днём
+      - from: 0
+        to: 12000
+        effects:
+          strength: 3 # 2 если в аду
+          regeneration: 2
   exclude_from_random: true
-#  TODO: Слабость (Эффект) - 1 (Только Ночью)
 #  TODO: Доп ушерб от проклятого оружия 1
 
-#  TODO: Сила (Эффект) - 3 (Только Днем (2, если в аду))
-#  TODO: Регенерация (Эффект) - 2 (Всегда (1, если в аду))
 #  TODO: Регенерация Маны +20% (Всегда ( +10%, если в аду))
 #  TODO:  Доп урон при использовании святого оружия 2
 
@@ -114,12 +143,21 @@ bes:
   effects_with:
     global:
       regeneration: 1 # 1
+    at_time:
+      #      Ночью
+      - from: 12000
+        to: 24000
+        effects:
+          strength: 1
+      #      Днём
+      - from: 0
+        to: 12000
+        effects:
+          weakness: 2
 
   exclude_from_random: true
-#  TODO: Слабость (Эффект) - 2 (Только Днем)
 #  TODO: Доп ушерб от святого оружия 2, если в аду 4
 
-#  TODO: Сила (Эффект) - 1 (Только Ночью)
 #  TODO: Регенерация Маны +10% (Без Условий)
 
 demon:
@@ -128,13 +166,25 @@ demon:
     lore: ""
     icon: "MACE"
   max_hp: 18
+  effects_with:
+    global:
+      regeneration: 1 # 1
+    at_time:
+      #      Ночью
+      - from: 12000
+        to: 24000
+        effects:
+          strength: 2
+          regeneration: 3 # в аду 6
+      #      Днём
+      - from: 0
+        to: 12000
+        effects:
+          weakness: 1
   exclude_from_random: true
 
-#  TODO: Слабость (Эффект) - 1 (Только Днем)
 #  TODO: Доп ушерб от святого оружия 2, если в аду 4
 
-#  TODO: Сила (Эффект) - 2 (Только ночью если в аду)
-#  TODO: Регенерация (Эффект) - 3 (Только ночью, 6 если в аду)
 #  TODO: Регенерация Маны +25% (Только Ночью, 50% если в аду)
 #  TODO: Доп урон при использовании проклятого оружия
 
@@ -145,11 +195,25 @@ arch-demon:
     lore: ""
     icon: "MACE"
   max_hp: 22
+  effects_with:
+    global:
+      regeneration: 1 # 1
+    at_time:
+      #      Ночью
+      - from: 12000
+        to: 24000
+        effects:
+          strength: 2
+          regeneration: 3
+      #      Днём
+      - from: 0
+        to: 12000
+        effects:
+          weakness: 1
+
   exclude_from_random: true
 #  TODO: Доп ушерб от святого оружия 1, если в аду 3
 
-#  TODO: Сила (Эффект) - 3 (Только ночью (4, если в аду))
-#  TODO: Регенерация (Эффект) - 2 (Всегда (3, если в аду))
 #  TODO: Регенерация Маны +20% (Всегда ( +30%, если в аду))
 #  TODO: Доп урон при использовании проклятого оружия 2
 

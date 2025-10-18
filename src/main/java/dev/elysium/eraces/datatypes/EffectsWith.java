@@ -17,4 +17,6 @@ public class EffectsWith {
     List<EffectsWithLight> effectsWithLights = new ArrayList<>();
     @RaceProperty(path = "at_block", type = FieldType.LIST_SUBGROUP)
     List<EffectsWithBlock> effectsWithBlocks = new ArrayList<>();
+    @RaceProperty(path = "at_time", type = FieldType.LIST_SUBGROUP)
+    List<EffectsWithTime> effectsWithTime = new ArrayList<>();
 }

@@ -20,6 +20,8 @@ public class EffectsUpdater implements IUpdater {
     private final int lightTask;
     @SuppressWarnings({"FieldCanBeLocal", "unused"})
     private final int blockTask;
+    @SuppressWarnings({"FieldCanBeLocal", "unused"})
+    private final int timeTask;
 
     public enum LightType {
         SUM, BLOCK, SKY;
@@ -53,6 +55,13 @@ public class EffectsUpdater implements IUpdater {
                 this::applyBlockEffects,
                 0,
                 5
+        );
+
+        timeTask =  Bukkit.getScheduler().scheduleSyncRepeatingTask(
+                ERaces.getInstance(),
+                this::applyTimeEffects,
+                0,
+                40
         );
     }
 
@@ -95,6 +104,19 @@ public class EffectsUpdater implements IUpdater {
             for (EffectsWithBlock effectConfig : race.getEffectsWith().getEffectsWithBlocks()) {
                 if (effectConfig.getBlocks().contains(block.getType().name())) {
                     EffectUtils.applyEffects(player, effectConfig.getEffects(), 20);
+                }
+            }
+        }
+    }
+
+    private void applyTimeEffects() {
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            Race race = ERaces.getInstance().getContext().playerDataManager.getPlayerRace(player);
+            long time = player.getWorld().getTime();
+
+            for (EffectsWithTime effectsCfg : race.getEffectsWith().getEffectsWithTime()) {
+                if (time >= effectsCfg.getFrom() && time <= effectsCfg.getTo()) {
+                    EffectUtils.applyEffects(player, effectsCfg.getEffects(), 40);
                 }
             }
         }

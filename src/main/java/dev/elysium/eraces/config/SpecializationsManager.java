@@ -27,6 +27,8 @@ public class SpecializationsManager {
 
     private final Object flushPlayerDataLock = new Object();
 
+    private static final long MAX_LEVEL = 50;
+
     private Integer task;
 
     public void flushPlayerDataCache() {
@@ -96,8 +98,14 @@ public class SpecializationsManager {
     }
 
     private void tryToUpgradeLevel(UUID uuid, SpecializationPlayerData data) {
-        while (data.getXp() >= config.getXpNext(data.getLevel()))
+        while (data.getLevel() < MAX_LEVEL && data.getXp() >= config.getXpNext(data.getLevel())) {
             upgradeLevel(uuid, data);
+        }
+
+        if (data.getLevel() >= MAX_LEVEL) {
+            data.setLevel(MAX_LEVEL);
+            data.setXp(0);
+        }
     }
 
     public void ensurePlayerInitialized(OfflinePlayer player) {
@@ -119,6 +127,7 @@ public class SpecializationsManager {
 
     public void addXp(OfflinePlayer player, long xp) {
         SpecializationPlayerData data = specPlayersData.get(player.getUniqueId());
+        if (data.getLevel() >= MAX_LEVEL) return;
         data.setXp(data.getXp() + xp);
         addPlayerToUpdated(player.getUniqueId());
         tryToUpgradeLevel(player.getUniqueId(), data);

@@ -86,6 +86,16 @@ public class ERaces extends JavaPlugin {
         context.setSpecializationsManager(new SpecializationsManager(this, context.getDatabase()));
         context.setRacesConfigManager(new RacesConfigManager(this));
         context.setPlayerDataManager(new PlayerDataManager(context.getRacesConfigManager().getRaces(), context.getDatabase()));
+
+        XpManager xpManager = new XpManager();
+        Bukkit.getPluginManager().registerEvents(xpManager, this);
+        context.setXpManager(xpManager);
+
+        DamageTracker damageTracker = new DamageTracker();
+        Bukkit.getPluginManager().registerEvents(damageTracker, this);
+        context.setXpDamageTracker(damageTracker);
+
+        context.manaManager = new ManaManager(this);
     }
 
     private void loadConfigs() {
@@ -142,14 +152,6 @@ public class ERaces extends JavaPlugin {
 
         GuiListener.INSTANCE.init(this);
         Bukkit.getPluginManager().registerEvents(GuiListener.INSTANCE, this);
-
-        XpManager xpManager = new XpManager();
-        Bukkit.getPluginManager().registerEvents(xpManager, this);
-        context.setXpManager(xpManager);
-
-        DamageTracker damageTracker = new DamageTracker();
-        Bukkit.getPluginManager().registerEvents(damageTracker, this);
-        context.setXpDamageTracker(damageTracker);
     }
 
     /* ------------------- Utility Methods ------------------- */

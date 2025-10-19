@@ -12,4 +12,5 @@ class PluginContext(val database: SqliteDatabase) {
     lateinit var specializationsManager: SpecializationsManager
     lateinit var xpManager: XpManager
     lateinit var xpDamageTracker: DamageTracker
+    lateinit var manaManager: ManaManager
 }

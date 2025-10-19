@@ -7,7 +7,6 @@ import dev.elysium.eraces.commands.AbilsCommand;
 import dev.elysium.eraces.commands.MyraceCommand;
 import dev.elysium.eraces.commands.RacesCommand;
 import dev.elysium.eraces.config.*;
-import dev.elysium.eraces.datatypes.configs.MessageConfigData;
 import dev.elysium.eraces.config.GlobalConfigManager;
 import dev.elysium.eraces.config.MessageManager;
 import dev.elysium.eraces.config.PlayerDataManager;
@@ -15,6 +14,7 @@ import dev.elysium.eraces.config.RacesConfigManager;
 import dev.elysium.eraces.gui.raceSelect.RaceSelectMenuPages;
 import dev.elysium.eraces.utils.SqliteDatabase;
 import dev.elysium.eraces.utils.targetUtils.PluginAccessor;
+import dev.elysium.eraces.xpManager.XpManager;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -142,6 +142,14 @@ public class ERaces extends JavaPlugin {
 
         GuiListener.INSTANCE.init(this);
         Bukkit.getPluginManager().registerEvents(GuiListener.INSTANCE, this);
+
+        XpManager xpManager = new XpManager();
+        Bukkit.getPluginManager().registerEvents(xpManager, this);
+        context.setXpManager(xpManager);
+
+        DamageTracker damageTracker = new DamageTracker();
+        Bukkit.getPluginManager().registerEvents(damageTracker, this);
+        context.setXpDamageTracker(damageTracker);
     }
 
     /* ------------------- Utility Methods ------------------- */

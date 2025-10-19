@@ -5,6 +5,7 @@ import dev.elysium.eraces.datatypes.SpecializationPlayerData;
 import dev.elysium.eraces.datatypes.configs.SpecializationData;
 import dev.elysium.eraces.utils.SqliteDatabase;
 import lombok.Getter;
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -25,6 +26,8 @@ public class SpecializationsManager {
     private final Set<UUID> updatedPlayers = new HashSet<>();
 
     private final Object flushPlayerDataLock = new Object();
+
+    private Integer task;
 
     public void flushPlayerDataCache() {
         synchronized (flushPlayerDataLock) {
@@ -69,6 +72,7 @@ public class SpecializationsManager {
         this.database = database;
         reloadConfig();
         loadSpecPlayerData();
+        this.task = Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, this::flushPlayerDataCache, 20, 20).getTaskId();
     }
 
     public void reloadConfig() {

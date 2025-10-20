@@ -5,23 +5,18 @@ import dev.elysium.eraces.utils.TimeParser
 import dev.elysium.eraces.utils.targetUtils.Target
 import dev.elysium.eraces.utils.targetUtils.effects.EffectsTarget
 import dev.elysium.eraces.utils.targetUtils.effects.Executor
-import dev.elysium.eraces.utils.targetUtils.ignite
 import dev.elysium.eraces.utils.targetUtils.target.TargetFilter
 import dev.elysium.eraces.utils.vectors.RadiusFillBuilder
-import org.bukkit.Color
 import org.bukkit.Particle
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.entity.Player
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
-import kotlin.math.PI
-import kotlin.math.cos
-import kotlin.math.sin
 
 class TheMagicBarrierAbility : BaseCooldownAbility(
-    id = "themagicbarrier", defaultCooldown = "8m"
+    id = "themagicbarrier", defaultCooldown = "8m",
 
-) {
+    ) {
     private var radius: Double = 5.0
 
     private var duration: String = "15s"

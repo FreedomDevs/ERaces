@@ -3,13 +3,15 @@ package dev.elysium.eraces.abilities.abils.base
 import dev.elysium.eraces.abilities.ICooldownAbility
 import dev.elysium.eraces.utils.TimeParser
 import org.bukkit.configuration.file.YamlConfiguration
+import java.util.HashMap
 
 /**
  * Базовый класс для способностей для работы с кулдаунами.
  */
 abstract class BaseCooldownAbility(
     id: String,
-    private var defaultCooldown: String = "10s"
+    private var defaultCooldown: String = "10s",
+    defaultEffects: HashMap<K, V>
 ) : BaseAbility(id), ICooldownAbility {
     private var cooldown: String = defaultCooldown
 

@@ -22,6 +22,7 @@ abstract class BaseEffectsAbility(
 
     override fun activate(player: Player) {
         EffectUtils.giveEffectsToPlayer(player, effectsMap.values)
+        customActivate(player)
     }
 
     override fun loadParams(cfg: YamlConfiguration) {
@@ -33,6 +34,7 @@ abstract class BaseEffectsAbility(
             effect.duration = cfg.getString("${name}_duration", effect.duration)!!
             effect.level = cfg.getInt("${name}_level", effect.level)
         }
+        loadCustomParams(cfg)
     }
 
     override fun writeDefaultParams(cfg: YamlConfiguration) {
@@ -44,7 +46,12 @@ abstract class BaseEffectsAbility(
             cfg.set("${name}_duration", effect.duration)
             cfg.set("${name}_level", effect.level)
         }
+        writeCustomDefaults(cfg)
     }
+
+    protected open fun customActivate(player: Player) {}
+    protected open fun loadCustomParams(cfg: YamlConfiguration) {}
+    protected open fun writeCustomDefaults(cfg: YamlConfiguration) {}
 
     override fun getCooldown(): Long {
         return cooldown?.let { TimeParser.parseToSeconds(it) } ?: 0L

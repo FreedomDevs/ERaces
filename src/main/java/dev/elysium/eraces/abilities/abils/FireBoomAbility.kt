@@ -14,9 +14,8 @@ import org.bukkit.entity.Player
 
 class FireBoomAbility : BaseCooldownAbility(
     id = "fireboom",
-    defaultCooldown = "15m",
-
-    ) {
+    defaultCooldown = "15m"
+) {
     private var radius: Double = 3.0
     private var fireDuration: String = "10s"
 

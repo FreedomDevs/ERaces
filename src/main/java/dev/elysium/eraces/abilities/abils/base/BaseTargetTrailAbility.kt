@@ -16,7 +16,7 @@ import org.bukkit.entity.LivingEntity
 abstract class BaseTargetTrailAbility(
     id: String,
     defaultCooldown: String = "10s"
-) : BaseCooldownAbility(id, defaultCooldown,) {
+) : BaseCooldownAbility(id, defaultCooldown) {
 
     protected open var distance: Double = 30.0
     protected open var particle: Particle = Particle.FLAME

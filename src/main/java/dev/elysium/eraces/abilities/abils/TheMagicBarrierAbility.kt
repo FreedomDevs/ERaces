@@ -14,9 +14,8 @@ import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 
 class TheMagicBarrierAbility : BaseCooldownAbility(
-    id = "themagicbarrier", defaultCooldown = "8m",
-
-    ) {
+    id = "themagicbarrier", defaultCooldown = "8m"
+) {
     private var radius: Double = 5.0
 
     private var duration: String = "15s"

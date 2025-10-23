@@ -5,10 +5,12 @@ import dev.elysium.eraces.abilities.abils.AfterimageAbility
 import dev.elysium.eraces.abilities.abils.BlockAbility
 import dev.elysium.eraces.abilities.abils.BossRushAbility
 import dev.elysium.eraces.abilities.abils.BurnAbility
+import dev.elysium.eraces.abilities.abils.DeadlyRushAbility
 import dev.elysium.eraces.abilities.abils.FireBoomAbility
 import dev.elysium.eraces.abilities.abils.FireballAbility
 import dev.elysium.eraces.utils.ChatUtil
 import dev.elysium.eraces.abilities.abils.ForestSpiritAbility
+import dev.elysium.eraces.abilities.abils.MasterTheForestAbility
 import dev.elysium.eraces.abilities.abils.RageModeAbility
 import dev.elysium.eraces.abilities.abils.TheMagicBarrierAbility
 import org.bukkit.entity.Player
@@ -62,7 +64,9 @@ class AbilsManager private constructor(private val plugin: ERaces) {
             BurnAbility(),
             FireBoomAbility(),
             TheMagicBarrierAbility(),
-            AfterimageAbility()
+            AfterimageAbility(),
+            DeadlyRushAbility(),
+            MasterTheForestAbility()
         )
         register(*defaultAbilities.toTypedArray())
         plugin.logger.info("&aЗарегистрировано способностей: ${abilities.size}")

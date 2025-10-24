@@ -66,7 +66,6 @@ class MasterTheForestAbility : BaseCooldownAbility(
                             EffectsTarget()
                                 .from(Executor.PLAYER(target))
                                 .particle(p = Particle.HEART)
-                                .particle(p = Particle.HAPPY_VILLAGER)
                                 .math(
                                     RadiusFillBuilder()
                                         .sphere(2.0)

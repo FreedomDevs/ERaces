@@ -29,7 +29,7 @@ class TheMagicBarrierAbility : BaseCooldownAbility(
             .executeEffects(
                 EffectsTarget()
                     .from(Executor.PLAYER(player))
-                    .particle(Particle.DUST)
+                    .particle(Particle.ENCHANTED_HIT)
                     .math(
                         RadiusFillBuilder()
                             .circle(radius)
@@ -53,6 +53,23 @@ class TheMagicBarrierAbility : BaseCooldownAbility(
                         false
                     )
                     target.addPotionEffect(effect)
+
+                    Target.from(target)
+                        .executeEffects(
+                            EffectsTarget()
+                                .from(Executor.PLAYER(target))
+                                .particle(Particle.GLOW)
+                                .math(
+                                    RadiusFillBuilder()
+                                        .sphere(2.0)
+                                        .filled(false)
+                                        .step(0.2)
+                                        .interpolationFactor(2)
+                                )
+
+
+                        )
+
                 }
             }
     }

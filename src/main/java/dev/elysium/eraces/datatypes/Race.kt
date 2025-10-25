@@ -64,9 +64,9 @@ class Race {
     @RaceProperty(path = "abilities", type = FieldType.LIST)
     var abilities: MutableList<String> = mutableListOf()
 
-    @RaceProperty(path = "mana_regeneration_modifiers", type = FieldType.LIST)
+    @RaceProperty(path = "mana_regeneration_modifiers", type = FieldType.SUBGROUP)
     var manaRegenModifiers:  ConditionalModifier = ConditionalModifier()
 
-    @RaceProperty(path = "clumsiness_chance", type = FieldType.LIST)
+    @RaceProperty(path = "clumsiness_chance", type = FieldType.SUBGROUP)
     var clumsinessChance: ClumsinessChance = ClumsinessChance()
 }

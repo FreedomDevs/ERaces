@@ -225,9 +225,12 @@ revenants:
   clumsiness_chance:
     chance: 0.01
     damage: 1.0
+
+  chance_resurrection:
+    chance: 0.1
+    nexHpMinus: 8.0
   exclude_from_random: true
 #  TODO: Высокий кулдаун на оружии + 0.5
-#  TODO: Шанс воксреснуть - 10% (-8 HP после каждого воскрешения)
 #  TODO: Сила (Эффект) - 2 (Только После воскрешения)
 
 nekros:
@@ -248,10 +251,13 @@ nekros:
   clumsiness_chance:
     chance: 0.05
     damage: 1.0
+
+  chance_resurrection:
+    chance: 0.2
+    nexHpMinus: 6.0
   exclude_from_random: true
 #  TODO: Высокий кулдаун на оружии + 1
 #  TODO: Шанс промаха - 5%
-#  TODO: Шанс воксреснуть - 20% (-6 HP после каждого воскрешения)
 #  TODO: Сила (Эффект) - 3 (Только После воскрешения)
 
 mastered_nekros:
@@ -272,8 +278,11 @@ mastered_nekros:
   clumsiness_chance:
     chance: 0.005
     damage: 1.0
+
+  chance_resurrection:
+    chance: 0.2
+    nexHpMinus: 4.0
   exclude_from_random: true
 #  TODO: Высокий кулдаун на оружии + 0.2
 #  TODO: Шанс промаха - 1%
-#  TODO: Шанс воксреснуть - 20% (-4 HP после каждого воскрешения)
 #  TODO: Сила (Эффект) - 3 (Только После воскрешения)

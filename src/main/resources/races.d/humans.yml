@@ -221,8 +221,11 @@ revenants:
   mana_regeneration_modifiers:
     - condition: "ALWAYS"
       multiplier: 1.05
+
+  clumsiness_chance:
+    chance: 0.01
+    damage: 1.0
   exclude_from_random: true
-#  TODO: Неловкость (Шанс оступиться и получить 1 урон) 1%
 #  TODO: Высокий кулдаун на оружии + 0.5
 #  TODO: Шанс воксреснуть - 10% (-8 HP после каждого воскрешения)
 #  TODO: Сила (Эффект) - 2 (Только После воскрешения)
@@ -241,8 +244,11 @@ nekros:
   mana_regeneration_modifiers:
     - condition: "ALWAYS"
       multiplier: 1.05
+
+  clumsiness_chance:
+    chance: 0.05
+    damage: 1.0
   exclude_from_random: true
-#  TODO: Неловкость (Шанс оступиться и получить 1 урон) 5%
 #  TODO: Высокий кулдаун на оружии + 1
 #  TODO: Шанс промаха - 5%
 #  TODO: Шанс воксреснуть - 20% (-6 HP после каждого воскрешения)
@@ -262,8 +268,11 @@ mastered_nekros:
   mana_regeneration_modifiers:
     - condition: "ALWAYS"
       multiplier: 1.50
+
+  clumsiness_chance:
+    chance: 0.005
+    damage: 1.0
   exclude_from_random: true
-#  TODO: Неловкость (Шанс оступиться и получить 1 урон) 0.5%
 #  TODO: Высокий кулдаун на оружии + 0.2
 #  TODO: Шанс промаха - 1%
 #  TODO: Шанс воксреснуть - 20% (-4 HP после каждого воскрешения)

@@ -13,17 +13,6 @@ human:
 #    AGI (Agility) 2
 #    VIT (Vitality) 3
 
-
-# ---- Святая ветка ----
-
-# TODO: Бафы у всех
-#
-#    Повышенные характеристики у святого снаряжения
-#
-# TODO: Дебафы у всех
-#
-#    Использование только святого оружия
-
 saint:
   gui_config:
     name: "Святой"
@@ -35,20 +24,20 @@ saint:
     global:
       regeneration: 1 # 1
     at_time:
-#      Ночью
       - from: 12000
         to: 24000
         effects:
           weakness: 1
-#      Днём
       - from: 0
         to: 12000
         effects:
           strength: 1
 
-  exclude_from_random: true
+  mana_regeneration_modifiers:
+    - condition: "ALWAYS"
+      multiplier: 1.10  # +10% без условий
 
-#  TODO: Регенерация Маны +10% (Без Условий
+  exclude_from_random: true
 
 angel:
   gui_config:
@@ -59,23 +48,25 @@ angel:
   max_hp: 20
   effects_with:
     at_time:
-#      Ночью
       - from: 12000
         to: 24000
         effects:
           weakness: 2
-#      Днём
       - from: 0
         to: 12000
         effects:
           strength: 2
           regeneration: 3
+
+  mana_regeneration_modifiers:
+    - condition: "TIME == DAY && WORLD != NETHER"
+      multiplier: 1.25   # +25% днём, не в аду
+    - condition: "WORLD == NETHER"
+      multiplier: 0.0    # отключаем в аду
+
   exclude_from_random: true
 #  TODO: Доп ушерб от проклятого оружия 2
-
-#  TODO: Регенерация Маны +25% (Только Днем и НЕ в Незере)
 #  TODO: Доп урон при использовании святого оружия
-
 
 fallen_angel:
   gui_config:
@@ -89,11 +80,13 @@ fallen_angel:
       regeneration: 3 # 3
       straight: 1 # 1
 
+  mana_regeneration_modifiers:
+    - condition: "ALWAYS"
+      multiplier: 1.10   # +10% без условий
+
   exclude_from_random: true
 #  TODO: Доп ушерб от святого оружия 2
 #  TODO: Доп ушерб от проклятого оружия 2
-
-#  TODO: Регенерация Маны +10%
 #  TODO: Использование проклятого и святого оружия
 
 archangel:
@@ -105,33 +98,25 @@ archangel:
   max_hp: 24
   effects_with:
     at_time:
-      #      Ночью
       - from: 12000
         to: 24000
         effects:
           weakness: 1
-      #      Днём
       - from: 0
         to: 12000
         effects:
           strength: 3 # 2 если в аду
           regeneration: 2
+
+  mana_regeneration_modifiers:
+    - condition: "ALWAYS"
+      multiplier: 1.20   # +20% всегда
+    - condition: "WORLD == NETHER"
+      multiplier: 1.10   # +10% дополнительно в аду
+
   exclude_from_random: true
 #  TODO: Доп ушерб от проклятого оружия 1
-
-#  TODO: Регенерация Маны +20% (Всегда ( +10%, если в аду))
 #  TODO:  Доп урон при использовании святого оружия 2
-
-# ---- Адская ветка ----
-
-# TODO: Бафы у всех
-#
-#    Повышенные характеристики у проклятого снаряжения
-#
-# TODO: Дебафы у всех
-#
-#    Использование только проклятого оружия
-
 
 bes:
   gui_config:
@@ -144,80 +129,83 @@ bes:
     global:
       regeneration: 1 # 1
     at_time:
-      #      Ночью
       - from: 12000
         to: 24000
         effects:
           strength: 1
-      #      Днём
       - from: 0
         to: 12000
         effects:
           weakness: 2
 
+  mana_regeneration_modifiers:
+    - condition: "ALWAYS"
+      multiplier: 1.10   # +10% всегда
+
   exclude_from_random: true
 #  TODO: Доп ушерб от святого оружия 2, если в аду 4
-
-#  TODO: Регенерация Маны +10% (Без Условий)
 
 demon:
   gui_config:
     name: "Демон"
     lore: ""
     icon: "MACE"
+
   max_hp: 18
   effects_with:
     global:
       regeneration: 1 # 1
     at_time:
-      #      Ночью
       - from: 12000
         to: 24000
         effects:
           strength: 2
           regeneration: 3 # в аду 6
-      #      Днём
       - from: 0
         to: 12000
         effects:
           weakness: 1
+
+  mana_regeneration_modifiers:
+    - condition: "ALWAYS"
+      multiplier: 1.10
+    - condition: "WORLD == NETHER"
+      multiplier: 1.60   # +60% в аду
+
   exclude_from_random: true
-
 #  TODO: Доп ушерб от святого оружия 2, если в аду 4
-
-#  TODO: Регенерация Маны +25% (Только Ночью, 50% если в аду)
 #  TODO: Доп урон при использовании проклятого оружия
-
 
 arch-demon:
   gui_config:
     name: "Архи-Демон"
     lore: ""
     icon: "MACE"
+
   max_hp: 22
   effects_with:
     global:
       regeneration: 1 # 1
     at_time:
-      #      Ночью
       - from: 12000
         to: 24000
         effects:
           strength: 2
           regeneration: 3
-      #      Днём
       - from: 0
         to: 12000
         effects:
           weakness: 1
 
+  mana_regeneration_modifiers:
+    - condition: "ALWAYS"
+      multiplier: 1.20   # +20% всегда
+    - condition: "WORLD == NETHER"
+      multiplier: 1.30   # +30% дополнительно в аду
+
   exclude_from_random: true
 #  TODO: Доп ушерб от святого оружия 1, если в аду 3
-
-#  TODO: Регенерация Маны +20% (Всегда ( +30%, если в аду))
 #  TODO: Доп урон при использовании проклятого оружия 2
-
-# ---- Воставшая ветка ----
 
 revenants:
   gui_config:
@@ -229,13 +217,15 @@ revenants:
   effects_with:
     global:
       regeneration: 1 # 1
+
+  mana_regeneration_modifiers:
+    - condition: "ALWAYS"
+      multiplier: 1.05
   exclude_from_random: true
 #  TODO: Неловкость (Шанс оступиться и получить 1 урон) 1%
 #  TODO: Высокий кулдаун на оружии + 0.5
-
 #  TODO: Шанс воксреснуть - 10% (-8 HP после каждого воскрешения)
 #  TODO: Сила (Эффект) - 2 (Только После воскрешения)
-#  TODO: Регенерация Маны +5% (Без Условий)
 
 nekros:
   gui_config:
@@ -247,14 +237,16 @@ nekros:
   effects_with:
     global:
       regeneration: 2 # 2
+
+  mana_regeneration_modifiers:
+    - condition: "ALWAYS"
+      multiplier: 1.05
   exclude_from_random: true
 #  TODO: Неловкость (Шанс оступиться и получить 1 урон) 5%
 #  TODO: Высокий кулдаун на оружии + 1
 #  TODO: Шанс промаха - 5%
-
 #  TODO: Шанс воксреснуть - 20% (-6 HP после каждого воскрешения)
 #  TODO: Сила (Эффект) - 3 (Только После воскрешения)
-#  TODO: Регенерация Маны +5% (Без Условий)
 
 mastered_nekros:
   gui_config:
@@ -266,11 +258,13 @@ mastered_nekros:
   effects_with:
     global:
       regeneration: 2 # 2 (после воскрешение 4)
+
+  mana_regeneration_modifiers:
+    - condition: "ALWAYS"
+      multiplier: 1.50
   exclude_from_random: true
 #  TODO: Неловкость (Шанс оступиться и получить 1 урон) 0.5%
 #  TODO: Высокий кулдаун на оружии + 0.2
 #  TODO: Шанс промаха - 1%
-
 #  TODO: Шанс воксреснуть - 20% (-4 HP после каждого воскрешения)
 #  TODO: Сила (Эффект) - 3 (Только После воскрешения)
-#  TODO: Регенерация Маны +50% (после воскрешения)

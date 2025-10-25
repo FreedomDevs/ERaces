@@ -49,7 +49,8 @@ public class RacesReloader implements Listener {
             new RaceChangeGuiListener(),
             new RaceChangePotion(),
             new PlayerShootBowEventListener(),
-            new ManaRegenerationListener()
+            new ManaRegenerationListener(),
+            new ChanceResurrectionListener()
     );
 
     public static void reloadRaceForPlayer(Player player) {

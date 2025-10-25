@@ -69,4 +69,7 @@ class Race {
 
     @RaceProperty(path = "clumsiness_chance", type = FieldType.SUBGROUP)
     var clumsinessChance: ClumsinessChance = ClumsinessChance()
+
+    @RaceProperty(path = "chance_resurrection", type = FieldType.SUBGROUP)
+    var chanceResurrection: ChanceResurrection = ChanceResurrection()
 }

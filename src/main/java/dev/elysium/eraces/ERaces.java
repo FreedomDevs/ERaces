@@ -50,7 +50,7 @@ public class ERaces extends JavaPlugin {
     @Override
     public void onEnable() {
         RaceSelectMenuPages.INSTANCE.registerDefaults();
-        getServer().getMessenger().registerIncomingPluginChannel(this, "elysium:eraces", new PluginMessageListener());
+        getServer().getMessenger().registerIncomingPluginChannel(this, "elysium:eraces_cast", new PluginMessageListener());
         RacesReloader.startListeners(this);
 
         connectDatabase();

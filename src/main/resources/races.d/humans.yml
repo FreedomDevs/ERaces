@@ -217,6 +217,9 @@ revenants:
   effects_with:
     global:
       regeneration: 1 # 1
+    at_resurrection:
+      effects:
+        strength: 1
 
   mana_regeneration_modifiers:
     - condition: "ALWAYS"
@@ -230,8 +233,6 @@ revenants:
     chance: 0.1
     nexHpMinus: 8.0
   exclude_from_random: true
-#  TODO: Высокий кулдаун на оружии + 0.5
-#  TODO: Сила (Эффект) - 2 (Только После воскрешения)
 
 nekros:
   gui_config:
@@ -243,6 +244,9 @@ nekros:
   effects_with:
     global:
       regeneration: 2 # 2
+    at_resurrection:
+      effects:
+        strength: 3
 
   mana_regeneration_modifiers:
     - condition: "ALWAYS"
@@ -256,9 +260,7 @@ nekros:
     chance: 0.2
     nexHpMinus: 6.0
   exclude_from_random: true
-#  TODO: Высокий кулдаун на оружии + 1
 #  TODO: Шанс промаха - 5%
-#  TODO: Сила (Эффект) - 3 (Только После воскрешения)
 
 mastered_nekros:
   gui_config:
@@ -270,6 +272,9 @@ mastered_nekros:
   effects_with:
     global:
       regeneration: 2 # 2 (после воскрешение 4)
+    at_resurrection:
+      effects:
+        strength: 3
 
   mana_regeneration_modifiers:
     - condition: "ALWAYS"
@@ -283,6 +288,4 @@ mastered_nekros:
     chance: 0.2
     nexHpMinus: 4.0
   exclude_from_random: true
-#  TODO: Высокий кулдаун на оружии + 0.2
 #  TODO: Шанс промаха - 1%
-#  TODO: Сила (Эффект) - 3 (Только После воскрешения)

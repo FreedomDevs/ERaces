@@ -22,6 +22,7 @@ cat:
     global:
       speed: 1
   additional_fire_damage: 2
+  exclude_from_random: true
 
 коловерши:
   gui_config:
@@ -31,9 +32,10 @@ cat:
   effects_with:
     global:
       speed: 1
+    in_water:
+      darkness: 1
   additional_fire_damage: 2
-  # Эффект темноты в воде
-
+  exclude_from_random: true
   # Яд 2 сек на цель при атаке
   #  Регенерация (Эффект) - 2 на 2 сек (после физ урона)
   #  Сниженный урон от падения (получение урона с 6 блоков)
@@ -46,9 +48,10 @@ cat:
   effects_with:
     global:
       speed: 1
+    in_water:
+      darkness: 1
   additional_fire_damage: 2
-  # Эффект темноты в воде
-
+  exclude_from_random: true
   #  Яд 4 сек на цель при атаке
   #  Регенерация (Эффект) - 2 на 2 сек (после физ урона)
   #  Сниженный урон от падения (получение урона с 8 блоков)
@@ -58,6 +61,7 @@ panther:
     name: "Пантера"
   max_hp: 22
   additional_fire_damage: 6
+  exclude_from_random: true
   #   Сила (Эффект) - 2 на 2 сек на после атаки по цели
   # Регенерация (Эффект) - 1 на 2 сек (после физ урона)
 
@@ -66,6 +70,7 @@ panther:
     name: "Полувидны"
   max_hp: 22
   additional_fire_damage: 6
+  exclude_from_random: true
   #   Сила (Эффект) - 2 на 2 сек на после атаки по цели
   # Регенерация (Эффект) - 1 на 2 сек (после физ урона)
   # Сила (Эффект) - 2 на 2 сек на после атаки по цели
@@ -76,6 +81,7 @@ panther:
     name: "Фантороды"
   max_hp: 24
   additional_fire_damage: 6
+  exclude_from_random: true
   #   Сила (Эффект) - 2 на 2 сек на после атаки по цели
   # Регенерация (Эффект) - 1 на 2 сек (после физ урона)
   #
@@ -90,10 +96,11 @@ wolf:
   effects_with:
     global:
       speed: 1
+    in_water:
+      speed: 2
+      dolphins_grace: 2
   additional_fire_damage: 6
-  #   Повышеная скорость в воде X2
-
-
+  exclude_from_random: true
 
 white_wolf:
   gui_config:
@@ -103,8 +110,11 @@ white_wolf:
   effects_with:
     global:
       speed: 1
+    in_water:
+      speed: 2
+      dolphins_grace: 2
   additional_fire_damage: 6
-  # Повышеная скорость в воде X2
+  exclude_from_random: true
   # Повышеная скорость на 25% (атрибут)
 
 фенрир:
@@ -115,50 +125,65 @@ white_wolf:
   effects_with:
     global:
       speed: 1
+    in_water:
+      speed: 2
+      dolphins_grace: 2
   additional_fire_damage: 6
-  # Повышеная скорость в воде X2
+  exclude_from_random: true
   # Повышеная скорость на 25% (атрибут)
 
 fox:
   gui_config:
     name: "Лис"
   max_hp: 18
-  # Повышеная скорость в воде X2
+  effects_with:
+    in_water:
+      speed: 2
+      dolphins_grace: 2
+  exclude_from_random: true
 
 kitsune:
   gui_config:
     name: "Китсуне"
   max_hp: 18
-  # Повышеная скорость в воде X2
+  effects_with:
+    in_water:
+      speed: 2
+      dolphins_grace: 2
+  exclude_from_random: true
 
 kitsune2:
   gui_config:
     name: "Многохвостый Китсуне"
   max_hp: 18
-  # Повышеная скорость в воде X3
+  effects_with:
+    in_water:
+      speed: 3
+      dolphins_grace: 3
+  exclude_from_random: true
 
 bird:
   gui_config:
     name: "Птица"
   max_hp: 16
-  # Дебафы
-  #
-  #    Когда в воде и в дождь скорость -30%)
-  #
-  #Бафы
-  #
-  #    Высокий прыжок (2 блока вверх)
+  effects_with:
+    global:
+      jump_boost: 1
+    in_water:
+      slowness: 1
+  exclude_from_random: true
   #    уменьшенный урон от падения -30%
 
 ренанин:
   gui_config:
     name: "Ренанин"
   max_hp: 16
-  # Дебафы
-  #
-  #    Когда в воде и в дождь скорость -30%)
-  #Бафы
-  #    Высокий прыжок (2 блока вверх)
+  effects_with:
+    global:
+      jump_boost: 1
+    in_water:
+      slowness: 1
+  exclude_from_random: true
   #    уменьшенный урон от падения -30%
 
 феникс:
@@ -169,10 +194,10 @@ bird:
     global:
       fire_resistance: 255
       regeneration: 1
-  # Дебафы
-  #    Когда в воде и в дождь скорость -30%)
-  #    Получает слепоту когда идет дождь (В том числе при нахождении в воде и от бутылочек с водой (Взрывных/обычных)
-  #Бафы
+    in_water:
+      slowness: 1
+      blindness: 1
+  exclude_from_random: true
   #    уменьшенный урон от падения -30%
   #    В незере +10% к регенерации
   #    Вторая жизнь (тотем без тотема), после использования кулдаун 30 минут

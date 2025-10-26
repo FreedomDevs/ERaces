@@ -2,6 +2,7 @@ package dev.elysium.eraces.datatypes;
 
 import lombok.Data;
 
+import java.nio.channels.InterruptedByTimeoutException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,4 +22,6 @@ public class EffectsWith {
     List<EffectsWithTime> effectsWithTime = new ArrayList<>();
     @RaceProperty(path = "at_resurrection" , type = FieldType.LIST_SUBGROUP)
     List<EffectsWithResurrection> effectsWithResurrection = new ArrayList<>();
+    @RaceProperty(path = "in_water", type = FieldType.MAP_STRING_INT)
+    Map<String, Integer> inWater = new HashMap<>();
 }

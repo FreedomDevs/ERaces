@@ -72,4 +72,7 @@ class Race {
 
     @RaceProperty(path = "chance_resurrection", type = FieldType.SUBGROUP)
     var chanceResurrection: ChanceResurrection = ChanceResurrection()
+
+    @RaceProperty(path = "missing_chance", type = FieldType.DOUBLE)
+    var missingChance: Double = 0.0
 }

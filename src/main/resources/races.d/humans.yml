@@ -259,8 +259,9 @@ nekros:
   chance_resurrection:
     chance: 0.2
     nexHpMinus: 6.0
+
+  missing_chance: 0.05
   exclude_from_random: true
-#  TODO: Шанс промаха - 5%
 
 mastered_nekros:
   gui_config:
@@ -287,5 +288,6 @@ mastered_nekros:
   chance_resurrection:
     chance: 0.2
     nexHpMinus: 4.0
+
+  missing_chance: 0.01
   exclude_from_random: true
-#  TODO: Шанс промаха - 1%

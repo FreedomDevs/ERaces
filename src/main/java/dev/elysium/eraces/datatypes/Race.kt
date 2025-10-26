@@ -63,4 +63,22 @@ class Race {
 
     @RaceProperty(path = "abilities", type = FieldType.LIST)
     var abilities: MutableList<String> = mutableListOf()
+
+    @RaceProperty(path = "mana_regeneration_modifiers", type = FieldType.SUBGROUP)
+    var manaRegenModifiers:  ConditionalModifier = ConditionalModifier()
+
+    @RaceProperty(path = "clumsiness_chance", type = FieldType.SUBGROUP)
+    var clumsinessChance: ClumsinessChance = ClumsinessChance()
+
+    @RaceProperty(path = "chance_resurrection", type = FieldType.SUBGROUP)
+    var chanceResurrection: ChanceResurrection = ChanceResurrection()
+
+    @RaceProperty(path = "missing_chance", type = FieldType.DOUBLE)
+    var missingChance: Double = 0.0
+
+    @RaceProperty(path = "additional_fire_damage", type = FieldType.DOUBLE)
+    var additionalFireDamage: Double = 0.0
+
+    @RaceProperty(path = "fall_damage_multiplier", type = FieldType.DOUBLE)
+    var fallDamageMultiplier: Double = 1.0
 }

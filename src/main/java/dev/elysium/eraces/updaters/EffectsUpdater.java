@@ -4,14 +4,17 @@ import dev.elysium.eraces.ERaces;
 import dev.elysium.eraces.datatypes.*;
 import dev.elysium.eraces.updaters.base.IUpdater;
 import dev.elysium.eraces.utils.EffectUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.NamespacedKey;
+import org.bukkit.*;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class EffectsUpdater implements IUpdater {
     @SuppressWarnings({"FieldCanBeLocal", "unused"})
@@ -22,6 +25,10 @@ public class EffectsUpdater implements IUpdater {
     private final int blockTask;
     @SuppressWarnings({"FieldCanBeLocal", "unused"})
     private final int timeTask;
+    @SuppressWarnings({"FieldCanBeLocal", "unused"})
+    private final int resurrectionTask;
+    @SuppressWarnings({"FieldCanBeLocal", "unused"})
+    private final int waterTask;
 
     public enum LightType {
         SUM, BLOCK, SKY;
@@ -57,12 +64,39 @@ public class EffectsUpdater implements IUpdater {
                 5
         );
 
-        timeTask =  Bukkit.getScheduler().scheduleSyncRepeatingTask(
+        timeTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(
                 ERaces.getInstance(),
                 this::applyTimeEffects,
                 0,
                 40
         );
+
+        resurrectionTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(
+                ERaces.getInstance(),
+                this::applyResurrectionEffects,
+                0,
+                20
+        );
+
+        waterTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(
+                ERaces.getInstance(),
+                this::applyWaterEffects,
+                0,
+                20
+        );
+    }
+
+    private void applyWaterEffects() {
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            Race race = ERaces.getInstance().getContext().playerDataManager.getPlayerRace(player);
+            Block block = player.getLocation().getBlock();
+            World world = player.getLocation().getWorld();
+            boolean isHighest = player.getLocation().getY() >= world.getHighestBlockYAt(player.getLocation());
+
+            if (block.getType() == Material.WATER || (isHighest && (world.isThundering() || world.hasStorm()))) {
+                EffectUtils.applyEffects(player, race.getEffectsWith().getInWater(), 23);
+            }
+        }
     }
 
     private void applyBiomeEffects() {
@@ -99,7 +133,7 @@ public class EffectsUpdater implements IUpdater {
     private void applyBlockEffects() {
         for (Player player : Bukkit.getOnlinePlayers()) {
             Race race = ERaces.getInstance().getContext().playerDataManager.getPlayerRace(player);
-            Block block = player.getLocation().getBlock();
+            Block block = player.getLocation().add(0, -1, 0).getBlock();
 
             for (EffectsWithBlock effectConfig : race.getEffectsWith().getEffectsWithBlocks()) {
                 if (effectConfig.getBlocks().contains(block.getType().name())) {
@@ -121,6 +155,32 @@ public class EffectsUpdater implements IUpdater {
             }
         }
     }
+
+    private void applyResurrectionEffects() {
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            Race race = ERaces.getInstance().getContext().playerDataManager.getPlayerRace(player);
+            if (race == null) continue;
+
+            NamespacedKey key = new NamespacedKey(ERaces.getInstance(), "resurrections_done");
+            Integer resurrectionsDone = player.getPersistentDataContainer().get(key, PersistentDataType.INTEGER);
+
+            if (resurrectionsDone == null || resurrectionsDone <= 0) {
+                List<EffectsWithResurrection> effectsList = race.getEffectsWith().getEffectsWithResurrection();
+                if (effectsList == null || effectsList.isEmpty()) continue;
+
+                effectsList.forEach(effects -> {
+                    Map<String, Integer> safeEffects = effects.getEffects().entrySet().stream()
+                            .filter(e -> e.getKey() != null && e.getValue() != null)
+                            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+
+                    if (!safeEffects.isEmpty()) {
+                        EffectUtils.applyEffects(player, safeEffects, 25);
+                    }
+                });
+            }
+        }
+    }
+
 
     @Override
     public void update(Race race, Player player) {

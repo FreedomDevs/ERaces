@@ -49,6 +49,7 @@ public class ERaces extends JavaPlugin {
     @Override
     public void onEnable() {
         RaceSelectMenuPages.INSTANCE.registerDefaults();
+        RacesReloader.startListeners(this);
 
         connectDatabase();
         createTables();

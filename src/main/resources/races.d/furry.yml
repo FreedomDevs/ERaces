@@ -1,0 +1,203 @@
+beastman:
+  gui_config:
+    name: "Зверочеловек"
+  max_hp: 20
+  additional_fire_damage: 2
+# Бафы
+# Повышенная задержка дыхания на 4 секунды
+
+
+# Характеристики
+#    STR (Strength) 4
+#    INT (Intelligence) 0
+#    AGI (Agility) 4
+#    VIT (Vitality) 4
+
+cat:
+  gui_config:
+    name: "Кошачие"
+  max_hp: 16
+
+  effects_with:
+    global:
+      speed: 1
+  additional_fire_damage: 2
+  exclude_from_random: true
+
+коловерши:
+  gui_config:
+    name: "Коловерши"
+  max_hp: 16
+
+  effects_with:
+    global:
+      speed: 1
+    in_water:
+      darkness: 1
+  additional_fire_damage: 2
+  exclude_from_random: true
+  fall_damage_multiplier: 0.5
+  # Яд 2 сек на цель при атаке
+  #  Регенерация (Эффект) - 2 на 2 сек (после физ урона)
+
+маглиды:
+  gui_config:
+    name: "Маглиды"
+  max_hp: 18
+
+  effects_with:
+    global:
+      speed: 1
+    in_water:
+      darkness: 1
+  additional_fire_damage: 2
+  exclude_from_random: true
+  fall_damage_multiplier: 0.4
+  #  Яд 4 сек на цель при атаке
+  #  Регенерация (Эффект) - 2 на 2 сек (после физ урона)
+
+panther:
+  gui_config:
+    name: "Пантера"
+  max_hp: 22
+  additional_fire_damage: 6
+  exclude_from_random: true
+  #   Сила (Эффект) - 2 на 2 сек на после атаки по цели
+  # Регенерация (Эффект) - 1 на 2 сек (после физ урона)
+
+полувидны:
+  gui_config:
+    name: "Полувидны"
+  max_hp: 22
+  additional_fire_damage: 6
+  exclude_from_random: true
+  #   Сила (Эффект) - 2 на 2 сек на после атаки по цели
+  # Регенерация (Эффект) - 1 на 2 сек (после физ урона)
+  # Сила (Эффект) - 2 на 2 сек на после атаки по цели
+  # Регенерация (Эффект) - 1 на 2 сек (после физ урона)
+
+фантороды:
+  gui_config:
+    name: "Фантороды"
+  max_hp: 24
+  additional_fire_damage: 6
+  exclude_from_random: true
+  #   Сила (Эффект) - 2 на 2 сек на после атаки по цели
+  # Регенерация (Эффект) - 1 на 2 сек (после физ урона)
+  #
+  #  Сила (Эффект) - 2 на 2 сек на после атаки по цели
+  #  Регенерация (Эффект) - 1 на 2 сек (после физ урона)
+
+wolf:
+  gui_config:
+    name: "Волк"
+  max_hp: 20
+
+  effects_with:
+    global:
+      speed: 1
+    in_water:
+      speed: 2
+      dolphins_grace: 2
+  additional_fire_damage: 6
+  exclude_from_random: true
+
+white_wolf:
+  gui_config:
+    name: "Светолапые Волк"
+  max_hp: 22
+
+  effects_with:
+    global:
+      speed: 1
+    in_water:
+      speed: 2
+      dolphins_grace: 2
+  additional_fire_damage: 6
+  exclude_from_random: true
+  # Повышеная скорость на 25% (атрибут)
+
+фенрир:
+  gui_config:
+    name: "Фенрир"
+  max_hp: 24
+
+  effects_with:
+    global:
+      speed: 1
+    in_water:
+      speed: 2
+      dolphins_grace: 2
+  additional_fire_damage: 6
+  exclude_from_random: true
+  # Повышеная скорость на 25% (атрибут)
+
+fox:
+  gui_config:
+    name: "Лис"
+  max_hp: 18
+  effects_with:
+    in_water:
+      speed: 2
+      dolphins_grace: 2
+  exclude_from_random: true
+
+kitsune:
+  gui_config:
+    name: "Китсуне"
+  max_hp: 18
+  effects_with:
+    in_water:
+      speed: 2
+      dolphins_grace: 2
+  exclude_from_random: true
+
+kitsune2:
+  gui_config:
+    name: "Многохвостый Китсуне"
+  max_hp: 18
+  effects_with:
+    in_water:
+      speed: 3
+      dolphins_grace: 3
+  exclude_from_random: true
+
+bird:
+  gui_config:
+    name: "Птица"
+  max_hp: 16
+  effects_with:
+    global:
+      jump_boost: 1
+    in_water:
+      slowness: 1
+  exclude_from_random: true
+  fall_damage_multiplier: 0.7
+
+ренанин:
+  gui_config:
+    name: "Ренанин"
+  max_hp: 16
+  effects_with:
+    global:
+      jump_boost: 1
+    in_water:
+      slowness: 1
+  exclude_from_random: true
+  fall_damage_multiplier: 0.7
+
+феникс:
+  gui_config:
+    name: "Феникс"
+  max_hp: 20
+  effects_with:
+    global:
+      fire_resistance: 255
+      regeneration: 1
+    in_water:
+      slowness: 1
+      blindness: 1
+  exclude_from_random: true
+  fall_damage_multiplier: 0.7
+  #    В незере +10% к регенерации
+  #    Вторая жизнь (тотем без тотема), после использования кулдаун 30 минут

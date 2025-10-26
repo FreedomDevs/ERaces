@@ -41,13 +41,19 @@ public class RacesReloader implements Listener {
             new SlownessWithIronAndMoreArmorListener(),
             new EffectsUpdater(),
             new NeutralMobsUpdater(),
+            new ClumsinessUpdater(),
+            new AdditionalFireDamage(),
+            new FallDamageUpdater(),
 
 //            new PlayerJoinListener(), -- мусор
             new PlayerQuitListener(),
             new PlayerRespawnListener(),
             new RaceChangeGuiListener(),
             new RaceChangePotion(),
-            new PlayerShootBowEventListener()
+            new PlayerShootBowEventListener(),
+            new ManaRegenerationListener(),
+            new ChanceResurrectionListener(),
+            new MissingChanceListener()
     );
 
     public static void reloadRaceForPlayer(Player player) {

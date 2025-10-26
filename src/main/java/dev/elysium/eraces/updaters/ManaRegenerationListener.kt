@@ -22,9 +22,10 @@ class ManaRegenerationListener : Listener {
     private fun getManaRegenMultiplier(race: Race, player: Player): Double {
         var result = 1.0
 
-        val modifier = race.manaRegenModifiers
-        if (ConditionLanguageUtils.check(player, modifier.condition)) {
-            result *= modifier.multiplier
+        for (modifier in race.manaRegenModifiers) {
+            if (ConditionLanguageUtils.check(player, modifier.condition)) {
+                result *= modifier.multiplier
+            }
         }
 
         return result

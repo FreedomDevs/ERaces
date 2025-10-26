@@ -20,8 +20,8 @@ public class EffectsWith {
     List<EffectsWithBlock> effectsWithBlocks = new ArrayList<>();
     @RaceProperty(path = "at_time", type = FieldType.LIST_SUBGROUP)
     List<EffectsWithTime> effectsWithTime = new ArrayList<>();
-    @RaceProperty(path = "at_resurrection" , type = FieldType.LIST_SUBGROUP)
-    List<EffectsWithResurrection> effectsWithResurrection = new ArrayList<>();
+    @RaceProperty(path = "at_resurrection" , type = FieldType.MAP_STRING_INT)
+    Map<String, Integer> effectsWithResurrection = new HashMap<String, Integer>();
     @RaceProperty(path = "in_water", type = FieldType.MAP_STRING_INT)
     Map<String, Integer> inWater = new HashMap<>();
 }

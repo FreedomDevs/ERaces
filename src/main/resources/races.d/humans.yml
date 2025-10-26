@@ -218,8 +218,7 @@ revenants:
     global:
       regeneration: 1 # 1
     at_resurrection:
-      effects:
-        strength: 1
+      strength: 1
 
   mana_regeneration_modifiers:
     - condition: "ALWAYS"
@@ -245,8 +244,7 @@ nekros:
     global:
       regeneration: 2 # 2
     at_resurrection:
-      effects:
-        strength: 3
+      strength: 3
 
   mana_regeneration_modifiers:
     - condition: "ALWAYS"
@@ -274,12 +272,11 @@ mastered_nekros:
     global:
       regeneration: 2 # 2 (после воскрешение 4)
     at_resurrection:
-      effects:
-        strength: 3
+      strength: 3
 
   mana_regeneration_modifiers:
     - condition: "ALWAYS"
-      multiplier: 1.50
+      multiplier: 1.5
 
   clumsiness_chance:
     chance: 0.005

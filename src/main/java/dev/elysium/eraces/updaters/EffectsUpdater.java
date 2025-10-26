@@ -165,18 +165,16 @@ public class EffectsUpdater implements IUpdater {
             Integer resurrectionsDone = player.getPersistentDataContainer().get(key, PersistentDataType.INTEGER);
 
             if (resurrectionsDone == null || resurrectionsDone <= 0) {
-                List<EffectsWithResurrection> effectsList = race.getEffectsWith().getEffectsWithResurrection();
+                Map<String, Integer> effectsList = race.getEffectsWith().getEffectsWithResurrection();
                 if (effectsList == null || effectsList.isEmpty()) continue;
 
-                effectsList.forEach(effects -> {
-                    Map<String, Integer> safeEffects = effects.getEffects().entrySet().stream()
-                            .filter(e -> e.getKey() != null && e.getValue() != null)
-                            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+                Map<String, Integer> safeEffects =  effectsList.entrySet().stream()
+                        .filter(e -> e.getKey() != null && e.getValue() != null)
+                        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
-                    if (!safeEffects.isEmpty()) {
-                        EffectUtils.applyEffects(player, safeEffects, 25);
-                    }
-                });
+                if (!safeEffects.isEmpty()) {
+                    EffectUtils.applyEffects(player, safeEffects, 25);
+                }
             }
         }
     }

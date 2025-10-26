@@ -42,6 +42,8 @@ public class RacesReloader implements Listener {
             new EffectsUpdater(),
             new NeutralMobsUpdater(),
             new ClumsinessUpdater(),
+            new AdditionalFireDamage(),
+            new FallDamageUpdater(),
 
 //            new PlayerJoinListener(), -- мусор
             new PlayerQuitListener(),

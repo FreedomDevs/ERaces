@@ -78,4 +78,7 @@ class Race {
 
     @RaceProperty(path = "additional_fire_damage", type = FieldType.DOUBLE)
     var additionalFireDamage: Double = 0.0
+
+    @RaceProperty(path = "fall_damage_multiplier", type = FieldType.DOUBLE)
+    var fallDamageMultiplier: Double = 1.0
 }

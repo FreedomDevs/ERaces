@@ -36,9 +36,9 @@ cat:
       darkness: 1
   additional_fire_damage: 2
   exclude_from_random: true
+  fall_damage_multiplier: 0.5
   # Яд 2 сек на цель при атаке
   #  Регенерация (Эффект) - 2 на 2 сек (после физ урона)
-  #  Сниженный урон от падения (получение урона с 6 блоков)
 
 маглиды:
   gui_config:
@@ -52,9 +52,9 @@ cat:
       darkness: 1
   additional_fire_damage: 2
   exclude_from_random: true
+  fall_damage_multiplier: 0.4
   #  Яд 4 сек на цель при атаке
   #  Регенерация (Эффект) - 2 на 2 сек (после физ урона)
-  #  Сниженный урон от падения (получение урона с 8 блоков)
 
 panther:
   gui_config:
@@ -172,7 +172,7 @@ bird:
     in_water:
       slowness: 1
   exclude_from_random: true
-  #    уменьшенный урон от падения -30%
+  fall_damage_multiplier: 0.7
 
 ренанин:
   gui_config:
@@ -184,7 +184,7 @@ bird:
     in_water:
       slowness: 1
   exclude_from_random: true
-  #    уменьшенный урон от падения -30%
+  fall_damage_multiplier: 0.7
 
 феникс:
   gui_config:
@@ -198,6 +198,6 @@ bird:
       slowness: 1
       blindness: 1
   exclude_from_random: true
-  #    уменьшенный урон от падения -30%
+  fall_damage_multiplier: 0.7
   #    В незере +10% к регенерации
   #    Вторая жизнь (тотем без тотема), после использования кулдаун 30 минут

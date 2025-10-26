@@ -25,10 +25,8 @@ class PlayerXpGainEvent(
 
     companion object {
         @JvmStatic
-        val handlers = HandlerList()
-        @JvmStatic
-        fun getHandlerList() = handlers
+        val handlerList = HandlerList()
     }
 
-    override fun getHandlers(): HandlerList = handlers
+    override fun getHandlers(): HandlerList = handlerList
 }

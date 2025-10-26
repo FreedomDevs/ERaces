@@ -39,7 +39,7 @@ java {
 
 tasks {
     runServer {
-        minecraftVersion("1.21.8")
+        minecraftVersion("1.21.4")
     }
 
     // jar = shadowJar

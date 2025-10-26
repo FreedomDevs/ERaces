@@ -1,6 +1,7 @@
 package dev.elysium.eraces;
 
 import dev.elysium.eraces.events.GuiListener;
+import dev.elysium.eraces.events.PluginMessageListener;
 import dev.elysium.eraces.events.RaceSelectListener;
 import dev.elysium.eraces.abilities.AbilsManager;
 import dev.elysium.eraces.commands.AbilsCommand;
@@ -49,6 +50,7 @@ public class ERaces extends JavaPlugin {
     @Override
     public void onEnable() {
         RaceSelectMenuPages.INSTANCE.registerDefaults();
+        getServer().getMessenger().registerIncomingPluginChannel(this, "elysium:eraces", new PluginMessageListener());
         RacesReloader.startListeners(this);
 
         connectDatabase();

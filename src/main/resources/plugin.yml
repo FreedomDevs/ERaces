@@ -2,7 +2,7 @@ name: ERaces
 version: ${version}
 main: dev.elysium.eraces.ERaces
 description: Просто плагин на расы
-api-version: '1.21.8'
+api-version: '1.21.4'
 
 commands:
   races:

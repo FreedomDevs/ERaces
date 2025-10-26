@@ -22,7 +22,7 @@ public class SpecializationsManager {
     private final SqliteDatabase database;
 
     @Getter
-    private final Map<UUID, SpecializationPlayerData> specPlayersData = new HashMap<>();
+    public final Map<UUID, SpecializationPlayerData> specPlayersData = new HashMap<>();
     private final Set<UUID> updatedPlayers = new HashSet<>();
 
     private final Object flushPlayerDataLock = new Object();

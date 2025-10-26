@@ -1,4 +1,4 @@
-package dev.elysium.eraces.events;
+package dev.elysium.eraces.listeners;
 
 import org.bukkit.Material;
 import org.bukkit.entity.AbstractArrow;

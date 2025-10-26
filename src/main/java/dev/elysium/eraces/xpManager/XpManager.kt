@@ -1,14 +1,13 @@
 package dev.elysium.eraces.xpManager
 
 import dev.elysium.eraces.ERaces
-import dev.elysium.eraces.events.custom.PlayerXpGainEvent
+import dev.elysium.eraces.listeners.custom.PlayerXpGainEvent
 import dev.elysium.eraces.xpManager.providers.BlockXpProvider
 import dev.elysium.eraces.xpManager.providers.CraftXpProvider
 import dev.elysium.eraces.xpManager.providers.MobXpProvider
 import dev.elysium.eraces.xpManager.providers.PlayerKillXpProvider
 import dev.elysium.eraces.xpManager.providers.XpProvider
 import org.bukkit.Bukkit
-import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener

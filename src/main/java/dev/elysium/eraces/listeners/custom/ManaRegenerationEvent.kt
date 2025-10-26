@@ -1,4 +1,4 @@
-package dev.elysium.eraces.events.custom
+package dev.elysium.eraces.listeners.custom
 
 import org.bukkit.OfflinePlayer
 import org.bukkit.event.Event

@@ -1,7 +1,7 @@
 package dev.elysium.eraces.updaters;
 
 import dev.elysium.eraces.datatypes.Race;
-import dev.elysium.eraces.events.PlayerShootBowEvent;
+import dev.elysium.eraces.listeners.PlayerShootBowEvent;
 import dev.elysium.eraces.updaters.base.RaceAttributeMapStorage;
 import org.bukkit.entity.AbstractArrow;
 import org.bukkit.event.EventHandler;

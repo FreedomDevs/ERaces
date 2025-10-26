@@ -1,7 +1,7 @@
 package dev.elysium.eraces;
 
 import dev.elysium.eraces.datatypes.Race;
-import dev.elysium.eraces.events.*;
+import dev.elysium.eraces.listeners.*;
 import dev.elysium.eraces.updaters.*;
 import dev.elysium.eraces.updaters.damage.*;
 import dev.elysium.eraces.items.RaceChangePotion;
@@ -45,7 +45,7 @@ public class RacesReloader implements Listener {
             new AdditionalFireDamage(),
             new FallDamageUpdater(),
 
-//            new PlayerJoinListener(), -- мусор
+            new PlayerJoinListener(),
             new PlayerQuitListener(),
             new PlayerRespawnListener(),
             new RaceChangeGuiListener(),

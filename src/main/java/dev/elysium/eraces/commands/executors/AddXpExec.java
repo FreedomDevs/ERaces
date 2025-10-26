@@ -19,9 +19,10 @@ public class AddXpExec {
 
     public AddXpExec() {
         this.cmd = Commands.literal("xp_add")
-                .then(Commands.argument("target", ArgumentTypes.player()))
-                .then(Commands.argument("count", LongArgumentType.longArg(1, Long.MAX_VALUE)))
-                .executes(this::exec);
+                .then(Commands.argument("target", ArgumentTypes.player())
+                        .then(Commands.argument("count", LongArgumentType.longArg(1, Long.MAX_VALUE))
+                                .executes(this::exec)));
+
     }
 
     private int exec(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {

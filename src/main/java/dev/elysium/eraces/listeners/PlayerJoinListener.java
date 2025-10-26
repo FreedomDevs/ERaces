@@ -1,7 +1,5 @@
-package dev.elysium.eraces.events;
+package dev.elysium.eraces.listeners;
 
-import dev.elysium.eraces.RacesReloader;
-import dev.elysium.eraces.VisualsManager;
 import dev.elysium.eraces.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,8 +10,6 @@ public class PlayerJoinListener implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        RacesReloader.reloadRaceForPlayer(player);
-        VisualsManager.updateVisualsForPlayer(player);
         ERaces.getInstance().getContext().getSpecializationsManager().ensurePlayerInitialized(event.getPlayer());
         ERaces.getInstance().getContext().getManaManager().getMana(player);
     }

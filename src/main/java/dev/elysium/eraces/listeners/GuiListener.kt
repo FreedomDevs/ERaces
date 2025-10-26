@@ -1,4 +1,4 @@
-package dev.elysium.eraces.events
+package dev.elysium.eraces.listeners
 
 import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.gui.core.GuiManager
@@ -9,7 +9,6 @@ import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryCloseEvent
-import org.bukkit.plugin.java.JavaPlugin
 
 /**
  * Слушатель событий для GUI-меню.

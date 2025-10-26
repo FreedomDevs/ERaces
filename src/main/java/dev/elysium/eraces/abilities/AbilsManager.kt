@@ -61,7 +61,6 @@ class AbilsManager private constructor(private val plugin: ERaces) {
             BurnAbility(),
             ForestSpiritAbility(),
             RageModeAbility(),
-            BurnAbility(),
             FireBoomAbility(),
             TheMagicBarrierAbility(),
             AfterimageAbility(),
@@ -69,7 +68,7 @@ class AbilsManager private constructor(private val plugin: ERaces) {
             MasterTheForestAbility()
         )
         register(*defaultAbilities.toTypedArray())
-        plugin.logger.info("&aЗарегистрировано способностей: ${abilities.size}")
+        plugin.logger.info("Зарегистрировано способностей: ${abilities.size}")
     }
 
     /**

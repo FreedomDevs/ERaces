@@ -2,8 +2,8 @@ package dev.elysium.eraces.config
 
 import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.datatypes.SpecializationPlayerData
-import dev.elysium.eraces.events.custom.ManaConsumeEvent
-import dev.elysium.eraces.events.custom.ManaRegenerationEvent
+import dev.elysium.eraces.listeners.custom.ManaConsumeEvent
+import dev.elysium.eraces.listeners.custom.ManaRegenerationEvent
 import org.bukkit.Bukkit
 import org.bukkit.OfflinePlayer
 import org.bukkit.entity.Player

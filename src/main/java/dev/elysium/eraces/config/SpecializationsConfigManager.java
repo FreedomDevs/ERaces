@@ -38,16 +38,17 @@ public class SpecializationsConfigManager {
     public SpecializationsConfigManager(JavaPlugin plugin) {
         this.plugin = plugin;
         this.cfgManager = new YamlManager(this.plugin, FILE_NAME, true);
-        this.luaGlobals = new Globals();
+        //this.luaGlobals = new Globals();
+        this.luaGlobals = JsePlatform.standardGlobals();
 
-        luaGlobals.load(new JseBaseLib());
+        //luaGlobals.load(new JseBaseLib());
         //luaGlobals.load(new Bit32Lib());
         //luaGlobals.load(new TableLib());
         //luaGlobals.load(new StringLib());
         //luaGlobals.load(new JseMathLib());
 
-        LoadState.install(luaGlobals);
-        LuaC.install(luaGlobals);
+        //LoadState.install(luaGlobals);
+        //LuaC.install(luaGlobals);
 
         reloadConfig();
     }

@@ -19,8 +19,8 @@ public class GetXpExec {
 
     public GetXpExec() {
         this.cmd = Commands.literal("xp_get")
-                .then(Commands.argument("target", ArgumentTypes.player()))
-                .executes(this::exec);
+                .then(Commands.argument("target", ArgumentTypes.player()).executes(this::exec));
+
     }
 
     private int exec(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {

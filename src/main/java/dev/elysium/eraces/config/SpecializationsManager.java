@@ -34,21 +34,23 @@ public class SpecializationsManager {
     public void flushPlayerDataCache() {
         synchronized (flushPlayerDataLock) {
             if (!updatedPlayers.isEmpty()) {
-                try (Connection conn = database.getConnection()) {
+                Connection conn = database.getConnection();
+                try {
                     conn.setAutoCommit(false);
                     PreparedStatement stmt = conn.prepareStatement(
-                            "INSERT OR REPLACE INTO specialization_levels(uuid, level, xp, int, str, agi, vit) VALUES (?, ?, ?, ?, ?, ?, ?)"
+                            "INSERT OR REPLACE INTO specialization_levels(uuid, specialization, level, xp, int, str, agi, vit) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
                     );
 
                     for (UUID uuid : updatedPlayers) {
                         SpecializationPlayerData p = specPlayersData.get(uuid);
                         stmt.setString(1, uuid.toString());
-                        stmt.setLong(2, p.getLevel());
-                        stmt.setLong(3, p.getXp());
-                        stmt.setDouble(4, p.getINT());
-                        stmt.setDouble(5, p.getSTR());
-                        stmt.setDouble(6, p.getAGI());
-                        stmt.setDouble(7, p.getVIT());
+                        stmt.setString(2, p.getSpecialization());
+                        stmt.setLong(3, p.getLevel());
+                        stmt.setLong(4, p.getXp());
+                        stmt.setDouble(5, p.getINT());
+                        stmt.setDouble(6, p.getSTR());
+                        stmt.setDouble(7, p.getAGI());
+                        stmt.setDouble(8, p.getVIT());
                         stmt.addBatch();
                     }
 

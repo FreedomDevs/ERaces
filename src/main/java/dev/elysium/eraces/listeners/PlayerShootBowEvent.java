@@ -1,4 +1,4 @@
-package dev.elysium.eraces.events;
+package dev.elysium.eraces.listeners;
 
 import lombok.Getter;
 import org.bukkit.entity.AbstractArrow;

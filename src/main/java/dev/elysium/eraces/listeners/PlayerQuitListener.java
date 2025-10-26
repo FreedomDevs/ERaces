@@ -1,4 +1,4 @@
-package dev.elysium.eraces.events;
+package dev.elysium.eraces.listeners;
 
 import dev.elysium.eraces.RacesReloader;
 import org.bukkit.event.EventHandler;

@@ -2,7 +2,7 @@ package dev.elysium.eraces.updaters
 
 import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.datatypes.Race
-import dev.elysium.eraces.events.custom.ManaRegenerationEvent
+import dev.elysium.eraces.listeners.custom.ManaRegenerationEvent
 import dev.elysium.eraces.utils.ConditionLanguageUtils
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler

@@ -1,9 +1,8 @@
-package dev.elysium.eraces.events;
+package dev.elysium.eraces.listeners;
 
 import dev.elysium.eraces.ERaces;
 import dev.elysium.eraces.RacesReloader;
 import dev.elysium.eraces.VisualsManager;
-import dev.elysium.eraces.*;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

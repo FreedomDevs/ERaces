@@ -1,4 +1,4 @@
-package dev.elysium.eraces.events;
+package dev.elysium.eraces.listeners;
 
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteStreams;

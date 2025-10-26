@@ -1,8 +1,8 @@
 package dev.elysium.eraces;
 
-import dev.elysium.eraces.events.GuiListener;
-import dev.elysium.eraces.events.PluginMessageListener;
-import dev.elysium.eraces.events.RaceSelectListener;
+import dev.elysium.eraces.listeners.GuiListener;
+import dev.elysium.eraces.listeners.PluginMessageListener;
+import dev.elysium.eraces.listeners.RaceSelectListener;
 import dev.elysium.eraces.abilities.AbilsManager;
 import dev.elysium.eraces.commands.AbilsCommand;
 import dev.elysium.eraces.commands.MyraceCommand;
@@ -126,7 +126,7 @@ public class ERaces extends JavaPlugin {
             stmt.executeUpdate("""
                         CREATE TABLE IF NOT EXISTS specialization_levels (
                               uuid TEXT PRIMARY KEY,  -- UUID игрока
-                              specialization TEXT,    -- Выбранная специализация
+                              specialization TEXT NOT NULL,    -- Выбранная специализация
                               level INTEGER NOT NULL, -- уровень
                               xp INTEGER NOT NULL,    -- опыт
                               int REAL NOT NULL,      -- сила интеллекта

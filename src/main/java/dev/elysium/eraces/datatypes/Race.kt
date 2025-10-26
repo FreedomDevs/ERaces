@@ -75,4 +75,7 @@ class Race {
 
     @RaceProperty(path = "missing_chance", type = FieldType.DOUBLE)
     var missingChance: Double = 0.0
+
+    @RaceProperty(path = "additional_fire_damage", type = FieldType.DOUBLE)
+    var additionalFireDamage: Double = 0.0
 }

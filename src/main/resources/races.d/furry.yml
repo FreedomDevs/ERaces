@@ -37,8 +37,13 @@ cat:
   additional_fire_damage: 2
   exclude_from_random: true
   fall_damage_multiplier: 0.5
-  # Яд 2 сек на цель при атаке
-  #  Регенерация (Эффект) - 2 на 2 сек (после физ урона)
+  effects_targeting:
+    effects_on_player_attacking:
+      poison: 2
+    effects_on_player_attacking_time: "3s"
+    effects_on_player_targeted:
+      regeneration: 2
+    effects_on_player_targeted_time: "2s"
 
 маглиды:
   gui_config:
@@ -53,8 +58,13 @@ cat:
   additional_fire_damage: 2
   exclude_from_random: true
   fall_damage_multiplier: 0.4
-  #  Яд 4 сек на цель при атаке
-  #  Регенерация (Эффект) - 2 на 2 сек (после физ урона)
+  effects_targeting:
+    effects_on_player_attacking:
+      poison: 2
+    effects_on_player_attacking_time: "4s"
+    effects_on_player_targeted:
+      regeneration: 2
+    effects_on_player_targeted_time: "2s"
 
 panther:
   gui_config:
@@ -62,8 +72,14 @@ panther:
   max_hp: 22
   additional_fire_damage: 6
   exclude_from_random: true
-  #   Сила (Эффект) - 2 на 2 сек на после атаки по цели
-  # Регенерация (Эффект) - 1 на 2 сек (после физ урона)
+  effects_targeting:
+    effects_on_player_attacking:
+      strength: 2
+    effects_on_player_attacking_time: "2s"
+    effects_on_player_targeted:
+      regeneration: 1
+    effects_on_player_targeted_time: "2s"
+
 
 полувидны:
   gui_config:
@@ -71,10 +87,14 @@ panther:
   max_hp: 22
   additional_fire_damage: 6
   exclude_from_random: true
-  #   Сила (Эффект) - 2 на 2 сек на после атаки по цели
-  # Регенерация (Эффект) - 1 на 2 сек (после физ урона)
-  # Сила (Эффект) - 2 на 2 сек на после атаки по цели
-  # Регенерация (Эффект) - 1 на 2 сек (после физ урона)
+  effects_targeting:
+    effects_on_player_attacking:
+      strength: 2
+    effects_on_player_attacking_time: "2s"
+    effects_on_player_targeted:
+      regeneration: 1
+    effects_on_player_targeted_time: "2s"
+
 
 фантороды:
   gui_config:
@@ -82,11 +102,14 @@ panther:
   max_hp: 24
   additional_fire_damage: 6
   exclude_from_random: true
-  #   Сила (Эффект) - 2 на 2 сек на после атаки по цели
-  # Регенерация (Эффект) - 1 на 2 сек (после физ урона)
-  #
-  #  Сила (Эффект) - 2 на 2 сек на после атаки по цели
-  #  Регенерация (Эффект) - 1 на 2 сек (после физ урона)
+  effects_targeting:
+    effects_on_player_attacking:
+      strength: 2
+    effects_on_player_attacking_time: "2s"
+    effects_on_player_targeted:
+      regeneration: 1
+    effects_on_player_targeted_time: "2s"
+
 
 wolf:
   gui_config:
@@ -115,7 +138,6 @@ white_wolf:
       dolphins_grace: 2
   additional_fire_damage: 6
   exclude_from_random: true
-  # Повышеная скорость на 25% (атрибут)
 
 фенрир:
   gui_config:
@@ -130,7 +152,6 @@ white_wolf:
       dolphins_grace: 2
   additional_fire_damage: 6
   exclude_from_random: true
-  # Повышеная скорость на 25% (атрибут)
 
 fox:
   gui_config:

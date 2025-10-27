@@ -15,30 +15,22 @@ class EffectsTargetingUpdater : Listener {
     fun onEntityDamage(event: EntityDamageByEntityEvent) {
         val damager = event.damager as? Player
         val targetEntity = event.entity as? LivingEntity ?: return
+        if (damager == null) return
+        val attackerRace = ERaces.getInstance().context.playerDataManager.getPlayerRace(damager)
 
-        if (damager != null) {
-            val attackerRace = ERaces.getInstance().context.playerDataManager.getPlayerRace(damager)
-            val effectsOnAttacking = attackerRace.effectsTargeting.effectsOnPlayerAttacking
-            val effectsOnAttackingTime = attackerRace.effectsTargeting.effectsOnPlayerAttackingTime
-
-            if (effectsOnAttacking.isNotEmpty()) {
-                EffectUtils.applyEffects(
-                    targetEntity,
-                    effectsOnAttacking,
-                    TimeParser.parseToTicks(effectsOnAttackingTime).toInt()
-                )
-            }
-        }
-
-        val targetRace = ERaces.getInstance().context.playerDataManager.getPlayerRace(targetEntity as Player)
-        val effectsOnTargeted = targetRace.effectsTargeting.effectsOnPlayerTargeted
-        val effectsOnTargetedTime = targetRace.effectsTargeting.effectsOnPlayerTargetedTime
-
-        if (effectsOnTargeted.isNotEmpty()) {
+        if (attackerRace.effectsTargeting.effectsOnPlayerAttacking.isNotEmpty()) {
             EffectUtils.applyEffects(
                 targetEntity,
-                effectsOnTargeted,
-                TimeParser.parseToTicks(effectsOnTargetedTime).toInt()
+                attackerRace.effectsTargeting.effectsOnPlayerAttacking,
+                TimeParser.parseToTicks(attackerRace.effectsTargeting.effectsOnPlayerAttackingTime).toInt()
+            )
+        }
+
+        if (attackerRace.effectsTargeting.effectsOnPlayerTargeted.isNotEmpty()) {
+            EffectUtils.applyEffects(
+                damager,
+                attackerRace.effectsTargeting.effectsOnPlayerTargeted,
+                TimeParser.parseToTicks(attackerRace.effectsTargeting.effectsOnPlayerTargetedTime).toInt()
             )
         }
     }

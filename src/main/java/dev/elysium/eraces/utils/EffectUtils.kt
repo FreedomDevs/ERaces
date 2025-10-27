@@ -6,6 +6,7 @@ import dev.elysium.eraces.updaters.EffectsUpdater
 import org.bukkit.NamespacedKey
 import org.bukkit.Registry
 import org.bukkit.block.Block
+import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
@@ -34,6 +35,21 @@ object EffectUtils {
             }
         }
     }
+
+    @JvmStatic
+    fun applyEffects(target: LivingEntity, effects: Map<String, Int>, durationTicks: Int) {
+        for ((keyStr, level) in effects) {
+            try {
+                val type = getPotionEffectType(keyStr)
+                target.addPotionEffect(PotionEffect(type, durationTicks, level - 1))
+            } catch (ex: Exception) {
+                ERaces.getInstance().logger.warning(
+                    "Ошибка при применении эффекта $keyStr с силой $level на ${target.name}: ${ex.message}"
+                )
+            }
+        }
+    }
+
 
     @JvmStatic
     fun isLightLevelInRange(block: Block, lightType: String, min: Int, max: Int): Boolean {

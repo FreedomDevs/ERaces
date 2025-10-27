@@ -73,6 +73,9 @@ class Race {
     @RaceProperty(path = "chance_resurrection", type = FieldType.SUBGROUP)
     var chanceResurrection: ChanceResurrection = ChanceResurrection()
 
+    @RaceProperty(path = "effects_targeting", type = FieldType.SUBGROUP)
+    var effectsTargeting: EffectTargeting = EffectTargeting()
+
     @RaceProperty(path = "missing_chance", type = FieldType.DOUBLE)
     var missingChance: Double = 0.0
 

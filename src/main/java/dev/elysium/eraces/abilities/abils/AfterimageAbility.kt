@@ -1,13 +1,13 @@
 package dev.elysium.eraces.abilities.abils
 
 import dev.elysium.eraces.ERaces
+import dev.elysium.eraces.abilities.AbilityUtils
+import dev.elysium.eraces.abilities.ConfigHelper
 import dev.elysium.eraces.abilities.abils.base.BaseEffectsAbility
-import dev.elysium.eraces.utils.TimeParser
 import dev.elysium.eraces.utils.targetUtils.Target
 import dev.elysium.eraces.utils.targetUtils.effects.EffectsTarget
 import dev.elysium.eraces.utils.targetUtils.effects.Executor
 import dev.elysium.eraces.utils.vectors.RadiusFillBuilder
-import org.bukkit.Bukkit
 import org.bukkit.Particle
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.entity.Player
@@ -26,39 +26,40 @@ class AfterimageAbility : BaseEffectsAbility(
     private var duration: String = "30s"
     private var radius: Double = 2.0
 
+    override fun onActivate(player: Player) {
+        super.onActivate(player)
 
-    override fun customActivate(player: Player) {
         val plugin = ERaces.getInstance()
-        var taskId = 0
-        var functia = 0
 
-        taskId = Bukkit.getScheduler().runTaskTimer(plugin, Runnable {
-            if (functia >= TimeParser.parseToSeconds(duration)) {
-                Bukkit.getScheduler().cancelTask(taskId)
-                return@Runnable
-            }
-
-            Target.from(player = player)
+        AbilityUtils.runRepeatingForDuration(plugin, duration) {
+            Target.from(player)
                 .executeEffects(
                     EffectsTarget()
-                        .from(Executor.PLAYER(entity = player))
-                        .particle(p = Particle.CAMPFIRE_COSY_SMOKE)
-                        .math(builder = RadiusFillBuilder().sphere(radius = radius).filled(true).step(0.1))
+                        .from(Executor.PLAYER(player))
+                        .particle(Particle.CAMPFIRE_COSY_SMOKE)
+                        .math(
+                            RadiusFillBuilder()
+                                .sphere(radius)
+                                .filled(true)
+                                .step(0.1)
+                        )
                 )
-
-            functia++
-        }, 0L, 20L).taskId
+        }
     }
 
     override fun loadCustomParams(cfg: YamlConfiguration) {
-        duration = cfg.getString("taskId", duration).toString()
-        radius = cfg.getDouble("radius", radius)
-
+        super.loadCustomParams(cfg)
+        ConfigHelper.with(cfg) {
+            read("taskId", ::duration)
+            read("radius", ::radius)
+        }
     }
 
     override fun writeCustomDefaults(cfg: YamlConfiguration) {
-        cfg.set("duration", duration)
-        cfg.set("radius", radius)
-
+        super.writeCustomDefaults(cfg)
+        ConfigHelper.with(cfg) {
+            write("taskId", duration)
+            write("radius", radius)
+        }
     }
 }

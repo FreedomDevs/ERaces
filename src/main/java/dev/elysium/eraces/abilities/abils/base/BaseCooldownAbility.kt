@@ -9,25 +9,23 @@ import org.bukkit.configuration.file.YamlConfiguration
  */
 abstract class BaseCooldownAbility(
     id: String,
-    private var defaultCooldown: String = "10s",
+    private val defaultCooldown: String = "10s"
 ) : BaseAbility(id), ICooldownAbility {
+
     private var cooldown: String = defaultCooldown
 
-    override fun loadParams(cfg: YamlConfiguration) {
+    final override fun loadParams(cfg: YamlConfiguration) {
         cooldown = cfg.getString("cooldown", defaultCooldown)!!
         loadCustomParams(cfg)
     }
 
-    override fun writeDefaultParams(cfg: YamlConfiguration) {
-        cfg.set("cooldown", defaultCooldown)
+    final override fun writeDefaultParams(cfg: YamlConfiguration) {
+        cfg.set("cooldown", cooldown)
         writeCustomDefaults(cfg)
     }
 
     protected open fun loadCustomParams(cfg: YamlConfiguration) {}
-
     protected open fun writeCustomDefaults(cfg: YamlConfiguration) {}
 
-    override fun getCooldown(): Long {
-        return TimeParser.parseToSeconds(cooldown)
-    }
+    override fun getCooldown(): Long = TimeParser.parseToSeconds(cooldown)
 }

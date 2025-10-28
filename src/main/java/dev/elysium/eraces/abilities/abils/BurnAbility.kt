@@ -1,5 +1,6 @@
 package dev.elysium.eraces.abilities.abils
 
+import dev.elysium.eraces.abilities.ConfigHelper
 import dev.elysium.eraces.abilities.abils.base.BaseTargetTrailAbility
 import dev.elysium.eraces.utils.TimeParser
 import dev.elysium.eraces.utils.targetUtils.ignite
@@ -19,12 +20,17 @@ class BurnAbility : BaseTargetTrailAbility(
 
     override fun loadCustomParams(cfg: YamlConfiguration) {
         super.loadCustomParams(cfg)
-        duration = cfg.getString("duration", duration)!!
+        ConfigHelper.with(cfg) {
+            read("duration", ::duration)
+        }
     }
 
     override fun writeCustomDefaults(cfg: YamlConfiguration) {
         super.writeCustomDefaults(cfg)
-        cfg.set("duration", duration)
+        ConfigHelper.with(cfg) {
+            write("duration", duration)
+        }
     }
+
 }
 

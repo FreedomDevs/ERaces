@@ -2,6 +2,7 @@ package dev.elysium.eraces.abilities
 
 import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.abilities.abils.AfterimageAbility
+import dev.elysium.eraces.abilities.abils.AmbushAbility
 import dev.elysium.eraces.abilities.abils.BlockAbility
 import dev.elysium.eraces.abilities.abils.BossRushAbility
 import dev.elysium.eraces.abilities.abils.BurnAbility
@@ -65,7 +66,8 @@ class AbilsManager private constructor(private val plugin: ERaces) {
             TheMagicBarrierAbility(),
             AfterimageAbility(),
             DeadlyRushAbility(),
-            MasterTheForestAbility()
+            MasterTheForestAbility(),
+            AmbushAbility()
         )
         register(*defaultAbilities.toTypedArray())
         plugin.logger.info("Зарегистрировано способностей: ${abilities.size}")

@@ -67,6 +67,7 @@ class DeadlyRushAbility : BaseEffectsAbility(
         radius = cfg.getDouble("radius", radius)
         damagePerSeconds = cfg.getDouble("damagePerSeconds", damagePerSeconds)
     }
+
     override fun writeCustomDefaults(cfg: YamlConfiguration) {
         cfg.set("duration", duration)
         cfg.set("radius", radius)

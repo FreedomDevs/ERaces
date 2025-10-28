@@ -3,8 +3,7 @@ beastman:
     name: "Зверочеловек"
   max_hp: 20
   additional_fire_damage: 2
-# Бафы
-# Повышенная задержка дыхания на 4 секунды
+  oxygen_bonus: 0.25
 
 
 # Характеристики

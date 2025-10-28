@@ -89,4 +89,7 @@ class Race {
 
     @RaceProperty(path = "second_life_cooldown", type = FieldType.STRING)
     var secondLifeCooldown: String = ""
+
+    @RaceProperty(path = "oxygen_bonus", type = FieldType.DOUBLE)
+    var oxygenBonus: Double = 0.0
 }

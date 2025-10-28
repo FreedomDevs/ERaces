@@ -24,4 +24,6 @@ public class EffectsWith {
     Map<String, Integer> effectsWithResurrection = new HashMap<String, Integer>();
     @RaceProperty(path = "in_water", type = FieldType.MAP_STRING_INT)
     Map<String, Integer> inWater = new HashMap<>();
+    @RaceProperty(path = "in_world", type = FieldType.LIST_SUBGROUP)
+    List<EffectsWithWorld> inWorld = new ArrayList<>();
 }

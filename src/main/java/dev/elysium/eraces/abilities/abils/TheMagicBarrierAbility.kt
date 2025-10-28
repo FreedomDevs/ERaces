@@ -1,5 +1,6 @@
 package dev.elysium.eraces.abilities.abils
 
+import dev.elysium.eraces.abilities.ConfigHelper
 import dev.elysium.eraces.abilities.abils.base.BaseCooldownAbility
 import dev.elysium.eraces.utils.TimeParser
 import dev.elysium.eraces.utils.targetUtils.Target
@@ -21,7 +22,7 @@ class TheMagicBarrierAbility : BaseCooldownAbility(
     private var duration: String = "15s"
     private var level: Int = 3
 
-    override fun activate(player: Player) {
+    override fun onActivate(player: Player) {
         Target.from(player)
             .filter(TargetFilter.ENTITIES)
             .inRadius(radius, useRaycast = true)
@@ -75,14 +76,20 @@ class TheMagicBarrierAbility : BaseCooldownAbility(
     }
 
     override fun loadCustomParams(cfg: YamlConfiguration) {
-        duration = cfg.getString("duration", duration).toString()
-        level = cfg.getInt("level", level)
-        radius = cfg.getDouble("radius", radius)
+        super.loadCustomParams(cfg)
+        ConfigHelper.with(cfg) {
+            read("duration", ::duration)
+            read("level", ::level)
+            read("radius", ::radius)
+        }
     }
 
     override fun writeCustomDefaults(cfg: YamlConfiguration) {
-        cfg.set("duration", duration)
-        cfg.set("level", level)
-        cfg.set("radius", radius)
+        super.writeCustomDefaults(cfg)
+        ConfigHelper.with(cfg) {
+            write("duration", duration)
+            write("level", level)
+            write("radius", radius)
+        }
     }
 }

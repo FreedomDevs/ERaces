@@ -5,7 +5,6 @@ import dev.elysium.eraces.utils.EffectUtils
 import dev.elysium.eraces.utils.TimeParser
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.entity.Player
-import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 
 /**
@@ -13,48 +12,31 @@ import org.bukkit.potion.PotionEffectType
  */
 abstract class BaseEffectsAbility(
     id: String,
-    defaultCooldown: String? = null,
+    defaultCooldown: String = "10s",
     defaultEffects: Map<String, EffectData>
-) : BaseAbility(id), ICooldownAbility {
+) : BaseCooldownAbility(id, defaultCooldown) {
 
-    private var cooldown: String? = defaultCooldown
     protected val effectsMap: MutableMap<String, EffectData> = defaultEffects.toMutableMap()
 
-    override fun activate(player: Player) {
+    override fun onActivate(player: Player) {
         EffectUtils.giveEffectsToPlayer(player, effectsMap.values)
         customActivate(player)
     }
 
-    override fun loadParams(cfg: YamlConfiguration) {
-        if (cfg.contains("cooldown") || cooldown != null) {
-            cooldown = cfg.getString("cooldown", cooldown)
-        }
+    protected open fun customActivate(player: Player) {}
 
+    override fun loadCustomParams(cfg: YamlConfiguration) {
         for ((name, effect) in effectsMap) {
             effect.duration = cfg.getString("${name}_duration", effect.duration)!!
             effect.level = cfg.getInt("${name}_level", effect.level)
         }
-        loadCustomParams(cfg)
     }
 
-    override fun writeDefaultParams(cfg: YamlConfiguration) {
-        if (cooldown != null) {
-            cfg.set("cooldown", cooldown)
-        }
-
+    override fun writeCustomDefaults(cfg: YamlConfiguration) {
         for ((name, effect) in effectsMap) {
             cfg.set("${name}_duration", effect.duration)
             cfg.set("${name}_level", effect.level)
         }
-        writeCustomDefaults(cfg)
-    }
-
-    protected open fun customActivate(player: Player) {}
-    protected open fun loadCustomParams(cfg: YamlConfiguration) {}
-    protected open fun writeCustomDefaults(cfg: YamlConfiguration) {}
-
-    override fun getCooldown(): Long {
-        return cooldown?.let { TimeParser.parseToSeconds(it) } ?: 0L
     }
 
     data class EffectData(var duration: String, var level: Int, val type: PotionEffectType)

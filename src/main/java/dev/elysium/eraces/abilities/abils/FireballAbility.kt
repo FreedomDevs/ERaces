@@ -1,5 +1,6 @@
 package dev.elysium.eraces.abilities.abils
 
+import dev.elysium.eraces.abilities.ConfigHelper
 import dev.elysium.eraces.abilities.abils.base.BaseTargetTrailAbility
 import dev.elysium.eraces.utils.TimeParser
 import dev.elysium.eraces.utils.targetUtils.target.TargetFilter
@@ -47,20 +48,23 @@ class FireballAbility : BaseTargetTrailAbility(
 
     override fun loadCustomParams(cfg: YamlConfiguration) {
         super.loadCustomParams(cfg)
-        power = cfg.getDouble("power", power)
-        burnDuration = cfg.getString("burnDuration", burnDuration) ?: burnDuration
-        distance = cfg.getDouble("distance", distance)
-        step = cfg.getDouble("step", step)
+        ConfigHelper.with(cfg) {
+            read("power", ::power)
+            read("burnDuration", ::burnDuration)
+            read("distance", ::distance)
+            read("step", ::step)
+        }
     }
 
     override fun writeCustomDefaults(cfg: YamlConfiguration) {
         super.writeCustomDefaults(cfg)
-        cfg.set("power", power)
-        cfg.set("burnDuration", burnDuration)
-        cfg.set("distance", distance)
-        cfg.set("step", step)
+        ConfigHelper.with(cfg) {
+            write("power", power)
+            write("burnDuration", burnDuration)
+            write("distance", distance)
+            write("step", step)
+        }
     }
-
 
     private fun spawnParticle(
         world: org.bukkit.World,

@@ -29,7 +29,7 @@ abstract class BaseTargetTrailAbility(
     protected open val customOnHit: ((LivingEntity) -> Unit)? = null
     protected open val customOnStep: ((Location) -> Unit)? = null
 
-    override fun activate(player: Player) {
+    override fun onActivate(player: Player) {
         Target.from(player)
             .filter(*getFilters())
             .trail(

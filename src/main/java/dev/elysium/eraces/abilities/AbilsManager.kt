@@ -89,7 +89,7 @@ class AbilsManager private constructor(private val plugin: ERaces) {
                 ability.loadConfig(plugin)
 
                 abilities[ability.id] = ability
-                plugin.logger.info("&aЗарегистрирована способность: ${ability.id}")
+                plugin.logger.info("Зарегистрирована способность: ${ability.id}")
             } catch (e: Exception) {
                 plugin.logger.log(Level.SEVERE, "Ошибка при регистрации способности '${ability.id}'", e)
             }

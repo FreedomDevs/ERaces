@@ -1,5 +1,7 @@
 package dev.elysium.eraces.datatypes
 
+import javax.print.DocFlavor
+
 class Race {
     var id: String? = null
 
@@ -84,4 +86,7 @@ class Race {
 
     @RaceProperty(path = "fall_damage_multiplier", type = FieldType.DOUBLE)
     var fallDamageMultiplier: Double = 1.0
+
+    @RaceProperty(path = "second_life_cooldown", type = FieldType.STRING)
+    var secondLifeCooldown: String = ""
 }

@@ -224,5 +224,5 @@ bird:
           regeneration: 2
 
   exclude_from_random: true
+  second_life_cooldown: "30m"
   fall_damage_multiplier: 0.7
-  #    Вторая жизнь (тотем без тотема), после использования кулдаун 30 минут

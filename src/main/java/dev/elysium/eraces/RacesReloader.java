@@ -45,6 +45,7 @@ public class RacesReloader implements Listener {
             new AdditionalFireDamage(),
             new FallDamageUpdater(),
             new EffectsTargetingUpdater(),
+            new SecondLifeUpdater(),
 
             new PlayerJoinListener(),
             new PlayerQuitListener(),

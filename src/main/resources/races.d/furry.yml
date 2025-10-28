@@ -3,8 +3,7 @@ beastman:
     name: "Зверочеловек"
   max_hp: 20
   additional_fire_damage: 2
-# Бафы
-# Повышенная задержка дыхания на 4 секунды
+  oxygen_bonus: 0.25
 
 
 # Характеристики
@@ -218,7 +217,11 @@ bird:
     in_water:
       slowness: 1
       blindness: 1
+    in_world:
+      - world: "world_the_nether"
+        effects:
+          regeneration: 2
+
   exclude_from_random: true
+  second_life_cooldown: "30m"
   fall_damage_multiplier: 0.7
-  #    В незере +10% к регенерации
-  #    Вторая жизнь (тотем без тотема), после использования кулдаун 30 минут

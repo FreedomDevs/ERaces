@@ -29,6 +29,8 @@ public class EffectsUpdater implements IUpdater {
     private final int resurrectionTask;
     @SuppressWarnings({"FieldCanBeLocal", "unused"})
     private final int waterTask;
+    @SuppressWarnings({"FieldCanBeLocal", "unused"})
+    private final int worldTask;
 
     public enum LightType {
         SUM, BLOCK, SKY;
@@ -84,6 +86,26 @@ public class EffectsUpdater implements IUpdater {
                 0,
                 20
         );
+
+        worldTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(
+                ERaces.getInstance(),
+                this::applyWorldEffects,
+                0,
+                100
+        ); // Абсолютно тупая логика, это стоило сделать через Listener-ы на ChangeWorld
+    }
+
+    private void applyWorldEffects() {
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            Race race = ERaces.getInstance().getContext().playerDataManager.getPlayerRace(player);
+            String worldName = player.getLocation().getWorld().getName().toLowerCase();
+
+            for (EffectsWithWorld i : race.getEffectsWith().getInWorld()) {
+                if (worldName.equals(i.getWorld().toLowerCase())) {
+                    EffectUtils.applyEffects(player, race.getEffectsWith().getInWater(), 103);
+                }
+            }
+        }
     }
 
     private void applyWaterEffects() {

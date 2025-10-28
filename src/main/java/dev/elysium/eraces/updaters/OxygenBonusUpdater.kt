@@ -9,7 +9,7 @@ import org.bukkit.attribute.AttributeModifier.Operation
 import org.bukkit.entity.Player
 
 class OxygenBonusUpdater : IUpdater {
-    val key: NamespacedKey = NamespacedKey("ERaces", "oxygen_bonus")
+    val key: NamespacedKey = NamespacedKey("eraces", "oxygen_bonus")
     override fun update(race: Race, player: Player) {
         val attr = player.getAttribute(Attribute.OXYGEN_BONUS) ?: return
         attr.removeModifier(key)

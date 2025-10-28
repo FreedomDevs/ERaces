@@ -14,6 +14,7 @@ import dev.elysium.eraces.utils.ChatUtil
 import dev.elysium.eraces.abilities.abils.ForestSpiritAbility
 import dev.elysium.eraces.abilities.abils.MasterTheForestAbility
 import dev.elysium.eraces.abilities.abils.RageModeAbility
+import dev.elysium.eraces.abilities.abils.SupremeMagician
 import dev.elysium.eraces.abilities.abils.TheMagicBarrierAbility
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
@@ -71,7 +72,8 @@ class AbilsManager private constructor(private val plugin: ERaces) {
             DeadlyRushAbility(),
             MasterTheForestAbility(),
             AmbushAbility(),
-            BloodOfFirst()
+            BloodOfFirst(),
+            SupremeMagician()
         )
         register(*defaultAbilities.toTypedArray())
         plugin.logger.info("Зарегистрировано способностей: ${abilities.size}")

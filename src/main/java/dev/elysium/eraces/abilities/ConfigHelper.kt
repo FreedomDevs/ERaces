@@ -17,6 +17,7 @@ object ConfigHelper {
             is String -> prop as KMutableProperty0<String> then { it.set(cfg.getString(key, current)!!) }
             is Double -> prop as KMutableProperty0<Double> then { it.set(cfg.getDouble(key, current)) }
             is Int -> prop as KMutableProperty0<Int> then { it.set(cfg.getInt(key, current)) }
+            is Long -> prop as KMutableProperty0<Long> then { it.set(cfg.getLong(key, current)) }
             is Boolean -> prop as KMutableProperty0<Boolean> then { it.set(cfg.getBoolean(key, current)) }
         }
     }

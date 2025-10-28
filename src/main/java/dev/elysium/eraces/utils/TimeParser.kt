@@ -16,6 +16,10 @@ object TimeParser {
         }
     }
 
+    fun parseToMilliseconds(input: String): Long {
+        return parseToSeconds(input) * 1000
+    }
+
     fun parseToTicks(input: String): Long {
         return parseToSeconds(input) * 20
     }

@@ -23,7 +23,7 @@ class SecondLifeUpdater : Listener {
         val player: Player = event.player
         val uuid: UUID = event.player.uniqueId
         val curTime: Long = System.currentTimeMillis()
-        val cooldown: Long = TimeParser.parseToSeconds(race.secondLifeCooldown) * 1000
+        val cooldown: Long = TimeParser.parseToMilliseconds(race.secondLifeCooldown)
 
 
         if (secondLifeCooldowns.getOrDefault(uuid, 0) + cooldown < curTime) {

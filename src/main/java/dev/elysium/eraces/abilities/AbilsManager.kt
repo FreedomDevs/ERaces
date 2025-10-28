@@ -4,6 +4,7 @@ import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.abilities.abils.AfterimageAbility
 import dev.elysium.eraces.abilities.abils.AmbushAbility
 import dev.elysium.eraces.abilities.abils.BlockAbility
+import dev.elysium.eraces.abilities.abils.BloodOfFirst
 import dev.elysium.eraces.abilities.abils.BossRushAbility
 import dev.elysium.eraces.abilities.abils.BurnAbility
 import dev.elysium.eraces.abilities.abils.DeadlyRushAbility
@@ -14,7 +15,9 @@ import dev.elysium.eraces.abilities.abils.ForestSpiritAbility
 import dev.elysium.eraces.abilities.abils.MasterTheForestAbility
 import dev.elysium.eraces.abilities.abils.RageModeAbility
 import dev.elysium.eraces.abilities.abils.TheMagicBarrierAbility
+import org.bukkit.Bukkit
 import org.bukkit.entity.Player
+import org.bukkit.event.Listener
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.TimeUnit
@@ -67,7 +70,8 @@ class AbilsManager private constructor(private val plugin: ERaces) {
             AfterimageAbility(),
             DeadlyRushAbility(),
             MasterTheForestAbility(),
-            AmbushAbility()
+            AmbushAbility(),
+            BloodOfFirst()
         )
         register(*defaultAbilities.toTypedArray())
         plugin.logger.info("Зарегистрировано способностей: ${abilities.size}")
@@ -83,6 +87,11 @@ class AbilsManager private constructor(private val plugin: ERaces) {
                 if (abilities.containsKey(ability.id)) {
                     plugin.logger.warning("Способность с id '${ability.id}' уже зарегистрирована, пропущена.")
                     continue
+                }
+
+                if (ability is Listener) {
+                    Bukkit.getPluginManager().registerEvents(ability, ERaces.getInstance())
+                    plugin.logger.info("Listener для способности '${ability.id}' зарегистрирован.")
                 }
 
                 ability.saveDefaultConfig(plugin)

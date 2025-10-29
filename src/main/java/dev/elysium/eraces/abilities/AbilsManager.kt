@@ -3,6 +3,7 @@ package dev.elysium.eraces.abilities
 import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.abilities.abils.AfterimageAbility
 import dev.elysium.eraces.abilities.abils.AmbushAbility
+import dev.elysium.eraces.abilities.abils.ArsenalAbility
 import dev.elysium.eraces.abilities.abils.BlockAbility
 import dev.elysium.eraces.abilities.abils.BloodOfFirst
 import dev.elysium.eraces.abilities.abils.BossRushAbility
@@ -75,7 +76,8 @@ class AbilsManager private constructor(private val plugin: ERaces) {
             AmbushAbility(),
             BloodOfFirst(),
             SupremeMagician(),
-            Shelling()
+            Shelling(),
+            ArsenalAbility()
         )
         register(*defaultAbilities.toTypedArray())
         plugin.logger.info("Зарегистрировано способностей: ${abilities.size}")

@@ -33,12 +33,12 @@ class SupremeMagician : BaseCooldownAbility ( id = "supreme_magician", defaultCo
     private var iceSphereSlownessDuration: String = "3s"
 
     override fun onActivate(player: Player) {
-        val timeStart: Long = System.currentTimeMillis()
+        val timeEnd: Long = System.currentTimeMillis() + TimeParser.parseToMilliseconds(duration)
         var iterationsCount: Long = 0
 
         var task: BukkitTask? = null
         task = Bukkit.getScheduler().runTaskTimer(ERaces.getInstance(), Runnable {
-            if (timeStart + (iterationsCount * sphereFallsEveryTick * 50) < System.currentTimeMillis()) {
+            if (!player.isOnline && timeEnd < System.currentTimeMillis()) {
                 task!!.cancel()
                 return@Runnable
             }

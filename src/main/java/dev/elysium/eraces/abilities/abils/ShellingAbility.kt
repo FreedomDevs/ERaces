@@ -17,7 +17,7 @@ import org.bukkit.scheduler.BukkitTask
 import org.bukkit.util.Vector
 import kotlin.random.Random
 
-class Shelling : BaseCooldownAbility ( id = "shelling", defaultCooldown = "10m") {
+class ShellingAbility : BaseCooldownAbility ( id = "shelling", defaultCooldown = "10m") {
     private var radius: Double = 5.0
     private var duration: String = "10s"
     private var arrowFallsEveryTick: Long = 10

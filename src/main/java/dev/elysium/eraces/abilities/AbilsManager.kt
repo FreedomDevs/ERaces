@@ -5,7 +5,7 @@ import dev.elysium.eraces.abilities.abils.AfterimageAbility
 import dev.elysium.eraces.abilities.abils.AmbushAbility
 import dev.elysium.eraces.abilities.abils.ArsenalAbility
 import dev.elysium.eraces.abilities.abils.BlockAbility
-import dev.elysium.eraces.abilities.abils.BloodOfFirst
+import dev.elysium.eraces.abilities.abils.BloodOfFirstAbility
 import dev.elysium.eraces.abilities.abils.BossRushAbility
 import dev.elysium.eraces.abilities.abils.BurnAbility
 import dev.elysium.eraces.abilities.abils.DeadlyRushAbility
@@ -15,8 +15,8 @@ import dev.elysium.eraces.utils.ChatUtil
 import dev.elysium.eraces.abilities.abils.ForestSpiritAbility
 import dev.elysium.eraces.abilities.abils.MasterTheForestAbility
 import dev.elysium.eraces.abilities.abils.RageModeAbility
-import dev.elysium.eraces.abilities.abils.Shelling
-import dev.elysium.eraces.abilities.abils.SupremeMagician
+import dev.elysium.eraces.abilities.abils.ShellingAbility
+import dev.elysium.eraces.abilities.abils.SupremeMagicianAbility
 import dev.elysium.eraces.abilities.abils.TheMagicBarrierAbility
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
@@ -74,9 +74,9 @@ class AbilsManager private constructor(private val plugin: ERaces) {
             DeadlyRushAbility(),
             MasterTheForestAbility(),
             AmbushAbility(),
-            BloodOfFirst(),
-            SupremeMagician(),
-            Shelling(),
+            BloodOfFirstAbility(),
+            SupremeMagicianAbility(),
+            ShellingAbility(),
             ArsenalAbility()
         )
         register(*defaultAbilities.toTypedArray())

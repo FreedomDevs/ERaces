@@ -1,7 +1,6 @@
 package dev.elysium.eraces.abilities.abils
 
 import dev.elysium.eraces.abilities.ConfigHelper
-import dev.elysium.eraces.abilities.ConfigHelper.write
 import dev.elysium.eraces.abilities.abils.base.BaseEffectsAbility
 import dev.elysium.eraces.utils.TimeParser
 import dev.elysium.eraces.utils.targetUtils.Target
@@ -17,7 +16,7 @@ import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.potion.PotionEffectType
 import java.util.UUID
 
-class BloodOfFirst : Listener, BaseEffectsAbility (
+class BloodOfFirstAbility : Listener, BaseEffectsAbility (
     id = "blood_of_first", defaultCooldown = "30m",
 
     defaultEffects = linkedMapOf(

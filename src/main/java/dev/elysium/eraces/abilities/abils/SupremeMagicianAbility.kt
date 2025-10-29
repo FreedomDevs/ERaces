@@ -5,7 +5,6 @@ import dev.elysium.eraces.abilities.ConfigHelper
 import dev.elysium.eraces.abilities.abils.base.BaseCooldownAbility
 import dev.elysium.eraces.utils.TimeParser
 import dev.elysium.eraces.utils.targetUtils.Target
-import dev.elysium.eraces.utils.targetUtils.target.RaycastHit
 import dev.elysium.eraces.utils.targetUtils.target.TargetFilter
 import dev.elysium.eraces.utils.targetUtils.target.TargetTrail
 import org.bukkit.Bukkit
@@ -19,7 +18,7 @@ import org.bukkit.potion.PotionEffectType
 import org.bukkit.scheduler.BukkitTask
 import kotlin.random.Random
 
-class SupremeMagician : BaseCooldownAbility ( id = "supreme_magician", defaultCooldown = "25m") {
+class SupremeMagicianAbility : BaseCooldownAbility ( id = "supreme_magician", defaultCooldown = "25m") {
     private var radius: Double = 5.0
     private var step: Double = 0.25
     private var duration: String = "10s"

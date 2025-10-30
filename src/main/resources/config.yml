@@ -2,3 +2,8 @@ plugin:
   prefix: "<green>[ERaces] "
   debug: false
   lang: "ru"
+
+cast:
+  timeout: 10000
+  max-length: 20
+  feedback: true

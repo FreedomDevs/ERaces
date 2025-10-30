@@ -137,6 +137,7 @@ white_wolf:
       dolphins_grace: 2
   additional_fire_damage: 6
   exclude_from_random: true
+  #  При нахождении в коробке из блоков шерсти дает повышение защиты на 4 и невидимость(высота коробки не менее 15 блоков, в коробке еще допустимо отверстие)  
 
 фенрир:
   gui_config:
@@ -151,6 +152,7 @@ white_wolf:
       dolphins_grace: 2
   additional_fire_damage: 6
   exclude_from_random: true
+  #  При нахождении в коробке из блоков шерсти дает повышение защиты на 4 и невидимость(высота коробки не менее 15 блоков, в коробке еще допустимо отверстие)  
 
 fox:
   gui_config:

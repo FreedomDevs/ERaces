@@ -1,4 +1,4 @@
-package dev.elysium.eraces.abilities
+package dev.elysium.eraces.abilities.interfaces
 
 import dev.elysium.eraces.ERaces
 import org.bukkit.configuration.file.YamlConfiguration

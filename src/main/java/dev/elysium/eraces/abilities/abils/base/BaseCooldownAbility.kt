@@ -1,6 +1,6 @@
 package dev.elysium.eraces.abilities.abils.base
 
-import dev.elysium.eraces.abilities.ICooldownAbility
+import dev.elysium.eraces.abilities.interfaces.ICooldownAbility
 import dev.elysium.eraces.utils.TimeParser
 import org.bukkit.configuration.file.YamlConfiguration
 

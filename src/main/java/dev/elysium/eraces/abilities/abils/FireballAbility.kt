@@ -1,6 +1,7 @@
 package dev.elysium.eraces.abilities.abils
 
 import dev.elysium.eraces.abilities.ConfigHelper
+import dev.elysium.eraces.abilities.interfaces.IManaCostAbility
 import dev.elysium.eraces.abilities.abils.base.BaseTargetTrailAbility
 import dev.elysium.eraces.utils.TimeParser
 import dev.elysium.eraces.utils.targetUtils.target.TargetFilter
@@ -15,7 +16,7 @@ import kotlin.random.Random
 class FireballAbility : BaseTargetTrailAbility(
     id = "fireball",
     defaultCooldown = "10m"
-) {
+), IManaCostAbility {
 
     private var power: Double = 2.0
     private var burnDuration: String = "3s"
@@ -76,4 +77,6 @@ class FireballAbility : BaseTargetTrailAbility(
     ) {
         world.spawnParticle(particle, location, count, offset, offset, offset, speed)
     }
+
+    override fun getManaCost(): Double = 3.0
 }

@@ -1,7 +1,9 @@
 package dev.elysium.eraces.abilities.abils.base
 
 import dev.elysium.eraces.ERaces
-import dev.elysium.eraces.abilities.IAbility
+import dev.elysium.eraces.abilities.interfaces.IAbility
+import dev.elysium.eraces.abilities.interfaces.IComboActivatable
+import dev.elysium.eraces.abilities.interfaces.IManaCostAbility
 import org.bukkit.configuration.file.YamlConfiguration
 import java.io.File
 import java.util.logging.Level
@@ -15,6 +17,15 @@ abstract class BaseAbilityWithConfig(override val id: String) : IAbility {
             if (!file.exists()) {
                 val cfg = YamlConfiguration()
                 writeDefaultParams(cfg)
+
+                if (this is IManaCostAbility) {
+                    cfg.set("manaCost", getManaCost())
+                }
+
+                if (this is IComboActivatable) {
+                    cfg.set("comboKey", getComboKey())
+                }
+
                 cfg.save(file)
             }
         }
@@ -28,6 +39,19 @@ abstract class BaseAbilityWithConfig(override val id: String) : IAbility {
                 saveDefaultConfig(plugin)
             }
             val cfg = YamlConfiguration.loadConfiguration(file)
+
+            if (this is IManaCostAbility && cfg.contains("manaCost")) {
+                val field = this::class.java.getDeclaredField("manaCost")
+                field.isAccessible = true
+                field.set(this, cfg.getDouble("manaCost"))
+            }
+
+            if (this is IComboActivatable && cfg.contains("comboKey")) {
+                val field = this::class.java.getDeclaredField("comboKey")
+                field.isAccessible = true
+                field.set(this, cfg.getString("comboKey"))
+            }
+
             loadParams(cfg)
         }
     }

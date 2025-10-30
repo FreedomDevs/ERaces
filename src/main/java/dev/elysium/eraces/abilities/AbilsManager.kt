@@ -18,6 +18,10 @@ import dev.elysium.eraces.abilities.abils.RageModeAbility
 import dev.elysium.eraces.abilities.abils.ShellingAbility
 import dev.elysium.eraces.abilities.abils.SupremeMagicianAbility
 import dev.elysium.eraces.abilities.abils.TheMagicBarrierAbility
+import dev.elysium.eraces.abilities.interfaces.IAbility
+import dev.elysium.eraces.abilities.interfaces.IComboActivatable
+import dev.elysium.eraces.abilities.interfaces.ICooldownAbility
+import dev.elysium.eraces.abilities.interfaces.IManaCostAbility
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.event.Listener
@@ -48,7 +52,7 @@ class AbilsManager private constructor(private val plugin: ERaces) {
         @Synchronized
         fun init(plugin: ERaces) {
             if (instance != null) {
-                plugin.logger.warning("⚠️ AbilsManager уже инициализирован, повторная инициализация пропущена.")
+                plugin.logger.warning("AbilsManager уже инициализирован, повторная инициализация пропущена.")
                 return
             }
 
@@ -103,6 +107,23 @@ class AbilsManager private constructor(private val plugin: ERaces) {
                 ability.saveDefaultConfig(plugin)
                 ability.loadConfig(plugin)
 
+                if (ability is IComboActivatable) {
+                    val combo = ability.getComboKey()
+                    if (!combo.isNullOrBlank()) {
+                        val duplicate = abilities.values
+                            .filterIsInstance<IComboActivatable>()
+                            .firstOrNull { it.getComboKey() == combo }
+
+                        if (duplicate != null) {
+                            val dupId = (duplicate as? IAbility)?.id ?: "unknown"
+                            plugin.logger.warning(
+                                "Дубликат comboKey '$combo' у способностей '$dupId' и '${ability.id}'. " +
+                                        "Комбинация будет работать только для первой зарегистрированной способности."
+                            )
+                        }
+                    }
+                }
+
                 abilities[ability.id] = ability
                 plugin.logger.info("Зарегистрирована способность: ${ability.id}")
             } catch (e: Exception) {
@@ -132,6 +153,22 @@ class AbilsManager private constructor(private val plugin: ERaces) {
             ability == null -> {
                 ChatUtil.legacyMessage(player, "&cСпособность &e$id&c не найдена!")
                 return
+            }
+        }
+
+        if (ability is IManaCostAbility) {
+            val manaCost = ability.getManaCost()
+            if (manaCost > 0) {
+                val manaManager = ERaces.getInstance().context.manaManager
+                val currentMana = manaManager.getMana(player)
+                if (currentMana < manaCost) {
+                    ChatUtil.sendAction(
+                        player,
+                        "<red>Недостаточно маны! Нужно <yellow>$manaCost<red>, у тебя <yellow>$currentMana"
+                    )
+                    return
+                }
+                manaManager.useMana(player, manaCost)
             }
         }
 
@@ -165,6 +202,20 @@ class AbilsManager private constructor(private val plugin: ERaces) {
      * Возвращает все зарегистрированные способности.
      */
     fun getAllAbilities(): List<IAbility> = abilities.values.toList()
+
+    fun activateByCombo(player: Player, combo: String) {
+        val ability = abilities.values
+            .filterIsInstance<IComboActivatable>()
+            .firstOrNull { it.getComboKey() == combo }
+
+        if (ability == null) {
+            ChatUtil.sendAction(player, "<red>Нет способности, назначенной на комбинацию <yellow>$combo")
+            return
+        }
+
+        activate(player, (ability as IAbility).id)
+    }
+
 
     private object CooldownManager {
         private val cooldowns: MutableMap<UUID, MutableMap<String, Long>> = ConcurrentHashMap()

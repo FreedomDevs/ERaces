@@ -1,8 +1,6 @@
 package dev.elysium.eraces.abilities.abils.base
 
-import dev.elysium.eraces.abilities.ICooldownAbility
 import dev.elysium.eraces.utils.EffectUtils
-import dev.elysium.eraces.utils.TimeParser
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.entity.Player
 import org.bukkit.potion.PotionEffectType

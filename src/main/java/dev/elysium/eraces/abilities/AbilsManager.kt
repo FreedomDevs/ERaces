@@ -9,6 +9,7 @@ import dev.elysium.eraces.abilities.abils.BloodOfFirstAbility
 import dev.elysium.eraces.abilities.abils.BossRushAbility
 import dev.elysium.eraces.abilities.abils.BurnAbility
 import dev.elysium.eraces.abilities.abils.DeadlyRushAbility
+import dev.elysium.eraces.abilities.abils.EroticCharmAbility
 import dev.elysium.eraces.abilities.abils.FireBoomAbility
 import dev.elysium.eraces.abilities.abils.FireballAbility
 import dev.elysium.eraces.utils.ChatUtil
@@ -83,7 +84,8 @@ class AbilsManager private constructor(private val plugin: ERaces) {
             SupremeMagicianAbility(),
             ShellingAbility(),
             ArsenalAbility(),
-            SharpClawsAbility()
+            SharpClawsAbility(),
+            EroticCharmAbility()
         )
         register(*defaultAbilities.toTypedArray())
         plugin.logger.info("Зарегистрировано способностей: ${abilities.size}")

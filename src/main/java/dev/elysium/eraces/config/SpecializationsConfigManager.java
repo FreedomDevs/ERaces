@@ -10,12 +10,8 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.luaj.vm2.*;
 import org.luaj.vm2.compiler.LuaC;
-import org.luaj.vm2.lib.Bit32Lib;
-import org.luaj.vm2.lib.StringLib;
-import org.luaj.vm2.lib.TableLib;
-import org.luaj.vm2.lib.jse.JseBaseLib;
-import org.luaj.vm2.lib.jse.JseMathLib;
-import org.luaj.vm2.lib.jse.JsePlatform;
+import org.luaj.vm2.lib.*;
+import org.luaj.vm2.lib.jse.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,17 +34,21 @@ public class SpecializationsConfigManager {
     public SpecializationsConfigManager(JavaPlugin plugin) {
         this.plugin = plugin;
         this.cfgManager = new YamlManager(this.plugin, FILE_NAME, true);
-        //this.luaGlobals = new Globals();
-        this.luaGlobals = JsePlatform.standardGlobals();
+        //this.luaGlobals = JsePlatform.standardGlobals();
 
-        //luaGlobals.load(new JseBaseLib());
-        //luaGlobals.load(new Bit32Lib());
-        //luaGlobals.load(new TableLib());
-        //luaGlobals.load(new StringLib());
-        //luaGlobals.load(new JseMathLib());
-
-        //LoadState.install(luaGlobals);
-        //LuaC.install(luaGlobals);
+        this.luaGlobals = new Globals();
+        luaGlobals.load(new JseBaseLib());
+        luaGlobals.load(new PackageLib());
+        luaGlobals.load(new Bit32Lib());
+        luaGlobals.load(new TableLib());
+        luaGlobals.load(new StringLib());
+        //luaGlobals.load(new CoroutineLib());
+        luaGlobals.load(new JseMathLib());
+        //luaGlobals.load(new JseIoLib());
+        //luaGlobals.load(new JseOsLib());
+        //luaGlobals.load(new LuajavaLib());
+        LoadState.install(luaGlobals);
+        LuaC.install(luaGlobals);
 
         reloadConfig();
     }
@@ -116,16 +116,16 @@ public class SpecializationsConfigManager {
         luaGlobals.set("level", LuaValue.valueOf(level));
 
         try {
-            LuaValue result = xpNextFormula.call();
-            long xpNext = result.checklong();
-            if (xpNext < 1) {
-                ERaces.getInstance().getLogger().warning("При вычислении xpNext для уровня " + level + " было получено отрицательное число или 0(засчитано как 1)");
+            LuaValue result = pointsPerLevelFormula.call();
+            long pointsPerLevel = result.checklong();
+            if (pointsPerLevel < 1) {
+                ERaces.getInstance().getLogger().warning("При вычислении pointsPerLevel для уровня " + level + " было получено отрицательное число или 0(засчитано как 1)");
                 return 1;
             }
 
-            return xpNext;
+            return pointsPerLevel;
         } catch (LuaError error) {
-            ERaces.getInstance().getLogger().log(Level.SEVERE, "Не удалось расчитать xpNext для уровня " + level, error);
+            ERaces.getInstance().getLogger().log(Level.SEVERE, "Не удалось расчитать pointsPerLevel для уровня " + level, error);
             return Long.MAX_VALUE;
         } finally {
             luaGlobals.set("level", LuaValue.NIL);

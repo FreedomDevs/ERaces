@@ -9,6 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,8 +22,7 @@ public class SpecializationsManager {
     private final SpecializationsConfigManager config;
     private final SqliteDatabase database;
 
-    @Getter
-    public final Map<UUID, SpecializationPlayerData> specPlayersData = new HashMap<>();
+    public final Map<UUID, SpecializationPlayerData> specPlayersData = new HashMap<>(); // НИ В КОЕМ СЛУЧАЕ НЕ РЕДАКТИРОВАТЬ ИЗ ВНЕ (читать можна)
     private final Set<UUID> updatedPlayers = new HashSet<>();
 
     private final Object flushPlayerDataLock = new Object();
@@ -73,6 +73,7 @@ public class SpecializationsManager {
 
     public SpecializationsManager(JavaPlugin plugin, SqliteDatabase database) {
         config = new SpecializationsConfigManager(plugin);
+        config.getXpNext(1);config.getPointsPerLevel(1);// Чтобы сразу проверить на ошибки
         this.database = database;
         reloadConfig();
         loadSpecPlayerData();
@@ -108,6 +109,13 @@ public class SpecializationsManager {
             data.setLevel(MAX_LEVEL);
             data.setXp(0);
         }
+    }
+
+    public @NotNull SpecializationPlayerData getPlayerData(OfflinePlayer player) {
+        return specPlayersData.get(player.getUniqueId());
+    }
+    public void setPlayerSpecialization(OfflinePlayer player, String specializaton) {
+        specPlayersData.get(player.getUniqueId()).setSpecialization(specializaton);
     }
 
     public void ensurePlayerInitialized(OfflinePlayer player) {

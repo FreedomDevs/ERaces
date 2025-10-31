@@ -116,6 +116,7 @@ public class SpecializationsManager {
     }
     public void setPlayerSpecialization(OfflinePlayer player, String specializaton) {
         specPlayersData.get(player.getUniqueId()).setSpecialization(specializaton);
+        updatedPlayers.add(player.getUniqueId());
     }
 
     public void ensurePlayerInitialized(OfflinePlayer player) {

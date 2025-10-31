@@ -126,7 +126,7 @@ public class SpecializationsConfigManager {
             return pointsPerLevel;
         } catch (LuaError error) {
             ERaces.getInstance().getLogger().log(Level.SEVERE, "Не удалось расчитать pointsPerLevel для уровня " + level, error);
-            return Long.MAX_VALUE;
+            return 0;
         } finally {
             luaGlobals.set("level", LuaValue.NIL);
         }

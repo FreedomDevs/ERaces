@@ -50,7 +50,6 @@ public class ERaces extends JavaPlugin {
     @Override
     public void onEnable() {
         RaceSelectMenuPages.INSTANCE.registerDefaults();
-        getServer().getMessenger().registerIncomingPluginChannel(this, "elysium:eraces_cast", new PluginMessageListener());
         RacesReloader.startListeners(this);
 
         connectDatabase();
@@ -152,6 +151,7 @@ public class ERaces extends JavaPlugin {
 
     private void registerEventListeners() {
         Bukkit.getPluginManager().registerEvents(RaceSelectListener.INSTANCE, this);
+        getServer().getMessenger().registerIncomingPluginChannel(this, "elysium:eraces_cast", new PluginMessageListener());
 
         GuiListener.INSTANCE.init(this);
         Bukkit.getPluginManager().registerEvents(GuiListener.INSTANCE, this);

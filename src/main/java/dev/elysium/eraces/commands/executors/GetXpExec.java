@@ -1,7 +1,6 @@
 package dev.elysium.eraces.commands.executors;
 
 import com.mojang.brigadier.Command;
-import com.mojang.brigadier.arguments.LongArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
@@ -26,7 +25,7 @@ public class GetXpExec {
     private int exec(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
         Player player = ctx.getArgument("target", PlayerSelectorArgumentResolver.class).resolve(ctx.getSource()).getFirst();
 
-        ctx.getSource().getSender().sendMessage(String.valueOf(ERaces.getInstance().getContext().getSpecializationsManager().getSpecPlayersData().get(player.getUniqueId()).getXp()));
+        ctx.getSource().getSender().sendMessage(String.valueOf(ERaces.getInstance().getContext().getSpecializationsManager().specPlayersData.get(player.getUniqueId()).getXp()));
         return Command.SINGLE_SUCCESS;
     }
 }

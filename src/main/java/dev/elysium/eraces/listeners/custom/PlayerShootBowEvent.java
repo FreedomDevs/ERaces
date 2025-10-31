@@ -1,4 +1,4 @@
-package dev.elysium.eraces.listeners;
+package dev.elysium.eraces.listeners.custom;
 
 import lombok.Getter;
 import org.bukkit.entity.AbstractArrow;

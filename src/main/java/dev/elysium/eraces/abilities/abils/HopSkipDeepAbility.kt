@@ -18,14 +18,16 @@ class HopSkipDeepAbility : BaseCooldownAbility(
         val jumpVector = moveDirection.multiply(jumpDistance).setY(jumpHeight)
         player.velocity = jumpVector
     }
+
     override fun loadCustomParams(cfg: YamlConfiguration) {
         ConfigHelper.with(cfg) {
             read("jumpDistance", ::jumpDistance)
             read("jumpHeight", ::jumpHeight)
         }
     }
+
     override fun writeCustomDefaults(cfg: YamlConfiguration) {
-        ConfigHelper.with(cfg){
+        ConfigHelper.with(cfg) {
             write("jumpDistance", jumpDistance)
             write("jumpHeight", jumpHeight)
         }

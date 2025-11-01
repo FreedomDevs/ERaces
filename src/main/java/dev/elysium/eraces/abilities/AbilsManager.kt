@@ -10,6 +10,7 @@ import dev.elysium.eraces.abilities.abils.BossRushAbility
 import dev.elysium.eraces.abilities.abils.BurnAbility
 import dev.elysium.eraces.abilities.abils.DeadlyRushAbility
 import dev.elysium.eraces.abilities.abils.EroticCharmAbility
+import dev.elysium.eraces.abilities.abils.FindHimIfYouCanAbility
 import dev.elysium.eraces.abilities.abils.FindMeIfYouCan
 import dev.elysium.eraces.abilities.abils.FireBoomAbility
 import dev.elysium.eraces.abilities.abils.FireballAbility
@@ -90,8 +91,7 @@ class AbilsManager private constructor(private val plugin: ERaces) {
             SharpClawsAbility(),
             TheWingedWhirlwindAbility(),
             TheFlameOfHealingAbility(),
-            EroticCharmAbility(),
-            TheFlameOfHealingAbility(),
+            FindHimIfYouCanAbility(),
             EroticCharmAbility(),
             FindMeIfYouCan()
         )

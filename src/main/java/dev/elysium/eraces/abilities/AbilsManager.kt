@@ -91,6 +91,7 @@ class AbilsManager private constructor(private val plugin: ERaces) {
             TheWingedWhirlwindAbility(),
             TheFlameOfHealingAbility(),
             EroticCharmAbility(),
+
             TheFlameOfHealingAbility(),
             EroticCharmAbility(),
             FindMeIfYouCan()

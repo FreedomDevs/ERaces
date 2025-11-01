@@ -16,6 +16,7 @@ import dev.elysium.eraces.abilities.abils.FireBoomAbility
 import dev.elysium.eraces.abilities.abils.FireballAbility
 import dev.elysium.eraces.utils.ChatUtil
 import dev.elysium.eraces.abilities.abils.ForestSpiritAbility
+import dev.elysium.eraces.abilities.abils.HopSkipDeepAbility
 import dev.elysium.eraces.abilities.abils.MasterTheForestAbility
 import dev.elysium.eraces.abilities.abils.RageModeAbility
 import dev.elysium.eraces.abilities.abils.SharpClawsAbility
@@ -95,7 +96,8 @@ class AbilsManager private constructor(private val plugin: ERaces) {
             EroticCharmAbility(),
             TheFlameOfHealingAbility(),
             EroticCharmAbility(),
-            FindMeIfYouCan()
+            FindMeIfYouCan(),
+            HopSkipDeepAbility()
         )
         register(*defaultAbilities.toTypedArray())
         plugin.logger.info("Зарегистрировано способностей: ${abilities.size}")

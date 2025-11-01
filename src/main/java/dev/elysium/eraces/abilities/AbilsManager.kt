@@ -93,6 +93,8 @@ class AbilsManager private constructor(private val plugin: ERaces) {
             TheFlameOfHealingAbility(),
             FindHimIfYouCanAbility(),
             EroticCharmAbility(),
+            TheFlameOfHealingAbility(),
+            EroticCharmAbility(),
             FindMeIfYouCan()
         )
         register(*defaultAbilities.toTypedArray())

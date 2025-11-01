@@ -10,6 +10,7 @@ import dev.elysium.eraces.abilities.abils.BossRushAbility
 import dev.elysium.eraces.abilities.abils.BurnAbility
 import dev.elysium.eraces.abilities.abils.DeadlyRushAbility
 import dev.elysium.eraces.abilities.abils.EroticCharmAbility
+import dev.elysium.eraces.abilities.abils.FindMeIfYouCan
 import dev.elysium.eraces.abilities.abils.FireBoomAbility
 import dev.elysium.eraces.abilities.abils.FireballAbility
 import dev.elysium.eraces.utils.ChatUtil
@@ -21,6 +22,7 @@ import dev.elysium.eraces.abilities.abils.ShellingAbility
 import dev.elysium.eraces.abilities.abils.SupremeMagicianAbility
 import dev.elysium.eraces.abilities.abils.TheFlameOfHealingAbility
 import dev.elysium.eraces.abilities.abils.TheMagicBarrierAbility
+import dev.elysium.eraces.abilities.abils.TheWingedWhirlwindAbility
 import dev.elysium.eraces.abilities.interfaces.IAbility
 import dev.elysium.eraces.abilities.interfaces.IComboActivatable
 import dev.elysium.eraces.abilities.interfaces.ICooldownAbility
@@ -86,11 +88,12 @@ class AbilsManager private constructor(private val plugin: ERaces) {
             ShellingAbility(),
             ArsenalAbility(),
             SharpClawsAbility(),
-<<<<<<< HEAD
-            TheFlameOfHealingAbility()
-=======
-            EroticCharmAbility()
->>>>>>> d5fde793d29184d8a94d2f1f8b8dc78204113c8f
+            TheWingedWhirlwindAbility(),
+            TheFlameOfHealingAbility(),
+            EroticCharmAbility(),
+            TheFlameOfHealingAbility(),
+            EroticCharmAbility(),
+            FindMeIfYouCan()
         )
         register(*defaultAbilities.toTypedArray())
         plugin.logger.info("Зарегистрировано способностей: ${abilities.size}")

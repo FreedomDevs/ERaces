@@ -30,12 +30,12 @@ public class MyraceCommand {
         String playerRace = context.getPlayerDataManager().getPlayerRaceId(player);
 
         if (playerRace == null || playerRace.isEmpty()) {
-            ChatUtil.message(player, context.getMessageManager().getData().getRaceNotSelected());
+            ChatUtil.INSTANCE.message(player, context.getMessageManager().getData().getRaceNotSelected());
             return;
         }
 
         String message = context.getMessageManager().getData().getGetPlayerRaceSuccessMe();
-        ChatUtil.message(player, message, Map.of("{race}", playerRace));
+        ChatUtil.INSTANCE.message(player, message, Map.of("{race}", playerRace));
     }
 }
 

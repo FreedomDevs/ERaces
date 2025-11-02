@@ -36,11 +36,11 @@ public class GetPlayerRaceExec {
         if (sender.getName().equals(playerName)) {
             String message = ERaces.getInstance().getContext().getMessageManager().getData().getGetPlayerRaceSuccessMe();
 
-            ChatUtil.message(sender, message,
+            ChatUtil.INSTANCE.message(sender, message,
                     Map.of("{race}", playerRace));
         } else {
             String message = ERaces.getInstance().getContext().getMessageManager().getData().getGetPlayerRaceSuccess();
-            ChatUtil.message(sender, message,
+            ChatUtil.INSTANCE.message(sender, message,
                     Map.of("{player}", playerName, "{race}", playerRace));
         }
 

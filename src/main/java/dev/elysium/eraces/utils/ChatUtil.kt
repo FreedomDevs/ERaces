@@ -1,231 +1,250 @@
-package dev.elysium.eraces.utils;
+package dev.elysium.eraces.utils
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
-import net.kyori.adventure.text.format.TextDecoration;
-import net.kyori.adventure.text.minimessage.MiniMessage;
-import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
-import net.kyori.adventure.text.minimessage.tag.standard.StandardTags;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-import net.kyori.adventure.title.Title;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
+import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.format.TextColor
+import net.kyori.adventure.text.format.TextDecoration
+import net.kyori.adventure.text.minimessage.MiniMessage
+import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver
+import net.kyori.adventure.text.minimessage.tag.standard.StandardTags
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
+import net.kyori.adventure.title.Title
+import org.bukkit.command.CommandSender
+import org.bukkit.entity.Player
+import java.time.Duration
+import java.util.regex.Pattern
 
-import java.time.Duration;
-import java.util.Collections;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+object ChatUtil {
 
-public class ChatUtil {
-    private static final MiniMessage miniMessage = MiniMessage.builder().tags(TagResolver.builder()
-            .resolver(StandardTags.color())
-            .resolver(StandardTags.gradient())
-            .resolver(StandardTags.rainbow())
-            .build()).build();
+    private val mini = MiniMessage.builder()
+        .tags(
+            TagResolver.builder()
+                .resolver(StandardTags.color())
+                .resolver(StandardTags.gradient())
+                .resolver(StandardTags.rainbow())
+                .build()
+        ).build()
 
-    private static final Pattern HEX_PATTERN = Pattern.compile("(?i)<#([0-9A-F]{6})>");
-
-    /**
-     * Форматирует строку с использованием MiniMessage и подставляет аргументы.
-     *
-     * @param text исходный текст с тегами MiniMessage
-     * @param args карта аргументов, где ключ заменяется на значение в тексте
-     * @return объект Component с применённым форматированием
-     */
-    public static Component format(String text, Map<String, String> args) {
-        return miniMessage.deserialize(applyArgs(text, args));
-    }
+    private val hexPattern = Pattern.compile("(?i)<#([0-9A-F]{6})>")
+    private val legacy = LegacyComponentSerializer.legacySection()
 
     /**
-     * Форматирует строку с использованием MiniMessage без аргументов.
+     * Парсит строку в компонент с поддержкой MiniMessage, legacy-цветов и подстановок.
      *
-     * @param text исходный текст с тегами MiniMessage
-     * @return объект Component с применённым форматированием
+     * @param text исходный текст.
+     * @param args карта замен (например, mapOf("{player}" to player.name)).
+     * @return готовый компонент без курсива.
      */
-    public static Component format(String text) {
-        return format(text, Collections.emptyMap());
-    }
-
-    /**
-     * Форматирует строку в стиле legacy (старые цветовые коды Minecraft) с подстановкой аргументов.
-     *
-     * @param text исходный текст с цветами и аргументами
-     * @param args карта аргументов
-     * @return объект Component с применённым legacy форматированием
-     */
-    public static Component legacyFormat(String text, Map<String, String> args) {
-        String colored = applyArgs(text, args);
-        colored = hexToLegacy(colored).replace('&', '§');
-        return clearItalic(LegacyComponentSerializer.legacySection().deserialize(colored));
-    }
-
-    /**
-     * Форматирует строку в стиле legacy без аргументов.
-     *
-     * @param text исходный текст
-     * @return объект Component с применённым legacy форматированием
-     */
-    public static Component legacyFormat(String text) {
-        return legacyFormat(text, Collections.emptyMap());
-    }
-
-    /**
-     * Создаёт компонент текста с указанным цветом.
-     *
-     * @param s текст
-     * @param clr цвет (TextColor)
-     * @return объект Component без наклонного текста
-     */
-    public static Component text(String s, TextColor clr) {
-        return clearItalic(Component.text(s, clr));
-    }
-
-    /**
-     * Создаёт компонент текста с цветом в hex формате.
-     *
-     * @param s текст
-     * @param hex цвет в формате "#RRGGBB"
-     * @return объект Component без наклонного текста
-     */
-    public static Component text(String s, String hex) {
-        return clearItalic(Component.text(s, TextColor.fromHexString(hex)));
-    }
-
-    /**
-     * Убирает наклонный стиль текста у компонента.
-     *
-     * @param text компонент текста
-     * @return новый компонент без наклона
-     */
-    public static Component clearItalic(Component text) {
-        return text.decoration(TextDecoration.ITALIC, false);
-    }
-
-    /**
-     * Подставляет аргументы в текст (ключи заменяются значениями).
-     *
-     * @param text исходный текст
-     * @param args карта аргументов
-     * @return текст с подставленными значениями
-     */
-    public static String applyArgs(String text, Map<String, String> args) {
-        String result = text;
-        for (Map.Entry<String, String> entry : args.entrySet()) {
-            result = result.replace(entry.getKey(), entry.getValue());
+    fun parse(text: String, args: Map<String, String> = emptyMap()): Component {
+        val replaced = applyArgs(text, args)
+        return when {
+            replaced.contains('<') -> clearItalic(mini.deserialize(replaced))
+            replaced.contains('&') -> clearItalic(legacy.deserialize(replaced.replace('&', '§')))
+            else -> clearItalic(Component.text(replaced))
         }
-        return result;
     }
 
     /**
-     * Отправляет форматированное сообщение игроку или консоли с аргументами.
-     *
-     * @param sender получатель сообщения (Player или CommandSender)
-     * @param msg текст сообщения
-     * @param args карта аргументов
+     * Перегрузка [parse], принимающая пары аргументов.
      */
-    public static void message(CommandSender sender, String msg, Map<String, String> args) {
-        sender.sendMessage(format(msg, args));
-    }
+    fun parse(text: String, vararg args: Pair<String, String>): Component =
+        parse(text, args.toMap())
 
     /**
-     * Отправляет форматированное сообщение без аргументов.
+     * Создаёт текстовый компонент заданного цвета.
      *
-     * @param sender получатель сообщения (Player или CommandSender)
-     * @param msg текст сообщения
+     * @param s текст.
+     * @param color цвет [TextColor].
      */
-    public static void message(CommandSender sender, String msg) {
-        message(sender, msg, Collections.emptyMap());
-    }
+    fun text(s: String, color: TextColor): Component = clearItalic(Component.text(s, color))
 
     /**
-     * Отправляет legacy-сообщение с аргументами.
+     * Создаёт текстовый компонент с цветом из HEX-строки.
      *
-     * @param sender получатель сообщения (Player или CommandSender)
-     * @param msg текст сообщения
-     * @param args карта аргументов
+     * @param s текст.
+     * @param hex HEX-код цвета (например, "#FFAA00").
      */
-    public static void legacyMessage(CommandSender sender, String msg, Map<String, String> args) {
-        sender.sendMessage(legacyFormat(msg, args));
-    }
+    fun text(s: String, hex: String): Component =
+        clearItalic(Component.text(s, TextColor.fromHexString(hex)))
 
     /**
-     * Отправляет legacy-сообщение без аргументов.
+     * Убирает курсив у текста.
      *
-     * @param sender получатель сообщения (Player или CommandSender)
-     * @param msg текст сообщения
+     * @param c компонент.
+     * @return компонент без курсива.
      */
-    public static void legacyMessage(CommandSender sender, String msg) {
-        legacyMessage(sender, msg, Collections.emptyMap());
-    }
+    fun clearItalic(c: Component): Component =
+        c.decoration(TextDecoration.ITALIC, false)
 
     /**
-     * Отправляет заголовок (title) и подзаголовок игроку с кастомными временами отображения.
+     * Отправляет сообщение [CommandSender] (игроку или консоли).
      *
-     * @param player игрок
-     * @param title заголовок
-     * @param subtitle подзаголовок
-     * @param fadeIn время появления (в миллисекундах)
-     * @param stay время отображения (в миллисекундах)
-     * @param fadeOut время исчезновения (в миллисекундах)
+     * @param sender получатель.
+     * @param component текстовый компонент.
      */
-    public static void sendTitle(Player player, String title, String subtitle, int fadeIn, int stay, int fadeOut) {
-        player.showTitle(Title.title(
-                format(title),
-                format(subtitle),
-                Title.Times.times(
-                        Duration.ofMillis(fadeIn),
-                        Duration.ofMillis(stay),
-                        Duration.ofMillis(fadeOut))));
-    }
+    fun message(sender: CommandSender, component: Component) =
+        sender.sendMessage(clearItalic(component))
 
     /**
-     * Отправляет заголовок и подзаголовок игроку с дефолтными временами отображения.
+     * Отправляет сообщение, предварительно парся текст через [parse].
      *
-     * @param player игрок
-     * @param title заголовок
-     * @param subtitle подзаголовок
+     * @param sender получатель.
+     * @param text текст с возможными MiniMessage/legacy кодами.
+     * @param args карта замен.
      */
-    public static void sendTitle(Player player, String title, String subtitle) {
-        sendTitle(player, title, subtitle, 10, 20, 10);
-    }
+    fun message(sender: CommandSender, text: String, args: Map<String, String> = emptyMap()) =
+        message(sender, parse(text, args))
 
     /**
-     * Отправляет сообщение в action bar игроку с аргументами.
-     *
-     * @param player игрок
-     * @param msg текст сообщения
-     * @param args карта аргументов
+     * Упрощённый вариант [message] без аргументов.
      */
-    public static void sendAction(Player player, String msg, Map<String, String> args) {
-        Component formatted = format(msg, args);
-        player.sendActionBar(formatted);
-    }
+    fun message(sender: CommandSender, text: String) =
+        message(sender, text, emptyMap())
 
     /**
-     * Отправляет сообщение в action bar игроку без аргументов.
+     * Отправляет сообщение в action bar игроку.
      *
-     * @param player игрок
-     * @param msg текст сообщения
+     * @param player игрок.
+     * @param text сообщение.
+     * @param args карта замен.
      */
-    public static void sendAction(Player player, String msg) {
-        sendAction(player, msg, Collections.emptyMap());
+    fun action(player: Player, text: String, args: Map<String, String> = emptyMap()) =
+        player.sendActionBar(parse(text, args))
+
+    /**
+     * Отправляет заголовок (title + subtitle) игроку.
+     *
+     * @param player игрок.
+     * @param title основной текст.
+     * @param subtitle подзаголовок.
+     * @param fadeIn длительность появления (мс).
+     * @param stay длительность показа (мс).
+     * @param fadeOut длительность исчезновения (мс).
+     */
+    fun title(
+        player: Player,
+        title: String,
+        subtitle: String = "",
+        fadeIn: Long = 500,
+        stay: Long = 2000,
+        fadeOut: Long = 500
+    ) = player.showTitle(
+        Title.title(
+            parse(title),
+            parse(subtitle),
+            Title.Times.times(
+                Duration.ofMillis(fadeIn),
+                Duration.ofMillis(stay),
+                Duration.ofMillis(fadeOut)
+            )
+        )
+    )
+
+    /** @deprecated Используй [parse] */
+    @Deprecated("Use ChatUtil.parse(text, args)")
+    fun formatOld(text: String, args: Map<String, String>): Component =
+        mini.deserialize(applyArgs(text, args))
+
+    /** @deprecated Используй [parse] */
+    @Deprecated("Use ChatUtil.parse(text)")
+    fun formatOld(text: String): Component =
+        formatOld(text, emptyMap())
+
+    /** @deprecated Используй [parse] */
+    @Deprecated("Use ChatUtil.parse(text, args)")
+    fun legacyFormat(text: String, args: Map<String, String>): Component {
+        val colored = hexToLegacy(applyArgs(text, args)).replace('&', '§')
+        return clearItalic(legacy.deserialize(colored))
     }
 
-    private static String hexToLegacy(String text) {
-        Matcher matcher = HEX_PATTERN.matcher(text);
-        StringBuffer buffer = new StringBuffer();
+    /** @deprecated Используй [parse] */
+    @Deprecated("Use ChatUtil.parse(text)")
+    fun legacyFormat(text: String): Component = legacyFormat(text, emptyMap())
 
+    /** @deprecated Используй [message] */
+    @Deprecated("Use ChatUtil.message(sender, text, args)")
+    fun messageOld(sender: CommandSender, msg: String, args: Map<String, String>) =
+        sender.sendMessage(parse(msg, args))
+
+    /** @deprecated Используй [message] */
+    @Deprecated("Use ChatUtil.message(sender, text)")
+    fun messageOld(sender: CommandSender, msg: String) =
+        messageOld(sender, msg, emptyMap())
+
+    /** @deprecated Используй [message] */
+    @Deprecated("Use ChatUtil.message(sender, text, args)")
+    fun legacyMessageOld(sender: CommandSender, msg: String, args: Map<String, String>) =
+        sender.sendMessage(legacyFormat(msg, args))
+
+    /** @deprecated Используй [message] */
+    @Deprecated("Use ChatUtil.message(sender, text)")
+    fun legacyMessageOld(sender: CommandSender, msg: String) =
+        legacyMessageOld(sender, msg, emptyMap())
+
+    /** @deprecated Используй [title] */
+    @Deprecated("Use ChatUtil.title(player, title, subtitle)")
+    fun sendTitleOld(player: Player, title: String, subtitle: String, fadeIn: Int, stay: Int, fadeOut: Int) =
+        title(player, title, subtitle, fadeIn.toLong(), stay.toLong(), fadeOut.toLong())
+
+    /** @deprecated Используй [title] */
+    @Deprecated("Use ChatUtil.title(player, title, subtitle)")
+    fun sendTitleOld(player: Player, title: String, subtitle: String) =
+        title(player, title, subtitle)
+
+    /** @deprecated Используй [action] */
+    @Deprecated("Use ChatUtil.action(player, text)")
+    fun sendActionOld(player: Player, msg: String, args: Map<String, String>) =
+        player.sendActionBar(parse(msg, args))
+
+    /** @deprecated Используй [action] */
+    @Deprecated("Use ChatUtil.action(player, text)")
+    fun sendActionOld(player: Player, msg: String) =
+        sendActionOld(player, msg, emptyMap())
+
+    private fun applyArgs(text: String, args: Map<String, String>): String {
+        var result = text
+        args.forEach { (k, v) -> result = result.replace(k, v) }
+        return result
+    }
+
+    private fun hexToLegacy(text: String): String {
+        val matcher = hexPattern.matcher(text)
+        val buffer = StringBuffer()
         while (matcher.find()) {
-            String hex = matcher.group(1);
-            StringBuilder legacy = new StringBuilder("§x");
-            for (char c : hex.toCharArray()) {
-                legacy.append('§').append(c);
+            val hex = matcher.group(1)
+            val legacy = buildString {
+                append("§x")
+                hex.forEach { append('§').append(it) }
             }
-            matcher.appendReplacement(buffer, legacy.toString());
+            matcher.appendReplacement(buffer, legacy)
         }
-
-        matcher.appendTail(buffer);
-        return buffer.toString().replaceAll("</#([0-9A-F]{6})>", "");
+        matcher.appendTail(buffer)
+        return buffer.toString().replace(Regex("</#([0-9A-F]{6})>"), "")
     }
 }
+
+/**
+ * Extension-функция для отправки сообщений из команд (CommandSender).
+ *
+ * @param text сообщение.
+ * @param args карта подстановок.
+ */
+fun CommandSender.msg(text: String, vararg args: Pair<String, String>) =
+    ChatUtil.message(this, text, args.toMap())
+
+/**
+ * Extension-функция для отправки сообщений в action bar.
+ *
+ * @param text текст сообщения.
+ * @param args карта подстановок.
+ */
+fun Player.actionMsg(text: String, vararg args: Pair<String, String>) =
+    ChatUtil.action(this, text, args.toMap())
+
+/**
+ * Extension-функция для отправки заголовков (title/subtitle) игроку.
+ *
+ * @param title заголовок.
+ * @param subtitle подзаголовок (по умолчанию пустой).
+ */
+fun Player.titleMsg(title: String, subtitle: String = "") =
+    ChatUtil.title(this, title, subtitle)

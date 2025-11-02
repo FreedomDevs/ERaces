@@ -7,6 +7,7 @@ import dev.elysium.eraces.abilities.abils.base.BaseEffectsAbility
 import dev.elysium.eraces.listeners.custom.ManaConsumeEvent
 import dev.elysium.eraces.listeners.custom.ManaRegenerationEvent
 import dev.elysium.eraces.utils.ChatUtil
+import dev.elysium.eraces.utils.actionMsg
 import org.bukkit.Color
 import org.bukkit.Particle
 import org.bukkit.attribute.Attribute
@@ -38,7 +39,7 @@ class SkillMastersAbility : BaseEffectsAbility(
         val plugin = ERaces.getInstance()
 
         if (active.contains(player.uniqueId)) {
-            ChatUtil.sendAction(player, "<red>Ты уже используешь способность 'Духовный щит'!")
+            player.actionMsg("<red>Ты уже используешь способность 'Духовный щит'!")
             return
         }
 
@@ -53,7 +54,7 @@ class SkillMastersAbility : BaseEffectsAbility(
         AbilityUtils.runLater(plugin, duration) {
             active.remove(player.uniqueId)
             attr?.baseValue = base
-            ChatUtil.sendAction(player, "<gray>Эффект способности 'Духовный щит' закончился.")
+            ChatUtil.sendActionOld(player, "<gray>Эффект способности 'Духовный щит' закончился.")
         }
 
         spawnParticle(plugin, player)

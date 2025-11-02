@@ -16,7 +16,7 @@ public class RaceChangeGui implements InventoryHolder {
 
     public RaceChangeGui(Player player) {
         int[] ids = {10, 12, 14, 16, 28, 30, 32, 34};
-        this.inventory = Bukkit.createInventory(this, 54, ChatUtil.text(centerTitle("Выбор Расы"), NamedTextColor.DARK_PURPLE));
+        this.inventory = Bukkit.createInventory(this, 54, ChatUtil.INSTANCE.text(centerTitle("Выбор Расы"), NamedTextColor.DARK_PURPLE));
 
         var context = ERaces.getInstance().getContext();
         Race currentRace = context.getPlayerDataManager().getPlayerRace(player);

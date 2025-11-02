@@ -28,7 +28,7 @@ public class ReloadExec {
 
         VisualsManager.reloadVisualsForAllPlayer();
         String message = context.getMessageManager().getData().getReloadSuccess();
-        ChatUtil.message(ctx.getSource().getSender(), message);
+        ChatUtil.INSTANCE.message(ctx.getSource().getSender(), message);
 
         return Command.SINGLE_SUCCESS;
     }

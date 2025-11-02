@@ -34,7 +34,7 @@ class ChanceResurrectionListener : Listener {
                     attribute.baseValue = if (newMaxHealth < 1.0) 1.0 else newMaxHealth
                     player.health = attribute.baseValue
 
-                    ChatUtil.sendAction(player, "Вам удалось избежать объятий смерти")
+                    ChatUtil.sendActionOld(player, "Вам удалось избежать объятий смерти")
                 } else {
                     resurrectionsDone = 0
                     player.getAttribute(Attribute.MAX_HEALTH)?.baseValue = race.maxHp

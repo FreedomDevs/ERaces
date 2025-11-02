@@ -42,7 +42,7 @@ object GuiListener : Listener {
         val menu = GuiManager.getOpenMenu(player) ?: return
 
         if (menu.onClose()) {
-            menu.closeMessage?.let { ChatUtil.sendAction(player, it) }
+            menu.closeMessage?.let { ChatUtil.sendActionOld(player, it) }
 
             player.server.scheduler.runTaskLater(plugin, Runnable {
                 menu.open()

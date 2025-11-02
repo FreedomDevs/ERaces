@@ -26,7 +26,7 @@ class RaceConfirmMenu(
             GuiManager.getOpenMenu(player)?.preventClose = false
             GuiManager.close(player)
             player.closeInventory()
-            ChatUtil.sendAction(player, "<green>Ты выбрал расу: <gold>${race.displayName}")
+            ChatUtil.sendActionOld(player, "<green>Ты выбрал расу: <gold>${race.displayName}")
             ERaces.getInstance().context.playerDataManager.setPlayerRace(player, race.id)
             RacesReloader.reloadRaceForPlayer(player)
             VisualsManager.updateVisualsForPlayer(player)

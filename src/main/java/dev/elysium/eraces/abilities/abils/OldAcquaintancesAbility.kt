@@ -7,6 +7,7 @@ import dev.elysium.eraces.abilities.abils.base.BaseEffectsAbility
 import dev.elysium.eraces.listeners.custom.ManaConsumeEvent
 import dev.elysium.eraces.listeners.custom.ManaRegenerationEvent
 import dev.elysium.eraces.utils.ChatUtil
+import dev.elysium.eraces.utils.actionMsg
 import org.bukkit.Color
 import org.bukkit.Particle
 import org.bukkit.configuration.file.YamlConfiguration
@@ -36,7 +37,7 @@ class OldAcquaintancesAbility : BaseEffectsAbility(
         val plugin = ERaces.getInstance()
 
         if (manaRegenBoost.contains(player.uniqueId) || manaConsumeBoost.contains(player.uniqueId)) {
-            ChatUtil.sendAction(player, "<red>Ты уже используешь способность 'Старые знакомства'!")
+            player.actionMsg( "<red>Ты уже используешь способность 'Старые знакомства'!")
             return
         }
 

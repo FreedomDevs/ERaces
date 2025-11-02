@@ -42,7 +42,7 @@ public class RegeneratePlayerRaceExec {
         VisualsManager.updateVisualsForPlayer(player);
 
         String message = ERaces.getInstance().getContext().getMessageManager().getData().getRegenerateSuccess();
-        ChatUtil.message(sender, message, Map.of("{player}", player.getName(), "{race}", newRace));
+        ChatUtil.INSTANCE.message(sender, message, Map.of("{player}", player.getName(), "{race}", newRace));
 
         return Command.SINGLE_SUCCESS;
     }

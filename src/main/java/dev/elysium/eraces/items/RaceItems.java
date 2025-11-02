@@ -23,8 +23,8 @@ public class RaceItems {
         if (m == null) m = Material.DIRT;
         ItemStack item = new ItemStack(m);
         ItemMeta meta = item.getItemMeta();
-        meta.displayName(ChatUtil.legacyFormat(cfg.getName()));
-        meta.lore(Arrays.stream(cfg.getLore().split("\n")).map(ChatUtil::legacyFormat).toList());
+        meta.displayName(ChatUtil.INSTANCE.legacyFormat(cfg.getName()));
+        meta.lore(Arrays.stream(cfg.getLore().split("\n")).map(ChatUtil.INSTANCE::legacyFormat).toList());
         meta.getPersistentDataContainer().set(RACE_GUI_ITEM_KEY, PersistentDataType.STRING, Objects.requireNonNull(race.getId()));
         item.setItemMeta(meta);
 

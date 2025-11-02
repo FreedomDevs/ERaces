@@ -52,7 +52,7 @@ public class SetPlayerRaceExec {
 
         if (!context.getRacesConfigManager().getRaces().containsKey(newRace)) {
             String message = context.getMessageManager().getData().getSetPlayerRaceNotFound();
-            ChatUtil.message(ctx.getSource().getSender(), message);
+            ChatUtil.INSTANCE.message(ctx.getSource().getSender(), message);
             return Command.SINGLE_SUCCESS;
         }
 
@@ -61,7 +61,7 @@ public class SetPlayerRaceExec {
         VisualsManager.updateVisualsForPlayer(player);
 
         String message = context.getMessageManager().getData().getSetPlayerRaceSuccess();
-        ChatUtil.message(ctx.getSource().getSender(),
+        ChatUtil.INSTANCE.message(ctx.getSource().getSender(),
                 message,
                 Map.of("{player}", player.getName(), "{race}", newRace));
 

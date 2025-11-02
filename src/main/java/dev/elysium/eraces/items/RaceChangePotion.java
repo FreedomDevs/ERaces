@@ -23,7 +23,7 @@ public class RaceChangePotion implements Listener {
         ItemStack potion = new ItemStack(Material.POTION);
         PotionMeta meta = (PotionMeta) potion.getItemMeta();
 
-        meta.displayName(ChatUtil.text("Сменить расу", NamedTextColor.LIGHT_PURPLE));
+        meta.displayName(ChatUtil.INSTANCE.text("Сменить расу", NamedTextColor.LIGHT_PURPLE));
         meta.setColor(Color.FUCHSIA);
         meta.getPersistentDataContainer().set(RACE_CHANGE_POTION_KEY, PersistentDataType.INTEGER, 1);
 

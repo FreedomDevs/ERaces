@@ -22,7 +22,7 @@ public class ForbiddenFoodsUpdater extends RaceAttributeMapStorage<List<String>>
         if (param == null || !param.contains(event.getItem().getType().toString())) return;
 
         player.sendActionBar(
-                ChatUtil.format(
+                ChatUtil.INSTANCE.legacyFormat(
                         ERaces.getInstance().getContext().getMessageManager().getData().getForbiddenFoods(),
                         Map.of()
                 )

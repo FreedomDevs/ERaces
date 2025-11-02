@@ -22,6 +22,7 @@ import dev.elysium.eraces.abilities.abils.OldAcquaintancesAbility
 import dev.elysium.eraces.abilities.abils.RageModeAbility
 import dev.elysium.eraces.abilities.abils.SharpClawsAbility
 import dev.elysium.eraces.abilities.abils.ShellingAbility
+import dev.elysium.eraces.abilities.abils.SkillMastersAbility
 import dev.elysium.eraces.abilities.abils.SupremeMagicianAbility
 import dev.elysium.eraces.abilities.abils.TheFlameOfHealingAbility
 import dev.elysium.eraces.abilities.abils.TheMagicBarrierAbility
@@ -99,7 +100,8 @@ class AbilsManager private constructor(private val plugin: ERaces) {
             EroticCharmAbility(),
             FindMeIfYouCan(),
             HopSkipDeepAbility(),
-            OldAcquaintancesAbility()
+            OldAcquaintancesAbility(),
+            SkillMastersAbility()
         )
         register(*defaultAbilities.toTypedArray())
         plugin.logger.info("Зарегистрировано способностей: ${abilities.size}")

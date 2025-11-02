@@ -15,6 +15,8 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.potion.PotionEffectType
 import java.util.UUID
+import kotlin.math.cos
+import kotlin.math.sin
 
 class OldAcquaintancesAbility : BaseEffectsAbility(
     id = "oldacquaintances", defaultCooldown = "5m", defaultEffects = linkedMapOf(
@@ -61,8 +63,8 @@ class OldAcquaintancesAbility : BaseEffectsAbility(
             val angle = tick * 0.3
             val radius = 0.8
 
-            val x = radius * kotlin.math.cos(angle)
-            val z = radius * kotlin.math.sin(angle)
+            val x = radius * cos(angle)
+            val z = radius * sin(angle)
             val loc = center.clone().add(x, 0.0, z)
 
             world.spawnParticle(
@@ -81,8 +83,8 @@ class OldAcquaintancesAbility : BaseEffectsAbility(
             val angle = -tick * 0.25
             val radius = 1.0
 
-            val x = radius * kotlin.math.cos(angle)
-            val z = radius * kotlin.math.sin(angle)
+            val x = radius * cos(angle)
+            val z = radius * sin(angle)
             val loc = center.clone().add(x, 0.0, z)
 
             world.spawnParticle(

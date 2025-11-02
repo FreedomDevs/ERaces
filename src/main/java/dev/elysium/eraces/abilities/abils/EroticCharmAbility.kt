@@ -9,9 +9,11 @@ import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.entity.Player
 import org.bukkit.potion.PotionEffectType
 
-class EroticCharmAbility : BaseEffectsAbility(id = "eroticcharm", defaultCooldown = "3m", defaultEffects = linkedMapOf(
-    "slowness" to EffectData("5s", 250, PotionEffectType.SLOWNESS)
-)) {
+class EroticCharmAbility : BaseEffectsAbility(
+    id = "eroticcharm", defaultCooldown = "3m", defaultEffects = linkedMapOf(
+        "slowness" to EffectData("5s", 250, PotionEffectType.SLOWNESS)
+    )
+) {
     private var level: Int = 5
     private var duration: String = "10s"
 
@@ -29,11 +31,11 @@ class EroticCharmAbility : BaseEffectsAbility(id = "eroticcharm", defaultCooldow
 
     override fun loadCustomParams(cfg: YamlConfiguration) {
         super.loadCustomParams(cfg)
-        ConfigHelper.read("duration", ::duration)
+        ConfigHelper.with(cfg) { read("duration", ::duration) }
     }
 
     override fun writeCustomDefaults(cfg: YamlConfiguration) {
         super.writeCustomDefaults(cfg)
-        ConfigHelper.write("duration", duration)
+        ConfigHelper.with(cfg) { write("duration", duration) }
     }
 }

@@ -8,6 +8,7 @@ import dev.elysium.eraces.abilities.abils.BlockAbility
 import dev.elysium.eraces.abilities.abils.BloodOfFirstAbility
 import dev.elysium.eraces.abilities.abils.BossRushAbility
 import dev.elysium.eraces.abilities.abils.BurnAbility
+import dev.elysium.eraces.abilities.abils.CrossProtectionAbility
 import dev.elysium.eraces.abilities.abils.DeadlyRushAbility
 import dev.elysium.eraces.abilities.abils.DiveAbility
 import dev.elysium.eraces.abilities.abils.EroticCharmAbility
@@ -105,7 +106,8 @@ class AbilsManager private constructor(private val plugin: ERaces) {
             OldAcquaintancesAbility(),
             SkillMastersAbility(),
             JerkAbility(),
-            DiveAbility()
+            DiveAbility(),
+            CrossProtectionAbility()
         )
         register(*defaultAbilities.toTypedArray())
         plugin.logger.info("Зарегистрировано способностей: ${abilities.size}")

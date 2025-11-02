@@ -25,6 +25,7 @@ class EffectsTarget {
     private var durationTicks: Int = 1
     private var periodTicks: Long = 1L
     private var maxPointsPerTick: Int = Int.MAX_VALUE
+    private var dustOptions: Particle.DustOptions? = null
 
     /**
      * Устанавливает Target, на который будут применяться эффекты.
@@ -51,6 +52,14 @@ class EffectsTarget {
      */
     fun particle(p: Particle): EffectsTarget {
         this.particle = p; return this
+    }
+
+    /**
+     * Устанавливает DustOptions (цвет и размер) для Particle.REDSTONE.
+     * @param org.bukkit.Particle.DustOptions
+     */
+    fun dust(options: Particle.DustOptions): EffectsTarget {
+        this.dustOptions = options; return this
     }
 
     /**
@@ -186,8 +195,23 @@ class EffectsTarget {
 
     private fun spawnAt(origin: Location, offsets: List<Vec3>) {
         val world = origin.world ?: return
-        for (off in offsets) {
-            world.spawnParticle(particle, origin.x + off.x, origin.y + off.y, origin.z + off.z, 1)
+
+        if (particle == Particle.DUST && dustOptions != null) {
+            for (off in offsets) {
+                world.spawnParticle(
+                    particle,
+                    origin.x + off.x,
+                    origin.y + off.y,
+                    origin.z + off.z,
+                    1,
+                    0.0, 0.0, 0.0, 0.0,
+                    dustOptions
+                )
+            }
+        } else {
+            for (off in offsets) {
+                world.spawnParticle(particle, origin.x + off.x, origin.y + off.y, origin.z + off.z, 1)
+            }
         }
     }
 

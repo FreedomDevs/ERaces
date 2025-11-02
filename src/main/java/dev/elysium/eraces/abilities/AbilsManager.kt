@@ -17,6 +17,7 @@ import dev.elysium.eraces.abilities.abils.FireballAbility
 import dev.elysium.eraces.utils.ChatUtil
 import dev.elysium.eraces.abilities.abils.ForestSpiritAbility
 import dev.elysium.eraces.abilities.abils.HopSkipDeepAbility
+import dev.elysium.eraces.abilities.abils.JerkAbility
 import dev.elysium.eraces.abilities.abils.MasterTheForestAbility
 import dev.elysium.eraces.abilities.abils.OldAcquaintancesAbility
 import dev.elysium.eraces.abilities.abils.RageModeAbility
@@ -101,7 +102,8 @@ class AbilsManager private constructor(private val plugin: ERaces) {
             FindMeIfYouCan(),
             HopSkipDeepAbility(),
             OldAcquaintancesAbility(),
-            SkillMastersAbility()
+            SkillMastersAbility(),
+            JerkAbility()
         )
         register(*defaultAbilities.toTypedArray())
         plugin.logger.info("Зарегистрировано способностей: ${abilities.size}")

@@ -163,17 +163,17 @@ class AbilsManager private constructor(private val plugin: ERaces) {
 
         when {
             race == null -> {
-                ChatUtil.legacyMessage(player, "&cТы ещё не выбрал расу!")
+                ChatUtil.legacyMessageOld(player, "&cТы ещё не выбрал расу!")
                 return
             }
 
             !race.abilities.contains(id) -> {
-                ChatUtil.legacyMessage(player, "&cТвоя раса не умеет использовать способность &e$id")
+                ChatUtil.legacyMessageOld(player, "&cТвоя раса не умеет использовать способность &e$id")
                 return
             }
 
             ability == null -> {
-                ChatUtil.legacyMessage(player, "&cСпособность &e$id&c не найдена!")
+                ChatUtil.legacyMessageOld(player, "&cСпособность &e$id&c не найдена!")
                 return
             }
         }
@@ -184,7 +184,7 @@ class AbilsManager private constructor(private val plugin: ERaces) {
                 val manaManager = ERaces.getInstance().context.manaManager
                 val currentMana = manaManager.getMana(player)
                 if (currentMana < manaCost) {
-                    ChatUtil.sendAction(
+                    ChatUtil.sendActionOld(
                         player,
                         "<red>Недостаточно маны! Нужно <yellow>$manaCost<red>, у тебя <yellow>$currentMana"
                     )
@@ -196,7 +196,7 @@ class AbilsManager private constructor(private val plugin: ERaces) {
 
         if (ability is ICooldownAbility && CooldownManager.hasCooldown(player, id)) {
             val remaining = CooldownManager.getRemaining(player, id)
-            ChatUtil.legacyMessage(player, "&cСпособность &e$id&c ещё на кулдауне! Осталось &e${remaining}с")
+            ChatUtil.legacyMessageOld(player, "&cСпособность &e$id&c ещё на кулдауне! Осталось &e${remaining}с")
             return
         }
 
@@ -211,7 +211,7 @@ class AbilsManager private constructor(private val plugin: ERaces) {
             }
         } catch (e: Exception) {
             plugin.logger.log(Level.SEVERE, "Ошибка при активации способности '$id' у игрока ${player.name}", e)
-            ChatUtil.legacyMessage(player, "&cПроизошла ошибка при использовании способности &e$id")
+            ChatUtil.legacyMessageOld(player, "&cПроизошла ошибка при использовании способности &e$id")
         }
     }
 
@@ -231,7 +231,7 @@ class AbilsManager private constructor(private val plugin: ERaces) {
             .firstOrNull { it.getComboKey() == combo }
 
         if (ability == null) {
-            ChatUtil.sendAction(player, "<red>Нет способности, назначенной на комбинацию <yellow>$combo")
+            ChatUtil.sendActionOld(player, "<red>Нет способности, назначенной на комбинацию <yellow>$combo")
             return
         }
 

@@ -25,7 +25,7 @@ class JerkAbility : BaseCooldownAbility(id = "jerk", defaultCooldown = "5m") {
         val plugin = ERaces.getInstance()
 
         player.safeDamage(damageCast)
-        ChatUtil.sendAction(player, "<blue>Ты совершаешь рывок вперёд!")
+        ChatUtil.sendActionOld(player, "<blue>Ты совершаешь рывок вперёд!")
 
         val startLoc = player.location.clone()
         val dir = player.location.direction.normalize()

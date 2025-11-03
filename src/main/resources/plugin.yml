@@ -2,7 +2,9 @@ name: ERaces
 version: ${version}
 main: dev.elysium.eraces.ERaces
 description: Просто плагин на расы
+website: 'https://github.com/FreedomDevs/ERaces'
 api-version: '1.21.4'
+softdepend: [PlaceholderAPI]
 
 commands:
   races:

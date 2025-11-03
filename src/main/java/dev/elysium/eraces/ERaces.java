@@ -13,6 +13,7 @@ import dev.elysium.eraces.config.MessageManager;
 import dev.elysium.eraces.config.PlayerDataManager;
 import dev.elysium.eraces.config.RacesConfigManager;
 import dev.elysium.eraces.gui.raceSelect.RaceSelectMenuPages;
+import dev.elysium.eraces.placeholders.ManaExpansion;
 import dev.elysium.eraces.utils.SqliteDatabase;
 import dev.elysium.eraces.utils.targetUtils.PluginAccessor;
 import dev.elysium.eraces.xpManager.XpManager;
@@ -63,6 +64,7 @@ public class ERaces extends JavaPlugin {
 
         registerCommands();
         registerEventListeners();
+        registerPlaceholders();
 
         configureLogging();
 
@@ -104,6 +106,22 @@ public class ERaces extends JavaPlugin {
         String lang = context.getGlobalConfigManager().getData().getLang();
         MessageManager messageManager = new MessageManager(this, lang);
         context.setMessageManager(messageManager);
+    }
+
+    /* ------------------- Placeholders init ------------------- */
+
+    private void registerPlaceholders() {
+        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") == null) {
+            getLogger().warning("PlaceholderAPI не найден — плейсхолдеры отключены.");
+            return;
+        }
+
+        try {
+            new ManaExpansion(this).register();
+            getLogger().info("PlaceholderAPI expansion 'eraces' успешно зарегистрирован.");
+        } catch (Exception e) {
+            getLogger().log(Level.SEVERE, "Ошибка при регистрации плейсхолдеров PlaceholderAPI", e);
+        }
     }
 
     /* ------------------- Database Helpers ------------------- */

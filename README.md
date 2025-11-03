@@ -9,7 +9,7 @@
 
 Вся конфигурация делается в plugins/ERaces/*.yml
 
-Документация по этим параметрам находится в [config_docs.md](config_docs.md)
+Документация по этим параметрам находится в [config_docs.md](docs/config_docs.md)
 
 ---
 

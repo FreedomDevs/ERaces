@@ -5,7 +5,7 @@ import me.clip.placeholderapi.expansion.PlaceholderExpansion
 import org.bukkit.OfflinePlayer
 
 class ManaExpansion(private val plugin: ERaces): PlaceholderExpansion() {
-    override fun getIdentifier(): String = "eraces"
+    override fun getIdentifier(): String = "eraces_mana"
     override fun getAuthor(): String = "ElysiumDev"
     override fun getVersion(): String = plugin.description.version
 

@@ -6,7 +6,6 @@ import dev.elysium.eraces.abilities.ConfigHelper
 import dev.elysium.eraces.abilities.abils.base.BaseEffectsAbility
 import dev.elysium.eraces.listeners.custom.ManaConsumeEvent
 import dev.elysium.eraces.listeners.custom.ManaRegenerationEvent
-import dev.elysium.eraces.utils.ChatUtil
 import dev.elysium.eraces.utils.actionMsg
 import org.bukkit.Color
 import org.bukkit.Particle

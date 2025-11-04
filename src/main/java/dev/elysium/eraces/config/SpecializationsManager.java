@@ -7,7 +7,6 @@ import dev.elysium.eraces.utils.SqliteDatabase;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
@@ -19,7 +18,7 @@ import java.util.*;
 
 public class SpecializationsManager {
     @Getter
-    private final SpecializationsConfigManager config;
+    public final SpecializationsConfigManager config;
     private final SqliteDatabase database;
 
     public final Map<UUID, SpecializationPlayerData> specPlayersData = new HashMap<>(); // НИ В КОЕМ СЛУЧАЕ НЕ РЕДАКТИРОВАТЬ ИЗ ВНЕ (читать можна)

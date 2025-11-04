@@ -1,7 +1,5 @@
 package dev.elysium.eraces.datatypes
 
-import javax.print.DocFlavor
-
 class Race {
     var id: String? = null
 

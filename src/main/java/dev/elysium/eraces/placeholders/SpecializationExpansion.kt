@@ -7,17 +7,17 @@ import org.bukkit.OfflinePlayer
 class SpecializationExpansion(private val plugin: ERaces) : PlaceholderExpansion() {
     override fun getIdentifier(): String = "eraces_spec"
     override fun getAuthor(): String = "ElysiumDev"
-    override fun getVersion(): String = plugin.description.version
+    override fun getVersion(): String = plugin.pluginMeta.version
 
     override fun onRequest(player: OfflinePlayer?, identifier: String): String? {
         if (player == null) return null
 
         val specManager = plugin.context.specializationsManager ?: return null
         val playerData = plugin.context.specializationsManager
-            .specPlayersData[player.uniqueId] ?: return "Нет данных"
+            .specPlayersData[player.uniqueId] ?: return "no_data"
 
         return when (identifier.lowercase()) {
-            "name" -> playerData.specialization ?: "none"
+            "name" -> playerData.specialization.ifBlank { "none" }
             "level" -> playerData.level.toString()
 
             // Текущий XP игрока

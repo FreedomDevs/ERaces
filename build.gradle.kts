@@ -32,6 +32,7 @@ dependencies {
     compileOnly("org.projectlombok:lombok:1.18.30")
     annotationProcessor("org.projectlombok:lombok:1.18.30")
     compileOnly("me.clip:placeholderapi:2.11.6")
+    implementation("org.jetbrains.kotlin:kotlin-reflect")
 }
 
 val targetJavaVersion = 21

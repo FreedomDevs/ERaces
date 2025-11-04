@@ -14,6 +14,7 @@ import dev.elysium.eraces.config.PlayerDataManager;
 import dev.elysium.eraces.config.RacesConfigManager;
 import dev.elysium.eraces.gui.raceSelect.RaceSelectMenuPages;
 import dev.elysium.eraces.placeholders.ManaExpansion;
+import dev.elysium.eraces.placeholders.RaceExpansion;
 import dev.elysium.eraces.placeholders.SpecializationExpansion;
 import dev.elysium.eraces.utils.SqliteDatabase;
 import dev.elysium.eraces.utils.targetUtils.PluginAccessor;
@@ -120,6 +121,7 @@ public class ERaces extends JavaPlugin {
         try {
             new ManaExpansion(this).register();
             new SpecializationExpansion(this).register();
+            new RaceExpansion(this).register();
             getLogger().info("PlaceholderAPI expansion 'eraces' успешно зарегистрирован.");
         } catch (Exception e) {
             getLogger().log(Level.SEVERE, "Ошибка при регистрации плейсхолдеров PlaceholderAPI", e);

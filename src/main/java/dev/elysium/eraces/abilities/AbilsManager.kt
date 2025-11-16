@@ -18,11 +18,13 @@ import dev.elysium.eraces.abilities.abils.FireBoomAbility
 import dev.elysium.eraces.abilities.abils.FireballAbility
 import dev.elysium.eraces.utils.ChatUtil
 import dev.elysium.eraces.abilities.abils.ForestSpiritAbility
+import dev.elysium.eraces.abilities.abils.HolyBodyAbility
 import dev.elysium.eraces.abilities.abils.HopSkipDeepAbility
 import dev.elysium.eraces.abilities.abils.JerkAbility
 import dev.elysium.eraces.abilities.abils.MasterTheForestAbility
 import dev.elysium.eraces.abilities.abils.OldAcquaintancesAbility
 import dev.elysium.eraces.abilities.abils.RageModeAbility
+import dev.elysium.eraces.abilities.abils.ShadowStepAbility
 import dev.elysium.eraces.abilities.abils.SharpClawsAbility
 import dev.elysium.eraces.abilities.abils.ShellingAbility
 import dev.elysium.eraces.abilities.abils.SkillMastersAbility
@@ -109,7 +111,9 @@ class AbilsManager private constructor(private val plugin: ERaces) {
             JerkAbility(),
             DiveAbility(),
             CrossProtectionAbility(),
-            TerrifyingRageAbility()
+            TerrifyingRageAbility(),
+            ShadowStepAbility(),
+            HolyBodyAbility(),
         )
         register(*defaultAbilities.toTypedArray())
         plugin.logger.info("Зарегистрировано способностей: ${abilities.size}")

@@ -1,8 +1,6 @@
 package dev.elysium.eraces.abilities.abils
 
 import dev.elysium.eraces.abilities.ConfigHelper
-import dev.elysium.eraces.abilities.ConfigHelper.read
-import dev.elysium.eraces.abilities.ConfigHelper.write
 import dev.elysium.eraces.abilities.abils.base.BaseEffectsAbility
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.entity.Player

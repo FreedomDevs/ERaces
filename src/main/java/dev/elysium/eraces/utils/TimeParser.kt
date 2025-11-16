@@ -30,15 +30,9 @@ object TimeParser {
      * @param input строка формата `"<число><единица>"`.
      * @return количество миллисекунд (округлённое до целого).
      * @throws IllegalArgumentException если формат строки неверный.
-     * @deprecated Используй [parseToMillisecondsDouble] для большей точности.
      */
-    @Deprecated(
-        message = "Данный метод является менее точным чем parseToMillisecondsDouble.",
-        replaceWith = ReplaceWith("parseToMillisecondsDouble(input)"),
-        level = DeprecationLevel.WARNING
-    )
     fun parseToMilliseconds(input: String): Long =
-        parseToSeconds(input) * 1000
+        (parseToSecondsDouble(input) * 1000).toLong()
 
     /**
      * Преобразует строку в количество тиков (целое число).
@@ -46,13 +40,7 @@ object TimeParser {
      * @param input строка формата `"<число><единица>"`.
      * @return количество тиков (округлённое до целого).
      * @throws IllegalArgumentException если формат строки неверный.
-     * @deprecated Используй [parseToTicksDouble] для большей точности.
      */
-    @Deprecated(
-        message = "Данный метод является менее точным чем parseToTicksDouble.",
-        replaceWith = ReplaceWith("parseToTicksDouble(input)"),
-        level = DeprecationLevel.WARNING
-    )
     fun parseToTicks(input: String): Long {
         val (value, unit) = parse(input)
         return (value * unit.ticksMultiplier).toLong()

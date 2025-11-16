@@ -1,8 +1,10 @@
 package dev.elysium.eraces.abilities.abils.base
 
+import dev.elysium.eraces.abilities.AbilsManager
 import dev.elysium.eraces.abilities.interfaces.ICooldownAbility
 import dev.elysium.eraces.utils.TimeParser
 import org.bukkit.configuration.file.YamlConfiguration
+import org.bukkit.entity.Player
 
 /**
  * Базовый класс для способностей для работы с кулдаунами.
@@ -26,6 +28,9 @@ abstract class BaseCooldownAbility(
 
     protected open fun loadCustomParams(cfg: YamlConfiguration) {}
     protected open fun writeCustomDefaults(cfg: YamlConfiguration) {}
+    protected fun resetCooldown(player: Player) {
+        AbilsManager.getInstance().clearCooldown(player, id)
+    }
 
     override fun getCooldown(): Long = TimeParser.parseToSeconds(cooldown)
 }

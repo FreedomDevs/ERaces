@@ -213,18 +213,25 @@ class AbilsManager private constructor(private val plugin: ERaces) {
         }
 
         try {
-            ability.activate(player)
-
             if (ability is ICooldownAbility) {
                 val cooldown = ability.getCooldown()
                 if (cooldown > 0) {
                     CooldownManager.setCooldown(player, id, cooldown)
                 }
             }
+
+            ability.activate(player)
         } catch (e: Exception) {
             plugin.logger.log(Level.SEVERE, "Ошибка при активации способности '$id' у игрока ${player.name}", e)
             ChatUtil.legacyMessageOld(player, "&cПроизошла ошибка при использовании способности &e$id")
         }
+    }
+
+    /**
+     * Обнуляет кулдаун способности игрока.
+     */
+    fun clearCooldown(player: Player, abilityId: String) {
+        CooldownManager.resetCooldown(player, abilityId)
     }
 
     /**

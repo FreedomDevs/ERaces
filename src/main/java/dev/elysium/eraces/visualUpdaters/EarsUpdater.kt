@@ -1,60 +1,68 @@
-package dev.elysium.eraces.visualUpdaters;
+package dev.elysium.eraces.visualUpdaters
 
-import dev.elysium.eraces.ERaces;
-import dev.elysium.eraces.datatypes.Race;
-import org.bukkit.Color;
-import org.bukkit.Location;
-import org.bukkit.Particle;
-import org.bukkit.Particle.DustOptions;
-import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
+import dev.elysium.eraces.ERaces
+import dev.elysium.eraces.datatypes.Race
+import org.bukkit.Bukkit
+import org.bukkit.Color
+import org.bukkit.Particle
+import org.bukkit.entity.Player
+import org.bukkit.util.Vector
+import java.util.UUID
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+class EarsUpdater : IVisualUpdater {
+    private val affectedPlayers: MutableSet<UUID> = mutableSetOf()
+    private var task: Int? = null
 
-public class EarsUpdater implements IVisualUpdater {
+    val delayInTicks: Long = 18
+    val earsTask = Runnable {
+        val toRemove = mutableListOf<UUID>()
 
-    private final Map<UUID, BukkitRunnable> tasks = new HashMap<>();
+        for (i: UUID in affectedPlayers) {
+            val player = Bukkit.getPlayer(i)
+            if (player == null) {
+                toRemove.add(i)
+                continue
+            }
 
-    @Override
-    public void updateVisuals(Race race, Player player) {
-        if (race.getVisuals().contains("ears")) {
-            if (tasks.containsKey(player.getUniqueId())) return;
+            val loc = player.eyeLocation
+            val dir = loc.direction
 
-            BukkitRunnable task = new BukkitRunnable() {
-                @Override
-                public void run() {
-                    if (!player.isOnline()) {
-                        this.cancel();
-                        tasks.remove(player.getUniqueId());
-                        return;
-                    }
+            val right: Vector = dir.clone().crossProduct(Vector(0, 1, 0)).normalize()
 
-                    Location loc = player.getEyeLocation();
+            val leftEar = loc.clone().add(right.clone().multiply(-0.3).add(Vector(0.0, 0.30, 0.0)))
+            val rightEar = loc.clone().add(right.clone().multiply(0.3).add(Vector(0.0, 0.30, 0.0)))
 
-                    Location leftEar = loc.clone().add(-0.3, 0.3, 0);
-                    Location rightEar = loc.clone().add(0.3, 0.3, 0);
+            val dustOptions = Particle.DustOptions(Color.fromRGB(255, 200, 0), 1.2f)
+            player.spawnParticle(Particle.DUST, leftEar, 5, 0.1, 0.1, 0.1, 0.0, dustOptions)
+            player.spawnParticle(Particle.DUST, rightEar, 5, 0.1, 0.1, 0.1, 0.0, dustOptions)
+        }
 
-                    DustOptions dustOptions = new DustOptions(Color.fromRGB(255, 200, 0), 1.2f);
-
-                    player.spawnParticle(Particle.DUST, leftEar, 5, 0.1, 0.1, 0.1, 0, dustOptions);
-                    player.spawnParticle(Particle.DUST, rightEar, 5, 0.1, 0.1, 0.1, 0, dustOptions);
-                }
-            };
-
-            task.runTaskTimer(ERaces.getInstance(), 0L, 10L);
-            tasks.put(player.getUniqueId(), task);
-        } else {
-            unloadVisuals(player);
+        @Suppress("ConvertArgumentToSet")
+        if (toRemove.isNotEmpty()) {
+            affectedPlayers.removeAll(toRemove)
+            updateTaskRunningState()
         }
     }
 
-    @Override
-    public void unloadVisuals(Player player) {
-        BukkitRunnable task = tasks.remove(player.getUniqueId());
-        if (task != null) {
-            task.cancel();
+    fun updateTaskRunningState() {
+        if (affectedPlayers.isNotEmpty() && task == null) {
+            ERaces.logger().fine("Affected players not empty, but task is null - starting ears drawer task")
+            task = Bukkit.getScheduler().scheduleSyncRepeatingTask(ERaces.getInstance(), earsTask, 0, delayInTicks)
+        } else if (affectedPlayers.isEmpty() && task != null) {
+            ERaces.logger().fine("Affected players empty, but task is running - cancelling ears drawer task")
+            Bukkit.getScheduler().cancelTask(task!!)
+            task = null
         }
+    }
+
+    override fun updateVisuals(race: Race, player: Player) {
+        if (race.visuals.contains("ears")) affectedPlayers.add(player.uniqueId)
+        else affectedPlayers.remove(player.uniqueId)
+        updateTaskRunningState()
+    }
+
+    override fun unloadVisuals(player: Player) {
+        affectedPlayers.remove(player.uniqueId)
+        updateTaskRunningState()
     }
 }

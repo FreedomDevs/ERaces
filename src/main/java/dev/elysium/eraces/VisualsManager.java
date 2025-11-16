@@ -16,20 +16,17 @@ public class VisualsManager {
     public static void updateVisualsForPlayer(Player player) {
         Race race = ERaces.getInstance().getContext().playerDataManager.getPlayerRace(player);
 
-        for (IVisualUpdater updater : visualUpdaters) {
+        for (IVisualUpdater updater : visualUpdaters)
             updater.updateVisuals(race, player);
-        }
     }
 
     public static void reloadVisualsForAllPlayer() {
-        for (Player player : Bukkit.getOnlinePlayers()) {
+        for (Player player : Bukkit.getOnlinePlayers())
             updateVisualsForPlayer(player);
-        }
     }
 
     public static void unloadVisualsForPlayer(Player player) {
-        for (IVisualUpdater updater : visualUpdaters) {
+        for (IVisualUpdater updater : visualUpdaters)
             updater.unloadVisuals(player);
-        }
     }
 }

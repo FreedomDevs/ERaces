@@ -32,6 +32,7 @@ import dev.elysium.eraces.abilities.abils.ShellingAbility
 import dev.elysium.eraces.abilities.abils.SkillMastersAbility
 import dev.elysium.eraces.abilities.abils.SupremeMagicianAbility
 import dev.elysium.eraces.abilities.abils.TerrifyingRageAbility
+import dev.elysium.eraces.abilities.abils.TheArboristAbility
 import dev.elysium.eraces.abilities.abils.TheFlameOfHealingAbility
 import dev.elysium.eraces.abilities.abils.TheJerkAbility
 import dev.elysium.eraces.abilities.abils.TheMagicBarrierAbility
@@ -119,7 +120,8 @@ class AbilsManager private constructor(private val plugin: ERaces) {
             TurretAbility(),
             AncientKnowledgeAbility(),
             TheJerkAbility(),
-            ShadowJerkAbility()
+            ShadowJerkAbility(),
+            TheArboristAbility()
         )
         register(*defaultAbilities.toTypedArray())
         plugin.logger.info("Зарегистрировано способностей: ${abilities.size}")

@@ -6,10 +6,14 @@ import dev.elysium.eraces.exceptions.InitFailedException
 import dev.elysium.eraces.gui.raceSelect.RaceSelectMenuPages
 import dev.elysium.eraces.utils.targetUtils.PluginAccessor
 import org.bukkit.plugin.java.JavaPlugin
+import java.util.logging.Logger
 
 class ERaces : JavaPlugin() {
     companion object {
         private lateinit var instance: ERaces
+
+        @JvmStatic
+        fun logger(): Logger = instance.logger
 
         @JvmStatic
         fun getInstance(): ERaces = instance

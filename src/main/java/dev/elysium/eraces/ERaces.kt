@@ -1,79 +1,64 @@
-package dev.elysium.eraces;
+package dev.elysium.eraces
 
-import dev.elysium.eraces.bootstrap.*;
-import dev.elysium.eraces.exceptions.InitFailedException;
-import dev.elysium.eraces.abilities.AbilsManager;
-import dev.elysium.eraces.gui.raceSelect.RaceSelectMenuPages;
-import dev.elysium.eraces.utils.SqliteDatabase;
-import dev.elysium.eraces.utils.targetUtils.PluginAccessor;
-import org.bukkit.plugin.java.JavaPlugin;
+import dev.elysium.eraces.abilities.AbilsManager
+import dev.elysium.eraces.bootstrap.*
+import dev.elysium.eraces.exceptions.InitFailedException
+import dev.elysium.eraces.gui.raceSelect.RaceSelectMenuPages
+import dev.elysium.eraces.utils.targetUtils.PluginAccessor
+import org.bukkit.plugin.java.JavaPlugin
 
-import java.util.List;
+class ERaces : JavaPlugin() {
+    companion object {
+        private lateinit var instance: ERaces
 
-public class ERaces extends JavaPlugin {
-    private static ERaces instance;
-
-    private PluginContext context;
-
-    public static ERaces getInstance() {
-        if (instance == null) throw new IllegalStateException("ERaces не инициализирован!");
-        return instance;
+        @JvmStatic
+        fun getInstance(): ERaces = instance
     }
 
-    public PluginContext getContext() {
-        return context;
-    }
+    val context: PluginContext = PluginContext()
 
-    @Override
-    public void onLoad() {
-        instance = this;
+    private val initializers = listOf(
+        DatabaseInitializer(),
+        ManagerInitializer(),
+        ConfigInitializer(),
+        PlaceholderInitializer(),
+        CommandInitializer(),
+        ListenerInitializer(),
+        LoggerConfigurator()
+    )
 
-        SqliteDatabase database = new SqliteDatabase();
-        context = new PluginContext(database);
-    }
-
-    @Override
-    public void onEnable() {
-        RaceSelectMenuPages.INSTANCE.registerDefaults();
-        RacesReloader.startListeners(this);
-
-        List<IInitializer> initializers = List.of(
-                new DatabaseInitializer(),
-                new ManagerInitializer(),
-                new ConfigInitializer(),
-                new PlaceholderInitializer(),
-                new CommandInitializer(),
-                new ListenerInitializer(),
-                new LoggerConfigurator()
-        );
-
-        for (IInitializer initializer : initializers) {
-            try {
-                initializer.setup(this);
-            } catch (InitFailedException e) {
-                getLogger().severe("Ошибка инициализации " + initializer.getClass().getSimpleName() + ": " + e.getMessage());
-                getServer().getPluginManager().disablePlugin(this);
-                return;
-            } catch (Exception e) {
-                getLogger().severe("Неожиданная ошибка в " + initializer.getClass().getSimpleName());
-                getServer().getPluginManager().disablePlugin(this);
-                return;
-            }
+    private fun runInitializer(init: IInitializer) {
+        try {
+            init.setup(this)
+        } catch (e: InitFailedException) {
+            logger.severe("Ошибка инициализации ${init.javaClass.simpleName}: ${e.message}")
+            server.pluginManager.disablePlugin(this)
+            throw e
+        } catch (e: Exception) {
+            logger.severe("Неожиданная ошибка в ${init.javaClass.simpleName}")
+            server.pluginManager.disablePlugin(this)
+            throw e
         }
-
-        AbilsManager.init(this);
-        PluginAccessor.INSTANCE.init(this);
-
-        logInfo(context.getMessageManager().getData().getPluginEnabled());
     }
 
-    @Override
-    public void onDisable() {
-        logInfo(context.getMessageManager().getData().getPluginDisabled());
-        context.getDatabase().close();
+    override fun onLoad() {
+        instance = this
     }
 
-    public void logInfo(String message) {
-        getLogger().info(message);
+    override fun onEnable() {
+        RaceSelectMenuPages.registerDefaults();
+        RacesReloader.startListeners(this)
+
+        initializers.forEach { runInitializer(it) }
+
+        AbilsManager.init(this)
+        PluginAccessor.init(this)
+
+        logger.info(context.messageManager.data.pluginEnabled)
+    }
+
+    override fun onDisable() {
+        logger.info(context.messageManager.data.pluginDisabled);
+        context.database.close();
     }
 }

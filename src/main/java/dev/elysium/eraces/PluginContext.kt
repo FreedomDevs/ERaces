@@ -4,7 +4,8 @@ import dev.elysium.eraces.config.*
 import dev.elysium.eraces.utils.SqliteDatabase
 import dev.elysium.eraces.xpManager.XpManager
 
-class PluginContext(val database: SqliteDatabase) {
+class PluginContext() {
+    lateinit var database: SqliteDatabase
     lateinit var globalConfigManager: GlobalConfigManager
     lateinit var messageManager: MessageManager
     lateinit var racesConfigManager: RacesConfigManager

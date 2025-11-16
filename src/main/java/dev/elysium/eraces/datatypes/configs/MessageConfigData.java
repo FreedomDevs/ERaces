@@ -7,58 +7,58 @@ import lombok.Setter;
 @Setter
 public class MessageConfigData {
     @ConfigsProperty(path = "plugin.enabled", defaultString = "Плагин включен!")
-    private String pluginEnabled;
+    public String pluginEnabled;
 
     @ConfigsProperty(path = "plugin.disabled", defaultString = "Плагин выключен")
-    private String pluginDisabled;
+    public String pluginDisabled;
 
     @ConfigsProperty(path = "commands.get_player_race.race_check_error", defaultString = "<red>Вы не указали игрока для получения расы")
-    private String getPlayerRaceError;
+    public String getPlayerRaceError;
 
     @ConfigsProperty(path = "commands.get_player_race.race_check_success", defaultString = "<green>У игрока <yellow>{player} <green>раса <yellow>{race}")
-    private String getPlayerRaceSuccess;
+    public String getPlayerRaceSuccess;
 
     @ConfigsProperty(path = "commands.get_player_race.race_check_success_me", defaultString = "<green>Ваша раса <yellow>{race}")
-    private String getPlayerRaceSuccessMe;
+    public String getPlayerRaceSuccessMe;
 
     @ConfigsProperty(path = "commands.races.subcommand_error", defaultString = "<red>Не указана подкоманда")
-    private String racesSubcommandError;
+    public String racesSubcommandError;
 
     @ConfigsProperty(path = "commands.races.subcommand_is_null", defaultString = "<red>Подкоманда: <yellow>{arg} <red>не существует")
-    private String racesSubcommandIsNull;
+    public String racesSubcommandIsNull;
 
     @ConfigsProperty(path = "commands.regenerate_player_race.console_usage", defaultString = "<red>Использование из консоли: /command <ник игрока>")
-    private String regenerateConsoleUsage;
+    public String regenerateConsoleUsage;
 
     @ConfigsProperty(path = "commands.regenerate_player_race.nick_error", defaultString = "<red>Неверно указан ник игрока")
-    private String regenerateNickError;
+    public String regenerateNickError;
 
     @ConfigsProperty(path = "commands.regenerate_player_race.regenerate_success", defaultString = "<green>Раса игрока <yellow>{player} <green>установлена на: <yellow>{race}")
-    private String regenerateSuccess;
+    public String regenerateSuccess;
 
     @ConfigsProperty(path = "commands.set_player_race.small_args", defaultString = "<red>Мало аргументов")
-    private String setPlayerRaceSmallArgs;
+    public String setPlayerRaceSmallArgs;
 
     @ConfigsProperty(path = "commands.set_player_race.race_not_found", defaultString = "<red>Такая раса не существует")
-    private String setPlayerRaceNotFound;
+    public String setPlayerRaceNotFound;
 
     @ConfigsProperty(path = "commands.set_player_race.nick_null", defaultString = "<red>Неверно указан ник игрока")
-    private String setPlayerRaceNickNull;
+    public String setPlayerRaceNickNull;
 
     @ConfigsProperty(path = "commands.set_player_race.set_success", defaultString = "<green>Раса игрока <yellow>{player} <green>установлена на: <yellow>{race}")
-    private String setPlayerRaceSuccess;
+    public String setPlayerRaceSuccess;
 
     @ConfigsProperty(path = "commands.reload.reload_success", defaultString = "<green>Конфиг перезагружен")
-    private String reloadSuccess;
+    public String reloadSuccess;
 
     @ConfigsProperty(path = "commands.myrace.race_not_selected", defaultString = "<red>У вас не выбрана раса")
-    private String raceNotSelected;
+    public String raceNotSelected;
 
     @ConfigsProperty(path = "shield_block", defaultString = "<red>Ваша раса не умеет использовать щиты")
-    private String shieldBlock;
+    public String shieldBlock;
 
     @ConfigsProperty(path = "forbidden_foods", defaultString = "<red>Ваша раса не приемлет данную еду")
-    private String forbiddenFoods;
+    public String forbiddenFoods;
 
     public MessageConfigData() {}
 }

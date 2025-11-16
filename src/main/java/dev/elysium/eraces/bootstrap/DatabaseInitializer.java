@@ -14,7 +14,8 @@ public class DatabaseInitializer implements IInitializer {
     public void setup(ERaces plugin) {
         plugin.getDataFolder().mkdirs();
         Path dbPath = plugin.getDataFolder().toPath().resolve("database_sqlite.db");
-        SqliteDatabase database = plugin.getContext().getDatabase();
+        SqliteDatabase database = new SqliteDatabase();
+        ERaces.getInstance().getContext().setDatabase(database);
         database.connect(dbPath.toString());
 
         try (Statement stmt = database.getConnection().createStatement()) {

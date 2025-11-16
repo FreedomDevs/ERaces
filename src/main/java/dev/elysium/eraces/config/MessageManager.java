@@ -3,7 +3,6 @@ package dev.elysium.eraces.config;
 import dev.elysium.eraces.ERaces;
 import dev.elysium.eraces.datatypes.configs.ConfigsProperty;
 import dev.elysium.eraces.datatypes.configs.MessageConfigData;
-import lombok.Getter;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
@@ -19,8 +18,12 @@ public class MessageManager {
     private YamlConfiguration config;
     private YamlConfiguration defaultConfig;
 
-    @Getter
     private MessageConfigData data;
+
+    @SuppressWarnings("LombokGetterMayBeUsed")
+    public MessageConfigData getData() {
+        return data;
+    }
 
     public MessageManager(ERaces plugin, String selectedLang) {
         File folder = new File(plugin.getDataFolder(), FOLDER_NAME);

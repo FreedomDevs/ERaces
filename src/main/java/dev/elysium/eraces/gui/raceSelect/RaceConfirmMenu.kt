@@ -23,7 +23,7 @@ class RaceConfirmMenu(
     }
 
     override fun setup() {
-        setButton(11, GuiButton.of(Material.LIME_WOOL, "§aДа, выбрать ${race.displayName}") {
+        setButton(11, GuiButton.of(Material.LIME_WOOL, "<green>Да, выбрать ${race.displayName}") {
             GuiManager.getOpenMenu(player)?.preventClose = false
             GuiManager.close(player)
             player.closeInventory()
@@ -33,7 +33,7 @@ class RaceConfirmMenu(
             VisualsManager.updateVisualsForPlayer(player)
         })
 
-        setButton(15, GuiButton.of(Material.RED_WOOL, "§cНет, вернуться") {
+        setButton(15, GuiButton.of(Material.RED_WOOL, "<red>Нет, вернуться") {
             GuiManager.getOpenMenu(player)?.preventClose = false
             GuiManager.close(player)
             player.closeInventory()

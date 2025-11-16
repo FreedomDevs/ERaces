@@ -39,7 +39,7 @@ class RaceSelectMenu(player: Player) : GuiBase(player, "Выбор расы") {
 
         setButton(22, GuiButton(race.toItem()) { })
 
-        setButton(31, GuiButton.of(Material.EMERALD_BLOCK, "§aВыбрать расу") {
+        setButton(31, GuiButton.of(Material.EMERALD_BLOCK, "<green>Выбрать расу") {
             GuiManager.getOpenMenu(player)?.preventClose = false
             GuiManager.close(player)
             player.closeInventory()
@@ -49,14 +49,14 @@ class RaceSelectMenu(player: Player) : GuiBase(player, "Выбор расы") {
 
 
         if (currentIndex > 0) {
-            setButton(45, GuiButton.of(Material.ARROW, "§eПредыдущая") {
+            setButton(45, GuiButton.of(Material.ARROW, "<yellow>Предыдущая") {
                 currentIndex--
                 open()
             })
         }
 
         if (currentIndex < pages.size - 1) {
-            setButton(53, GuiButton.of(Material.ARROW, "§eСледующая") {
+            setButton(53, GuiButton.of(Material.ARROW, "<yellow>Следующая") {
                 currentIndex++
                 open()
             })

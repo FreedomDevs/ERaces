@@ -1,5 +1,6 @@
 package dev.elysium.eraces.gui.core
 
+import dev.elysium.eraces.utils.ChatUtil
 import net.kyori.adventure.text.Component
 import org.bukkit.Material
 import org.bukkit.event.inventory.InventoryClickEvent
@@ -16,7 +17,7 @@ class GuiButton(
         fun of(material: Material, name: String, onClick: (InventoryClickEvent) -> Unit): GuiButton {
             val item = ItemStack(material).apply {
                 val meta = itemMeta ?: return@apply
-                meta.displayName(Component.text(name))
+                meta.displayName(ChatUtil.parse(name))
                 itemMeta = meta
             }
             return GuiButton(item, onClick)

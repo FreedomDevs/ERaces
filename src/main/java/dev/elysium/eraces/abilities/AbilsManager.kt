@@ -33,6 +33,7 @@ import dev.elysium.eraces.abilities.abils.TerrifyingRageAbility
 import dev.elysium.eraces.abilities.abils.TheFlameOfHealingAbility
 import dev.elysium.eraces.abilities.abils.TheMagicBarrierAbility
 import dev.elysium.eraces.abilities.abils.TheWingedWhirlwindAbility
+import dev.elysium.eraces.abilities.abils.TurretAbility
 import dev.elysium.eraces.abilities.interfaces.IAbility
 import dev.elysium.eraces.abilities.interfaces.IComboActivatable
 import dev.elysium.eraces.abilities.interfaces.ICooldownAbility
@@ -114,6 +115,7 @@ class AbilsManager private constructor(private val plugin: ERaces) {
             TerrifyingRageAbility(),
             ShadowStepAbility(),
             HolyBodyAbility(),
+            TurretAbility()
         )
         register(*defaultAbilities.toTypedArray())
         plugin.logger.info("Зарегистрировано способностей: ${abilities.size}")

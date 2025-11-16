@@ -20,6 +20,7 @@ class FireballAbility : BaseTargetTrailAbility(
 
     private var power: Double = 2.0
     private var burnDuration: String = "3s"
+    private var manaCost: Double = 3.0
     override var distance: Double = 10.0
     override var step: Double = 0.5
     override var particle: Particle = Particle.FLAME
@@ -78,5 +79,5 @@ class FireballAbility : BaseTargetTrailAbility(
         world.spawnParticle(particle, location, count, offset, offset, offset, speed)
     }
 
-    override fun getManaCost(): Double = 3.0
+    override fun getManaCost() = manaCost
 }

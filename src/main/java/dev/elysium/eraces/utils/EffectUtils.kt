@@ -86,6 +86,6 @@ object EffectUtils {
         } catch (_: Exception) {
             effect.type
         }
-        return PotionEffect(type, ticks, effect.level, false, true)
+        return PotionEffect(type, ticks, effect.level - 1, false, true)
     }
 }

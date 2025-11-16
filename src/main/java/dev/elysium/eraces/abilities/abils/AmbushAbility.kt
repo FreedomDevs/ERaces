@@ -35,7 +35,7 @@ class AmbushAbility : BaseEffectsAbility(
         val elapsedSeconds = 0
 
         taskId = Bukkit.getScheduler().runTaskTimer(plugin, Runnable {
-            if (elapsedSeconds >= TimeParser.parseToSeconds(duration)) {
+            if (elapsedSeconds >= TimeParser.parseToSecondsDouble(duration).toInt()) {
                 Bukkit.getScheduler().cancelTask(taskId)
                 return@Runnable
             }

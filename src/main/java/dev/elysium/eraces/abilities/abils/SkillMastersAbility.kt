@@ -54,7 +54,7 @@ class SkillMastersAbility : BaseEffectsAbility(
         AbilityUtils.runLater(plugin, duration) {
             active.remove(player.uniqueId)
             attr?.baseValue = base
-            ChatUtil.sendActionOld(player, "<gray>Эффект способности 'Духовный щит' закончился.")
+            player.actionMsg("<gray>Эффект способности 'Духовный щит' закончился.")
         }
 
         spawnParticle(plugin, player)

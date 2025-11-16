@@ -7,6 +7,7 @@ import dev.elysium.eraces.gui.core.GuiBase
 import dev.elysium.eraces.gui.core.GuiButton
 import dev.elysium.eraces.gui.core.GuiManager
 import dev.elysium.eraces.utils.ChatUtil
+import dev.elysium.eraces.utils.actionMsg
 import org.bukkit.Material
 import org.bukkit.entity.Player
 
@@ -26,7 +27,7 @@ class RaceConfirmMenu(
             GuiManager.getOpenMenu(player)?.preventClose = false
             GuiManager.close(player)
             player.closeInventory()
-            ChatUtil.sendActionOld(player, "<green>Ты выбрал расу: <gold>${race.displayName}")
+            player.actionMsg("<green>Ты выбрал расу: <gold>${race.displayName}")
             ERaces.getInstance().context.playerDataManager.setPlayerRace(player, race.id)
             RacesReloader.reloadRaceForPlayer(player)
             VisualsManager.updateVisualsForPlayer(player)

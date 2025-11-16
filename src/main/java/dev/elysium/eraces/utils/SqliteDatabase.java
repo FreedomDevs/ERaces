@@ -4,22 +4,24 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import static dev.elysium.eraces.ERaces.logger;
+
 public class SqliteDatabase {
     private Connection connection;
+
+    public Connection getConnection() {
+        return connection;
+    }
 
     public void connect(String path) {
         try {
             // Путь к файлу базы
             String url = "jdbc:sqlite:"+path;
             connection = DriverManager.getConnection(url);
-            System.out.println("SQLite подключен!");
+            logger().info("SQLite connected!");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public Connection getConnection() {
-        return connection;
     }
 
     public void close() {

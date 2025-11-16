@@ -2,7 +2,7 @@ package dev.elysium.eraces.listeners
 
 import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.gui.core.GuiManager
-import dev.elysium.eraces.utils.ChatUtil
+import dev.elysium.eraces.utils.actionMsg
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
@@ -42,7 +42,7 @@ object GuiListener : Listener {
         val menu = GuiManager.getOpenMenu(player) ?: return
 
         if (menu.onClose()) {
-            menu.closeMessage?.let { ChatUtil.sendActionOld(player, it) }
+            menu.closeMessage?.let { player.actionMsg(it) }
 
             player.server.scheduler.runTaskLater(plugin, Runnable {
                 menu.open()

@@ -17,6 +17,8 @@ data class RacePage(
             val meta = itemMeta ?: return@apply
 
             meta.displayName(Component.text(displayName, TextColor.color(0xFFFF55)))
+
+            @Suppress("Deprecation")
             meta.lore(lore?.map { Component.text(it, TextColor.color(0xAAAAAA)) })
 
             itemMeta = meta

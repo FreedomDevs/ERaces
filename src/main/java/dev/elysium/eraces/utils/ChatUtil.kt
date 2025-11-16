@@ -146,6 +146,7 @@ object ChatUtil {
 
     /** @deprecated Используй [parse] */
     @Deprecated("Use ChatUtil.parse(text)")
+    @Suppress("Deprecation")
     fun formatOld(text: String): Component =
         formatOld(text, emptyMap())
 
@@ -158,6 +159,7 @@ object ChatUtil {
 
     /** @deprecated Используй [parse] */
     @Deprecated("Use ChatUtil.parse(text)")
+    @Suppress("Deprecation")
     fun legacyFormat(text: String): Component = legacyFormat(text, emptyMap())
 
     /** @deprecated Используй [message] */
@@ -167,16 +169,19 @@ object ChatUtil {
 
     /** @deprecated Используй [message] */
     @Deprecated("Use ChatUtil.message(sender, text)")
+    @Suppress("Deprecation")
     fun messageOld(sender: CommandSender, msg: String) =
         messageOld(sender, msg, emptyMap())
 
     /** @deprecated Используй [message] */
     @Deprecated("Use ChatUtil.message(sender, text, args)")
+    @Suppress("Deprecation")
     fun legacyMessageOld(sender: CommandSender, msg: String, args: Map<String, String>) =
         sender.sendMessage(legacyFormat(msg, args))
 
     /** @deprecated Используй [message] */
     @Deprecated("Use ChatUtil.message(sender, text)")
+    @Suppress("Deprecation")
     fun legacyMessageOld(sender: CommandSender, msg: String) =
         legacyMessageOld(sender, msg, emptyMap())
 
@@ -192,11 +197,13 @@ object ChatUtil {
 
     /** @deprecated Используй [action] */
     @Deprecated("Use ChatUtil.action(player, text)")
+    @Suppress("Deprecation")
     fun sendActionOld(player: Player, msg: String, args: Map<String, String>) =
         player.sendActionBar(parse(msg, args))
 
     /** @deprecated Используй [action] */
     @Deprecated("Use ChatUtil.action(player, text)")
+    @Suppress("Deprecation")
     fun sendActionOld(player: Player, msg: String) =
         sendActionOld(player, msg, emptyMap())
 

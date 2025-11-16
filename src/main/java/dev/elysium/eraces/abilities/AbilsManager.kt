@@ -42,6 +42,8 @@ import dev.elysium.eraces.abilities.interfaces.IAbility
 import dev.elysium.eraces.abilities.interfaces.IComboActivatable
 import dev.elysium.eraces.abilities.interfaces.ICooldownAbility
 import dev.elysium.eraces.abilities.interfaces.IManaCostAbility
+import dev.elysium.eraces.utils.actionMsg
+import dev.elysium.eraces.utils.msg
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.event.Listener
@@ -181,17 +183,17 @@ class AbilsManager private constructor(private val plugin: ERaces) {
 
         when {
             race == null -> {
-                ChatUtil.legacyMessageOld(player, "&cТы ещё не выбрал расу!")
+                player.msg("<red>Ты ещё не выбрал расу!")
                 return
             }
 
             !race.abilities.contains(id) -> {
-                ChatUtil.legacyMessageOld(player, "&cТвоя раса не умеет использовать способность &e$id")
+                player.msg("<red>Твоя раса не умеет использовать способность <yellow>$id")
                 return
             }
 
             ability == null -> {
-                ChatUtil.legacyMessageOld(player, "&cСпособность &e$id&c не найдена!")
+                player.msg("<red>Способность <yellow>$id<red> не найдена!")
                 return
             }
         }
@@ -202,10 +204,7 @@ class AbilsManager private constructor(private val plugin: ERaces) {
                 val manaManager = ERaces.getInstance().context.manaManager
                 val currentMana = manaManager.getMana(player)
                 if (currentMana < manaCost) {
-                    ChatUtil.sendActionOld(
-                        player,
-                        "<red>Недостаточно маны! Нужно <yellow>$manaCost<red>, у тебя <yellow>$currentMana"
-                    )
+                    player.actionMsg("<red>Недостаточно маны! Нужно <yellow>$manaCost<red>, у тебя <yellow>$currentMana")
                     return
                 }
                 manaManager.useMana(player, manaCost)
@@ -214,7 +213,7 @@ class AbilsManager private constructor(private val plugin: ERaces) {
 
         if (ability is ICooldownAbility && CooldownManager.hasCooldown(player, id)) {
             val remaining = CooldownManager.getRemaining(player, id)
-            ChatUtil.legacyMessageOld(player, "&cСпособность &e$id&c ещё на кулдауне! Осталось &e${remaining}с")
+            player.msg("<red>Способность <yellow>$id<red> ещё на кулдауне! Осталось <yellow>${remaining}с")
             return
         }
 
@@ -229,7 +228,7 @@ class AbilsManager private constructor(private val plugin: ERaces) {
             ability.activate(player)
         } catch (e: Exception) {
             plugin.logger.log(Level.SEVERE, "Ошибка при активации способности '$id' у игрока ${player.name}", e)
-            ChatUtil.legacyMessageOld(player, "&cПроизошла ошибка при использовании способности &e$id")
+            player.msg("<red>Произошла ошибка при использовании способности <yellow>$id")
         }
     }
 
@@ -256,7 +255,7 @@ class AbilsManager private constructor(private val plugin: ERaces) {
             .firstOrNull { it.getComboKey() == combo }
 
         if (ability == null) {
-            ChatUtil.sendActionOld(player, "<red>Нет способности, назначенной на комбинацию <yellow>$combo")
+            player.actionMsg("<red>Нет способности, назначенной на комбинацию <yellow>$combo")
             return
         }
 

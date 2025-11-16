@@ -12,6 +12,7 @@ object ConfigHelper {
         this.block()
     }
 
+    @Suppress("UNCHECKED_CAST")
     fun read(key: String, prop: KMutableProperty0<*>) {
         when (val current = prop.get()) {
             is String -> prop as KMutableProperty0<String> then { it.set(cfg.getString(key, current)!!) }

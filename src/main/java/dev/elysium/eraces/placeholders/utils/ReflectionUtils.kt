@@ -6,6 +6,7 @@ import kotlin.reflect.full.memberProperties
 
 object ReflectionUtils {
 
+    @Suppress("UNCHECKED_CAST")
     fun buildPropertyChain(
         startClass: KClass<*>,
         parts: List<String>,

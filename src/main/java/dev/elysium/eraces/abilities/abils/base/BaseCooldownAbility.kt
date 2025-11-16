@@ -32,5 +32,5 @@ abstract class BaseCooldownAbility(
         AbilsManager.getInstance().clearCooldown(player, id)
     }
 
-    override fun getCooldown(): Long = TimeParser.parseToSeconds(cooldown)
+    override fun getCooldown(): Long = TimeParser.parseToSecondsDouble(cooldown).toLong()
 }

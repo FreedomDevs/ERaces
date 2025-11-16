@@ -5,6 +5,7 @@ import dev.elysium.eraces.abilities.AbilityUtils
 import dev.elysium.eraces.abilities.ConfigHelper
 import dev.elysium.eraces.abilities.abils.base.BaseCooldownAbility
 import dev.elysium.eraces.utils.ChatUtil
+import dev.elysium.eraces.utils.actionMsg
 import dev.elysium.eraces.utils.targetUtils.Target
 import dev.elysium.eraces.utils.targetUtils.safeDamage
 import dev.elysium.eraces.utils.targetUtils.target.TargetFilter
@@ -25,7 +26,7 @@ class JerkAbility : BaseCooldownAbility(id = "jerk", defaultCooldown = "5m") {
         val plugin = ERaces.getInstance()
 
         player.safeDamage(damageCast)
-        ChatUtil.sendActionOld(player, "<blue>Ты совершаешь рывок вперёд!")
+        player.actionMsg("<blue>Ты совершаешь рывок вперёд!")
 
         val startLoc = player.location.clone()
         val dir = player.location.direction.normalize()

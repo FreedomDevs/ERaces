@@ -2,6 +2,7 @@ package dev.elysium.eraces.updaters
 
 import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.utils.ChatUtil
+import dev.elysium.eraces.utils.actionMsg
 import org.bukkit.NamespacedKey
 import org.bukkit.attribute.Attribute
 import org.bukkit.entity.Player
@@ -34,7 +35,7 @@ class ChanceResurrectionListener : Listener {
                     attribute.baseValue = if (newMaxHealth < 1.0) 1.0 else newMaxHealth
                     player.health = attribute.baseValue
 
-                    ChatUtil.sendActionOld(player, "Вам удалось избежать объятий смерти")
+                    player.actionMsg("Вам удалось избежать объятий смерти")
                 } else {
                     resurrectionsDone = 0
                     player.getAttribute(Attribute.MAX_HEALTH)?.baseValue = race.maxHp

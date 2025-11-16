@@ -12,7 +12,7 @@ object AbilityUtils {
 
     /** Запускает однократную задачу через [delay] ("5s", "2m"). */
     fun runLater(plugin: ERaces, delay: String, block: () -> Unit): BukkitTask {
-        val ticks = TimeParser.parseToSeconds(delay) * 20L
+        val ticks = TimeParser.parseToTicks(delay)
         return Bukkit.getScheduler().runTaskLater(plugin, Runnable { block() }, ticks)
     }
 
@@ -29,19 +29,19 @@ object AbilityUtils {
         plugin: ERaces,
         duration: String,
         tickInterval: Long = 20L,
-        block: (elapsedSeconds: Int) -> Unit
+        block: (elapsedSeconds: Long) -> Unit
     ): BukkitTask {
-        val totalSeconds = TimeParser.parseToSeconds(duration)
-        var elapsed = 0
+        val totalTicks = TimeParser.parseToTicks(duration)
+        var elapsed = 0L
         var task: BukkitTask? = null
 
         task = Bukkit.getScheduler().runTaskTimer(plugin, Runnable {
-            if (elapsed >= totalSeconds) {
+            if (elapsed >= totalTicks) {
                 task?.cancel()
                 return@Runnable
             }
             block(elapsed)
-            elapsed++
+            elapsed += tickInterval
         }, 0L, tickInterval)
         return task
     }
@@ -51,7 +51,7 @@ object AbilityUtils {
      */
     fun registerTemporaryListener(plugin: ERaces, listener: Listener, duration: String) {
         Bukkit.getPluginManager().registerEvents(listener, plugin)
-        val ticks = TimeParser.parseToSeconds(duration) * 20L
+        val ticks = TimeParser.parseToTicks(duration)
         Bukkit.getScheduler().runTaskLater(plugin, Runnable {
             HandlerList.unregisterAll(listener)
         }, ticks)

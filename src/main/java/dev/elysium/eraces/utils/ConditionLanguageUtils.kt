@@ -1,5 +1,6 @@
 package dev.elysium.eraces.utils
 
+import org.bukkit.attribute.Attribute
 import org.bukkit.entity.Player
 
 object ConditionLanguageUtils {
@@ -20,7 +21,7 @@ object ConditionLanguageUtils {
             "WORLD" to player.world.environment.name.uppercase(),
             "BIOME" to player.location.block.biome.key.key.uppercase(),
             "HP" to player.health.toString(),
-            "MAX_HP" to player.maxHealth.toString(),
+            "MAX_HP" to player.getAttribute(Attribute.MAX_HEALTH)!!.value.toString(),
             "IS_UNDERWATER" to player.eyeLocation.block.type.name.contains("WATER").toString()
         )
     }

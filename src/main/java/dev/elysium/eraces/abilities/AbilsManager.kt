@@ -27,6 +27,7 @@ import dev.elysium.eraces.abilities.abils.SharpClawsAbility
 import dev.elysium.eraces.abilities.abils.ShellingAbility
 import dev.elysium.eraces.abilities.abils.SkillMastersAbility
 import dev.elysium.eraces.abilities.abils.SupremeMagicianAbility
+import dev.elysium.eraces.abilities.abils.TerrifyingRageAbility
 import dev.elysium.eraces.abilities.abils.TheFlameOfHealingAbility
 import dev.elysium.eraces.abilities.abils.TheMagicBarrierAbility
 import dev.elysium.eraces.abilities.abils.TheWingedWhirlwindAbility
@@ -107,7 +108,8 @@ class AbilsManager private constructor(private val plugin: ERaces) {
             SkillMastersAbility(),
             JerkAbility(),
             DiveAbility(),
-            CrossProtectionAbility()
+            CrossProtectionAbility(),
+            TerrifyingRageAbility()
         )
         register(*defaultAbilities.toTypedArray())
         plugin.logger.info("Зарегистрировано способностей: ${abilities.size}")

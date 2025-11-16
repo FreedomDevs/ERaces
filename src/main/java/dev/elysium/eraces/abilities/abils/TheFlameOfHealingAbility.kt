@@ -21,7 +21,7 @@ class TheFlameOfHealingAbility : BaseCooldownAbility(
         Target.from(player)
             .filter(TargetFilter.ENTITIES)
             .inRadius(radius)
-            .excludeCaster()
+
             .execute { target ->
                 if (target is Player) {
                     val effect = PotionEffect(

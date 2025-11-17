@@ -42,7 +42,7 @@ import dev.elysium.eraces.abilities.interfaces.IAbility
 import dev.elysium.eraces.abilities.interfaces.IComboActivatable
 import dev.elysium.eraces.abilities.interfaces.ICooldownAbility
 import dev.elysium.eraces.abilities.interfaces.IManaCostAbility
-import dev.elysium.eraces.exceptions.PlayerException
+import dev.elysium.eraces.exceptions.base.PlayerException
 import dev.elysium.eraces.exceptions.internal.AbilityActivationException
 import dev.elysium.eraces.exceptions.internal.AbilityRegistrationException
 import dev.elysium.eraces.exceptions.player.PlayerAbilityNotFoundException

@@ -1,9 +1,17 @@
 package dev.elysium.eraces.exceptions.internal
 
-import dev.elysium.eraces.exceptions.InternalException
+import dev.elysium.eraces.exceptions.ErrorCodes
+import dev.elysium.eraces.exceptions.base.InternalException
 
-class AbilityRegistrationException(
-    message: String,
-    cause: Throwable? = null,
-    context: Any? = null
-) : InternalException(message, "ABILITY_REGISTRATION_ERROR", context, cause)
+/**
+ * Ошибка при регистрации способности.
+ */
+class AbilityRegistrationException : InternalException {
+    constructor(message: String, context: Any? = null) : super(message, ErrorCodes.ABILITY_REGISTRATION, context)
+    constructor(message: String, cause: Throwable, context: Any? = null) : super(
+        message,
+        ErrorCodes.ABILITY_REGISTRATION,
+        context,
+        cause
+    )
+}

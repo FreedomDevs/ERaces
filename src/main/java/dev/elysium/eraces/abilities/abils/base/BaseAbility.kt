@@ -1,6 +1,7 @@
 package dev.elysium.eraces.abilities.abils.base
 
 import dev.elysium.eraces.ERaces
+import dev.elysium.eraces.exceptions.internal.AbilityActivationException
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.entity.Player
 import java.util.logging.Level
@@ -12,11 +13,11 @@ abstract class BaseAbility(override val id: String) : BaseAbilityWithConfig(id) 
             onActivate(player)
             postActivate(player)
         } catch (e: Exception) {
-            ERaces.getInstance().logger.log(
-                Level.SEVERE,
-                "Ошибка активации способности $id у игрока ${player.name}",
-                e
-            )
+            AbilityActivationException(
+                message = "Ошибка активации способности '$id' у игрока ${player.name}",
+                cause = e,
+                player = player
+            ).handle()
         }
     }
 

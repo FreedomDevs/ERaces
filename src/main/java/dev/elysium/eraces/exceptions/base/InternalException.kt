@@ -1,22 +1,30 @@
-package dev.elysium.eraces.exceptions
+package dev.elysium.eraces.exceptions.base
 
 import dev.elysium.eraces.ERaces
+import dev.elysium.eraces.ERacesLogger
 import dev.elysium.eraces.utils.ChatUtil
 
+/**
+ * Базовое исключение для внутренних ошибок плагина.
+ * @param message Сообщение об ошибке
+ * @param code Код ошибки
+ * @param context Дополнительный контекст, если есть
+ * @param cause Причина ошибки, если есть
+ */
 abstract class InternalException(
-    override val message: String,
-    override val code: String = "INTERNAL_ERROR",
+    message: String,
+    code: String,
     val context: Any? = null,
     cause: Throwable? = null
 ) : ERacesException(code, message) {
 
     init {
-        if (cause != null) initCause(cause)
+        cause?.let { initCause(it) }
     }
 
     override fun handle() {
         val ctx = context?.let { " Context: $it" } ?: ""
-        println("[ERaces][Internal][$code] $message$ctx")
+        ERacesLogger.warning("[Internal][$code] $message$ctx")
 
         if (ERaces.getInstance().context.globalConfigManager.data.isDebug) {
             ERaces.getInstance().server.onlinePlayers

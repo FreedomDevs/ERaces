@@ -54,11 +54,20 @@ public class MessageConfigData {
     @ConfigsProperty(path = "commands.myrace.race_not_selected", defaultString = "<red>У вас не выбрана раса")
     public String raceNotSelected;
 
+    @ConfigsProperty(path = "commands.get_xp.result", defaultString = "У игрока <aqua>{player}</aqua>: <gold>{count}</gold> XP")
+    public String getXpResult;
+
     @ConfigsProperty(path = "shield_block", defaultString = "<red>Ваша раса не умеет использовать щиты")
     public String shieldBlock;
 
     @ConfigsProperty(path = "forbidden_foods", defaultString = "<red>Ваша раса не приемлет данную еду")
     public String forbiddenFoods;
+
+    @ConfigsProperty(path = "player_not_found", defaultString = "<red>Указанный игрок не найден")
+    public String playerNotFound;
+
+    @ConfigsProperty(path = "multiple_players_selected", defaultString = "<red>Ожидалось получить одного игрока, но получено: {count}")
+    public String multiplePlayersSelected;
 
     public MessageConfigData() {}
 }

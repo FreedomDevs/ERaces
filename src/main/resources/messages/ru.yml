@@ -29,5 +29,11 @@ commands:
   myrace:
     race_not_selected: "<red>У вас не выбрана раса"
 
+  get_xp:
+    result: "У игрока <aqua>{player}</aqua>: <gold>{count}</gold> XP"
+
 shield_block: "<red>Ваша раса не умеет использовать щиты"
 forbidden_foods: "<red>Ваша раса не приемлет данную еду"
+
+player_not_found: "<red>Указанный игрок не найден"
+multiple_players_selected: "<red>Ожидалось получить одного игрока, но получено: {count}"

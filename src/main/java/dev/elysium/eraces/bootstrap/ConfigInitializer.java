@@ -2,7 +2,7 @@ package dev.elysium.eraces.bootstrap;
 
 import dev.elysium.eraces.ERaces;
 import dev.elysium.eraces.config.MessageManager;
-import dev.elysium.eraces.exceptions.InitFailedException;
+import dev.elysium.eraces.exceptions.internal.InitFailedException;
 
 public class ConfigInitializer implements IInitializer {
     @Override

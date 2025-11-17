@@ -1,7 +1,7 @@
 package dev.elysium.eraces.bootstrap;
 
 import dev.elysium.eraces.ERaces;
-import dev.elysium.eraces.exceptions.InitFailedException;
+import dev.elysium.eraces.exceptions.internal.InitFailedException;
 import dev.elysium.eraces.listeners.GuiListener;
 import dev.elysium.eraces.listeners.RaceSelectListener;
 import dev.elysium.eraces.listeners.PluginMessageListener;

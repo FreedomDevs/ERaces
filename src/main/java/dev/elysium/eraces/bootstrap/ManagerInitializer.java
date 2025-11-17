@@ -4,7 +4,7 @@ import dev.elysium.eraces.DamageTracker;
 import dev.elysium.eraces.ERaces;
 import dev.elysium.eraces.PluginContext;
 import dev.elysium.eraces.config.*;
-import dev.elysium.eraces.exceptions.InitFailedException;
+import dev.elysium.eraces.exceptions.internal.InitFailedException;
 import dev.elysium.eraces.xpManager.XpManager;
 import org.bukkit.Bukkit;
 

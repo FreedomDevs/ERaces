@@ -2,7 +2,7 @@ package dev.elysium.eraces
 
 import dev.elysium.eraces.abilities.AbilsManager
 import dev.elysium.eraces.bootstrap.*
-import dev.elysium.eraces.exceptions.InitFailedException
+import dev.elysium.eraces.exceptions.internal.InitFailedException
 import dev.elysium.eraces.gui.raceSelect.RaceSelectMenuPages
 import dev.elysium.eraces.utils.targetUtils.PluginAccessor
 import org.bukkit.plugin.java.JavaPlugin

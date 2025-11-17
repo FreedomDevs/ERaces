@@ -12,7 +12,25 @@ import org.bukkit.configuration.file.YamlConfiguration
 import java.io.File
 import java.lang.reflect.Field
 
+
+/**
+ * Базовый класс для способностей, которые имеют конфигурацию.
+ *
+ * Отвечает за сохранение и загрузку конфигурации YAML для каждой способности.
+ *
+ * @property id уникальный идентификатор способности
+ */
 abstract class BaseAbilityWithConfig(override val id: String) : IAbility {
+
+    /**
+     * Сохраняет конфигурацию способности по умолчанию.
+     * Если файл конфигурации уже существует — ничего не делает.
+     * Если способность реализует [IManaCostAbility] или [IComboActivatable],
+     * соответствующие значения также сохраняются.
+     *
+     * @param plugin основной плагин ERaces
+     * @throws ConfigSaveException если произошла ошибка при записи конфигурации
+     */
     override fun saveDefaultConfig(plugin: ERaces) {
         val folder = File(plugin.dataFolder, "abils").also { it.mkdirs() }
         val file = File(folder, "$id.yml")
@@ -41,6 +59,16 @@ abstract class BaseAbilityWithConfig(override val id: String) : IAbility {
         }
     }
 
+    /**
+     * Загружает конфигурацию способности из файла.
+     * Если файл не найден, создаёт дефолтную конфигурацию.
+     * Поддерживает автоматическое применение полей [manaCost] и [comboKey],
+     * если способность реализует соответствующие интерфейсы.
+     *
+     * @param plugin основной плагин ERaces
+     * @throws ConfigLoadException если произошла ошибка при загрузке конфигурации
+     * @throws ConfigParamException если возникла ошибка при применении параметров
+     */
     override fun loadConfig(plugin: ERaces) {
         val file = File(plugin.dataFolder, "abils/$id.yml")
 
@@ -93,8 +121,15 @@ abstract class BaseAbilityWithConfig(override val id: String) : IAbility {
     }
 
     /**
-     * Попытка установить значение приватного/наследуемого поля по имени, обходя иерархию.
-     * Если поле не найдено или его нельзя установить - кидаем исключение.
+     * Устанавливает значение приватного или наследуемого поля по имени,
+     * обходя всю иерархию классов.
+     *
+     * Используется для автоматического применения конфигурационных параметров.
+     *
+     * @param target объект, в котором ищется поле
+     * @param fieldName имя поля
+     * @param value значение для установки
+     * @throws Exception если поле не найдено или не удалось установить значение
      */
     private fun setFieldByNameInHierarchy(target: Any, fieldName: String, value: Any?) {
         var cls: Class<*>? = target::class.java

@@ -1,54 +1,13 @@
 package dev.elysium.eraces.abilities
 
 import dev.elysium.eraces.ERaces
-import dev.elysium.eraces.abilities.abils.AfterimageAbility
-import dev.elysium.eraces.abilities.abils.AmbushAbility
-import dev.elysium.eraces.abilities.abils.AncientKnowledgeAbility
-import dev.elysium.eraces.abilities.abils.ArsenalAbility
-import dev.elysium.eraces.abilities.abils.BlockAbility
-import dev.elysium.eraces.abilities.abils.BloodOfFirstAbility
-import dev.elysium.eraces.abilities.abils.BossRushAbility
-import dev.elysium.eraces.abilities.abils.BurnAbility
-import dev.elysium.eraces.abilities.abils.CrossProtectionAbility
-import dev.elysium.eraces.abilities.abils.DeadlyRushAbility
-import dev.elysium.eraces.abilities.abils.DiveAbility
-import dev.elysium.eraces.abilities.abils.EroticCharmAbility
-import dev.elysium.eraces.abilities.abils.FindHimIfYouCanAbility
-import dev.elysium.eraces.abilities.abils.FindMeIfYouCan
-import dev.elysium.eraces.abilities.abils.FireBoomAbility
-import dev.elysium.eraces.abilities.abils.FireballAbility
-import dev.elysium.eraces.abilities.abils.ForestSpiritAbility
-import dev.elysium.eraces.abilities.abils.HolyBodyAbility
-import dev.elysium.eraces.abilities.abils.HopSkipDeepAbility
-import dev.elysium.eraces.abilities.abils.JerkAbility
-import dev.elysium.eraces.abilities.abils.MasterTheForestAbility
-import dev.elysium.eraces.abilities.abils.OldAcquaintancesAbility
-import dev.elysium.eraces.abilities.abils.RageModeAbility
-import dev.elysium.eraces.abilities.abils.ShadowJerkAbility
-import dev.elysium.eraces.abilities.abils.ShadowStepAbility
-import dev.elysium.eraces.abilities.abils.SharpClawsAbility
-import dev.elysium.eraces.abilities.abils.ShellingAbility
-import dev.elysium.eraces.abilities.abils.SkillMastersAbility
-import dev.elysium.eraces.abilities.abils.SupremeMagicianAbility
-import dev.elysium.eraces.abilities.abils.TerrifyingRageAbility
-import dev.elysium.eraces.abilities.abils.TheArboristAbility
-import dev.elysium.eraces.abilities.abils.TheFlameOfHealingAbility
-import dev.elysium.eraces.abilities.abils.TheJerkAbility
-import dev.elysium.eraces.abilities.abils.TheMagicBarrierAbility
-import dev.elysium.eraces.abilities.abils.TheWingedWhirlwindAbility
-import dev.elysium.eraces.abilities.abils.TurretAbility
-import dev.elysium.eraces.abilities.interfaces.IAbility
-import dev.elysium.eraces.abilities.interfaces.IComboActivatable
-import dev.elysium.eraces.abilities.interfaces.ICooldownAbility
-import dev.elysium.eraces.abilities.interfaces.IManaCostAbility
+import dev.elysium.eraces.abilities.abils.*
+import dev.elysium.eraces.abilities.interfaces.*
 import dev.elysium.eraces.exceptions.ExceptionProcessor
 import dev.elysium.eraces.exceptions.base.PlayerException
 import dev.elysium.eraces.exceptions.internal.AbilityActivationException
 import dev.elysium.eraces.exceptions.internal.AbilityRegistrationException
-import dev.elysium.eraces.exceptions.player.PlayerAbilityNotFoundException
-import dev.elysium.eraces.exceptions.player.PlayerAbilityNotOwnedException
-import dev.elysium.eraces.exceptions.player.PlayerAbilityOnCooldownException
-import dev.elysium.eraces.exceptions.player.PlayerRaceNotSelectedException
+import dev.elysium.eraces.exceptions.player.*
 import dev.elysium.eraces.utils.actionMsg
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
@@ -57,7 +16,23 @@ import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.TimeUnit
 
+
+/**
+ * Менеджер всех способностей плагина.
+ *
+ * Отвечает за:
+ * - регистрацию способностей,
+ * - хранение всех экземпляров способностей,
+ * - активацию способностей игроками с проверкой прав, маны и кулдаунов,
+ * - сброс кулдаунов и работу с комбо-способностями.
+ *
+ * Использует паттерн Singleton: создаётся один раз через [init].
+ *
+ * @property plugin основной плагин [ERaces]
+ */
 class AbilsManager private constructor(private val plugin: ERaces) {
+
+    /** Все зарегистрированные способности по их уникальному ID */
     private val abilities: MutableMap<String, IAbility> = mutableMapOf()
 
     companion object {
@@ -89,7 +64,8 @@ class AbilsManager private constructor(private val plugin: ERaces) {
     }
 
     /**
-     * Регистрирует стандартные способности
+     * Регистрирует стандартные способности плагина.
+     * Автоматически вызывается при инициализации.
      */
     private fun registerDefaultAbilities() {
         val defaultAbilities = listOf<IAbility>(
@@ -136,7 +112,9 @@ class AbilsManager private constructor(private val plugin: ERaces) {
 
     /**
      * Регистрирует одну или несколько способностей.
-     * Проверяет дубликаты, сохраняет конфиг и логирует успешную регистрацию.
+     * Проверяет дубликаты, сохраняет конфигурацию и логирует успешную регистрацию.
+     *
+     * @param abilitiesToAdd список способностей для регистрации
      */
     private fun register(vararg abilitiesToAdd: IAbility) {
         for (ability in abilitiesToAdd) {
@@ -186,6 +164,22 @@ class AbilsManager private constructor(private val plugin: ERaces) {
 
     /**
      * Активация способности игроком.
+     * Выполняет проверки:
+     * - существует ли способность,
+     * - выбран ли рас игрока,
+     * - есть ли способность у игрока,
+     * - хватает ли маны,
+     * - не на кулдауне.
+     *
+     * Если проверки прошли успешно — активирует способность.
+     *
+     * @param player игрок
+     * @param id ID способности
+     *
+     * @throws PlayerAbilityNotFoundException если способность не найдена
+     * @throws PlayerRaceNotSelectedException если игрок не выбрал расу
+     * @throws PlayerAbilityNotOwnedException если игрок не владеет способностью
+     * @throws PlayerAbilityOnCooldownException если способность на кулдауне
      */
     fun activate(player: Player, id: String) {
         val ability = abilities[id]
@@ -195,7 +189,8 @@ class AbilsManager private constructor(private val plugin: ERaces) {
             ability == null -> throw PlayerAbilityNotFoundException(player, id)
             race == null -> throw PlayerRaceNotSelectedException(player)
             !race.abilities.contains(id) -> throw PlayerAbilityNotOwnedException(player, id)
-            else -> { /* ok */ }
+            else -> { /* ok */
+            }
         }
 
         if (ability is IManaCostAbility) {
@@ -229,27 +224,45 @@ class AbilsManager private constructor(private val plugin: ERaces) {
             e.handle()
         } catch (t: Throwable) {
             ExceptionProcessor.process(t, player)
-            AbilityActivationException("Ошибка при активации способности '$id' у игрока ${player.name}", t, player).handle()
+            AbilityActivationException(
+                "Ошибка при активации способности '$id' у игрока ${player.name}",
+                t,
+                player
+            ).handle()
         }
     }
 
     /**
-     * Обнуляет кулдаун способности игрока.
+     * Сбрасывает кулдаун конкретной способности игрока.
+     *
+     * @param player игрок
+     * @param abilityId ID способности
      */
     fun clearCooldown(player: Player, abilityId: String) {
         CooldownManager.resetCooldown(player, abilityId)
     }
 
     /**
-     * Возвращяет способность по её ID.
+     * Возвращает способность по её ID.
+     *
+     * @param id ID способности
+     * @return экземпляр способности или null, если не зарегистрирована
      */
     fun getAbility(id: String): IAbility? = abilities[id]
 
     /**
      * Возвращает все зарегистрированные способности.
+     *
+     * @return список всех способностей
      */
     fun getAllAbilities(): List<IAbility> = abilities.values.toList()
 
+    /**
+     * Активация способности игроком по комбо-коду.
+     *
+     * @param player игрок
+     * @param combo комбо-код способности
+     */
     fun activateByCombo(player: Player, combo: String) {
         val ability = abilities.values
             .filterIsInstance<IComboActivatable>()
@@ -263,7 +276,10 @@ class AbilsManager private constructor(private val plugin: ERaces) {
         activate(player, (ability as IAbility).id)
     }
 
-
+    /**
+     * Внутренний менеджер кулдаунов способностей.
+     * Хранит время окончания кулдауна для каждого игрока и способности.
+     */
     private object CooldownManager {
         private val cooldowns: MutableMap<UUID, MutableMap<String, Long>> = ConcurrentHashMap()
 

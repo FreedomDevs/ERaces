@@ -6,11 +6,15 @@ import dev.elysium.eraces.exceptions.ErrorCodes
 import dev.elysium.eraces.utils.ChatUtil
 
 /**
- * Базовое исключение для внутренних ошибок плагина.
- * @param message Сообщение об ошибке
- * @param code Код ошибки
- * @param context Дополнительный контекст, если есть
- * @param cause Причина ошибки, если есть
+ * Базовое исключение для внутренних ошибок плагина ERaces.
+ *
+ * Используется для ошибок, связанных с некорректной работой плагина,
+ * не зависящих от действий игрока.
+ *
+ * @property code код ошибки из [ErrorCodes], по умолчанию [ErrorCodes.INTERNAL_ERROR]
+ * @property context дополнительный контекст, например путь к файлу или объект, вызывающий ошибку
+ * @param message сообщение об ошибке
+ * @param cause причина ошибки, если есть
  */
 abstract class InternalException(
     message: String,
@@ -23,6 +27,14 @@ abstract class InternalException(
         cause?.let { initCause(it) }
     }
 
+    /**
+     * Обработка внутреннего исключения.
+     *
+     * Логирует предупреждение с кодом ошибки, сообщением, контекстом и причиной.
+     * Если включён debug-режим, отправляет сообщение всем онлайн-администраторам.
+     *
+     * Метод можно переопределять в дочерних классах для кастомной обработки.
+     */
     override fun handle() {
         val ctx = context?.let { " Context: $it" } ?: ""
         val causeInfo =

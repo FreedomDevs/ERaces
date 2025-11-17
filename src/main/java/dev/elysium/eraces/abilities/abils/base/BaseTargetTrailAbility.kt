@@ -12,6 +12,8 @@ import org.bukkit.entity.LivingEntity
 
 /**
  * Базовый класс для способностей, которые используют Target(trail).
+ *
+ * ИСПОЛЬЗОВАТЬ КРАЙНЕ НЕ РЕКОМЕНДУЕТСЯ!!!!
  */
 abstract class BaseTargetTrailAbility(
     id: String,

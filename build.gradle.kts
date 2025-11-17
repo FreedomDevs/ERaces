@@ -1,4 +1,4 @@
-import java.net.URL
+import java.net.URI
 
 plugins {
     java
@@ -26,7 +26,6 @@ repositories {
 
 dependencies {
     // Kotlin
-    compileOnly(kotlin("stdlib"))
     compileOnly("org.jetbrains.kotlin:kotlin-reflect")
 
     // Paper
@@ -63,7 +62,7 @@ tasks {
             val viaVersionJar = pluginsDir.resolve("ViaVersion-5.5.1.jar")
             if (!viaVersionJar.exists()) {
                 println("Скачиваем ViaVersion...")
-                URL("https://hangarcdn.papermc.io/plugins/ViaVersion/ViaVersion/versions/5.5.1/PAPER/ViaVersion-5.5.1.jar").openStream().use { input ->
+                URI("https://hangarcdn.papermc.io/plugins/ViaVersion/ViaVersion/versions/5.5.1/PAPER/ViaVersion-5.5.1.jar").toURL().openStream().use { input ->
                     viaVersionJar.outputStream().use { output ->
                         input.copyTo(output)
                     }
@@ -89,6 +88,10 @@ tasks {
         filesMatching("plugin.yml") {
             expand(props)
         }
+    }
+
+    withType<JavaCompile> {
+        options.compilerArgs.add("-Xlint:deprecation")
     }
 }
 

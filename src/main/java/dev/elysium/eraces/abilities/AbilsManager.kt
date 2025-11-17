@@ -104,7 +104,8 @@ class AbilsManager private constructor(private val plugin: ERaces) {
             AncientKnowledgeAbility(),
             TheJerkAbility(),
             ShadowJerkAbility(),
-            TheArboristAbility()
+            TheArboristAbility(),
+            StaticRadiusAbility()
         )
         register(*defaultAbilities.toTypedArray())
         plugin.logger.info("Зарегистрировано способностей: ${abilities.size}")

@@ -4,6 +4,8 @@ import dev.elysium.eraces.ERaces;
 import dev.elysium.eraces.datatypes.FieldType;
 import dev.elysium.eraces.datatypes.configs.GlobalConfigData;
 import dev.elysium.eraces.datatypes.configs.ConfigsProperty;
+import dev.elysium.eraces.exceptions.internal.ConfigLoadException;
+import dev.elysium.eraces.exceptions.internal.ConfigSaveException;
 import lombok.Getter;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -19,37 +21,53 @@ public class GlobalConfigManager {
 
     private static final String FILE_NAME = "config.yml";
 
-    public GlobalConfigManager(ERaces plugin) throws IllegalAccessException {
-        this.cfgManager = new YamlManager(plugin, FILE_NAME, true);
-        loadConfig();
+    public GlobalConfigManager(ERaces plugin) {
+        try {
+            this.cfgManager = new YamlManager(plugin, FILE_NAME, true);
+            loadConfig();
+        } catch (Exception e) {
+            throw new ConfigLoadException("Не удалось инициализировать глобальный конфиг", e);
+        }
     }
 
-    public void loadConfig() throws IllegalAccessException {
-        this.config = cfgManager.getConfig();
-        this.data = new GlobalConfigData();
+    public void loadConfig() {
+        try {
+            this.config = cfgManager.getConfig();
+            this.data = new GlobalConfigData();
 
-        for (Field field : GlobalConfigData.class.getDeclaredFields()) {
-            field.setAccessible(true);
+            for (Field field : GlobalConfigData.class.getDeclaredFields()) {
+                field.setAccessible(true);
 
-            ConfigsProperty annotation = field.getAnnotation(ConfigsProperty.class);
-            if (annotation == null) continue;
+                ConfigsProperty annotation = field.getAnnotation(ConfigsProperty.class);
+                if (annotation == null) continue;
 
-            String path = annotation.path();
-            FieldType type = annotation.type();
+                String path = annotation.path();
+                FieldType type = annotation.type();
 
-            Object value = getOrCreateConfigValue(path, type, annotation, field.getName());
-            field.set(data, value);
+                Object value = getOrCreateConfigValue(path, type, annotation, field.getName());
+                field.set(data, value);
+            }
+        } catch (Exception e) {
+            throw new ConfigLoadException("Ошибка при загрузке глобальной конфигурации", e);
         }
     }
 
     private Object getOrCreateConfigValue(String path, FieldType type, ConfigsProperty annotation, String fieldName) {
-        if (!config.contains(path)) {
-            Object defaultValue = getDefaultFromAnnotation(type, annotation, fieldName);
-            config.set(path, defaultValue);
-            cfgManager.saveConfig(config);
-            return defaultValue;
+        try {
+            if (!config.contains(path)) {
+                Object defaultValue = getDefaultFromAnnotation(type, annotation, fieldName);
+                config.set(path, defaultValue);
+                try {
+                    cfgManager.saveConfig(config);
+                } catch (Exception e) {
+                    throw new ConfigSaveException("Не удалось сохранить конфиг " + path, e);
+                }
+                return defaultValue;
+            }
+            return getValueByType(type, path);
+        } catch (Exception e) {
+            throw new ConfigLoadException("Ошибка при получении/создании значения для пути " + path, e);
         }
-        return getValueByType(type, path);
     }
 
     private Object getDefaultFromAnnotation(FieldType type, ConfigsProperty annotation, String fieldName) {
@@ -83,6 +101,10 @@ public class GlobalConfigManager {
     }
 
     public void save() {
-        cfgManager.saveConfig(config);
+        try {
+            cfgManager.saveConfig(config);
+        } catch (Exception e) {
+            throw new ConfigSaveException("Ошибка при сохранении глобального конфига", e);
+        }
     }
 }

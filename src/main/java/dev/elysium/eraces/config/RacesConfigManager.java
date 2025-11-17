@@ -2,6 +2,7 @@ package dev.elysium.eraces.config;
 
 import dev.elysium.eraces.datatypes.Race;
 import dev.elysium.eraces.datatypes.ReflectionUtils;
+import dev.elysium.eraces.exceptions.internal.ConfigLoadException;
 import lombok.Getter;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -59,7 +60,7 @@ public class RacesConfigManager {
                         Files.copy(in, new File(dir, f).toPath());
                     }
                 } catch (IOException e) {
-                    plugin.getLogger().log(Level.SEVERE, "Не удалось скопировать " + f, e);
+                    throw new ConfigLoadException("Не удалось скопировать " + f, e);
                 }
             }
         }

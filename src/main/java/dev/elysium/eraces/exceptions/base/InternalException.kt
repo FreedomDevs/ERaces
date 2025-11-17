@@ -25,12 +25,18 @@ abstract class InternalException(
 
     override fun handle() {
         val ctx = context?.let { " Context: $it" } ?: ""
-        ERacesLogger.warning("[Internal][$code] $message$ctx")
+        val causeInfo =
+            cause?.let { "\nCause: ${it::class.java.name}: ${it.message}\n${it.stackTraceToString()}" } ?: ""
+        ERacesLogger.warning("[Internal][$code] $message$ctx$causeInfo")
 
-        if (ERaces.getInstance().context.globalConfigManager.data.isDebug) {
-            ERaces.getInstance().server.onlinePlayers
-                .filter { it.hasPermission("eraces.admin") }
-                .forEach { ChatUtil.message(it, "§c[DEBUG][Internal] $message") }
+        try {
+            val eraces = ERaces.getInstance()
+            if (eraces.context.globalConfigManager.data.isDebug) {
+                eraces.server.onlinePlayers
+                    .filter { it.hasPermission("eraces.admin") }
+                    .forEach { ChatUtil.message(it, "§c[DEBUG][Internal] $message") }
+            }
+        } catch (ignored: Exception) {
         }
     }
 }

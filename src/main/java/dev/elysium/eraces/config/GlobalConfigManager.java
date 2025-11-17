@@ -17,7 +17,7 @@ public class GlobalConfigManager {
     private YamlConfiguration config;
 
     @Getter
-    private GlobalConfigData data;
+    public GlobalConfigData data;
 
     private static final String FILE_NAME = "config.yml";
 

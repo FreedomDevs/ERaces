@@ -5,14 +5,14 @@ import dev.elysium.eraces.ERacesLogger
 import dev.elysium.eraces.abilities.interfaces.IAbility
 import dev.elysium.eraces.abilities.interfaces.IComboActivatable
 import dev.elysium.eraces.abilities.interfaces.IManaCostAbility
+import dev.elysium.eraces.exceptions.internal.ConfigLoadException
 import dev.elysium.eraces.exceptions.internal.ConfigParamException
 import dev.elysium.eraces.exceptions.internal.ConfigSaveException
 import org.bukkit.configuration.file.YamlConfiguration
 import java.io.File
-import java.util.logging.Level
+import java.lang.reflect.Field
 
 abstract class BaseAbilityWithConfig(override val id: String) : IAbility {
-
     override fun saveDefaultConfig(plugin: ERaces) {
         val folder = File(plugin.dataFolder, "abils").also { it.mkdirs() }
         val file = File(folder, "$id.yml")
@@ -55,12 +55,10 @@ abstract class BaseAbilityWithConfig(override val id: String) : IAbility {
             // ---- Mana cost
             if (this is IManaCostAbility && cfg.contains("manaCost")) {
                 try {
-                    val field = this::class.java.getDeclaredField("manaCost")
-                    field.isAccessible = true
-                    field.set(this, cfg.getDouble("manaCost"))
+                    setFieldByNameInHierarchy(this, "manaCost", cfg.getDouble("manaCost"))
                 } catch (e: Exception) {
                     throw ConfigParamException(
-                        message = "Ошибка применения параметра 'manaCost' для способности '$id'",
+                        message = "Ошибка применения параметра 'manaCost' для способности '$id': ${e.message}",
                         cause = e,
                         context = file.path
                     )
@@ -70,12 +68,10 @@ abstract class BaseAbilityWithConfig(override val id: String) : IAbility {
             // ---- Combo key
             if (this is IComboActivatable && cfg.contains("comboKey")) {
                 try {
-                    val field = this::class.java.getDeclaredField("comboKey")
-                    field.isAccessible = true
-                    field.set(this, cfg.getString("comboKey"))
+                    setFieldByNameInHierarchy(this, "comboKey", cfg.getString("comboKey"))
                 } catch (e: Exception) {
                     throw ConfigParamException(
-                        message = "Ошибка применения параметра 'comboKey' для способности '$id'",
+                        message = "Ошибка применения параметра 'comboKey' для способности '$id': ${e.message}",
                         cause = e,
                         context = file.path
                     )
@@ -88,11 +84,48 @@ abstract class BaseAbilityWithConfig(override val id: String) : IAbility {
             throw e
 
         } catch (e: Exception) {
-            throw ConfigSaveException(
+            throw ConfigLoadException(
                 message = "Ошибка при загрузке конфигурации способности '$id'",
                 cause = e,
                 context = file.path
             )
         }
+    }
+
+    /**
+     * Попытка установить значение приватного/наследуемого поля по имени, обходя иерархию.
+     * Если поле не найдено или его нельзя установить - кидаем исключение.
+     */
+    private fun setFieldByNameInHierarchy(target: Any, fieldName: String, value: Any?) {
+        var cls: Class<*>? = target::class.java
+        var lastEx: Exception? = null
+
+        while (cls != null) {
+            try {
+                val field: Field = cls.getDeclaredField(fieldName)
+                field.isAccessible = true
+                val fieldType = field.type
+                val toSet = when {
+                    value == null -> null
+                    fieldType == java.lang.Double.TYPE || fieldType == java.lang.Double::class.java -> (value as Number).toDouble()
+                    fieldType == java.lang.Long.TYPE || fieldType == java.lang.Long::class.java -> (value as Number).toLong()
+                    fieldType == java.lang.Integer.TYPE || fieldType == java.lang.Integer::class.java -> (value as Number).toInt()
+                    fieldType == java.lang.Float.TYPE || fieldType == java.lang.Float::class.java -> (value as Number).toFloat()
+                    fieldType == java.lang.Boolean.TYPE || fieldType == java.lang.Boolean::class.java -> value as Boolean
+                    fieldType == java.lang.String::class.java -> value.toString()
+                    else -> value
+                }
+                field.set(target, toSet)
+                return
+            } catch (ex: NoSuchFieldException) {
+                cls = cls.superclass
+                continue
+            } catch (ex: Exception) {
+                lastEx = ex
+                break
+            }
+        }
+
+        throw lastEx ?: NoSuchFieldException("Поле '$fieldName' не найдено в классе ${target::class.java.name} и его суперклассах")
     }
 }

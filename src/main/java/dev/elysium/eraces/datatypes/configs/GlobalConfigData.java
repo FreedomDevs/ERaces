@@ -12,7 +12,7 @@ public class GlobalConfigData {
     private String prefix;
 
     @ConfigsProperty(path = "plugin.debug", type = FieldType.BOOLEAN, defaultBoolean = false)
-    private boolean debug;
+    public boolean isDebug;
 
     @ConfigsProperty(path = "plugin.lang", type = FieldType.STRING, defaultString = "ru")
     private String lang;

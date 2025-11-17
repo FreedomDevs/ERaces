@@ -17,7 +17,6 @@ import dev.elysium.eraces.abilities.abils.FindHimIfYouCanAbility
 import dev.elysium.eraces.abilities.abils.FindMeIfYouCan
 import dev.elysium.eraces.abilities.abils.FireBoomAbility
 import dev.elysium.eraces.abilities.abils.FireballAbility
-import dev.elysium.eraces.utils.ChatUtil
 import dev.elysium.eraces.abilities.abils.ForestSpiritAbility
 import dev.elysium.eraces.abilities.abils.HolyBodyAbility
 import dev.elysium.eraces.abilities.abils.HopSkipDeepAbility
@@ -42,6 +41,7 @@ import dev.elysium.eraces.abilities.interfaces.IAbility
 import dev.elysium.eraces.abilities.interfaces.IComboActivatable
 import dev.elysium.eraces.abilities.interfaces.ICooldownAbility
 import dev.elysium.eraces.abilities.interfaces.IManaCostAbility
+import dev.elysium.eraces.exceptions.ExceptionProcessor
 import dev.elysium.eraces.exceptions.base.PlayerException
 import dev.elysium.eraces.exceptions.internal.AbilityActivationException
 import dev.elysium.eraces.exceptions.internal.AbilityRegistrationException
@@ -50,14 +50,12 @@ import dev.elysium.eraces.exceptions.player.PlayerAbilityNotOwnedException
 import dev.elysium.eraces.exceptions.player.PlayerAbilityOnCooldownException
 import dev.elysium.eraces.exceptions.player.PlayerRaceNotSelectedException
 import dev.elysium.eraces.utils.actionMsg
-import dev.elysium.eraces.utils.msg
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.event.Listener
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.TimeUnit
-import java.util.logging.Level
 
 class AbilsManager private constructor(private val plugin: ERaces) {
     private val abilities: MutableMap<String, IAbility> = mutableMapOf()
@@ -72,7 +70,7 @@ class AbilsManager private constructor(private val plugin: ERaces) {
          */
         @JvmStatic
         fun getInstance(): AbilsManager =
-            instance ?: throw IllegalStateException("AbilsManager не инициализирован! Вызови init()")
+            instance ?: throw IllegalStateException("AbilsManager не инициализирован! Вызови init() в onEnable()")
 
         /**
          * Инициализация менеджера. Вызывается один раз при старте плагина.
@@ -176,7 +174,12 @@ class AbilsManager private constructor(private val plugin: ERaces) {
                 abilities[ability.id] = ability
                 plugin.logger.info("Зарегистрирована способность: ${ability.id}")
             } catch (e: Exception) {
-                AbilityRegistrationException("Ошибка при регистрации способности '${ability.id}'", e).handle()
+                val ex = AbilityRegistrationException(
+                    "Ошибка при регистрации способности '${ability.id}'",
+                    e,
+                    ability.id
+                )
+                ex.handle()
             }
         }
     }
@@ -185,13 +188,14 @@ class AbilsManager private constructor(private val plugin: ERaces) {
      * Активация способности игроком.
      */
     fun activate(player: Player, id: String) {
-        val race = ERaces.getInstance().context.playerDataManager.getPlayerRace(player)
         val ability = abilities[id]
+        val race = ERaces.getInstance().context.playerDataManager.getPlayerRace(player)
 
         when {
+            ability == null -> throw PlayerAbilityNotFoundException(player, id)
             race == null -> throw PlayerRaceNotSelectedException(player)
             !race.abilities.contains(id) -> throw PlayerAbilityNotOwnedException(player, id)
-            ability == null -> throw PlayerAbilityNotFoundException(player, id)
+            else -> { /* ok */ }
         }
 
         if (ability is IManaCostAbility) {
@@ -223,8 +227,9 @@ class AbilsManager private constructor(private val plugin: ERaces) {
             ability.activate(player)
         } catch (e: PlayerException) {
             e.handle()
-        } catch (e: Exception) {
-            AbilityActivationException("Ошибка при активации способности '$id' у игрока ${player.name}", e, player).handle()
+        } catch (t: Throwable) {
+            ExceptionProcessor.process(t, player)
+            AbilityActivationException("Ошибка при активации способности '$id' у игрока ${player.name}", t, player).handle()
         }
     }
 

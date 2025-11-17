@@ -32,6 +32,9 @@ commands:
   get_xp:
     result: "У игрока <aqua>{player}</aqua>: <gold>{count}</gold> XP"
 
+  add_xp:
+    response: "Игроку {player} успешно добавлено {count} XP"
+
 shield_block: "<red>Ваша раса не умеет использовать щиты"
 forbidden_foods: "<red>Ваша раса не приемлет данную еду"
 

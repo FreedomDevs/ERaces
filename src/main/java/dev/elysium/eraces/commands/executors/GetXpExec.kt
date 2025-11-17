@@ -13,7 +13,7 @@ import io.papermc.paper.command.brigadier.argument.resolvers.selector.PlayerSele
 object GetXpExec {
     val cmd: LiteralArgumentBuilder<CommandSourceStack> = Commands.literal("xp_get").then(
         Commands.argument("target", ArgumentTypes.player())
-            .executes { ctx: CommandContext<CommandSourceStack> -> this.exec(ctx) })
+            .executes { ctx: CommandContext<CommandSourceStack> -> exec(ctx) })
 
     @Suppress("SameReturnValue")
     private fun exec(ctx: CommandContext<CommandSourceStack>): Int {

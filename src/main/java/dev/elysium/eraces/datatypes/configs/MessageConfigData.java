@@ -57,6 +57,9 @@ public class MessageConfigData {
     @ConfigsProperty(path = "commands.get_xp.result", defaultString = "У игрока <aqua>{player}</aqua>: <gold>{count}</gold> XP")
     public String getXpResult;
 
+    @ConfigsProperty(path = "commands.add_xp.response", defaultString = "Игроку {player} успешно добавлено {count} XP")
+    public String addXpResponse;
+
     @ConfigsProperty(path = "shield_block", defaultString = "<red>Ваша раса не умеет использовать щиты")
     public String shieldBlock;
 

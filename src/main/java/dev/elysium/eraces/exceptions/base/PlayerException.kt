@@ -1,6 +1,7 @@
 package dev.elysium.eraces.exceptions.base
 
 import dev.elysium.eraces.ERacesLogger
+import dev.elysium.eraces.exceptions.ErrorCodes
 import dev.elysium.eraces.utils.ChatUtil
 import org.bukkit.entity.Player
 
@@ -13,7 +14,7 @@ import org.bukkit.entity.Player
 abstract class PlayerException(
     val player: Player,
     override val message: String,
-    override val code: String = "PLAYER_ERROR"
+    override val code: ErrorCodes = ErrorCodes.PLAYER_ERROR
 ) : ERacesException(code, message) {
 
     override fun handle() {

@@ -2,6 +2,7 @@ package dev.elysium.eraces.exceptions.base
 
 import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.ERacesLogger
+import dev.elysium.eraces.exceptions.ErrorCodes
 import dev.elysium.eraces.utils.ChatUtil
 
 /**
@@ -13,7 +14,7 @@ import dev.elysium.eraces.utils.ChatUtil
  */
 abstract class InternalException(
     message: String,
-    code: String,
+    override val code: ErrorCodes = ErrorCodes.INTERNAL_ERROR,
     val context: Any? = null,
     cause: Throwable? = null
 ) : ERacesException(code, message) {

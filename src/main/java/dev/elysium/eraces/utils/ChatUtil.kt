@@ -110,6 +110,15 @@ object ChatUtil {
     fun action(player: Player, text: String, args: Map<String, String> = emptyMap()) =
         player.sendActionBar(parse(text, args))
 
+
+    /**
+     * Отправляет сообщение в action bar игроку без дополнительных аргументов.
+     *
+     * @param player игрок.
+     * @param text сообщение.
+     */
+    fun action(player: Player, text: String) = action(player, text, emptyMap())
+
     /**
      * Отправляет заголовок (title + subtitle) игроку.
      *

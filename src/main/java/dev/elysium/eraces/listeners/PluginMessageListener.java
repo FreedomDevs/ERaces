@@ -80,7 +80,7 @@ public class PluginMessageListener implements org.bukkit.plugin.messaging.Plugin
         ERaces.getInstance().getLogger().fine("Игрок " + player.getName() + " начал ввод комбо.");
 
         if (cfg.isCastFeedback()) {
-            ChatUtil.INSTANCE.sendActionOld(player, "<green>Начат ввод комбинации...");
+            ChatUtil.INSTANCE.action(player, "<green>Начат ввод комбинации...");
         }
     }
 
@@ -88,39 +88,39 @@ public class PluginMessageListener implements org.bukkit.plugin.messaging.Plugin
         CastingSession s = sessions.get(player.getUniqueId());
         if (s == null) {
             ERaces.getInstance().getLogger().fine("Игрок " + player.getName() + " отправил cast_key без start_cast.");
-            if (cfg.isCastFeedback()) ChatUtil.INSTANCE.sendActionOld(player, "<red>Сначала начни ввод (start cast).");
+            if (cfg.isCastFeedback()) ChatUtil.INSTANCE.action(player, "<red>Сначала начни ввод (start cast).");
             return;
         }
 
         if (s.isExpired()) {
             sessions.remove(player.getUniqueId());
-            if (cfg.isCastFeedback()) ChatUtil.INSTANCE.sendActionOld(player, "<red>Время ввода прошло — начни заново.");
+            if (cfg.isCastFeedback()) ChatUtil.INSTANCE.action(player, "<red>Время ввода прошло — начни заново.");
             return;
         }
 
         if (s.getKeys().length() >= cfg.getCastMaxLength()) {
-            if (cfg.isCastFeedback()) ChatUtil.INSTANCE.sendActionOld(player, "<red>Комбинация слишком длинная.");
+            if (cfg.isCastFeedback()) ChatUtil.INSTANCE.action(player, "<red>Комбинация слишком длинная.");
             return;
         }
 
         s.appendKey(payload);
         ERaces.getInstance().getLogger().fine("Игрок " + player.getName() + " добавил клавишу: " + payload + " (текущая: " + s.getKeys() + ")");
         if (cfg.isCastFeedback()) {
-            ChatUtil.INSTANCE.sendActionOld(player, "<yellow>Текущая комбинация: <white>" + s.getKeys());
+            ChatUtil.INSTANCE.action(player, "<yellow>Текущая комбинация: <white>" + s.getKeys());
         }
     }
 
     private void handleEnd(Player player, String payload) {
         CastingSession s = sessions.get(player.getUniqueId());
         if (s == null) {
-            if (cfg.isCastFeedback()) ChatUtil.INSTANCE.sendActionOld(player, "<red>Нечего завершать — начни ввод комбинации сначала.");
+            if (cfg.isCastFeedback()) ChatUtil.INSTANCE.action(player, "<red>Нечего завершать — начни ввод комбинации сначала.");
             ERaces.getInstance().getLogger().fine("Игрок " + player.getName() + " прислал end_cast без активной сессии.");
             return;
         }
 
         if (s.isExpired()) {
             sessions.remove(player.getUniqueId());
-            if (cfg.isCastFeedback()) ChatUtil.INSTANCE.sendActionOld(player, "<red>Время ввода истекло — комбинация сброшена.");
+            if (cfg.isCastFeedback()) ChatUtil.INSTANCE.action(player, "<red>Время ввода истекло — комбинация сброшена.");
             return;
         }
 
@@ -128,7 +128,7 @@ public class PluginMessageListener implements org.bukkit.plugin.messaging.Plugin
         sessions.remove(player.getUniqueId());
 
         if (collected.isEmpty()) {
-            if (cfg.isCastFeedback()) ChatUtil.INSTANCE.sendActionOld(player, "<red>Комбинация пуста.");
+            if (cfg.isCastFeedback()) ChatUtil.INSTANCE.action(player, "<red>Комбинация пуста.");
             return;
         }
 
@@ -138,7 +138,7 @@ public class PluginMessageListener implements org.bukkit.plugin.messaging.Plugin
         } catch (Exception e) {
             ERaces.getInstance().getLogger().severe("Ошибка при активации комбинации '" + collected + "' у игрока " + player.getName());
             e.printStackTrace();
-            if (cfg.isCastFeedback()) ChatUtil.INSTANCE.sendActionOld(player, "<red>Ошибка при активации способности.");
+            if (cfg.isCastFeedback()) ChatUtil.INSTANCE.action(player, "<red>Ошибка при активации способности.");
         }
     }
 }

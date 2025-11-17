@@ -1,6 +1,7 @@
 package dev.elysium.eraces.xpManager
 
 import dev.elysium.eraces.ERaces
+import dev.elysium.eraces.exceptions.internal.InternalXpException
 import dev.elysium.eraces.listeners.custom.PlayerXpGainEvent
 import dev.elysium.eraces.xpManager.providers.BlockXpProvider
 import dev.elysium.eraces.xpManager.providers.CraftXpProvider
@@ -27,7 +28,15 @@ class XpManager : Listener {
         Bukkit.getPluginManager().callEvent(event)
         if (event.isCancelled) return
 
-        ERaces.getInstance().context.specializationsManager.addXp(player, event.xp)
+        try {
+            ERaces.getInstance().context.specializationsManager.addXp(player, event.xp)
+        } catch (e: Exception) {
+            throw InternalXpException(
+                "Не удалось добавить XP игроку ${player.name}",
+                e,
+                mapOf("xp" to xp, "reason" to reason)
+            )
+        }
     }
 
     @EventHandler

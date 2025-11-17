@@ -42,6 +42,13 @@ import dev.elysium.eraces.abilities.interfaces.IAbility
 import dev.elysium.eraces.abilities.interfaces.IComboActivatable
 import dev.elysium.eraces.abilities.interfaces.ICooldownAbility
 import dev.elysium.eraces.abilities.interfaces.IManaCostAbility
+import dev.elysium.eraces.exceptions.PlayerException
+import dev.elysium.eraces.exceptions.internal.AbilityActivationException
+import dev.elysium.eraces.exceptions.internal.AbilityRegistrationException
+import dev.elysium.eraces.exceptions.player.PlayerAbilityNotFoundException
+import dev.elysium.eraces.exceptions.player.PlayerAbilityNotOwnedException
+import dev.elysium.eraces.exceptions.player.PlayerAbilityOnCooldownException
+import dev.elysium.eraces.exceptions.player.PlayerRaceNotSelectedException
 import dev.elysium.eraces.utils.actionMsg
 import dev.elysium.eraces.utils.msg
 import org.bukkit.Bukkit
@@ -169,7 +176,7 @@ class AbilsManager private constructor(private val plugin: ERaces) {
                 abilities[ability.id] = ability
                 plugin.logger.info("Зарегистрирована способность: ${ability.id}")
             } catch (e: Exception) {
-                plugin.logger.log(Level.SEVERE, "Ошибка при регистрации способности '${ability.id}'", e)
+                AbilityRegistrationException("Ошибка при регистрации способности '${ability.id}'", e).handle()
             }
         }
     }
@@ -182,20 +189,9 @@ class AbilsManager private constructor(private val plugin: ERaces) {
         val ability = abilities[id]
 
         when {
-            race == null -> {
-                player.msg("<red>Ты ещё не выбрал расу!")
-                return
-            }
-
-            !race.abilities.contains(id) -> {
-                player.msg("<red>Твоя раса не умеет использовать способность <yellow>$id")
-                return
-            }
-
-            ability == null -> {
-                player.msg("<red>Способность <yellow>$id<red> не найдена!")
-                return
-            }
+            race == null -> throw PlayerRaceNotSelectedException(player)
+            !race.abilities.contains(id) -> throw PlayerAbilityNotOwnedException(player, id)
+            ability == null -> throw PlayerAbilityNotFoundException(player, id)
         }
 
         if (ability is IManaCostAbility) {
@@ -213,8 +209,7 @@ class AbilsManager private constructor(private val plugin: ERaces) {
 
         if (ability is ICooldownAbility && CooldownManager.hasCooldown(player, id)) {
             val remaining = CooldownManager.getRemaining(player, id)
-            player.msg("<red>Способность <yellow>$id<red> ещё на кулдауне! Осталось <yellow>${remaining}с")
-            return
+            throw PlayerAbilityOnCooldownException(player, id, remaining)
         }
 
         try {
@@ -226,9 +221,10 @@ class AbilsManager private constructor(private val plugin: ERaces) {
             }
 
             ability.activate(player)
+        } catch (e: PlayerException) {
+            e.handle()
         } catch (e: Exception) {
-            plugin.logger.log(Level.SEVERE, "Ошибка при активации способности '$id' у игрока ${player.name}", e)
-            player.msg("<red>Произошла ошибка при использовании способности <yellow>$id")
+            AbilityActivationException("Ошибка при активации способности '$id' у игрока ${player.name}", e, player).handle()
         }
     }
 

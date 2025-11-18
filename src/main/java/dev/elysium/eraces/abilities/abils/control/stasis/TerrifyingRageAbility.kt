@@ -20,7 +20,7 @@ class TerrifyingRageAbility : BaseCooldownAbility(
     private val activatePlayers = mutableMapOf<UUID, Long>()
 
     override fun onActivate(player: Player) {
-        Target.Companion.from(player)
+        Target.from(player)
             .inRadius(radiuas)
             .excludeCaster()
             .execute { target ->

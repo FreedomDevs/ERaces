@@ -25,7 +25,6 @@ import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.TimeUnit
 
-
 /**
  * Менеджер всех способностей плагина.
  *
@@ -115,7 +114,8 @@ class AbilsManager private constructor(private val plugin: ERaces) {
             ShadowJerkAbility(),
             TheArboristAbility(),
             StaticRadiusAbility(),
-            ShamanRadiusAbility()
+            ShamanRadiusAbility(),
+            ForestAidAbility()
         )
         register(*defaultAbilities.toTypedArray())
         plugin.logger.info("Зарегистрировано способностей: ${abilities.size}")

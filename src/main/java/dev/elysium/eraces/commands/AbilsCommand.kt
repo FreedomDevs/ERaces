@@ -12,7 +12,7 @@ import io.papermc.paper.command.brigadier.Commands
 import org.bukkit.entity.Player
 import java.util.concurrent.CompletableFuture
 
-class AbilsCommand {
+object AbilsCommand {
     val cmd: LiteralCommandNode<CommandSourceStack> = Commands.literal("abils")
         .requires { source -> source.sender is Player }
         .then(

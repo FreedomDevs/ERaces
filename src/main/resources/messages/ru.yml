@@ -4,23 +4,15 @@ plugin:
 
 commands:
   get_player_race:
-    race_check_error: "<red>Вы не указали игрока для получения расы"
     race_check_success: "<green>У игрока <yellow>{player} <green>раса <yellow>{race}"
     race_check_success_me: "<green>Ваша раса <yellow>{race}"
 
-  races:
-    subcommand_error: "<red>Не указана подкоманда"
-    subcommand_is_null: "<red>Подкоманда: <yellow>{arg} <red>не существует"
-
   regenerate_player_race:
-    console_usage: "<red>Использование из консоли: /command <ник игрока>"
     nick_error: "<red>Неверно указан ник игрока"
     regenerate_success: "<green>Раса игрока <yellow>{player} <green>установлена на: <yellow>{race}"
 
   set_player_race:
-    small_args: "<red>Мало аргументов"
     race_not_found: "<red>Такая раса не существует"
-    nick_null: "<red>Неверно указан ник игрока"
     set_success: "<green>Раса игрока <yellow>{player} <green>установлена на: <yellow>{race}"
 
   reload:
@@ -29,5 +21,14 @@ commands:
   myrace:
     race_not_selected: "<red>У вас не выбрана раса"
 
+  get_xp:
+    result: "У игрока <aqua>{player}</aqua>: <gold>{count}</gold> XP"
+
+  add_xp:
+    response: "Игроку {player} успешно добавлено {count} XP"
+
 shield_block: "<red>Ваша раса не умеет использовать щиты"
 forbidden_foods: "<red>Ваша раса не приемлет данную еду"
+
+player_not_found: "<red>Указанный игрок не найден"
+multiple_players_selected: "<red>Ожидалось получить одного игрока, но получено: {count}"

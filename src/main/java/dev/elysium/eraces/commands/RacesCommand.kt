@@ -10,7 +10,7 @@ object RacesCommand {
         .requires { sender: CommandSourceStack ->
             sender.sender.hasPermission("eraces.races_command.use")
         }
-        .then(ReloadExec().cmd)
+        .then(ReloadExec.cmd)
         .then(RegeneratePlayerRaceExec().cmd)
         .then(GetPlayerRaceExec().cmd)
         .then(SetPlayerRaceExec().cmd)

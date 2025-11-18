@@ -20,7 +20,7 @@ public class RacesConfigManager {
     private static final String DIRECTORY_NAME = "races.d";
 
     @Getter
-    private final Map<String, Race> races = new HashMap<>();
+    public final Map<String, Race> races = new HashMap<>();
 
     private final YamlManager cfgManager;
     private final JavaPlugin plugin;
@@ -47,7 +47,7 @@ public class RacesConfigManager {
         File dir = new File(plugin.getDataFolder(), DIRECTORY_NAME);
         if (!dir.exists()) {
             boolean result = dir.mkdirs();
-            if (!result){
+            if (!result) {
                 plugin.getLogger().severe("Не удалось создать папку races.d");
                 return;
             }
@@ -68,9 +68,9 @@ public class RacesConfigManager {
             File[] files = dir.listFiles((d, name) -> (name.endsWith(".yml") || name.endsWith(".yaml")));
             if (files != null) {
                 for (File file : files) {
-                    plugin.getLogger().info("Загрузка конфига: "+file.getName());
+                    plugin.getLogger().info("Загрузка конфига: " + file.getName());
                     int racesLoaded = loadFromConfig(YamlConfiguration.loadConfiguration(file));
-                    plugin.getLogger().info("Из конфига: "+file.getName()+" загружено "+racesLoaded+" рас");
+                    plugin.getLogger().info("Из конфига: " + file.getName() + " загружено " + racesLoaded + " рас");
                 }
             }
         }
@@ -92,8 +92,8 @@ public class RacesConfigManager {
                 continue;
             }
 
-            if(races.containsKey(key)){
-                plugin.getLogger().severe("Не удалось загрузить расу "+key+", раса уже объявлена в другом конфиге");
+            if (races.containsKey(key)) {
+                plugin.getLogger().severe("Не удалось загрузить расу " + key + ", раса уже объявлена в другом конфиге");
                 continue;
             }
 

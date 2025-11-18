@@ -11,7 +11,7 @@ object RacesCommand {
             sender.sender.hasPermission("eraces.races_command.use")
         }
         .then(ReloadExec.cmd)
-        .then(GetPlayerRaceExec().cmd)
+        .then(GetPlayerRaceExec.cmd)
         .then(SetPlayerRaceExec.cmd)
         .then(GetChangePotionExec().cmd)
         .then(AddXpExec.cmd)

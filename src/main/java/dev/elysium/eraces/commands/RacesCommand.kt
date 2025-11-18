@@ -13,7 +13,7 @@ object RacesCommand {
         .then(ReloadExec.cmd)
         .then(RegeneratePlayerRaceExec().cmd)
         .then(GetPlayerRaceExec().cmd)
-        .then(SetPlayerRaceExec().cmd)
+        .then(SetPlayerRaceExec.cmd)
         .then(GetChangePotionExec().cmd)
         .then(AddXpExec.cmd)
         .then(GetXpExec.cmd)

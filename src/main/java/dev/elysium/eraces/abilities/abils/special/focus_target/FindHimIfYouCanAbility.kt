@@ -1,6 +1,7 @@
 package dev.elysium.eraces.abilities.abils.special.focus_target
 
 import dev.elysium.eraces.abilities.ConfigHelper
+import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseCooldownAbility
 import dev.elysium.eraces.utils.TimeParser
 import dev.elysium.eraces.utils.targetUtils.Target
@@ -10,6 +11,8 @@ import org.bukkit.entity.Player
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 
+@RegisterAbility
+@Suppress("unused")
 class FindHimIfYouCanAbility : BaseCooldownAbility(
     id = "findhimifoucan", defaultCooldown = "5m"
 ) {

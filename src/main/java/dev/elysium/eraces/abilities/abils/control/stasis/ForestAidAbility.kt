@@ -3,6 +3,7 @@ package dev.elysium.eraces.abilities.abils.control.stasis
 import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.abilities.AbilityUtils
 import dev.elysium.eraces.abilities.ConfigHelper
+import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseCooldownAbility
 import dev.elysium.eraces.utils.EffectUtils
 import dev.elysium.eraces.utils.TimeParser
@@ -20,6 +21,8 @@ import org.bukkit.util.Vector
 import kotlin.math.cos
 import kotlin.math.sin
 
+@RegisterAbility
+@Suppress("unused")
 class ForestAidAbility : BaseCooldownAbility(
     id = "forest_aid", defaultCooldown = "1m"
 ), Listener {

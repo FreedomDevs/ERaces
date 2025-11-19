@@ -3,6 +3,7 @@ package dev.elysium.eraces.abilities.abils.buffs.self_buffs
 import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.abilities.AbilityUtils
 import dev.elysium.eraces.abilities.ConfigHelper
+import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseEffectsAbility
 import dev.elysium.eraces.listeners.custom.ManaConsumeEvent
 import dev.elysium.eraces.listeners.custom.ManaRegenerationEvent
@@ -19,6 +20,8 @@ import java.util.UUID
 import kotlin.math.cos
 import kotlin.math.sin
 
+@RegisterAbility
+@Suppress("unused")
 class SkillMastersAbility : BaseEffectsAbility(
     id = "skillmasters",
     defaultCooldown = "5m",
@@ -35,7 +38,7 @@ class SkillMastersAbility : BaseEffectsAbility(
     private var duration: String = "2m"
 
     override fun customActivate(player: Player) {
-        val plugin = ERaces.Companion.getInstance()
+        val plugin = ERaces.getInstance()
 
         if (active.contains(player.uniqueId)) {
             player.actionMsg("<red>Ты уже используешь способность 'Духовный щит'!")

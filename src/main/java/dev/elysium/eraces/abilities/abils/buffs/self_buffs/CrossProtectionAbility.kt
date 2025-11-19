@@ -3,6 +3,7 @@ package dev.elysium.eraces.abilities.abils.buffs.self_buffs
 import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.abilities.AbilityUtils
 import dev.elysium.eraces.abilities.ConfigHelper
+import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseCooldownAbility
 import dev.elysium.eraces.utils.actionMsg
 import org.bukkit.Bukkit
@@ -19,6 +20,8 @@ import java.util.UUID
 import kotlin.math.cos
 import kotlin.math.sin
 
+@RegisterAbility
+@Suppress("unused")
 class CrossProtectionAbility : BaseCooldownAbility(id = "crossprotection", defaultCooldown = "30s"), Listener {
     private val particleTasks = mutableMapOf<UUID, BukkitTask>()
     private val active = mutableSetOf<UUID>()
@@ -26,7 +29,7 @@ class CrossProtectionAbility : BaseCooldownAbility(id = "crossprotection", defau
     private var duration: String = "1s"
 
     override fun onActivate(player: Player) {
-        val plugin = ERaces.Companion.getInstance()
+        val plugin = ERaces.getInstance()
 
         if (active.contains(player.uniqueId)) {
             player.actionMsg("<red>Ты уже используешь способность 'Перекрестная защита'!")
@@ -64,7 +67,7 @@ class CrossProtectionAbility : BaseCooldownAbility(id = "crossprotection", defau
     }
 
     private fun startParticleTails(player: Player): BukkitTask {
-        val plugin = ERaces.Companion.getInstance()
+        val plugin = ERaces.getInstance()
         val world = player.world
         val color = Color.ORANGE
         var angle = 0.0

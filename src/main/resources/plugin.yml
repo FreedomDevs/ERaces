@@ -35,5 +35,6 @@ permissions:
 libraries:
   - org.jetbrains.kotlin:kotlin-stdlib:2.2.21
   - org.jetbrains.kotlin:kotlin-reflect:2.2.21
+  - io.github.classgraph:classgraph:4.8.184
   - org.xerial:sqlite-jdbc:3.51.0.0
   - org.luaj:luaj-jse:3.0.1

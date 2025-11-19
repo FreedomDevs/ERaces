@@ -2,6 +2,7 @@ package dev.elysium.eraces.abilities.abils.special.falling_objects
 
 import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.abilities.ConfigHelper
+import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseCooldownAbility
 import dev.elysium.eraces.utils.TimeParser
 import dev.elysium.eraces.utils.targetUtils.Target
@@ -18,6 +19,8 @@ import org.bukkit.potion.PotionEffectType
 import org.bukkit.scheduler.BukkitTask
 import kotlin.random.Random
 
+@RegisterAbility
+@Suppress("unused")
 class SupremeMagicianAbility : BaseCooldownAbility( id = "supreme_magician", defaultCooldown = "25m") {
     private var radius: Double = 5.0
     private var step: Double = 0.25
@@ -36,7 +39,7 @@ class SupremeMagicianAbility : BaseCooldownAbility( id = "supreme_magician", def
         var iterationsCount: Long = 0
 
         var task: BukkitTask? = null
-        task = Bukkit.getScheduler().runTaskTimer(ERaces.Companion.getInstance(), Runnable {
+        task = Bukkit.getScheduler().runTaskTimer(ERaces.getInstance(), Runnable {
             if (!player.isOnline && timeEnd < System.currentTimeMillis()) {
                 task!!.cancel()
                 return@Runnable

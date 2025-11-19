@@ -1,6 +1,7 @@
 package dev.elysium.eraces.abilities.abils.special.focus_target
 
 import dev.elysium.eraces.abilities.ConfigHelper
+import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseCooldownAbility
 import dev.elysium.eraces.utils.TimeParser
 import org.bukkit.configuration.file.YamlConfiguration
@@ -12,8 +13,10 @@ import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 import java.util.UUID
 
+@RegisterAbility
+@Suppress("unused")
 class FindMeIfYouCan : Listener, BaseCooldownAbility(id = "find_me_if_you_can", defaultCooldown = "3m") {
-    private var duration: String = "20s";
+    private var duration: String = "20s"
 
     private val playersOnEffect: MutableMap<UUID, Long> = mutableMapOf()
 

@@ -3,6 +3,7 @@ package dev.elysium.eraces.abilities.abils.support.ally_buffs
 import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.abilities.AbilityUtils
 import dev.elysium.eraces.abilities.ConfigHelper
+import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseCooldownAbility
 import dev.elysium.eraces.listeners.custom.ManaRegenerationEvent
 import org.bukkit.configuration.file.YamlConfiguration
@@ -11,6 +12,8 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import java.util.UUID
 
+@RegisterAbility
+@Suppress("unused")
 class StaticRadiusAbility : BaseCooldownAbility(id = "static_radius", defaultCooldown = "50s"), Listener {
     private var radius: Double = 4.0
     private var duration: String = "30s"
@@ -18,7 +21,7 @@ class StaticRadiusAbility : BaseCooldownAbility(id = "static_radius", defaultCoo
     private val boostedPlayers: MutableSet<UUID> = mutableSetOf()
 
     override fun onActivate(player: Player) {
-        val plugin = ERaces.Companion.getInstance()
+        val plugin = ERaces.getInstance()
         val nearPlayers = player.getNearbyEntities(radius, radius, radius).filterIsInstance<Player>().toMutableList()
 
         nearPlayers.add(player)

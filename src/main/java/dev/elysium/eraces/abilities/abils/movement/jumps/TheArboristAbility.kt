@@ -1,10 +1,13 @@
 package dev.elysium.eraces.abilities.abils.movement.jumps
 
 import dev.elysium.eraces.abilities.ConfigHelper
+import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseCooldownAbility
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.entity.Player
 
+@RegisterAbility
+@Suppress("unused")
 class TheArboristAbility : BaseCooldownAbility(
     id = "thearborist", defaultCooldown = "15s"
 ) {

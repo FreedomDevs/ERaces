@@ -25,8 +25,9 @@ repositories {
 }
 
 dependencies {
-    // Kotlin
+    // Reflections
     compileOnly("org.jetbrains.kotlin:kotlin-reflect")
+    compileOnly("io.github.classgraph:classgraph:4.8.184")
 
     // Paper
     compileOnly("io.papermc.paper:paper-api:1.21.10-R0.1-SNAPSHOT")

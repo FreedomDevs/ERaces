@@ -1,11 +1,14 @@
 package dev.elysium.eraces.abilities.abils.movement.dash
 
 import dev.elysium.eraces.abilities.ConfigHelper
+import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseCooldownAbility
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.entity.Player
 import org.bukkit.util.Vector
 
+@RegisterAbility
+@Suppress("unused")
 class HopSkipDeepAbility : BaseCooldownAbility(
     id = "hopSkipDeep", defaultCooldown = "15s"
 ) {

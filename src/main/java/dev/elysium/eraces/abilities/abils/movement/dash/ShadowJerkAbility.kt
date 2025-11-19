@@ -1,12 +1,15 @@
 package dev.elysium.eraces.abilities.abils.movement.dash
 
 import dev.elysium.eraces.abilities.ConfigHelper
+import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseEffectsAbility
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.entity.Player
 import org.bukkit.potion.PotionEffectType
 import org.bukkit.util.Vector
 
+@RegisterAbility
+@Suppress("unused")
 class ShadowJerkAbility: BaseEffectsAbility(
     id = "shadowjerk",
     defaultCooldown = "1m",

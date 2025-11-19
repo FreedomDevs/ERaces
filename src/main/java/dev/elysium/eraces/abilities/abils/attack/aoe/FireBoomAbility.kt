@@ -1,6 +1,7 @@
 package dev.elysium.eraces.abilities.abils.attack.aoe
 
 import dev.elysium.eraces.abilities.ConfigHelper
+import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseCooldownAbility
 import dev.elysium.eraces.utils.TimeParser
 import dev.elysium.eraces.utils.targetUtils.Target
@@ -13,6 +14,8 @@ import org.bukkit.Particle
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.entity.Player
 
+@RegisterAbility
+@Suppress("unused")
 class FireBoomAbility : BaseCooldownAbility(
     id = "fireboom",
     defaultCooldown = "15m"

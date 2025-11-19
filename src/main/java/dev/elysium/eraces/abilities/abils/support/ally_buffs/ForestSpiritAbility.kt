@@ -1,8 +1,11 @@
 package dev.elysium.eraces.abilities.abils.support.ally_buffs
 
+import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseEffectsAbility
 import org.bukkit.potion.PotionEffectType
 
+@RegisterAbility
+@Suppress("unused")
 class ForestSpiritAbility : BaseEffectsAbility(
     id = "forestspirit",
     defaultCooldown = "10m",

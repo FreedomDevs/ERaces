@@ -1,6 +1,7 @@
 package dev.elysium.eraces.abilities.abils.attack.aoe
 
 import dev.elysium.eraces.ERaces
+import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseEffectsAbility
 import dev.elysium.eraces.utils.TimeParser
 import dev.elysium.eraces.utils.targetUtils.Target
@@ -15,6 +16,8 @@ import org.bukkit.entity.Player
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 
+@RegisterAbility
+@Suppress("unused")
 class AmbushAbility : BaseEffectsAbility(
     id = "ambush", defaultCooldown = "20m",
     defaultEffects = linkedMapOf(
@@ -30,7 +33,7 @@ class AmbushAbility : BaseEffectsAbility(
     private var nauseaLevel: Int = 1
 
     override fun customActivate(player: Player) {
-        val plugin = ERaces.Companion.getInstance()
+        val plugin = ERaces.getInstance()
         var taskId = 0
         val elapsedSeconds = 0
 
@@ -39,7 +42,7 @@ class AmbushAbility : BaseEffectsAbility(
                 Bukkit.getScheduler().cancelTask(taskId)
                 return@Runnable
             }
-            Target.Companion.from(player)
+            Target.from(player)
                 .filter(TargetFilter.ENTITIES)
                 .inRadius(radius)
                 .excludeCaster()

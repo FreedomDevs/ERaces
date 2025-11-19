@@ -1,6 +1,7 @@
 package dev.elysium.eraces.abilities.abils.control.aoe_debuff
 
 import dev.elysium.eraces.abilities.ConfigHelper
+import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseEffectsAbility
 import dev.elysium.eraces.utils.EffectUtils
 import dev.elysium.eraces.utils.TimeParser
@@ -9,6 +10,8 @@ import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.entity.Player
 import org.bukkit.potion.PotionEffectType
 
+@RegisterAbility
+@Suppress("unused")
 class EroticCharmAbility : BaseEffectsAbility(
     id = "eroticcharm", defaultCooldown = "3m", defaultEffects = linkedMapOf(
         "slowness" to EffectData("5s", 250, PotionEffectType.SLOWNESS)

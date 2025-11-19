@@ -1,6 +1,7 @@
 package dev.elysium.eraces.abilities.abils.attack.magic_damage
 
 import dev.elysium.eraces.abilities.ConfigHelper
+import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseCooldownAbility
 import org.bukkit.Material
 import org.bukkit.configuration.file.YamlConfiguration
@@ -9,6 +10,8 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.PotionMeta
 import org.bukkit.potion.PotionType
 
+@RegisterAbility
+@Suppress("unused")
 class ArsenalAbility : BaseCooldownAbility(id = "arsenal", defaultCooldown = "5m") {
     private var effects: String = "POISON;SLOWNESS"
     private var count: Int = 16

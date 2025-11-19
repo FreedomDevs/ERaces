@@ -2,6 +2,7 @@ package dev.elysium.eraces.abilities.abils.attack.aoe
 
 import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.abilities.ConfigHelper
+import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseCooldownAbility
 import dev.elysium.eraces.utils.TimeParser
 import org.bukkit.Bukkit
@@ -15,6 +16,8 @@ import org.bukkit.scheduler.BukkitTask
 import org.bukkit.util.Vector
 import kotlin.random.Random
 
+@RegisterAbility
+@Suppress("unused")
 class ShellingAbility : BaseCooldownAbility( id = "shelling", defaultCooldown = "10m") {
     private var radius: Double = 5.0
     private var duration: String = "10s"
@@ -25,7 +28,7 @@ class ShellingAbility : BaseCooldownAbility( id = "shelling", defaultCooldown = 
         var iterationsCount: Long = 0
 
         var task: BukkitTask? = null
-        task = Bukkit.getScheduler().runTaskTimer(ERaces.Companion.getInstance(), Runnable {
+        task = Bukkit.getScheduler().runTaskTimer(ERaces.getInstance(), Runnable {
             if (!player.isOnline && timeEnd < System.currentTimeMillis()) {
                 task!!.cancel()
                 return@Runnable

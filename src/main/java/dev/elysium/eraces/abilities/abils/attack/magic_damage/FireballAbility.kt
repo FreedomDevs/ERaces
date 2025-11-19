@@ -1,6 +1,7 @@
 package dev.elysium.eraces.abilities.abils.attack.magic_damage
 
 import dev.elysium.eraces.abilities.ConfigHelper
+import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseTargetTrailAbility
 import dev.elysium.eraces.abilities.interfaces.IManaCostAbility
 import dev.elysium.eraces.utils.TimeParser
@@ -14,6 +15,8 @@ import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
 import kotlin.random.Random
 
+@RegisterAbility
+@Suppress("unused")
 class FireballAbility : BaseTargetTrailAbility(
     id = "fireball",
     defaultCooldown = "10m"

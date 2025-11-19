@@ -3,6 +3,7 @@ package dev.elysium.eraces.abilities.abils.buffs.mana
 import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.abilities.AbilityUtils
 import dev.elysium.eraces.abilities.ConfigHelper
+import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseEffectsAbility
 import dev.elysium.eraces.listeners.custom.ManaConsumeEvent
 import dev.elysium.eraces.listeners.custom.ManaRegenerationEvent
@@ -18,6 +19,8 @@ import java.util.UUID
 import kotlin.math.cos
 import kotlin.math.sin
 
+@RegisterAbility
+@Suppress("unused")
 class OldAcquaintancesAbility : BaseEffectsAbility(
     id = "oldacquaintances", defaultCooldown = "5m", defaultEffects = linkedMapOf(
         "regeneration" to EffectData("10s", 2, PotionEffectType.REGENERATION)
@@ -33,7 +36,7 @@ class OldAcquaintancesAbility : BaseEffectsAbility(
     private var manaConsumeTime: String = "2m"
 
     override fun customActivate(player: Player) {
-        val plugin = ERaces.Companion.getInstance()
+        val plugin = ERaces.getInstance()
 
         if (manaRegenBoost.contains(player.uniqueId) || manaConsumeBoost.contains(player.uniqueId)) {
             player.actionMsg( "<red>Ты уже используешь способность 'Старые знакомства'!")

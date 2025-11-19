@@ -1,6 +1,7 @@
 package dev.elysium.eraces.abilities.abils.movement.jumps
 
 import dev.elysium.eraces.abilities.ConfigHelper
+import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseCooldownAbility
 import org.bukkit.NamespacedKey
 import org.bukkit.attribute.Attribute
@@ -11,12 +12,14 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerMoveEvent
 
+@RegisterAbility
+@Suppress("unused")
 class DiveAbility : Listener, BaseCooldownAbility(id = "dive", defaultCooldown = "10m") {
     val key: NamespacedKey = NamespacedKey("eraces", "dive_ability")
     private var gravityMultiplier = -0.3
 
     @EventHandler
-    @Suppress("deprecation")
+    @Suppress("Deprecation")
     fun onMove(event: PlayerMoveEvent) {
         // Вроде как опасно для безопасности
         if (event.player.isOnGround) {

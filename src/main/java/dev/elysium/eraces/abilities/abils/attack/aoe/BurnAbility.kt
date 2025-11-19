@@ -1,6 +1,7 @@
 package dev.elysium.eraces.abilities.abils.attack.aoe
 
 import dev.elysium.eraces.abilities.ConfigHelper
+import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseTargetTrailAbility
 import dev.elysium.eraces.utils.TimeParser
 import dev.elysium.eraces.utils.targetUtils.ignite
@@ -8,6 +9,8 @@ import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
 
+@RegisterAbility
+@Suppress("unused")
 class BurnAbility : BaseTargetTrailAbility(
     id = "burn",
     defaultCooldown = "10m"

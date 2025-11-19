@@ -3,6 +3,7 @@ package dev.elysium.eraces.abilities.abils.movement.dash
 import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.abilities.AbilityUtils
 import dev.elysium.eraces.abilities.ConfigHelper
+import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseCooldownAbility
 import dev.elysium.eraces.utils.actionMsg
 import dev.elysium.eraces.utils.targetUtils.Target
@@ -15,6 +16,8 @@ import org.bukkit.Sound
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.entity.Player
 
+@RegisterAbility
+@Suppress("unused")
 class JerkAbility : BaseCooldownAbility(id = "jerk", defaultCooldown = "5m") {
     private var maxDistance = 15.0
     private var damageLine = 3.0
@@ -22,7 +25,7 @@ class JerkAbility : BaseCooldownAbility(id = "jerk", defaultCooldown = "5m") {
     private var damageThrough = 3.0
 
     override fun onActivate(player: Player) {
-        val plugin = ERaces.Companion.getInstance()
+        val plugin = ERaces.getInstance()
 
         player.safeDamage(damageCast)
         player.actionMsg("<blue>Ты совершаешь рывок вперёд!")

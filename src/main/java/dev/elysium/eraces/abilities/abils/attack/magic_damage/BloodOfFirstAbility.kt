@@ -1,6 +1,7 @@
 package dev.elysium.eraces.abilities.abils.attack.magic_damage
 
 import dev.elysium.eraces.abilities.ConfigHelper
+import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseEffectsAbility
 import dev.elysium.eraces.utils.TimeParser
 import dev.elysium.eraces.utils.targetUtils.Target
@@ -16,6 +17,8 @@ import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.potion.PotionEffectType
 import java.util.UUID
 
+@RegisterAbility
+@Suppress("unused")
 class BloodOfFirstAbility : Listener, BaseEffectsAbility(
     id = "blood_of_first", defaultCooldown = "30m",
 

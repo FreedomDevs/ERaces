@@ -3,6 +3,7 @@ package dev.elysium.eraces.abilities.abils.attack.aoe
 import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.abilities.AbilityUtils
 import dev.elysium.eraces.abilities.ConfigHelper
+import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseEffectsAbility
 import dev.elysium.eraces.utils.targetUtils.Target
 import dev.elysium.eraces.utils.targetUtils.effects.EffectsTarget
@@ -14,6 +15,8 @@ import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.entity.Player
 import org.bukkit.potion.PotionEffectType
 
+@RegisterAbility
+@Suppress("unused")
 class DeadlyRushAbility : BaseEffectsAbility(
     id = "deadlyrush", defaultCooldown = "30m",
 
@@ -28,7 +31,7 @@ class DeadlyRushAbility : BaseEffectsAbility(
     private var damagePerSeconds: Double = 1.0
 
     override fun customActivate(player: Player) {
-        val plugin = ERaces.Companion.getInstance()
+        val plugin = ERaces.getInstance()
 
         AbilityUtils.runRepeatingForDuration(plugin, duration) {
             Target.Companion.from(player)

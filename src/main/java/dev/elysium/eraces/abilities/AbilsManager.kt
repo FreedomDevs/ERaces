@@ -18,12 +18,15 @@ import dev.elysium.eraces.exceptions.base.PlayerException
 import dev.elysium.eraces.exceptions.internal.*
 import dev.elysium.eraces.exceptions.player.*
 import dev.elysium.eraces.utils.actionMsg
+import io.github.classgraph.ClassGraph
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.event.Listener
+import org.bukkit.plugin.java.JavaPlugin
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.TimeUnit
+import kotlin.reflect.full.createInstance
 
 /**
  * Менеджер всех способностей плагина.
@@ -66,59 +69,36 @@ class AbilsManager private constructor(private val plugin: ERaces) {
                 return
             }
 
-            instance = AbilsManager(plugin).apply { registerDefaultAbilities() }
+            instance = AbilsManager(plugin).apply { registerPackage(plugin, "dev.elysium.eraces.abilities.abils") }
             plugin.logger.info("AbilsManager успешно инициализирован.")
         }
     }
 
-    /**
-     * Регистрирует стандартные способности плагина.
-     * Автоматически вызывается при инициализации.
-     */
-    private fun registerDefaultAbilities() {
-        val defaultAbilities = listOf<IAbility>(
-            FireballAbility(),
-            BlockAbility(),
-            BossRushAbility(),
-            BurnAbility(),
-            ForestSpiritAbility(),
-            RageModeAbility(),
-            FireBoomAbility(),
-            TheMagicBarrierAbility(),
-            AfterimageAbility(),
-            DeadlyRushAbility(),
-            MasterTheForestAbility(),
-            AmbushAbility(),
-            BloodOfFirstAbility(),
-            SupremeMagicianAbility(),
-            ShellingAbility(),
-            ArsenalAbility(),
-            SharpClawsAbility(),
-            TheWingedWhirlwindAbility(),
-            TheFlameOfHealingAbility(),
-            FindHimIfYouCanAbility(),
-            EroticCharmAbility(),
-            FindMeIfYouCan(),
-            HopSkipDeepAbility(),
-            OldAcquaintancesAbility(),
-            SkillMastersAbility(),
-            JerkAbility(),
-            DiveAbility(),
-            CrossProtectionAbility(),
-            TerrifyingRageAbility(),
-            ShadowStepAbility(),
-            HolyBodyAbility(),
-            TurretAbility(),
-            AncientKnowledgeAbility(),
-            TheJerkAbility(),
-            ShadowJerkAbility(),
-            TheArboristAbility(),
-            StaticRadiusAbility(),
-            ShamanRadiusAbility(),
-            ForestAidAbility()
-        )
-        register(*defaultAbilities.toTypedArray())
-        plugin.logger.info("Зарегистрировано способностей: ${abilities.size}")
+    fun registerPackage(plugin: JavaPlugin, packageName: String) {
+        // TODO, как-то при выключении плагина способки отрегистрировать егошние
+        val scanResult = ClassGraph()
+            .enableAllInfo()
+            .acceptPackages(packageName)
+            .addClassLoader(plugin.javaClass.classLoader)
+            .scan()
+
+        val abils: MutableList<IAbility> = mutableListOf()
+        for (clsInfo in scanResult.getClassesWithAnnotation(RegisterAbility::class.java.name)) {
+            try {
+                // Создаём экземпляр через чистый Java Reflection
+                val ability = clsInfo.loadClass()
+                    .getDeclaredConstructor() // default constructor
+                    .newInstance() as IAbility
+
+                abils.add(ability)
+            } catch (e: Throwable) {
+                plugin.logger.warning("Не удалось создать способность ${clsInfo.name}: ${e.message}")
+            }
+        }
+
+
+        register(*abils.toTypedArray())
+        plugin.logger.info("Зарегистрировано способностей: ${abils.size}, на плагин: ${plugin.name}, (в сумме ${abilities.size})")
     }
 
     /**

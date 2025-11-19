@@ -3,6 +3,7 @@ package dev.elysium.eraces.abilities.abils.buffs.self_buffs
 import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.abilities.AbilityUtils
 import dev.elysium.eraces.abilities.ConfigHelper
+import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseEffectsAbility
 import dev.elysium.eraces.utils.targetUtils.Target
 import dev.elysium.eraces.utils.targetUtils.effects.EffectsTarget
@@ -13,6 +14,8 @@ import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.entity.Player
 import org.bukkit.potion.PotionEffectType
 
+@RegisterAbility
+@Suppress("unused")
 class AfterimageAbility : BaseEffectsAbility(
     id = "afterimage", defaultCooldown = "10m",
 
@@ -29,7 +32,7 @@ class AfterimageAbility : BaseEffectsAbility(
     override fun onActivate(player: Player) {
         super.onActivate(player)
 
-        val plugin = ERaces.Companion.getInstance()
+        val plugin = ERaces.getInstance()
 
         AbilityUtils.runRepeatingForDuration(plugin, duration) {
             Target.Companion.from(player)

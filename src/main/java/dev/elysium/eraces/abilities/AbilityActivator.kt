@@ -16,7 +16,8 @@ import dev.elysium.eraces.utils.actionMsg
 import org.bukkit.entity.Player
 
 class AbilityActivator(
-    private val abilities: Map<String, IAbility>
+    private val abilities: Map<String, IAbility>,
+    private val combos: ComboRegistry
 ) {
     fun activate(player: Player, id: String) {
         val context = ERaces.getInstance().context
@@ -77,15 +78,13 @@ class AbilityActivator(
     }
 
     fun activateByCombo(player: Player, combo: String) {
-        val ability = abilities.values
-            .filterIsInstance<IComboActivatable>()
-            .firstOrNull { it.getComboKey() == combo }
+        val abilityId = combos.getAbilityId(combo)
 
-        if (ability == null) {
+        if (abilityId == null) {
             player.actionMsg("<red>Нет способности, назначенной на комбинацию <yellow>$combo")
             return
         }
 
-        activate(player, (ability as IAbility).id)
+        activate(player, abilityId)
     }
 }

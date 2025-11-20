@@ -24,8 +24,9 @@ class AbilsManager private constructor(private val plugin: ERaces) {
     /** Все зарегистрированные способности по их уникальному ID */
     private val abilities: MutableMap<String, IAbility> = mutableMapOf()
 
-    private val registrar = AbilityRegistrar(plugin, abilities)
-    private val activator = AbilityActivator(abilities)
+    private val comboRegistry = ComboRegistry()
+    private val registrar = AbilityRegistrar(plugin, abilities, comboRegistry)
+    private val activator = AbilityActivator(abilities, comboRegistry)
 
     companion object {
         @Volatile

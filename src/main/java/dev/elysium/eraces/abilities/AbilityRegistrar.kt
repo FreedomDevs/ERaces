@@ -8,8 +8,11 @@ import org.bukkit.Bukkit
 import org.bukkit.event.Listener
 
 class AbilityRegistrar(
-    private val plugin: ERaces, private val abilities: MutableMap<String, IAbility>
+    private val plugin: ERaces,
+    private val abilities: MutableMap<String, IAbility>,
+    private val comboRegistry: ComboRegistry
 ) {
+
     fun register(vararg toAdd: IAbility) {
         for (ability in toAdd) {
 
@@ -59,18 +62,15 @@ class AbilityRegistrar(
         val combo = ability.getComboKey()
         if (combo.isNullOrBlank()) return
 
-        val duplicate = abilities.values
-            .filterIsInstance<IComboActivatable>()
-            .firstOrNull { it.getComboKey() == combo }
+        val existing = comboRegistry.getAbilityId(combo)
 
-        if (duplicate != null) {
-            val dupId = (duplicate as? IAbility)?.id ?: "unknown"
-
+        if (existing != null) {
             plugin.logger.warning(
-                "Дубликат comboKey '$combo' у способностей '$dupId' и '${ability.id}'. " +
-                        "Комбинация будет работать только для первой."
+                "Дубликат comboKey '$combo': уже назначен для '$existing'. " +
+                        "Способность '${ability.id}' пропущена."
             )
+        } else {
+            comboRegistry.registerCombo(ability)
         }
     }
-
 }

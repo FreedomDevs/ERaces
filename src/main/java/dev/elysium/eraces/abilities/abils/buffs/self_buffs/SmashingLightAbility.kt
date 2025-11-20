@@ -1,8 +1,10 @@
 package dev.elysium.eraces.abilities.abils.buffs.self_buffs
 
+import dev.elysium.eraces.abilities.ConfigHelper
 import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseCooldownAbility
 import org.bukkit.attribute.Attribute
+import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -20,9 +22,9 @@ data class PlayerAbilityData(
 @Suppress("unused")
 class SmashingLightAbility : BaseCooldownAbility(id = "smashinglight", defaultCooldown = "2m"), Listener {
 
-    private val MAX_DAMAGE_BONUS_PERCENT = 80;
-    private val MIN_DAMAGE_BONUS_PERCENT = 50;
-    private val HITS_AMOUNT = 3;
+    private var MAX_DAMAGE_BONUS_PERCENT = 80;
+    private var MIN_DAMAGE_BONUS_PERCENT = 50;
+    private var HITS_AMOUNT = 3;
     //трекаем состояние
     private val PLAYER_ABILITY_DATA: MutableMap<UUID, PlayerAbilityData> = mutableMapOf()
 
@@ -87,5 +89,21 @@ class SmashingLightAbility : BaseCooldownAbility(id = "smashinglight", defaultCo
         val bonusPercent = (MAX_DAMAGE_BONUS_PERCENT..MIN_DAMAGE_BONUS_PERCENT).random().toDouble() * 0.01;
 
         return totalDamage * bonusPercent;
+    }
+
+    override fun loadCustomParams(cfg: YamlConfiguration) {
+        ConfigHelper.with(cfg) {
+            read("hitsAmount", ::HITS_AMOUNT)
+            read("maxDamageBonusPercent", ::MAX_DAMAGE_BONUS_PERCENT)
+            read("minDamageBonusPercent", ::MIN_DAMAGE_BONUS_PERCENT)
+        }
+    }
+
+    override fun writeCustomDefaults(cfg: YamlConfiguration) {
+        ConfigHelper.with(cfg) {
+            write("hitsAmount", HITS_AMOUNT)
+            write("maxDamageBonusPercent", MAX_DAMAGE_BONUS_PERCENT)
+            write("minDamageBonusPercent", MIN_DAMAGE_BONUS_PERCENT)
+        }
     }
 }

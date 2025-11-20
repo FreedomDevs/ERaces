@@ -1,8 +1,6 @@
 package dev.elysium.eraces.abilities
 
 import dev.elysium.eraces.ERaces
-import dev.elysium.eraces.abilities.interfaces.IAbility
-import dev.elysium.eraces.abilities.interfaces.IComboActivatable
 import dev.elysium.eraces.abilities.interfaces.ICooldownAbility
 import dev.elysium.eraces.abilities.interfaces.IManaCostAbility
 import dev.elysium.eraces.exceptions.ExceptionProcessor
@@ -12,12 +10,12 @@ import dev.elysium.eraces.exceptions.player.PlayerAbilityNotFoundException
 import dev.elysium.eraces.exceptions.player.PlayerAbilityNotOwnedException
 import dev.elysium.eraces.exceptions.player.PlayerAbilityOnCooldownException
 import dev.elysium.eraces.exceptions.player.PlayerRaceNotSelectedException
-import dev.elysium.eraces.utils.actionMsg
 import org.bukkit.entity.Player
 
 class AbilityActivator(
     private val registry: AbilityRegistry,
-    private val combos: ComboRegistry
+    private val combos: ComboRegistry,
+    private val messenger: IAbilityMessenger
 ) {
     fun activate(player: Player, id: String) {
         val context = ERaces.getInstance().context
@@ -40,7 +38,7 @@ class AbilityActivator(
                 val current = manaManager.getMana(player)
 
                 if (current < cost) {
-                    player.actionMsg("<red>Недостаточно маны! Нужно <yellow>$cost<red>, у тебя <yellow>$current")
+                    messenger.send(player,"<red>Недостаточно маны! Нужно <yellow>$cost<red>, у тебя <yellow>$current")
                     return
                 }
 
@@ -81,7 +79,7 @@ class AbilityActivator(
         val abilityId = combos.getAbilityId(combo)
 
         if (abilityId == null) {
-            player.actionMsg("<red>Нет способности, назначенной на комбинацию <yellow>$combo")
+            messenger.send(player,"<red>Нет способности, назначенной на комбинацию <yellow>$combo")
             return
         }
 

@@ -64,30 +64,11 @@ class AbilsManager private constructor(private val plugin: ERaces) {
     }
 
     fun registerPackage(plugin: JavaPlugin, packageName: String) {
-        val scanResult = ClassGraph()
-            .enableAllInfo()
-            .acceptPackages(packageName)
-            .addClassLoader(plugin.javaClass.classLoader)
-            .scan()
-
-        val abils: MutableList<IAbility> = mutableListOf()
-
-        for (clsInfo in scanResult.getClassesWithAnnotation(RegisterAbility::class.java.name)) {
-            try {
-                val ability = clsInfo.loadClass()
-                    .getDeclaredConstructor()
-                    .newInstance() as IAbility
-
-                abils.add(ability)
-            } catch (e: Throwable) {
-                plugin.logger.warning("Не удалось создать способность ${clsInfo.name}: ${e.message}")
-            }
-        }
-
-        register(*abils.toTypedArray())
+        val scanned = AbilityScanner.scan(plugin, packageName)
+        register(*scanned.toTypedArray())
 
         plugin.logger.info(
-            "Зарегистрировано ${abils.size} способностей для плагина ${plugin.name}. " +
+            "Зарегистрировано ${scanned.size} способностей для плагина ${plugin.name}. " +
                     "Текущее общее количество: ${abilities.size}"
         )
     }

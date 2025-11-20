@@ -1,16 +1,15 @@
 package dev.elysium.eraces.abilities
 
-import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.abilities.interfaces.IAbility
 import dev.elysium.eraces.abilities.interfaces.IComboActivatable
 import dev.elysium.eraces.exceptions.internal.AbilityRegistrationException
-import org.bukkit.Bukkit
 import org.bukkit.event.Listener
 
 class AbilityRegistrar(
-    private val plugin: ERaces,
     private val registry: AbilityRegistry,
-    private val comboRegistry: ComboRegistry
+    private val combos: ComboRegistry,
+    private val logger: IAbilityLogger,
+    private val env: IAbilityEnvironment
 ) {
 
     fun register(vararg toAdd: IAbility) {
@@ -32,7 +31,7 @@ class AbilityRegistrar(
         val id = ability.id
 
         if (registry.contains(id)) {
-            plugin.logger.warning("Способность с id '$id' уже зарегистрирована, пропущена.")
+            logger.warn("Способность с id '$id' уже зарегистрирована, пропущена.")
             return
         }
 
@@ -41,19 +40,19 @@ class AbilityRegistrar(
         warnIfDuplicateCombo(ability)
 
         registry.register(ability)
-        plugin.logger.info("Зарегистрирована способность: $id")
+        logger.info("Зарегистрирована способность: $id")
     }
 
     private fun registerListenerIfNeeded(ability: IAbility) {
         if (ability is Listener) {
-            Bukkit.getPluginManager().registerEvents(ability, plugin)
-            plugin.logger.info("Listener для способности '${ability.id}' зарегистрирован.")
+            env.registerListener(ability)
+            logger.info("Listener для способности '${ability.id}' зарегистрирован.")
         }
     }
 
     private fun loadConfigs(ability: IAbility) {
-        ability.saveDefaultConfig(plugin)
-        ability.loadConfig(plugin)
+        env.saveDefaultConfig(ability)
+        env.loadConfig(ability)
     }
 
     private fun warnIfDuplicateCombo(ability: IAbility) {
@@ -62,15 +61,13 @@ class AbilityRegistrar(
         val combo = ability.getComboKey()
         if (combo.isNullOrBlank()) return
 
-        val existing = comboRegistry.getAbilityId(combo)
+        val existing = combos.getAbilityId(combo)
 
         if (existing != null) {
-            plugin.logger.warning(
-                "Дубликат comboKey '$combo': уже назначен для '$existing'. " +
-                        "Способность '${ability.id}' пропущена."
-            )
+            logger.warn("Дубликат comboKey '$combo': уже назначен для '$existing'. " +
+                    "Способность '${ability.id}' пропущена.")
         } else {
-            comboRegistry.registerCombo(ability)
+            combos.registerCombo(ability)
         }
     }
 }

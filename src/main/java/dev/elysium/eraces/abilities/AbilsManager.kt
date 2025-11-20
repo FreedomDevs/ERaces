@@ -2,20 +2,9 @@ package dev.elysium.eraces.abilities
 
 import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.abilities.interfaces.*
-import dev.elysium.eraces.exceptions.ExceptionProcessor
-import dev.elysium.eraces.exceptions.base.PlayerException
-import dev.elysium.eraces.exceptions.internal.*
 import dev.elysium.eraces.exceptions.player.*
-import dev.elysium.eraces.utils.actionMsg
-import io.github.classgraph.ClassGraph
-import org.bukkit.Bukkit
 import org.bukkit.entity.Player
-import org.bukkit.event.Listener
 import org.bukkit.plugin.java.JavaPlugin
-import java.util.*
-import java.util.concurrent.ConcurrentHashMap
-import java.util.concurrent.TimeUnit
-import kotlin.reflect.full.createInstance
 
 /**
  * Менеджер всех способностей плагина.
@@ -36,6 +25,7 @@ class AbilsManager private constructor(private val plugin: ERaces) {
     private val abilities: MutableMap<String, IAbility> = mutableMapOf()
 
     private val registrar = AbilityRegistrar(plugin, abilities)
+    private val activator = AbilityActivator(abilities)
 
     companion object {
         @Volatile
@@ -95,53 +85,7 @@ class AbilsManager private constructor(private val plugin: ERaces) {
      * @throws PlayerAbilityOnCooldownException если способность на кулдауне
      */
     fun activate(player: Player, id: String) {
-        val context = ERaces.getInstance().context
-        val ability = abilities[id]
-        val race = context.playerDataManager.getPlayerRace(player)
-
-        if (ability == null) throw PlayerAbilityNotFoundException(player, id)
-        if (race == null) throw PlayerRaceNotSelectedException(player)
-        if (id !in race.abilities) throw PlayerAbilityNotOwnedException(player, id)
-
-        if (ability is IManaCostAbility) {
-            val manaCost = ability.getManaCost()
-            if (manaCost > 0) {
-                val manaManager = context.manaManager
-                val currentMana = manaManager.getMana(player)
-
-                if (currentMana < manaCost) {
-                    player.actionMsg("<red>Недостаточно маны! Нужно <yellow>$manaCost<red>, у тебя <yellow>$currentMana")
-                    return
-                }
-
-                manaManager.useMana(player, manaCost)
-            }
-        }
-
-        if (ability is ICooldownAbility && AbilityCooldownManager.hasCooldown(player, id)) {
-            val remaining = AbilityCooldownManager.getRemaining(player, id)
-            throw PlayerAbilityOnCooldownException(player, id, remaining)
-        }
-
-        try {
-            if (ability is ICooldownAbility) {
-                val cooldown = ability.getCooldown()
-                if (cooldown > 0) {
-                    AbilityCooldownManager.setCooldown(player, id, cooldown)
-                }
-            }
-
-            ability.activate(player)
-        } catch (e: PlayerException) {
-            e.handle()
-        } catch (t: Throwable) {
-            ExceptionProcessor.process(t, player)
-            AbilityActivationException(
-                "Ошибка при активации способности '$id' у игрока ${player.name}",
-                t,
-                player
-            ).handle()
-        }
+        activator.activate(player, id)
     }
 
     /**
@@ -176,15 +120,6 @@ class AbilsManager private constructor(private val plugin: ERaces) {
      * @param combo комбо-код способности
      */
     fun activateByCombo(player: Player, combo: String) {
-        val ability = abilities.values
-            .filterIsInstance<IComboActivatable>()
-            .firstOrNull { it.getComboKey() == combo }
-
-        if (ability == null) {
-            player.actionMsg("<red>Нет способности, назначенной на комбинацию <yellow>$combo")
-            return
-        }
-
-        activate(player, (ability as IAbility).id)
+        activator.activateByCombo(player, combo)
     }
 }

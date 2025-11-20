@@ -187,8 +187,8 @@ class AbilsManager private constructor(private val plugin: ERaces) {
             }
         }
 
-        if (ability is ICooldownAbility && CooldownManager.hasCooldown(player, id)) {
-            val remaining = CooldownManager.getRemaining(player, id)
+        if (ability is ICooldownAbility && AbilityCooldownManager.hasCooldown(player, id)) {
+            val remaining = AbilityCooldownManager.getRemaining(player, id)
             throw PlayerAbilityOnCooldownException(player, id, remaining)
         }
 
@@ -196,7 +196,7 @@ class AbilsManager private constructor(private val plugin: ERaces) {
             if (ability is ICooldownAbility) {
                 val cooldown = ability.getCooldown()
                 if (cooldown > 0) {
-                    CooldownManager.setCooldown(player, id, cooldown)
+                    AbilityCooldownManager.setCooldown(player, id, cooldown)
                 }
             }
 
@@ -220,7 +220,7 @@ class AbilsManager private constructor(private val plugin: ERaces) {
      * @param abilityId ID способности
      */
     fun clearCooldown(player: Player, abilityId: String) {
-        CooldownManager.resetCooldown(player, abilityId)
+        AbilityCooldownManager.resetCooldown(player, abilityId)
     }
 
     /**
@@ -255,33 +255,5 @@ class AbilsManager private constructor(private val plugin: ERaces) {
         }
 
         activate(player, (ability as IAbility).id)
-    }
-
-    /**
-     * Внутренний менеджер кулдаунов способностей.
-     * Хранит время окончания кулдауна для каждого игрока и способности.
-     */
-    private object CooldownManager {
-        private val cooldowns: MutableMap<UUID, MutableMap<String, Long>> = ConcurrentHashMap()
-
-        fun hasCooldown(player: Player, abilityId: String): Boolean {
-            return (cooldowns[player.uniqueId]?.get(abilityId) ?: return false) >
-                    System.currentTimeMillis()
-        }
-
-        fun getRemaining(player: Player, abilityId: String): Long {
-            val expireTime = cooldowns[player.uniqueId]?.get(abilityId) ?: return 0
-            val remaining = expireTime - System.currentTimeMillis()
-            return if (remaining > 0) TimeUnit.MILLISECONDS.toSeconds(remaining) else 0
-        }
-
-        fun setCooldown(player: Player, abilityId: String, seconds: Long) {
-            val playerCooldowns = cooldowns.computeIfAbsent(player.uniqueId) { ConcurrentHashMap() }
-            playerCooldowns[abilityId] = System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(seconds)
-        }
-
-        fun resetCooldown(player: Player, abilityId: String) {
-            cooldowns[player.uniqueId]?.remove(abilityId)
-        }
     }
 }

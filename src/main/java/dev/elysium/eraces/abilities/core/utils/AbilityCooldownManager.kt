@@ -1,4 +1,4 @@
-package dev.elysium.eraces.abilities
+package dev.elysium.eraces.abilities.core.utils
 
 import org.bukkit.entity.Player
 import java.util.UUID

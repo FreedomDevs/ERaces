@@ -1,6 +1,9 @@
 package dev.elysium.eraces.abilities
 
 import dev.elysium.eraces.ERaces
+import dev.elysium.eraces.abilities.core.activator.AbilityFactory
+import dev.elysium.eraces.abilities.core.utils.AbilityCooldownManager
+import dev.elysium.eraces.abilities.core.utils.AbilityScanner
 import dev.elysium.eraces.abilities.interfaces.*
 import dev.elysium.eraces.exceptions.player.*
 import org.bukkit.entity.Player

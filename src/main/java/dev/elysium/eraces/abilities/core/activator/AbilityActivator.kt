@@ -1,6 +1,10 @@
-package dev.elysium.eraces.abilities
+package dev.elysium.eraces.abilities.core.activator
 
 import dev.elysium.eraces.ERaces
+import dev.elysium.eraces.abilities.core.utils.AbilityCooldownManager
+import dev.elysium.eraces.abilities.core.interfaces.IAbilityMessenger
+import dev.elysium.eraces.abilities.core.registry.AbilityRegistry
+import dev.elysium.eraces.abilities.core.registry.ComboRegistry
 import dev.elysium.eraces.abilities.interfaces.ICooldownAbility
 import dev.elysium.eraces.abilities.interfaces.IManaCostAbility
 import dev.elysium.eraces.exceptions.ExceptionProcessor
@@ -18,7 +22,7 @@ class AbilityActivator(
     private val messenger: IAbilityMessenger
 ) {
     fun activate(player: Player, id: String) {
-        val context = ERaces.getInstance().context
+        val context = ERaces.Companion.getInstance().context
         val ability = registry.get(id)
         val race = context.playerDataManager.getPlayerRace(player)
 

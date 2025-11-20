@@ -1,5 +1,7 @@
-package dev.elysium.eraces.abilities
+package dev.elysium.eraces.abilities.core.utils
 
+import dev.elysium.eraces.abilities.RegisterAbility
+import dev.elysium.eraces.abilities.core.activator.AbilityFactory
 import dev.elysium.eraces.abilities.interfaces.IAbility
 import io.github.classgraph.ClassGraph
 import org.bukkit.plugin.java.JavaPlugin

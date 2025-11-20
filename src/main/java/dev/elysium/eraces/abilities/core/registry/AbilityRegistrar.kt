@@ -1,5 +1,9 @@
-package dev.elysium.eraces.abilities
+package dev.elysium.eraces.abilities.core.registry
 
+import dev.elysium.eraces.abilities.core.registry.AbilityRegistry
+import dev.elysium.eraces.abilities.core.registry.ComboRegistry
+import dev.elysium.eraces.abilities.core.interfaces.IAbilityEnvironment
+import dev.elysium.eraces.abilities.core.interfaces.IAbilityLogger
 import dev.elysium.eraces.abilities.interfaces.IAbility
 import dev.elysium.eraces.abilities.interfaces.IComboActivatable
 import dev.elysium.eraces.exceptions.internal.AbilityRegistrationException

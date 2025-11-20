@@ -1,4 +1,4 @@
-package dev.elysium.eraces.abilities
+package dev.elysium.eraces.abilities.core.registry
 
 import dev.elysium.eraces.abilities.interfaces.IAbility
 

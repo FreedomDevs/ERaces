@@ -1,4 +1,4 @@
-package dev.elysium.eraces.abilities
+package dev.elysium.eraces.abilities.core.interfaces
 
 interface IAbilityLogger {
     fun info(message: String)

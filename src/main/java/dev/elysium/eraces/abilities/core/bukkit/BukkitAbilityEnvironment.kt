@@ -1,6 +1,7 @@
-package dev.elysium.eraces.abilities
+package dev.elysium.eraces.abilities.core.bukkit
 
 import dev.elysium.eraces.ERaces
+import dev.elysium.eraces.abilities.core.interfaces.IAbilityEnvironment
 import dev.elysium.eraces.abilities.interfaces.IAbility
 import org.bukkit.Bukkit
 import org.bukkit.event.Listener

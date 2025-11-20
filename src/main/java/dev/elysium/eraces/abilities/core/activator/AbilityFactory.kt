@@ -1,4 +1,4 @@
-package dev.elysium.eraces.abilities
+package dev.elysium.eraces.abilities.core.activator
 
 import dev.elysium.eraces.abilities.interfaces.IAbility
 import kotlin.reflect.KClass

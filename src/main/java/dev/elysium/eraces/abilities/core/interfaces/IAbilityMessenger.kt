@@ -1,4 +1,4 @@
-package dev.elysium.eraces.abilities
+package dev.elysium.eraces.abilities.core.interfaces
 
 import org.bukkit.entity.Player
 

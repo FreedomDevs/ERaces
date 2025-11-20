@@ -1,5 +1,6 @@
-package dev.elysium.eraces.abilities
+package dev.elysium.eraces.abilities.core.bukkit
 
+import dev.elysium.eraces.abilities.core.interfaces.IAbilityMessenger
 import dev.elysium.eraces.utils.actionMsg
 import org.bukkit.entity.Player
 

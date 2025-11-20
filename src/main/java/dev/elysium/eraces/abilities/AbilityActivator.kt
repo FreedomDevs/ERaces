@@ -16,12 +16,12 @@ import dev.elysium.eraces.utils.actionMsg
 import org.bukkit.entity.Player
 
 class AbilityActivator(
-    private val abilities: Map<String, IAbility>,
+    private val registry: AbilityRegistry,
     private val combos: ComboRegistry
 ) {
     fun activate(player: Player, id: String) {
         val context = ERaces.getInstance().context
-        val ability = abilities[id]
+        val ability = registry.get(id)
         val race = context.playerDataManager.getPlayerRace(player)
 
         if (ability == null)

@@ -9,7 +9,7 @@ import org.bukkit.event.Listener
 
 class AbilityRegistrar(
     private val plugin: ERaces,
-    private val abilities: MutableMap<String, IAbility>,
+    private val registry: AbilityRegistry,
     private val comboRegistry: ComboRegistry
 ) {
 
@@ -31,7 +31,7 @@ class AbilityRegistrar(
     private fun registerSingle(ability: IAbility) {
         val id = ability.id
 
-        if (abilities.containsKey(id)) {
+        if (registry.contains(id)) {
             plugin.logger.warning("Способность с id '$id' уже зарегистрирована, пропущена.")
             return
         }
@@ -40,7 +40,7 @@ class AbilityRegistrar(
         loadConfigs(ability)
         warnIfDuplicateCombo(ability)
 
-        abilities[id] = ability
+        registry.register(ability)
         plugin.logger.info("Зарегистрирована способность: $id")
     }
 

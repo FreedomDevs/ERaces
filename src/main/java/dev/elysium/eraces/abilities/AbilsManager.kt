@@ -21,12 +21,11 @@ import org.bukkit.plugin.java.JavaPlugin
  */
 class AbilsManager private constructor(private val plugin: ERaces) {
 
-    /** Все зарегистрированные способности по их уникальному ID */
-    private val abilities: MutableMap<String, IAbility> = mutableMapOf()
+    private val abilityRegistry = AbilityRegistry()
 
     private val comboRegistry = ComboRegistry()
-    private val registrar = AbilityRegistrar(plugin, abilities, comboRegistry)
-    private val activator = AbilityActivator(abilities, comboRegistry)
+    private val registrar = AbilityRegistrar(plugin, abilityRegistry, comboRegistry)
+    private val activator = AbilityActivator(abilityRegistry, comboRegistry)
 
     companion object {
         @Volatile
@@ -62,7 +61,7 @@ class AbilsManager private constructor(private val plugin: ERaces) {
 
         plugin.logger.info(
             "Зарегистрировано ${scanned.size} способностей для плагина ${plugin.name}. " +
-                    "Текущее общее количество: ${abilities.size}"
+                    "Текущее общее количество: ${abilityRegistry.size()}"
         )
     }
 
@@ -105,14 +104,14 @@ class AbilsManager private constructor(private val plugin: ERaces) {
      * @param id ID способности
      * @return экземпляр способности или null, если не зарегистрирована
      */
-    fun getAbility(id: String): IAbility? = abilities[id]
+    fun getAbility(id: String): IAbility? = abilityRegistry.get(id)
 
     /**
      * Возвращает все зарегистрированные способности.
      *
      * @return список всех способностей
      */
-    fun getAllAbilities(): List<IAbility> = abilities.values.toList()
+    fun getAllAbilities(): List<IAbility> = abilityRegistry.getAll().toList()
 
     /**
      * Активация способности игроком по комбо-коду.

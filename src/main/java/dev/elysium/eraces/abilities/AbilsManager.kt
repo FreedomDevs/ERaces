@@ -21,11 +21,7 @@ import org.bukkit.plugin.java.JavaPlugin
  */
 class AbilsManager private constructor(private val plugin: ERaces) {
 
-    private val abilityRegistry = AbilityRegistry()
-
-    private val comboRegistry = ComboRegistry()
-    private val registrar = AbilityRegistrar(plugin, abilityRegistry, comboRegistry)
-    private val activator = AbilityActivator(abilityRegistry, comboRegistry)
+    private val context = AbilityContext(plugin)
 
     companion object {
         @Volatile
@@ -57,11 +53,11 @@ class AbilsManager private constructor(private val plugin: ERaces) {
 
     fun registerPackage(plugin: JavaPlugin, packageName: String) {
         val scanned = AbilityScanner.scan(plugin, packageName)
-        registrar.register(*scanned.toTypedArray())
+        context.registrar.register(*scanned.toTypedArray())
 
         plugin.logger.info(
             "Зарегистрировано ${scanned.size} способностей для плагина ${plugin.name}. " +
-                    "Текущее общее количество: ${abilityRegistry.size()}"
+                    "Текущее общее количество: ${context.registry.size()}"
         )
     }
 
@@ -85,7 +81,7 @@ class AbilsManager private constructor(private val plugin: ERaces) {
      * @throws PlayerAbilityOnCooldownException если способность на кулдауне
      */
     fun activate(player: Player, id: String) {
-        activator.activate(player, id)
+        context.activator.activate(player, id)
     }
 
     /**
@@ -104,14 +100,14 @@ class AbilsManager private constructor(private val plugin: ERaces) {
      * @param id ID способности
      * @return экземпляр способности или null, если не зарегистрирована
      */
-    fun getAbility(id: String): IAbility? = abilityRegistry.get(id)
+    fun getAbility(id: String): IAbility? = context.registry.get(id)
 
     /**
      * Возвращает все зарегистрированные способности.
      *
      * @return список всех способностей
      */
-    fun getAllAbilities(): List<IAbility> = abilityRegistry.getAll().toList()
+    fun getAllAbilities(): List<IAbility> = context.registry.getAll().toList()
 
     /**
      * Активация способности игроком по комбо-коду.
@@ -120,6 +116,6 @@ class AbilsManager private constructor(private val plugin: ERaces) {
      * @param combo комбо-код способности
      */
     fun activateByCombo(player: Player, combo: String) {
-        activator.activateByCombo(player, combo)
+        context.activator.activateByCombo(player, combo)
     }
 }

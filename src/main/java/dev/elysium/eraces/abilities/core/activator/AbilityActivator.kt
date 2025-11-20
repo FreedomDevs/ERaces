@@ -1,8 +1,9 @@
 package dev.elysium.eraces.abilities.core.activator
 
-import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.abilities.core.utils.AbilityCooldownManager
 import dev.elysium.eraces.abilities.core.interfaces.IAbilityMessenger
+import dev.elysium.eraces.abilities.core.interfaces.providers.IManaProvider
+import dev.elysium.eraces.abilities.core.interfaces.providers.IPlayerDataProvider
 import dev.elysium.eraces.abilities.core.registry.AbilityRegistry
 import dev.elysium.eraces.abilities.core.registry.ComboRegistry
 import dev.elysium.eraces.abilities.interfaces.ICooldownAbility
@@ -19,12 +20,13 @@ import org.bukkit.entity.Player
 class AbilityActivator(
     private val registry: AbilityRegistry,
     private val combos: ComboRegistry,
-    private val messenger: IAbilityMessenger
+    private val messenger: IAbilityMessenger,
+    private val playerDataProvider: IPlayerDataProvider,
+    private val manaProvider: IManaProvider
 ) {
     fun activate(player: Player, id: String) {
-        val context = ERaces.Companion.getInstance().context
         val ability = registry.get(id)
-        val race = context.playerDataManager.getPlayerRace(player)
+        val race = playerDataProvider.getPlayerRace(player)
 
         if (ability == null)
             throw PlayerAbilityNotFoundException(player, id)
@@ -38,15 +40,14 @@ class AbilityActivator(
         if (ability is IManaCostAbility) {
             val cost = ability.getManaCost()
             if (cost > 0) {
-                val manaManager = context.manaManager
-                val current = manaManager.getMana(player)
+                val current = manaProvider.getMana(player)
 
                 if (current < cost) {
                     messenger.send(player,"<red>Недостаточно маны! Нужно <yellow>$cost<red>, у тебя <yellow>$current")
                     return
                 }
 
-                manaManager.useMana(player, cost)
+                manaProvider.useMana(player, cost)
             }
         }
 

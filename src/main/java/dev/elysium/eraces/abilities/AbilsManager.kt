@@ -35,6 +35,8 @@ class AbilsManager private constructor(private val plugin: ERaces) {
     /** Все зарегистрированные способности по их уникальному ID */
     private val abilities: MutableMap<String, IAbility> = mutableMapOf()
 
+    private val registrar = AbilityRegistrar(plugin, abilities)
+
     companion object {
         @Volatile
         private var instance: AbilsManager? = null
@@ -65,64 +67,12 @@ class AbilsManager private constructor(private val plugin: ERaces) {
 
     fun registerPackage(plugin: JavaPlugin, packageName: String) {
         val scanned = AbilityScanner.scan(plugin, packageName)
-        register(*scanned.toTypedArray())
+        registrar.register(*scanned.toTypedArray())
 
         plugin.logger.info(
             "Зарегистрировано ${scanned.size} способностей для плагина ${plugin.name}. " +
                     "Текущее общее количество: ${abilities.size}"
         )
-    }
-
-    /**
-     * Регистрирует одну или несколько способностей.
-     * Проверяет дубликаты, сохраняет конфигурацию и логирует успешную регистрацию.
-     *
-     * @param abilitiesToAdd список способностей для регистрации
-     */
-    private fun register(vararg abilitiesToAdd: IAbility) {
-        for (ability in abilitiesToAdd) {
-            try {
-                if (abilities.containsKey(ability.id)) {
-                    plugin.logger.warning("Способность с id '${ability.id}' уже зарегистрирована, пропущена.")
-                    continue
-                }
-
-                if (ability is Listener) {
-                    Bukkit.getPluginManager().registerEvents(ability, ERaces.getInstance())
-                    plugin.logger.info("Listener для способности '${ability.id}' зарегистрирован.")
-                }
-
-                ability.saveDefaultConfig(plugin)
-                ability.loadConfig(plugin)
-
-                if (ability is IComboActivatable) {
-                    val combo = ability.getComboKey()
-
-                    if (!combo.isNullOrBlank()) {
-                        val duplicate = abilities.values
-                            .filterIsInstance<IComboActivatable>()
-                            .firstOrNull { it.getComboKey() == combo }
-
-                        if (duplicate != null) {
-                            val dupId = (duplicate as? IAbility)?.id ?: "unknown"
-                            plugin.logger.warning(
-                                "Дубликат comboKey '$combo' у способностей '$dupId' и '${ability.id}'. " +
-                                        "Комбинация будет работать только для первой зарегистрированной способности."
-                            )
-                        }
-                    }
-                }
-
-                abilities[ability.id] = ability
-                plugin.logger.info("Зарегистрирована способность: ${ability.id}")
-            } catch (e: Exception) {
-                AbilityRegistrationException(
-                    "Ошибка при регистрации способности '${ability.id}'",
-                    e,
-                    ability.id
-                ).handle()
-            }
-        }
     }
 
     /**

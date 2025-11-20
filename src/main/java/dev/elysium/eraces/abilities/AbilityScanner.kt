@@ -3,13 +3,14 @@ package dev.elysium.eraces.abilities
 import dev.elysium.eraces.abilities.interfaces.IAbility
 import io.github.classgraph.ClassGraph
 import org.bukkit.plugin.java.JavaPlugin
+import kotlin.reflect.KClass
 
 /**
  * Сканирует указанный пакет и создаёт экземпляры всех способностей,
  * помеченных аннотацией @RegisterAbility.
  */
-internal object AbilityScanner {
-    fun scan(plugin: JavaPlugin, packageName: String): List<IAbility> {
+object AbilityScanner {
+    fun scan(plugin: JavaPlugin, packageName: String, factory: AbilityFactory): List<IAbility> {
         val scanResult = ClassGraph()
             .enableAllInfo()
             .acceptPackages(packageName)
@@ -20,16 +21,11 @@ internal object AbilityScanner {
 
         for (clsInfo in scanResult.getClassesWithAnnotation(RegisterAbility::class.java.name)) {
             try {
-                val ability = clsInfo
-                    .loadClass()
-                    .getDeclaredConstructor()
-                    .newInstance() as IAbility
-
+                val abilityClass = clsInfo.loadClass().kotlin
+                val ability = factory.create(abilityClass as KClass<IAbility>)
                 abilities.add(ability)
             } catch (e: Throwable) {
-                plugin.logger.warning(
-                    "Не удалось создать способность ${clsInfo.name}: ${e.message}"
-                )
+                plugin.logger.warning("Не удалось создать способность ${clsInfo.name}: ${e.message}")
             }
         }
 

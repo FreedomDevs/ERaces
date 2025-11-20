@@ -52,14 +52,11 @@ class AbilsManager private constructor(private val plugin: ERaces) {
     }
 
     fun registerPackage(plugin: JavaPlugin, packageName: String) {
-        val scanned = AbilityScanner.scan(plugin, packageName)
+        val factory = AbilityFactory()
+        val scanned = AbilityScanner.scan(plugin, packageName, factory)
         context.registrar.register(*scanned.toTypedArray())
-
-        plugin.logger.info(
-            "Зарегистрировано ${scanned.size} способностей для плагина ${plugin.name}. " +
-                    "Текущее общее количество: ${context.registry.size()}"
-        )
     }
+
 
     /**
      * Активация способности игроком.

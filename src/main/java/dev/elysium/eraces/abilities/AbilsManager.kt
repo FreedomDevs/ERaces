@@ -1,17 +1,6 @@
 package dev.elysium.eraces.abilities
 
 import dev.elysium.eraces.ERaces
-import dev.elysium.eraces.abilities.abils.attack.aoe.*
-import dev.elysium.eraces.abilities.abils.attack.magic_damage.*
-import dev.elysium.eraces.abilities.abils.buffs.mana.*
-import dev.elysium.eraces.abilities.abils.buffs.self_buffs.*
-import dev.elysium.eraces.abilities.abils.control.aoe_debuff.*
-import dev.elysium.eraces.abilities.abils.control.stasis.*
-import dev.elysium.eraces.abilities.abils.movement.dash.*
-import dev.elysium.eraces.abilities.abils.movement.jumps.*
-import dev.elysium.eraces.abilities.abils.special.falling_objects.*
-import dev.elysium.eraces.abilities.abils.special.focus_target.*
-import dev.elysium.eraces.abilities.abils.support.ally_buffs.*
 import dev.elysium.eraces.abilities.interfaces.*
 import dev.elysium.eraces.exceptions.ExceptionProcessor
 import dev.elysium.eraces.exceptions.base.PlayerException
@@ -75,7 +64,6 @@ class AbilsManager private constructor(private val plugin: ERaces) {
     }
 
     fun registerPackage(plugin: JavaPlugin, packageName: String) {
-        // TODO, как-то при выключении плагина способки отрегистрировать егошние
         val scanResult = ClassGraph()
             .enableAllInfo()
             .acceptPackages(packageName)
@@ -83,11 +71,11 @@ class AbilsManager private constructor(private val plugin: ERaces) {
             .scan()
 
         val abils: MutableList<IAbility> = mutableListOf()
+
         for (clsInfo in scanResult.getClassesWithAnnotation(RegisterAbility::class.java.name)) {
             try {
-                // Создаём экземпляр через чистый Java Reflection
                 val ability = clsInfo.loadClass()
-                    .getDeclaredConstructor() // default constructor
+                    .getDeclaredConstructor()
                     .newInstance() as IAbility
 
                 abils.add(ability)
@@ -96,9 +84,12 @@ class AbilsManager private constructor(private val plugin: ERaces) {
             }
         }
 
-
         register(*abils.toTypedArray())
-        plugin.logger.info("Зарегистрировано способностей: ${abils.size}, на плагин: ${plugin.name}, (в сумме ${abilities.size})")
+
+        plugin.logger.info(
+            "Зарегистрировано ${abils.size} способностей для плагина ${plugin.name}. " +
+                    "Текущее общее количество: ${abilities.size}"
+        )
     }
 
     /**
@@ -125,6 +116,7 @@ class AbilsManager private constructor(private val plugin: ERaces) {
 
                 if (ability is IComboActivatable) {
                     val combo = ability.getComboKey()
+
                     if (!combo.isNullOrBlank()) {
                         val duplicate = abilities.values
                             .filterIsInstance<IComboActivatable>()
@@ -143,12 +135,11 @@ class AbilsManager private constructor(private val plugin: ERaces) {
                 abilities[ability.id] = ability
                 plugin.logger.info("Зарегистрирована способность: ${ability.id}")
             } catch (e: Exception) {
-                val ex = AbilityRegistrationException(
+                AbilityRegistrationException(
                     "Ошибка при регистрации способности '${ability.id}'",
                     e,
                     ability.id
-                )
-                ex.handle()
+                ).handle()
             }
         }
     }
@@ -173,26 +164,25 @@ class AbilsManager private constructor(private val plugin: ERaces) {
      * @throws PlayerAbilityOnCooldownException если способность на кулдауне
      */
     fun activate(player: Player, id: String) {
+        val context = ERaces.getInstance().context
         val ability = abilities[id]
-        val race = ERaces.getInstance().context.playerDataManager.getPlayerRace(player)
+        val race = context.playerDataManager.getPlayerRace(player)
 
-        when {
-            ability == null -> throw PlayerAbilityNotFoundException(player, id)
-            race == null -> throw PlayerRaceNotSelectedException(player)
-            !race.abilities.contains(id) -> throw PlayerAbilityNotOwnedException(player, id)
-            else -> { /* ok */
-            }
-        }
+        if (ability == null) throw PlayerAbilityNotFoundException(player, id)
+        if (race == null) throw PlayerRaceNotSelectedException(player)
+        if (id !in race.abilities) throw PlayerAbilityNotOwnedException(player, id)
 
         if (ability is IManaCostAbility) {
             val manaCost = ability.getManaCost()
             if (manaCost > 0) {
-                val manaManager = ERaces.getInstance().context.manaManager
+                val manaManager = context.manaManager
                 val currentMana = manaManager.getMana(player)
+
                 if (currentMana < manaCost) {
                     player.actionMsg("<red>Недостаточно маны! Нужно <yellow>$manaCost<red>, у тебя <yellow>$currentMana")
                     return
                 }
+
                 manaManager.useMana(player, manaCost)
             }
         }
@@ -275,8 +265,8 @@ class AbilsManager private constructor(private val plugin: ERaces) {
         private val cooldowns: MutableMap<UUID, MutableMap<String, Long>> = ConcurrentHashMap()
 
         fun hasCooldown(player: Player, abilityId: String): Boolean {
-            val expireTime = cooldowns[player.uniqueId]?.get(abilityId) ?: return false
-            return System.currentTimeMillis() < expireTime
+            return (cooldowns[player.uniqueId]?.get(abilityId) ?: return false) >
+                    System.currentTimeMillis()
         }
 
         fun getRemaining(player: Player, abilityId: String): Long {

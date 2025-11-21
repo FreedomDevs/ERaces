@@ -22,13 +22,13 @@ class DestructiveRageAbility : BaseEffectsAbility(
     )) {
 
     var additionalArmor = 3.0
-    var armorDuraton = "20s"
+    var armorDuration = "20s"
 
     override fun customActivate(player: Player) {
         addArmor(player)
 
         // убираем броню через 20 секунд
-        AbilityUtils.runLater(ERaces.getInstance(), armorDuraton) {
+        AbilityUtils.runLater(ERaces.getInstance(), armorDuration) {
             removeArmor(player)
         }
     }
@@ -54,14 +54,14 @@ class DestructiveRageAbility : BaseEffectsAbility(
     override fun loadCustomParams(cfg: YamlConfiguration) {
         ConfigHelper.with(cfg) {
             read("additionalArmor", ::additionalArmor)
-            read("armorDuraton", ::armorDuraton)
+            read("armorDuration", ::armorDuration)
         }
     }
 
     override fun writeCustomDefaults(cfg: YamlConfiguration) {
         ConfigHelper.with(cfg) {
             write("additionalArmor", additionalArmor)
-            write("armorDuraton", armorDuraton)
+            write("armorDuraton", armorDuration)
         }
     }
 }

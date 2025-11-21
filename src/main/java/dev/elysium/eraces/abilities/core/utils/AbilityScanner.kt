@@ -27,8 +27,13 @@ object AbilityScanner {
                 val ability = factory.create(abilityClass as KClass<IAbility>)
                 abilities.add(ability)
             } catch (e: Throwable) {
-                plugin.logger.warning("Не удалось создать способность ${clsInfo.name}: ${e.message}")
+                plugin.logger.log(
+                    java.util.logging.Level.SEVERE,
+                    "Ошибка при создании способности ${clsInfo.name}",
+                    e
+                )
             }
+
         }
 
         return abilities

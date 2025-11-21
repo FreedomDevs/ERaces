@@ -1,7 +1,9 @@
 package dev.elysium.eraces.abilities.abils.attack.single_target
 
+import dev.elysium.eraces.abilities.ConfigHelper
 import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseCooldownAbility
+import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -16,7 +18,7 @@ class CursedTouchAbility : BaseCooldownAbility("cursedtouch", defaultCooldown = 
 
     // трекаем у кого активировалась абилка
     val abilityActivatedByPlayer: MutableMap<UUID, Boolean> = mutableMapOf()
-
+    var killChance = 10.0
     // помечаем игрока как активировавшего абилку
     override fun onActivate(player: Player) {
         abilityActivatedByPlayer.put(player.uniqueId, true);
@@ -35,8 +37,8 @@ class CursedTouchAbility : BaseCooldownAbility("cursedtouch", defaultCooldown = 
         val activated = abilityActivatedByPlayer.get(player.uniqueId) ?: false;
         if (activated) {
             val chance = (1..100).random();
-            // убиваем сущность, по которой был нанесен удар если выпало число от 1 до 10
-            if (chance <= 10)
+            // убиваем сущность, по которой был нанесен удар если выпало число от 1 до killChance
+            if (chance <= killChance)
                 victim.health = 0.0;
 
             // абилка сработала, поэтому деактивируем способность
@@ -49,5 +51,15 @@ class CursedTouchAbility : BaseCooldownAbility("cursedtouch", defaultCooldown = 
     fun onPlayerQuit(event: PlayerQuitEvent) {
         // чистим мапу, когда игрок выходит с сервера
         abilityActivatedByPlayer.remove(event.player.uniqueId)
+    }
+
+    override fun loadCustomParams(cfg: YamlConfiguration) {
+        ConfigHelper.with(cfg) {
+            read("killChance", ::killChance)
+        }
+    }
+
+    override fun writeCustomDefaults(cfg: YamlConfiguration) {
+        cfg.addDefault("killChance", killChance)
     }
 }

@@ -9,6 +9,7 @@ import org.bukkit.attribute.Attribute
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
+import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerQuitEvent
 import org.bukkit.potion.PotionEffectType
 
@@ -19,7 +20,7 @@ class DestructiveRageAbility : BaseEffectsAbility(
     defaultEffects = mapOf(
         "speed" to EffectData("20s", 1, PotionEffectType.SPEED),
         "jump_boost" to EffectData("20s", 1, PotionEffectType.JUMP_BOOST),
-    )) {
+    )), Listener {
 
     var additionalArmor = 3.0
     var armorDuration = "20s"

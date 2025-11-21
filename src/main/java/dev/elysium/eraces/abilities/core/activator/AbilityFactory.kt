@@ -5,6 +5,10 @@ import kotlin.reflect.KClass
 
 class AbilityFactory {
     fun <T : IAbility> create(klass: KClass<T>): T {
-        return klass.java.getDeclaredConstructor().newInstance()
+        return try {
+            klass.java.getDeclaredConstructor().newInstance()
+        } catch (e: Exception) {
+            throw IllegalArgumentException("Не удалось создать экземпляр способности: ${klass.simpleName}", e)
+        }
     }
 }

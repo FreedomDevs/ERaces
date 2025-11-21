@@ -8,7 +8,7 @@ import dev.elysium.eraces.exceptions.base.InternalException
  */
 class AbilityActivationException : InternalException {
     constructor(message: String, context: Any? = null) : super(message, ErrorCodes.ABILITY_ACTIVATION, context)
-    constructor(message: String, cause: Throwable, context: Any? = null) : super(
+    constructor(message: String, cause: Throwable?, context: Any? = null) : super(
         message,
         ErrorCodes.ABILITY_ACTIVATION,
         context,

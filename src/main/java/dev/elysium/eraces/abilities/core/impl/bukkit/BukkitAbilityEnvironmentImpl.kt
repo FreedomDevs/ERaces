@@ -1,4 +1,4 @@
-package dev.elysium.eraces.abilities.core.bukkit
+package dev.elysium.eraces.abilities.core.impl.bukkit
 
 import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.abilities.core.interfaces.IAbilityEnvironment
@@ -6,7 +6,7 @@ import dev.elysium.eraces.abilities.interfaces.IAbility
 import org.bukkit.Bukkit
 import org.bukkit.event.Listener
 
-class BukkitAbilityEnvironment(private val plugin: ERaces) : IAbilityEnvironment {
+class BukkitAbilityEnvironmentImpl(private val plugin: ERaces) : IAbilityEnvironment {
     override fun registerListener(listener: Listener) {
         Bukkit.getPluginManager().registerEvents(listener, plugin)
     }

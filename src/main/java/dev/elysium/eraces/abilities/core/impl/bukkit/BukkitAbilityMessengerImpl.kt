@@ -1,10 +1,10 @@
-package dev.elysium.eraces.abilities.core.bukkit
+package dev.elysium.eraces.abilities.core.impl.bukkit
 
 import dev.elysium.eraces.abilities.core.interfaces.IAbilityMessenger
 import dev.elysium.eraces.utils.actionMsg
 import org.bukkit.entity.Player
 
-class BukkitAbilityMessenger : IAbilityMessenger {
+class BukkitAbilityMessengerImpl : IAbilityMessenger {
     override fun send(player: Player, message: String) {
         player.actionMsg(message)
     }

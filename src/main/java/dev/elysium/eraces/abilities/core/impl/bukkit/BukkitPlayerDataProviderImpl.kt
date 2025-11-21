@@ -1,11 +1,11 @@
-package dev.elysium.eraces.abilities.core.bukkit
+package dev.elysium.eraces.abilities.core.impl.bukkit
 
 import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.abilities.core.interfaces.providers.IPlayerDataProvider
 import dev.elysium.eraces.abilities.core.registry.PlayerRaceData
 import org.bukkit.entity.Player
 
-class BukkitPlayerDataProvider : IPlayerDataProvider {
+class BukkitPlayerDataProviderImpl : IPlayerDataProvider {
     private val plugin: ERaces = ERaces.getInstance()
 
     override fun getPlayerRace(player: Player): PlayerRaceData? {

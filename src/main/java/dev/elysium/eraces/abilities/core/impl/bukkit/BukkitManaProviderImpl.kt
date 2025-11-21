@@ -1,10 +1,10 @@
-package dev.elysium.eraces.abilities.core.bukkit
+package dev.elysium.eraces.abilities.core.impl.bukkit
 
 import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.abilities.core.interfaces.providers.IManaProvider
 import org.bukkit.entity.Player
 
-class BukkitManaProvider : IManaProvider {
+class BukkitManaProviderImpl : IManaProvider {
     private val plugin: ERaces = ERaces.getInstance()
 
     override fun getMana(player: Player): Double {

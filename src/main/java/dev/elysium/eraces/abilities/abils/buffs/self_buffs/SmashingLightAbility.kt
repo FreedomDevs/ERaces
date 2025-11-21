@@ -22,20 +22,20 @@ data class PlayerAbilityData(
 @Suppress("unused")
 class SmashingLightAbility : BaseCooldownAbility(id = "smashinglight", defaultCooldown = "2m"), Listener {
 
-    private var MAX_DAMAGE_BONUS_PERCENT = 80;
-    private var MIN_DAMAGE_BONUS_PERCENT = 50;
-    private var HITS_AMOUNT = 3;
+    private var maxDamageBonusPercent = 80;
+    private var minDamageBonusPercent = 50;
+    private var hitsAmount = 3;
     //трекаем состояние
-    private val PLAYER_ABILITY_DATA: MutableMap<UUID, PlayerAbilityData> = mutableMapOf()
+    private val playerAbilityData: MutableMap<UUID, PlayerAbilityData> = mutableMapOf()
 
     override fun onActivate(player: Player) {
         //добавляем в мапу только тех, кто активирует способность
-        PLAYER_ABILITY_DATA.put(player.uniqueId, PlayerAbilityData(0, true));
+        playerAbilityData.put(player.uniqueId, PlayerAbilityData(0, true));
     }
     // очищаем мапу когда игрок выходит с сервера
     @EventHandler
     private fun onPlayerLeave(event: PlayerQuitEvent) {
-        PLAYER_ABILITY_DATA.remove(event.player.uniqueId);
+        playerAbilityData.remove(event.player.uniqueId);
     }
 
     @EventHandler
@@ -49,16 +49,16 @@ class SmashingLightAbility : BaseCooldownAbility(id = "smashinglight", defaultCo
         val victim = event.entity as LivingEntity;
 
         //если способность не активирована
-        if (!PLAYER_ABILITY_DATA.get(player.uniqueId)!!.activated)
+        if (!playerAbilityData.get(player.uniqueId)!!.activated)
             return;
 
 
         //при ударе мы поднимаем счетчик. но сбрасываем его, если удар третий.
-        PLAYER_ABILITY_DATA.compute(player.uniqueId) { _, abilityData ->
+        playerAbilityData.compute(player.uniqueId) { _, abilityData ->
             val current = abilityData?.hitsCount ?: 0;
 
             //отнимаем 1 потому что нам нужно значение перед максимальным. нельзя, чтобы счетчик показывал максимальное значение
-            if (current == HITS_AMOUNT - 1)
+            if (current == hitsAmount - 1)
             // сбрасываем счетчик и выключаем способность
                 PlayerAbilityData(0, false)
             else
@@ -86,24 +86,24 @@ class SmashingLightAbility : BaseCooldownAbility(id = "smashinglight", defaultCo
         for (modifier in baseAttackDamageAttribute)
             totalDamage += modifier.getAmount()
 
-        val bonusPercent = (MAX_DAMAGE_BONUS_PERCENT..MIN_DAMAGE_BONUS_PERCENT).random().toDouble() * 0.01;
+        val bonusPercent = (maxDamageBonusPercent..minDamageBonusPercent).random().toDouble() * 0.01;
 
         return totalDamage * bonusPercent;
     }
 
     override fun loadCustomParams(cfg: YamlConfiguration) {
         ConfigHelper.with(cfg) {
-            read("hitsAmount", ::HITS_AMOUNT)
-            read("maxDamageBonusPercent", ::MAX_DAMAGE_BONUS_PERCENT)
-            read("minDamageBonusPercent", ::MIN_DAMAGE_BONUS_PERCENT)
+            read("hitsAmount", ::hitsAmount)
+            read("maxDamageBonusPercent", ::maxDamageBonusPercent)
+            read("minDamageBonusPercent", ::minDamageBonusPercent)
         }
     }
 
     override fun writeCustomDefaults(cfg: YamlConfiguration) {
         ConfigHelper.with(cfg) {
-            write("hitsAmount", HITS_AMOUNT)
-            write("maxDamageBonusPercent", MAX_DAMAGE_BONUS_PERCENT)
-            write("minDamageBonusPercent", MIN_DAMAGE_BONUS_PERCENT)
+            write("hitsAmount", hitsAmount)
+            write("maxDamageBonusPercent", maxDamageBonusPercent)
+            write("minDamageBonusPercent", minDamageBonusPercent)
         }
     }
 }

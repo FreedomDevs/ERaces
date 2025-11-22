@@ -26,7 +26,8 @@ class BlindRageAbility : BaseEffectsAbility(id = "blindrage", defaultCooldown = 
         addArmor(player);
 
         AbilityUtils.runLater(ERaces.getInstance(), armorDuration) {
-            removeArmor(player)
+            if (player.isOnline)
+                removeArmor(player)
         }
     }
 

@@ -32,7 +32,8 @@ class DestructiveRageAbility : BaseEffectsAbility(
 
         // убираем броню через 20 секунд
         AbilityUtils.runLater(ERaces.getInstance(), armorDuration) {
-            removeArmor(player)
+            if (player.isOnline)
+                removeArmor(player)
         }
     }
 

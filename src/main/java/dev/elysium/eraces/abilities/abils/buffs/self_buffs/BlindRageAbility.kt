@@ -4,7 +4,9 @@ import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.abilities.AbilityUtils
 import dev.elysium.eraces.abilities.ConfigHelper
 import dev.elysium.eraces.abilities.abils.base.BaseEffectsAbility
+import org.bukkit.NamespacedKey
 import org.bukkit.attribute.Attribute
+import org.bukkit.attribute.AttributeModifier
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -34,16 +36,16 @@ class BlindRageAbility : BaseEffectsAbility(id = "blindrage", defaultCooldown = 
         removeArmor(event.player);
     }
 
+    val addArmorKey: NamespacedKey = NamespacedKey("eraces", "blind_rage_ability_armor_bonus")
+
     private fun addArmor(player: Player) {
-        val attribute = player.getAttribute(Attribute.ARMOR)
-        if (attribute != null)
-            attribute.setBaseValue(attribute.baseValue + additionalArmor)
+        val attribute = player.getAttribute(Attribute.ARMOR) ?: return
+        attribute.addModifier(AttributeModifier(addArmorKey, additionalArmor, AttributeModifier.Operation.ADD_NUMBER))
     }
 
     private fun removeArmor(player: Player) {
-        val attribute = player.getAttribute(Attribute.ARMOR)
-        if (attribute != null)
-            attribute.setBaseValue(attribute.baseValue - additionalArmor)
+        val attribute = player.getAttribute(Attribute.ARMOR) ?: return
+        attribute.removeModifier(addArmorKey)
     }
 
     override fun writeCustomDefaults(cfg: YamlConfiguration) {

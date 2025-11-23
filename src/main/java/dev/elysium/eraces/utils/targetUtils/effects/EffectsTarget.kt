@@ -1,7 +1,7 @@
 package dev.elysium.eraces.utils.targetUtils.effects
 
+import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.utils.targetUtils.Target
-import dev.elysium.eraces.utils.targetUtils.PluginAccessor
 import dev.elysium.eraces.utils.vectors.RadiusFillBuilder
 import dev.elysium.eraces.utils.vectors.Vec3
 import org.bukkit.Location
@@ -132,7 +132,7 @@ class EffectsTarget {
      */
     fun apply(): Target {
         val t = target ?: return Target.fromNull()
-        val plugin = PluginAccessor.plugin
+        val plugin = ERaces.getInstance()
         val targets = t.getEntities()
         val provider = pointsProvider ?: { emptyList<Vec3>() }
 

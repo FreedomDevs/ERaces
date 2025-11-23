@@ -8,7 +8,7 @@ import java.util.logging.Level
 class LoggerConfigurator : IInitializer {
     override fun setup(plugin: ERaces) {
         try {
-            if (plugin.context.globalConfigManager.getData().isDebug()) {
+            if (plugin.context.globalConfigManager.data.isDebug) {
                 logger().level = Level.FINE
                 logger().info("Режим отладки включён.")
             }

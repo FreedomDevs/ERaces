@@ -7,13 +7,8 @@ object ERacesLogger {
     private val logger: Logger
         get() = ERaces.getInstance().logger
 
-    fun info(message: String) = logger.log(Level.INFO, "[ERaces] $message")
-    fun warning(message: String) = logger.log(Level.WARNING, "[ERaces] $message")
-    fun severe(message: String) = logger.log(Level.SEVERE, "[ERaces] $message")
-
-    fun debug(message: String) {
-        if (ERaces.getInstance().context.globalConfigManager.data.isDebug) {
-            logger.log(Level.INFO, "[ERaces][DEBUG] $message")
-        }
-    }
+    fun info(message: String) = logger.log(Level.INFO, message)
+    fun warning(message: String) = logger.log(Level.WARNING, message)
+    fun severe(message: String) = logger.log(Level.SEVERE, message)
+    fun debug(message: String) = logger.log(Level.FINE, "[DEBUG] $message")
 }

@@ -25,7 +25,7 @@ class ManagerInitializer : IInitializer {
             // Races and player data
             ctx.racesConfigManager = RacesConfigManager(plugin)
             ctx.specializationsManager = SpecializationsManager(plugin, ctx.database)
-            ctx.playerDataManager = PlayerDataManager(ctx.racesConfigManager.getRaces(), ctx.database)
+            ctx.playerDataManager = PlayerDataManager(ctx.racesConfigManager.races, ctx.database)
 
             // XP & Damage tracking
             val xpManager = XpManager()

@@ -1,4 +1,5 @@
 name: ERaces
+prefix: ERaces
 version: ${version}
 main: dev.elysium.eraces.ERaces
 description: Просто плагин на расы

@@ -13,15 +13,12 @@ internal object AbilityCooldownManager {
 
     private val cooldowns: MutableMap<UUID, MutableMap<String, Long>> = ConcurrentHashMap()
 
-    fun hasCooldown(player: Player, abilityId: String): Boolean {
-        return (cooldowns[player.uniqueId]?.get(abilityId) ?: return false) >
-                System.currentTimeMillis()
-    }
+    fun hasCooldown(player: Player, abilityId: String): Boolean =
+        (cooldowns[player.uniqueId]?.getOrDefault(abilityId, 0L) ?: 0L) > System.currentTimeMillis()
 
     fun getRemaining(player: Player, abilityId: String): Long {
-        val expireTime = cooldowns[player.uniqueId]?.get(abilityId) ?: return 0
-        val remaining = expireTime - System.currentTimeMillis()
-        return if (remaining > 0) TimeUnit.MILLISECONDS.toSeconds(remaining) else 0
+        val remaining = (cooldowns[player.uniqueId]?.get(abilityId) ?: 0) - System.currentTimeMillis()
+        return maxOf(0, TimeUnit.MILLISECONDS.toSeconds(remaining))
     }
 
     fun setCooldown(player: Player, abilityId: String, seconds: Long) {

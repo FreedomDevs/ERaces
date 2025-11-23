@@ -7,24 +7,25 @@ class ComboRegistry {
 
     private val comboMap: MutableMap<String, String> = mutableMapOf()
 
+    val size: Int
+        get() = comboMap.size
+
     /**
      * Регистрирует comboKey для способности.
      * Если уже существует — возвращает id способности, которая держит эту комбо.
      */
     fun registerCombo(ability: IComboActivatable) {
-        val combo = ability.getComboKey() ?: return
-        if (combo.isBlank()) return
-
-        // Не заменяем уже существующую комбо
-        if (!comboMap.containsKey(combo)) {
-            comboMap[combo] = (ability as IAbility).id
-        }
+        ability.getComboKey()
+            ?.takeIf { it.isNotBlank() }
+            ?.let { combo ->
+                (ability as IAbility).id
+                    .takeIf { combo !in comboMap }
+                    ?.let { comboMap[combo] = it }
+            }
     }
 
     /**
      * Возвращает ID способности по ее comboKey.
      */
-    fun getAbilityId(combo: String): String? {
-        return comboMap[combo]
-    }
+    fun getAbilityId(combo: String): String? = comboMap[combo]
 }

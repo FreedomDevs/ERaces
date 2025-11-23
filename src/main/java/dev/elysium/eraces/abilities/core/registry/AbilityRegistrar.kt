@@ -1,7 +1,5 @@
 package dev.elysium.eraces.abilities.core.registry
 
-import dev.elysium.eraces.abilities.core.registry.AbilityRegistry
-import dev.elysium.eraces.abilities.core.registry.ComboRegistry
 import dev.elysium.eraces.abilities.core.interfaces.IAbilityEnvironment
 import dev.elysium.eraces.abilities.core.interfaces.IAbilityLogger
 import dev.elysium.eraces.abilities.interfaces.IAbility
@@ -17,8 +15,7 @@ class AbilityRegistrar(
 ) {
 
     fun register(vararg toAdd: IAbility) {
-        for (ability in toAdd) {
-
+        toAdd.forEach { ability ->
             try {
                 registerSingle(ability)
             } catch (e: Exception) {

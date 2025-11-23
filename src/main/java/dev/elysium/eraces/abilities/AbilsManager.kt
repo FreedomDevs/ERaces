@@ -9,18 +9,12 @@ import dev.elysium.eraces.exceptions.player.*
 import org.bukkit.entity.Player
 import org.bukkit.plugin.java.JavaPlugin
 
+
 /**
  * Менеджер всех способностей плагина.
  *
- * Отвечает за:
- * - регистрацию способностей,
- * - хранение всех экземпляров способностей,
- * - активацию способностей игроками с проверкой прав, маны и кулдаунов,
- * - сброс кулдаунов и работу с комбо-способностями.
- *
- * Использует паттерн Singleton: создаётся один раз через [init].
- *
- * @property plugin основной плагин [ERaces]
+ * Отвечает за регистрацию, хранение, активацию способностей, работу с кулдаунами и комбо.
+ * Реализует паттерн Singleton через init().
  */
 class AbilsManager private constructor(private val plugin: ERaces) {
 
@@ -48,16 +42,18 @@ class AbilsManager private constructor(private val plugin: ERaces) {
                 plugin.logger.warning("AbilsManager уже инициализирован, повторная инициализация пропущена.")
                 return
             }
+            instance = AbilsManager(plugin).apply {
+                registerPackage(plugin, "dev.elysium.eraces.abilities.abils")
+            }
 
-            instance = AbilsManager(plugin).apply { registerPackage(plugin, "dev.elysium.eraces.abilities.abils") }
             plugin.logger.info("AbilsManager успешно инициализирован.")
         }
     }
 
     fun registerPackage(plugin: JavaPlugin, packageName: String) {
         val factory = AbilityFactory()
-        val scanned = AbilityScanner.scan(plugin, packageName, factory)
-        context.registrar.register(*scanned.toTypedArray())
+        AbilityScanner.scan(plugin, packageName, factory)
+            .also { context.registrar.register(*it.toTypedArray()) }
     }
 
 
@@ -85,6 +81,16 @@ class AbilsManager private constructor(private val plugin: ERaces) {
     }
 
     /**
+     * Активация способности игроком по комбо-коду.
+     *
+     * @param player игрок
+     * @param combo комбо-код способности
+     */
+    fun activateByCombo(player: Player, combo: String) {
+        context.activator.activateByCombo(player, combo)
+    }
+
+    /**
      * Сбрасывает кулдаун конкретной способности игрока.
      *
      * @param player игрок
@@ -108,14 +114,4 @@ class AbilsManager private constructor(private val plugin: ERaces) {
      * @return список всех способностей
      */
     fun getAllAbilities(): List<IAbility> = context.registry.getAll().toList()
-
-    /**
-     * Активация способности игроком по комбо-коду.
-     *
-     * @param player игрок
-     * @param combo комбо-код способности
-     */
-    fun activateByCombo(player: Player, combo: String) {
-        context.activator.activateByCombo(player, combo)
-    }
 }

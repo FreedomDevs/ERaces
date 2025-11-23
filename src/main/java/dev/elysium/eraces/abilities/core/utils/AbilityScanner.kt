@@ -33,7 +33,6 @@ object AbilityScanner {
                     e
                 )
             }
-
         }
 
         return abilities

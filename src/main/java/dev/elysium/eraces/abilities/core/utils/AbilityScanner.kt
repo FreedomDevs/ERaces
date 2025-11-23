@@ -24,6 +24,7 @@ object AbilityScanner {
         for (clsInfo in scanResult.getClassesWithAnnotation(RegisterAbility::class.java.name)) {
             try {
                 val abilityClass = clsInfo.loadClass().kotlin
+                @Suppress("UNCHECKED_CAST")
                 val ability = factory.create(abilityClass as KClass<IAbility>)
                 abilities.add(ability)
             } catch (e: Throwable) {

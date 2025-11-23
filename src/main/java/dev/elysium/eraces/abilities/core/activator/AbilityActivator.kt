@@ -21,40 +21,46 @@ class AbilityActivator(
         val ability = registry.get(abilityId)
             ?: throw AbilityActivationException("Способность '$abilityId' не найдена", null, player)
 
-        try {
+        player.runAbilityAction {
             validationService.validateAbilityAccess(player, abilityId)
 
-            if (ability is IManaCostAbility)
-                manaService.checkAndConsume(player, ability)
+            (ability as? IManaCostAbility)?.let {
+                manaService.checkAndConsume(player, it)
+            }
 
-            if (ability is ICooldownAbility)
-                cooldownService.check(player, abilityId, ability)
+            (ability as? ICooldownAbility)?.let {
+                cooldownService.check(player, abilityId, it)
+            }
 
             ability.activate(player)
 
-            if (ability is ICooldownAbility)
-                cooldownService.apply(player, abilityId, ability)
-
-        } catch (e: PlayerException) {
-            e.handle()
-        } catch (t: Throwable) {
-            ExceptionProcessor.process(t, player)
-            AbilityActivationException(
-                "Ошибка при активации способности '$abilityId' у игрока ${player.name}",
-                t,
-                player
-            ).handle()
+            (ability as? ICooldownAbility)?.let {
+                cooldownService.apply(player, abilityId, it)
+            }
         }
     }
 
     fun activateByCombo(player: Player, combo: String) {
-        val abilityId = comboService.resolve(combo)
+        comboService.resolve(combo)?.let {
+            activate(player, it)
+        } ?: messenger.send(
+            player,
+            "<red>Нет способности, назначенной на комбинацию <yellow>$combo"
+        )
+    }
 
-        if (abilityId == null) {
-            messenger.send(player,"<red>Нет способности, назначенной на комбинацию <yellow>$combo")
-            return
+    private inline fun Player.runAbilityAction(block: () -> Unit) {
+        try {
+            block()
+        } catch (e: PlayerException) {
+            e.handle()
+        } catch (t: Throwable) {
+            ExceptionProcessor.process(t, this)
+            AbilityActivationException(
+                "Ошибка при активации способности у игрока $name",
+                t,
+                this
+            ).handle()
         }
-
-        activate(player, abilityId)
     }
 }

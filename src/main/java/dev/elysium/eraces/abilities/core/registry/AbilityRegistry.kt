@@ -5,9 +5,8 @@ import dev.elysium.eraces.abilities.interfaces.IAbility
 class AbilityRegistry {
     private val abilities: MutableMap<String, IAbility> = mutableMapOf()
 
-    fun register(vararg ability: IAbility) {
-        for (a in ability) abilities[a.id] = a
-    }
+    fun register(vararg ability: IAbility) =
+        ability.forEach { abilities[it.id] = it }
 
     fun contains(id: String): Boolean = abilities.containsKey(id)
 

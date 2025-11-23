@@ -13,7 +13,7 @@ class AbilityValidationServiceImpl(
     private val playerDataProvider: IPlayerDataProvider
 ) : IAbilityValidationService {
     override fun validateAbilityAccess(player: Player, abilityId: String) {
-        val ability = registry.get(abilityId)
+        registry.get(abilityId)
             ?: throw PlayerAbilityNotFoundException(player, abilityId)
 
         val race = playerDataProvider.getPlayerRace(player)

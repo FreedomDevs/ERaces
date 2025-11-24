@@ -16,7 +16,7 @@ import org.bukkit.plugin.java.JavaPlugin
  * Отвечает за регистрацию, хранение, активацию способностей, работу с кулдаунами и комбо.
  * Реализует паттерн Singleton через init().
  */
-class AbilsManager private constructor(private val plugin: ERaces) {
+class AbilsManager private constructor(plugin: ERaces) {
 
     private val context = AbilityContext(plugin)
 

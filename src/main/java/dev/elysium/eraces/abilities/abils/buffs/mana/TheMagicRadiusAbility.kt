@@ -17,7 +17,6 @@ class TheMagicRadiusAbility : BaseCooldownAbility(
     id = "themagiceadius", defaultCooldown = "45s"
 ) {
     private var radius: Double = 3.0
-    private var duration: String = "30s"
     private var manaRestorePercent: Double = .10
 
     override fun onActivate(player: Player) {
@@ -44,7 +43,6 @@ class TheMagicRadiusAbility : BaseCooldownAbility(
     override fun loadCustomParams(cfg: YamlConfiguration) {
         ConfigHelper.with(cfg) {
             read("radius", ::radius)
-            read("duration", ::duration)
             read("manaRestorePercent", ::manaRestorePercent)
         }
     }
@@ -52,7 +50,6 @@ class TheMagicRadiusAbility : BaseCooldownAbility(
     override fun writeCustomDefaults(cfg: YamlConfiguration) {
         ConfigHelper.with(cfg) {
             write("radius", radius)
-            write("duration", duration)
             write("manaRestorePercent", manaRestorePercent)
         }
     }

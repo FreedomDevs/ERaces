@@ -1,15 +1,17 @@
 package dev.elysium.eraces.abilities.abils.special.focus_target
 
 import dev.elysium.eraces.abilities.ConfigHelper
+import dev.elysium.eraces.abilities.ConfigHelper.read
+import dev.elysium.eraces.abilities.ConfigHelper.write
 import dev.elysium.eraces.abilities.abils.base.BaseCooldownAbility
 import dev.elysium.eraces.utils.msg
 import dev.elysium.eraces.utils.targetUtils.Target
 import dev.elysium.eraces.utils.targetUtils.target.TargetFilter
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.entity.Player
-import java.util.UUID
+import java.util.*
 
-// НЕ РАБОТАЕТ ПОКА ЧТО
+// НЕ РАБОТАЕТ ПОКА ЧТО (НАЧИНАЮ ДЕЛАТЬ)
 class LifeGoingAccordingToPlanAbility : BaseCooldownAbility(
     id = "lifegoingaccordingtoplan",
     defaultCooldown = "5m"
@@ -27,7 +29,7 @@ class LifeGoingAccordingToPlanAbility : BaseCooldownAbility(
             .filter(TargetFilter.ENTITIES, TargetFilter.FIRST_ENTITY)
             .inEye(radius, 0.1)
             .execute { target -> run {
-                    affectedPlayers[target.uniqueId] = System.currentTimeMillis();
+                affectedPlayers[target.uniqueId] = System.currentTimeMillis()
                     isExecuted = true
                 }
             }

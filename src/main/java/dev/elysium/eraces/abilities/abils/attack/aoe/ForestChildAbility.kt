@@ -13,12 +13,10 @@ import dev.elysium.eraces.utils.targetUtils.target.TargetFilter
 import dev.elysium.eraces.utils.vectors.RadiusFillBuilder
 import io.papermc.paper.event.entity.EntityMoveEvent
 import org.bukkit.Color
-import org.bukkit.Material
 import org.bukkit.NamespacedKey
 import org.bukkit.Particle
 import org.bukkit.Registry
 import org.bukkit.configuration.file.YamlConfiguration
-import org.bukkit.entity.EntityType
 import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -47,17 +45,16 @@ class ForestChildAbility : BaseCooldownAbility(id = "forestchild", defaultCooldo
         val entities =Target
             .from(player)
             .filter(TargetFilter.ENTITIES)
-            .inRadius(radius, useRaycast = true)
+            .inRadius(radius, useRaycast = false)
             .getEntities()
 
-        //берем рандомные 5 ближних сущностей
-        val randomEntities = entities
-            .filter { istEntityMelee(it) }
-            .shuffled()
+        //берем 5 ближайших сущностей
+        val firstFiveClosestEntities = entities
+            .sortedBy { player.location.distance(it.location) }
             .take(targetAmount)
 
         //для каждой сущности выполняем действия
-        for (entity in randomEntities) {
+        for (entity in firstFiveClosestEntities) {
 
             Target.from(entity)
                 .execute { it.addPotionEffects(listOf(PotionEffect(bukkitEffect, TimeParser.parseToTicks(effectDuration).toInt(), 0))) }
@@ -84,58 +81,6 @@ class ForestChildAbility : BaseCooldownAbility(id = "forestchild", defaultCooldo
                         )
                 )
         }
-    }
-
-
-    //нам нужно применять способность только к ближникам
-    private fun istEntityMelee(entity: LivingEntity): Boolean {
-
-        // Список дальних оружий в игре
-        val rangedWeapons: List<Material> = listOf(
-            Material.BOW,
-            Material.CROSSBOW,
-            Material.TRIDENT,
-
-        )
-
-        //если сущность игрок, то проверяем его оружие в руках
-        if (entity is Player) {
-            val player = entity
-
-            val itemHeldByPlayer = player.inventory.itemInMainHand
-
-            if (rangedWeapons.contains(itemHeldByPlayer.type))
-                return false
-            else
-                return true
-        } else {
-            //если не игрок, то проверяем является ли сущность ближним мобов
-            val meleeMobs = getMeleeMobs()
-
-            return meleeMobs.contains(entity.type)
-        }
-    }
-
-    private fun getMeleeMobs(): List<EntityType> {
-        return EntityType.entries
-            .filter { entityType ->
-                entityType.isAlive && entityType.isSpawnable && isMeleeMob(entityType)
-            }
-    }
-
-    private fun isMeleeMob(entityType: EntityType): Boolean {
-        val rangedMobs = setOf(
-            EntityType.GHAST,
-            EntityType.BLAZE,
-            EntityType.SHULKER,
-            EntityType.WITCH,
-            EntityType.SKELETON,
-            EntityType.STRAY
-        )
-
-        if (entityType in rangedMobs) return false
-
-        return true
     }
 
     private val stunnedEntities = mutableMapOf<UUID, LivingEntity>()

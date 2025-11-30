@@ -22,13 +22,14 @@ import org.bukkit.entity.EntityType
 import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
+import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerMoveEvent
 import org.bukkit.potion.PotionEffect
 import java.util.UUID
 
 @RegisterAbility
 @Suppress("unused")
-class ForestChildAbility : BaseCooldownAbility(id = "forestchild", defaultCooldown = "2m") {
+class ForestChildAbility : BaseCooldownAbility(id = "forestchild", defaultCooldown = "2m"), Listener {
     private var radius: Double = 40.0
     private var targetAmount: Int = 5
     private var damage: Double = 10.0

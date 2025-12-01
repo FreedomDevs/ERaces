@@ -53,7 +53,7 @@ public class RacesConfigManager {
                 return;
             }
 
-            String[] defaults = {"elfs.yml", "humans.yml", "orks.yml"}; // все файлы-шаблоны
+            String[] defaults = {"elfs.yml", "humans.yml", "orks.yml", "furry.yml"}; // все файлы-шаблоны
             for (String f : defaults) {
                 try (InputStream in = plugin.getResource(DIRECTORY_NAME + "/" + f)) {
                     if (in != null) {

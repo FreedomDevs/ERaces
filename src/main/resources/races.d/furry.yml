@@ -183,6 +183,8 @@ kitsune2:
       speed: 3
       dolphins_grace: 3
   exclude_from_random: true
+  abilities:
+    - "lifegoingaccordingtoplan"
 
 bird:
   gui_config:

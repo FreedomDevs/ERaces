@@ -1,9 +1,13 @@
 package dev.elysium.eraces.abilities.core.activator
 
 import dev.elysium.eraces.abilities.core.interfaces.IAbilityMessenger
-import dev.elysium.eraces.abilities.core.interfaces.services.activator.*
+import dev.elysium.eraces.abilities.core.interfaces.services.activator.IAbilityComboService
+import dev.elysium.eraces.abilities.core.interfaces.services.activator.IAbilityCooldownService
+import dev.elysium.eraces.abilities.core.interfaces.services.activator.IAbilityManaService
+import dev.elysium.eraces.abilities.core.interfaces.services.activator.IAbilityValidationService
 import dev.elysium.eraces.abilities.core.registry.AbilityRegistry
-import dev.elysium.eraces.abilities.interfaces.*
+import dev.elysium.eraces.abilities.interfaces.ICooldownAbility
+import dev.elysium.eraces.abilities.interfaces.IManaCostAbility
 import dev.elysium.eraces.exceptions.ExceptionProcessor
 import dev.elysium.eraces.exceptions.base.PlayerException
 import dev.elysium.eraces.exceptions.internal.AbilityActivationException
@@ -32,11 +36,11 @@ class AbilityActivator(
                 cooldownService.check(player, abilityId, it)
             }
 
-            ability.activate(player)
-
             (ability as? ICooldownAbility)?.let {
                 cooldownService.apply(player, abilityId, it)
             }
+
+            ability.activate(player)
         }
     }
 

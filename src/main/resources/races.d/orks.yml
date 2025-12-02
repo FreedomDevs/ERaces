@@ -53,8 +53,8 @@ shatarak:
   max_hp: 24
   additional_scale: 0.4 # НЕ РЕАЛИЗОВАНО
   additional_armor: 3
+  attack_speed_multiplier: 0.8
 #**Дебафы**
-#- Скорость атаки -20%
 #**Способности
 #Слепая Ярость **
 
@@ -66,8 +66,8 @@ shatarak_nok:
   max_hp: 26
   additional_scale: 0.6 # НЕ РЕАЛИЗОВАНО
   additional_armor: 5
+  attack_speed_multiplier: 0.8
 #**Дебафы**
-#- Скорость атаки -20%
 #**Способности
 #Слепая Ярость**
 
@@ -79,15 +79,14 @@ shatarak_nok_van:
   max_hp: 28
   additional_scale: 0.8 # НЕ РЕАЛИЗОВАНО
   additional_armor: 7
+  attack_speed_multiplier: 0.8
+  move_speed_multiplier: 0.95
   weapon_proficiency:
     sword_damage_multiplier: 0.94 # Почему-то в поле "Бафы" было написано что урон от ближнего оружия -6%, ок мб
     axe_damage_multiplier: 0.94
     hand_damage_additional: 0.94
 
-
 #**Дебафы**
-#- Скорость атаки -20%
-#- Скорость -5%
 #**Способности
 #Слепая Ярость
 
@@ -99,11 +98,11 @@ imtish:
   max_hp: 20
   additional_scale: 1 # НЕ РЕАЛИЗОВАНО
   additional_armor: 10
+  base_damage_bonus: 3
 
 #**Дебафы**
 #- Не может использовать святое и проклятое оружия
 #**Бафы**
-#- Базовый урон +3
 #**Способности**
 #- **Башенная турель**
 
@@ -115,8 +114,8 @@ imtish_var:
   max_hp: 26
   additional_scale: 1 # НЕ РЕАЛИЗОВАНО
   additional_armor: 14
+  base_damage_bonus: 5
 #**Бафы**
-#- Базовый урон +5
 #**Способности**
 #- **Башенная турель**
 
@@ -128,7 +127,7 @@ imtish_var_shak:
   max_hp: 32
   additional_scale: 1.5 # НЕ РЕАЛИЗОВАНО
   additional_armor: 16
+  base_damage_bonus: 7
 #**Бафы**
-#- Базовый урон +7
 #**Способности**
 #- **Орочьи регалии**

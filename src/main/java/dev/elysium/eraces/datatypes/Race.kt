@@ -90,4 +90,13 @@ class Race {
 
     @RaceProperty(path = "oxygen_bonus", type = FieldType.DOUBLE)
     var oxygenBonus: Double = 0.0
+
+    @RaceProperty(path = "attack_speed_multiplier", type = FieldType.DOUBLE)
+    var attackSpeedMultiplier: Double = 1.0
+
+    @RaceProperty(path = "move_speed_multiplier", type = FieldType.DOUBLE)
+    var moveSpeedMultiplier: Double = 1.0
+
+    @RaceProperty(path = "base_damage_bonus", type = FieldType.DOUBLE)
+    var baseDamageBonus: Double = 0.0
 }

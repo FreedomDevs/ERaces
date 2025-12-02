@@ -99,4 +99,7 @@ class Race {
 
     @RaceProperty(path = "base_damage_bonus", type = FieldType.DOUBLE)
     var baseDamageBonus: Double = 0.0
+
+    @RaceProperty(path = "additional_scale", type = FieldType.DOUBLE)
+    var additionalScale: Double = 0.0
 }

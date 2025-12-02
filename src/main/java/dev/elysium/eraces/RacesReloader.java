@@ -1,12 +1,12 @@
 package dev.elysium.eraces;
 
 import dev.elysium.eraces.datatypes.Race;
+import dev.elysium.eraces.items.RaceChangePotion;
 import dev.elysium.eraces.listeners.*;
 import dev.elysium.eraces.updaters.*;
-import dev.elysium.eraces.updaters.damage.*;
-import dev.elysium.eraces.items.RaceChangePotion;
 import dev.elysium.eraces.updaters.base.IUnloadable;
 import dev.elysium.eraces.updaters.base.IUpdater;
+import dev.elysium.eraces.updaters.damage.*;
 import dev.elysium.eraces.updaters.speed.SlownessWithIronAndMoreArmorListener;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -50,6 +50,7 @@ public class RacesReloader implements Listener {
             new AttackSpeedUpdater(),
             new MoveSpeedUpdater(),
             new BaseDamageUpdater(),
+            new AdditionalScaleUpdater(),
 
             new PlayerJoinListener(),
             new PlayerQuitListener(),

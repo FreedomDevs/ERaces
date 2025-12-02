@@ -3,7 +3,7 @@ ork:
     name: "Орк"
     lore: ""
     icon: "IRON_SWORD"
-  additional_scale: 0.1 # НЕ РЕАЛИЗОВАНО
+  additional_scale: 0.1
 
   # Дебафы
   #- Не может использовать святое и проклятое оружия
@@ -24,7 +24,7 @@ kushar_tar:
     lore: ""
     icon: "IRON_SWORD"
   max_hp: 25
-  additional_scale: 0.2 # НЕ РЕАЛИЗОВАНО
+  additional_scale: 0.2
 
 # Не может использовать святое и проклятое оружия
 #Бафы
@@ -38,7 +38,7 @@ kushar_tar_shir:
     lore: ""
     icon: "IRON_SWORD"
   max_hp: 27
-  additional_scale: 0.3 # НЕ РЕАЛИЗОВАНО
+  additional_scale: 0.3
 #- Не может использовать святое и проклятое оружия
 #Бафы
 #-10% урона от магии
@@ -51,7 +51,7 @@ shatarak:
     lore: ""
     icon: "IRON_SWORD"
   max_hp: 24
-  additional_scale: 0.4 # НЕ РЕАЛИЗОВАНО
+  additional_scale: 0.4
   additional_armor: 3
   attack_speed_multiplier: 0.8
 #**Дебафы**
@@ -64,7 +64,7 @@ shatarak_nok:
     lore: ""
     icon: "IRON_SWORD"
   max_hp: 26
-  additional_scale: 0.6 # НЕ РЕАЛИЗОВАНО
+  additional_scale: 0.6
   additional_armor: 5
   attack_speed_multiplier: 0.8
 #**Дебафы**
@@ -77,7 +77,7 @@ shatarak_nok_van:
     lore: ""
     icon: "IRON_SWORD"
   max_hp: 28
-  additional_scale: 0.8 # НЕ РЕАЛИЗОВАНО
+  additional_scale: 0.8
   additional_armor: 7
   attack_speed_multiplier: 0.8
   move_speed_multiplier: 0.95
@@ -96,7 +96,7 @@ imtish:
     lore: ""
     icon: "IRON_SWORD"
   max_hp: 20
-  additional_scale: 1 # НЕ РЕАЛИЗОВАНО
+  additional_scale: 1
   additional_armor: 10
   base_damage_bonus: 3
 
@@ -112,7 +112,7 @@ imtish_var:
     lore: ""
     icon: "IRON_SWORD"
   max_hp: 26
-  additional_scale: 1 # НЕ РЕАЛИЗОВАНО
+  additional_scale: 1
   additional_armor: 14
   base_damage_bonus: 5
 #**Бафы**
@@ -125,7 +125,7 @@ imtish_var_shak:
     lore: ""
     icon: "IRON_SWORD"
   max_hp: 32
-  additional_scale: 1.5 # НЕ РЕАЛИЗОВАНО
+  additional_scale: 1.5
   additional_armor: 16
   base_damage_bonus: 7
 #**Бафы**

@@ -63,7 +63,8 @@ tasks {
             val viaVersionJar = pluginsDir.resolve("ViaVersion-5.5.1.jar")
             if (!viaVersionJar.exists()) {
                 println("Скачиваем ViaVersion...")
-                URI("https://hangarcdn.papermc.io/plugins/ViaVersion/ViaVersion/versions/5.5.1/PAPER/ViaVersion-5.5.1.jar").toURL().openStream().use { input ->
+                URI("https://hangarcdn.papermc.io/plugins/ViaVersion/ViaVersion/versions/5.6.0/PAPER/ViaVersion-5.6.0.jar").toURL()
+                    .openStream().use { input ->
                     viaVersionJar.outputStream().use { output ->
                         input.copyTo(output)
                     }

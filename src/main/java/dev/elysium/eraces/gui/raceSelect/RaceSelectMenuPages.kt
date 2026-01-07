@@ -18,6 +18,14 @@ object RaceSelectMenuPages {
         )
 
         pages += RacePage(
+            id = "asir",
+            displayName = "Асир",
+            lore = listOf("Северный народ", "Закалённый холодом"),
+            material = Material.DIAMOND_AXE,
+            title = "race.asir"
+        )
+
+        pages += RacePage(
             id = "ork",
             displayName = "Орк",
             lore = listOf("Сильный воин", "Ненавидит эльфов"),

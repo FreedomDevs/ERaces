@@ -110,6 +110,145 @@ sun_elf:
     - condition: "ALWAYS"
       multiplier: 1.25  # +25% восстановление маны
 
+
+high_elf:
+  gui_config:
+    name: "§6Высший эльф"
+    lore: "§6Воплощение мощи.\n\n§eБонусы:\n§7»  Восстановление маны +40%.\n§7»  Скорость атаки +20%.\n§7»  Скорость полета стрелы +30%.\n\n§cМинусы:\n§7»  Эффект замерзания в зимних биомах.\n§7»  −10% урона от ближнего оружия.\n§7»  В аду: тошнота (20 сек, КД 3 мин), слепота (5 сек, КД 1 мин).\n\n§7Для выбора нажмите: §f[ПКМ]"
+    icon: "GOLDEN_ARROW"
+  max_hp: 30
+  weapon_proficiency:
+    sword_damage_multiplier: 0.9  # -10% урона от меча
+    axe_damage_multiplier: 0.9    # -10% урона от топора
+    mace_damage_multiplier: 0.9   # -10% урона от булавы
+    bow_projectile_speed_multiplier: 1.3  # +30% скорость полета стрелы
+  effects_with:
+    in_biome:
+      - biomes:
+          - snowy_taiga
+          - snowy_plains
+          - ice_spikes
+          - frozen_river
+          - snowy_beach
+          - frozen_ocean
+        effects:
+          slowness: 1  # Эффект замерзания в зимних биомах
+      - biomes:
+          - nether_wastes
+          - basalt_deltas
+          - crimson_forest
+          - warped_forest
+          - soul_sand_valley
+        effects:
+          nausea:
+            # amplifier: 0 TODO: реализовать
+            # duration: 20  20 сек TODO: реализовать
+            # cooldown: 180   3 мин TODO: реализовать
+          blindness:
+            # amplifier: 0  TODO: реализовать
+            # duration: 5   5 сек TODO: реализовать
+            # cooldown: 60   1 мин TODO: реализовать
+  attack_speed_multiplier: 1.2  # +20% скорость атаки
+  mana_regeneration_modifiers:
+    - condition: "ALWAYS"
+      multiplier: 1.40  # +40% восстановление маны
+      
+
+nandor:
+  gui_config:
+    name: "§2Нандор"
+    lore: "§2Лесные эльфы, быстрые и ловкие.\n\n§eБонусы:\n§7»  Скорость атаки +15%.\n§7» Cкорость полета стрелы +30%.\n§7»  Скорость и прыгучесть в лесах (1 лвл).\n\n§cМинусы:\n§7»  Эффект замерзания в зимних биомах.\n§7»  −20% урона от ближнего оружия.\n\n§7Для выбора нажмите: §f[ПКМ]"
+    icon: "JUNGLE_SAPLING"
+  max_hp: 20
+  weapon_proficiency:
+    sword_damage_multiplier: 0.8  # -20% урона от меча
+    axe_damage_multiplier: 0.8    # -20% урона от топора
+    mace_damage_multiplier: 0.8   # -20% урона от булавы
+    bow_projectile_speed_multiplier: 1.3  # +30% скорость полета стрелы
+  effects_with:
+    in_biome:
+      - biomes:
+          - snowy_taiga
+          - snowy_plains
+          - ice_spikes
+          - frozen_river
+          - snowy_beach
+          - frozen_ocean
+        effects:
+          slowness: 1  # Эффект замерзания в зимних биомах
+      - biomes:
+          - forest
+          - birch_forest
+          - dark_forest
+          - taiga
+        effects:
+          speed: 1
+          jump_boost: 1
+  attack_speed_multiplier: 1.15  # +15% скорость атаки
+
+
+silvan:
+  gui_config:
+    name: "§aСильван"
+    lore: "§aЛесные эльфы, прирождённые охотники.\n\n§eБонусы:\n§7»  Скорость атаки +20%.\n§7»  Скорость полета стрелы +35%.\n§7»  Скорость и прыгучесть в лесах (1 лвл).\n§7»  Урон от падения −10%.\n\n§cМинусы:\n§7»  Эффект замерзания в зимних биомах.\n§7»  −20% урона от ближнего оружия.\n\n§7Для выбора нажмите: §f[ПКМ]"
+    icon: "OAK_LEAVES"
+  max_hp: 20
+  weapon_proficiency:
+    sword_damage_multiplier: 0.8  # -20% урона от меча
+    axe_damage_multiplier: 0.8    # -20% урона от топора
+    mace_damage_multiplier: 0.8   # -20% урона от булавы
+    bow_projectile_speed_multiplier: 1.35  # +35% скорость полета стрелы
+  effects_with:
+    in_biome:
+      - biomes:
+          - snowy_taiga
+          - snowy_plains
+          - ice_spikes
+          - frozen_river
+          - snowy_beach
+          - frozen_ocean
+        effects:
+          slowness: 1  # Эффект замерзания в зимних биомах
+      - biomes:
+          - forest
+          - birch_forest
+          - dark_forest
+          - taiga
+        effects:
+          speed: 1
+          jump_boost: 1
+  attack_speed_multiplier: 1.2  # +20% скорость атаки
+  fall_damage_multiplier: 0.9   # -10% урон от падения
+
+
+teleri:
+  gui_config:
+    name: "§bТэлери"
+    lore: "§bМорские эльфы, быстрые и ловкие.\n\n§eБонусы:\n§7»  Восстановление маны +15%.\n§7»  Скорость полета стрелы +25%.\n§7»  Скорость атаки +20%.\n\n§cМинусы:\n§7»  Эффект замерзания в зимних биомах.\n§7»  −20% урона от ближнего оружия.\n\n§7Для выбора нажмите: §f[ПКМ]"
+    icon: "PRISMARINE_CRYSTALS"
+  max_hp: 24
+  weapon_proficiency:
+    sword_damage_multiplier: 0.8  # -20% урона от меча
+    axe_damage_multiplier: 0.8    # -20% урона от топора
+    mace_damage_multiplier: 0.8   # -20% урона от булавы
+    bow_projectile_speed_multiplier: 1.25  # +25% скорость полета стрелы
+  effects_with:
+    in_biome:
+      - biomes:
+          - snowy_taiga
+          - snowy_plains
+          - ice_spikes
+          - frozen_river
+          - snowy_beach
+          - frozen_ocean
+        effects:
+          slowness: 1  # Эффект замерзания в зимних биомах
+  attack_speed_multiplier: 1.2  # +20% скорость атаки
+  mana_regeneration_modifiers:
+    - condition: "ALWAYS"
+      multiplier: 1.15  # +15% восстановление маны
+
+
 elf:
   gui_config:
     name: "§aЭльф"

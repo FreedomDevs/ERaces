@@ -46,7 +46,6 @@ class DamagedHalberd(
                 0.0
             )
 
-            // Звук удара
             player.world.playSound(
                 event.entity.location,
                 Sound.ENTITY_PLAYER_ATTACK_CRIT,

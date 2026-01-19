@@ -4,6 +4,7 @@ import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.items.SlotType
 import dev.elysium.eraces.items.weapon.MeleeWeapon
 import dev.elysium.eraces.utils.EffectUtils
+import dev.elysium.eraces.utils.TimeParser
 import org.bukkit.Material
 import org.bukkit.entity.Player
 
@@ -22,7 +23,7 @@ class OneHandedSword(override val plugin: ERaces) : MeleeWeapon(
                 EffectUtils.applyEffects(
                     player,
                     mapOf("minecraft:speed" to 1),
-                    10
+                    TimeParser.parseToTicks("1s").toInt()
                 )
             }
         }

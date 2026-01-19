@@ -12,6 +12,7 @@ object WeaponManager {
             IronSword(plugin),
             OneHandedSword(plugin),
             DamagedHalberd(plugin),
+            Scythes(plugin),
         )
 
         weapons.forEach(ItemRegistry::register)

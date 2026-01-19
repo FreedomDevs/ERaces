@@ -2,6 +2,7 @@ package dev.elysium.eraces
 
 import dev.elysium.eraces.bootstrap.*
 import dev.elysium.eraces.exceptions.internal.InitFailedException
+import dev.elysium.eraces.items.core.ItemKeys
 import org.bukkit.plugin.java.JavaPlugin
 import java.util.logging.Logger
 
@@ -50,6 +51,8 @@ class ERaces : JavaPlugin() {
     override fun onEnable() {
         initializers.forEach { runInitializer(it) }
         logger.info(context.messageManager.data.pluginEnabled)
+
+        ItemKeys.init(this)
     }
 
     override fun onDisable() {

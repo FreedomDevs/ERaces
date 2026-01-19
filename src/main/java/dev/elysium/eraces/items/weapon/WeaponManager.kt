@@ -10,9 +10,12 @@ object WeaponManager {
             CombatStaff(plugin),
             Dagger(plugin),
             IronSword(plugin),
+            OneHandedSword(plugin),
         )
 
         weapons.forEach(ItemRegistry::register)
         plugin.server.pluginManager.registerEvents(WeaponListener(), plugin)
+
+        WeaponInventoryTask().runTaskTimer(plugin, 0L, 5L)
     }
 }

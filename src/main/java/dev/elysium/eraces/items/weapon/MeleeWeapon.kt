@@ -20,10 +20,10 @@ abstract class MeleeWeapon(
     val material: Material,
     private val model: Int,
     private val name: String,
-    private val damage: Double,
-    private val attackSpeed: Double,
+    val damage: Double,
+    val attackSpeed: Double,
     private val isUnbreakable: Boolean = false,
-    private val maxDurability: Int
+    val maxDurability: Int
 ) : Weapon() {
     abstract val plugin: ERaces
 
@@ -71,5 +71,4 @@ abstract class MeleeWeapon(
             player.sendMessage("Ваш ${stack.itemMeta?.displayName} сломался!")
         }
     }
-
 }

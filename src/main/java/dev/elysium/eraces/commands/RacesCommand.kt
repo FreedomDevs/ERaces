@@ -16,5 +16,6 @@ object RacesCommand {
         .then(GetChangePotionExec.cmd)
         .then(AddXpExec.cmd)
         .then(GetXpExec.cmd)
+        .then(WeaponCommand.cmd)
         .build()
 }

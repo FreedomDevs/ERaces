@@ -8,4 +8,6 @@ object ItemRegistry {
     }
 
     fun byId(id: String): Item? = items[id]
+
+    fun all(): Collection<Item> = items.values
 }

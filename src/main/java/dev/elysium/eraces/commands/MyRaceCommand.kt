@@ -31,4 +31,3 @@ object MyRaceCommand {
         player.msg(message, Pair("{race}", playerRace))
     }
 }
-

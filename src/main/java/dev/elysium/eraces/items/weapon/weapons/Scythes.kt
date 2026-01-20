@@ -18,7 +18,7 @@ class Scythes(
 ) : MeleeWeapon(
     id = "scythes",
     material = Material.IRON_SWORD,
-    model = 3,
+    model = 1006,
     name = "§aСерпы",
     damage = 5.0,
     attackSpeed = 2.2,

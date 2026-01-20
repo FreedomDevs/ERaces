@@ -16,7 +16,7 @@ class DamagedHalberd(
 ) : MeleeWeapon(
     id = "damaged_halberd",
     material = Material.IRON_AXE,
-    model = 2,
+    model = 1005,
     name = "§cПоврежденный Бердыш",
     damage = 10.0,
     attackSpeed = 0.8,

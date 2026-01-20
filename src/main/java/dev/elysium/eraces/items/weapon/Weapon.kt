@@ -15,6 +15,7 @@ abstract class Weapon: Item {
 
     open fun onInventory(playersWithSlots: Map<Player, Set<SlotType>>) {}
 
+    @Deprecated("Хуйня не трогать убьёт всё нахуй", level = DeprecationLevel.ERROR)
     open fun onInteractOffHand(player: Player) {}
 
     open fun onInteract(player: Player, hand: EquipmentSlot, click: ClickType) {}

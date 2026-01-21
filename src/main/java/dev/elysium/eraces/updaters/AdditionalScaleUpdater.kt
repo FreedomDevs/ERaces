@@ -15,6 +15,16 @@ class AdditionalScaleUpdater : IUpdater {
 
         val attribute = player.getAttribute(Attribute.SCALE) ?: return
 
-        attribute.addModifier(AttributeModifier(key, bonus, AttributeModifier.Operation.ADD_NUMBER))
+        attribute.modifiers.firstOrNull { it.key == key }?.let {
+            attribute.removeModifier(it)
+        }
+
+        attribute.addModifier(
+            AttributeModifier(
+                key,
+                bonus,
+                AttributeModifier.Operation.ADD_NUMBER
+            )
+        )
     }
 }

@@ -17,6 +17,16 @@ class AttackSpeedUpdater : IUpdater {
         val attribute = player.getAttribute(Attribute.ATTACK_SPEED) ?: return
         val baseValue = attribute.baseValue
 
-        attribute.addModifier(AttributeModifier(key, baseValue * asMultiplier, AttributeModifier.Operation.MULTIPLY_SCALAR_1))
+        attribute.modifiers.firstOrNull { it.key == key }?.let {
+            attribute.removeModifier(it)
+        }
+
+        attribute.addModifier(
+            AttributeModifier(
+                key,
+                baseValue * asMultiplier,
+                AttributeModifier.Operation.MULTIPLY_SCALAR_1
+            )
+        )
     }
 }

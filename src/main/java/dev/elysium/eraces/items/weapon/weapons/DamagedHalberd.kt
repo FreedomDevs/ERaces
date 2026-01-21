@@ -1,9 +1,11 @@
 package dev.elysium.eraces.items.weapon.weapons
 
 import dev.elysium.eraces.ERaces
+import dev.elysium.eraces.ERacesLogger
 import dev.elysium.eraces.items.core.state.ItemState
 import dev.elysium.eraces.items.core.state.StateKeys
 import dev.elysium.eraces.items.weapon.MeleeWeapon
+import dev.elysium.eraces.utils.ChatUtil
 import net.kyori.adventure.text.Component
 import org.bukkit.Material
 import org.bukkit.Particle
@@ -17,7 +19,7 @@ class DamagedHalberd(
     id = "damaged_halberd",
     material = Material.IRON_AXE,
     model = 1005,
-    name = "§cПоврежденный Бердыш",
+    name = "Поврежденный Бердыш",
     damage = 10.0,
     attackSpeed = 0.8,
     maxDurability = 600
@@ -26,32 +28,56 @@ class DamagedHalberd(
     override fun onHit(event: EntityDamageByEntityEvent) {
         super.onHit(event)
 
+        ERacesLogger.info("onHit вызван! Дамагер: ${event.damager}, цель: ${event.entity}")
+
+
         val player = event.damager as? Player ?: return
         val stack = player.inventory.itemInMainHand
         if (stack.type.isAir) return
 
         val weapon = ItemState(stack)
-        val hits = weapon.addInt(StateKeys.HITS, 1)
+        val previousHits = weapon.getInt(StateKeys.HITS)
+        weapon.addInt(StateKeys.HITS, 1)
 
-        if (hits % 2 == 0) {
+        if ((previousHits + 1) % 2 == 0) {
             val newDamage = event.damage * 1.5
             event.damage = newDamage
-            player.world.spawnParticle(
+
+            val victimLoc = event.entity.location.clone().add(0.0, 1.0, 0.0)
+
+            ERacesLogger.info("damaged_halberd крит удар!")
+
+            event.entity.world.spawnParticle(
                 Particle.CRIT,
-                event.entity.location.add(0.0, 1.0, 0.0),
-                10,
-                0.3,
-                0.3,
-                0.3,
-                0.0
+                victimLoc,
+                30,
+                0.5, 0.7, 0.5,
+                0.2
             )
 
-            player.world.playSound(
-                event.entity.location,
+            event.entity.world.spawnParticle(
+                Particle.END_ROD,
+                victimLoc,
+                15,
+                0.3, 0.5, 0.3,
+                0.1
+            )
+
+            event.entity.world.spawnParticle(
+                Particle.WITCH,
+                victimLoc,
+                10,
+                0.2, 0.5, 0.2,
+                0.05
+            )
+
+            event.entity.world.playSound(
+                victimLoc,
                 Sound.ENTITY_PLAYER_ATTACK_CRIT,
                 1.0f,
                 1.0f
             )
         }
+
     }
 }

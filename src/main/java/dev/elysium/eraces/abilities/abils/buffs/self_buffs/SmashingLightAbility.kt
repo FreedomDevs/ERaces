@@ -40,18 +40,14 @@ class SmashingLightAbility : BaseCooldownAbility(id = "smashinglight", defaultCo
 
     @EventHandler
     fun onPlayerHit(event: EntityDamageByEntityEvent) {
-        if (event.damager !is Player)
-            return;
-        val player = event.damager as Player;
+        if (event.damager !is Player) return
+        val player = event.damager as Player
 
-        if (event.entity !is LivingEntity)
-            return;
-        val victim = event.entity as LivingEntity;
+        if (event.entity !is LivingEntity) return
+        val victim = event.entity as LivingEntity
 
-        //если способность не активирована
-        if (!playerAbilityData.get(player.uniqueId)!!.activated)
-            return;
-
+        val abilityData = playerAbilityData[player.uniqueId]
+        if (abilityData == null || !abilityData.activated) return
 
         //при ударе мы поднимаем счетчик. но сбрасываем его, если удар третий.
         playerAbilityData.compute(player.uniqueId) { _, abilityData ->

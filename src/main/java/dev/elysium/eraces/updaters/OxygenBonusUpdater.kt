@@ -13,6 +13,11 @@ class OxygenBonusUpdater : IUpdater {
     override fun update(race: Race, player: Player) {
         val attr = player.getAttribute(Attribute.OXYGEN_BONUS) ?: return
         attr.removeModifier(key)
+
+        attr.modifiers.firstOrNull { it.key == key }?.let {
+            attr.removeModifier(it)
+        }
+
         attr.addModifier(AttributeModifier(key, race.oxygenBonus, Operation.ADD_NUMBER))
     }
 }

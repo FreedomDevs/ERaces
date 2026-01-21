@@ -22,4 +22,9 @@ class ItemState(private val stack: ItemStack) {
         setInt(key, new)
         return new
     }
+
+    fun contains(key: NamespacedKey): Boolean {
+        val meta = stack.itemMeta ?: return false
+        return meta.persistentDataContainer.has(key, PersistentDataType.INTEGER)
+    }
 }

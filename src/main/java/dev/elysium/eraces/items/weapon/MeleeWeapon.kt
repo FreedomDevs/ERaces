@@ -34,7 +34,6 @@ abstract class MeleeWeapon(
         meta.setCustomModelData(model)
         meta.isUnbreakable = isUnbreakable
 
-
         val damageModifier = AttributeModifier(
             NamespacedKey(plugin, "${id}_damage"),
             damage,
@@ -42,7 +41,6 @@ abstract class MeleeWeapon(
             EquipmentSlotGroup.HAND
         )
         meta.addAttributeModifier(Attribute.ATTACK_DAMAGE, damageModifier)
-
 
         val speedModifier = AttributeModifier(
             NamespacedKey(plugin, "${id}_speed"),
@@ -53,8 +51,9 @@ abstract class MeleeWeapon(
         meta.addAttributeModifier(Attribute.ATTACK_SPEED, speedModifier)
 
         val state = ItemState(item)
-        state.setInt(StateKeys.HITS, maxDurability)
-
+        if (!state.contains(StateKeys.HITS)) {
+            state.setInt(StateKeys.HITS, maxDurability)
+        }
 
         item.itemMeta = meta
     }

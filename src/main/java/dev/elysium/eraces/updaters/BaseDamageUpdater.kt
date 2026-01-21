@@ -15,6 +15,16 @@ class BaseDamageUpdater : IUpdater {
 
         val attribute = player.getAttribute(Attribute.ATTACK_SPEED) ?: return
 
-        attribute.addModifier(AttributeModifier(key, bonus, AttributeModifier.Operation.ADD_NUMBER))
+        attribute.modifiers.firstOrNull { it.key == key }?.let {
+            attribute.removeModifier(it)
+        }
+
+        attribute.addModifier(
+            AttributeModifier(
+                key,
+                bonus,
+                AttributeModifier.Operation.ADD_NUMBER
+            )
+        )
     }
 }

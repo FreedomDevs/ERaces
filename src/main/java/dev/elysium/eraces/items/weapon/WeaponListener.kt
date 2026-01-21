@@ -50,32 +50,23 @@ class WeaponListener : Listener {
     }
 
     private fun getWeaponToMainOrOffHand(player: Player, hand: Hand = Hand.ALL): Pair<Weapon, Hand>? {
-        var weapon: Weapon
         val inv = player.inventory
 
         fun main(): Pair<Weapon, Hand>? {
-            if (ItemResolver.resolve(inv.itemInMainHand) is Weapon) {
-                weapon = ItemResolver.resolve(inv.itemInMainHand) as? Weapon ?: return null
-                return Pair(weapon, Hand.MAIN_HAND)
-            }
-            return null
+            val w = ItemResolver.resolve(inv.itemInMainHand) as? Weapon ?: return null
+            return Pair(w, Hand.MAIN_HAND)
         }
 
         fun off(): Pair<Weapon, Hand>? {
-            if (ItemResolver.resolve(inv.itemInOffHand) is Weapon) {
-                weapon = ItemResolver.resolve(inv.itemInOffHand) as? Weapon ?: return null
-                return Pair(weapon, Hand.OFF_HAND)
-            }
-            return null
+            val w = ItemResolver.resolve(inv.itemInOffHand) as? Weapon ?: return null
+            return Pair(w, Hand.OFF_HAND)
         }
 
-        when (hand) {
+        return when (hand) {
             Hand.ALL -> main() ?: off()
             Hand.MAIN_HAND -> main()
             Hand.OFF_HAND -> off()
         }
-
-        return null
     }
 
     private enum class Hand {

@@ -71,6 +71,18 @@ tasks {
                 }
                 println("ViaVersion скачан в run/plugins")
             }
+
+            val placeholderAPI = pluginsDir.resolve("PlaceholderAPI-2.11.7.jar")
+            if (!placeholderAPI.exists()) {
+                println("Скачиваем PlaceholderAPI...")
+                URI("https://cdn.modrinth.com/data/lKEzGugV/versions/sn9LYZkM/PlaceholderAPI-2.11.7.jar").toURL()
+                    .openStream().use { input ->
+                        placeholderAPI.outputStream().use { output ->
+                            input.copyTo(output)
+                        }
+                    }
+                println("PlaceholderAPI скачан в run/plugins")
+            }
         }
     }
 

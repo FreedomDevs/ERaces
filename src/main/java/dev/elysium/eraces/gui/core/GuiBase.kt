@@ -31,7 +31,6 @@ abstract class GuiBase(
 
     fun open() {
         setup()
-        programmaticOpen = true
         player.openInventory(inv)
         GuiManager.setOpenMenu(player, this)
     }
@@ -44,9 +43,5 @@ abstract class GuiBase(
     fun clearButtons() {
         buttons.clear()
         inv.clear()
-    }
-
-    open fun onClose(): Boolean {
-        return preventClose && !programmaticOpen
     }
 }

@@ -41,7 +41,7 @@ object GuiListener : Listener {
         val player = event.player as? Player ?: return
         val menu = GuiManager.getOpenMenu(player) ?: return
 
-        if (menu.onClose()) {
+        if (menu.preventClose) {
             menu.closeMessage?.let { player.actionMsg(it) }
 
             player.server.scheduler.runTaskLater(plugin, Runnable {

@@ -1,12 +1,9 @@
 package dev.elysium.eraces.items.weapon.weapons
 
 import dev.elysium.eraces.ERaces
-import dev.elysium.eraces.ERacesLogger
 import dev.elysium.eraces.items.core.state.ItemState
 import dev.elysium.eraces.items.core.state.StateKeys
 import dev.elysium.eraces.items.weapon.MeleeWeapon
-import dev.elysium.eraces.utils.ChatUtil
-import net.kyori.adventure.text.Component
 import org.bukkit.Material
 import org.bukkit.Particle
 import org.bukkit.Sound
@@ -22,30 +19,29 @@ class DamagedHalberd(
     name = "Поврежденный Бердыш",
     damage = 10.0,
     attackSpeed = 0.8,
-    maxDurability = 600
+    maxDurability = 10,
+    options = mapOf(
+        "lore" to listOf(
+            "<red>Поврежденный Бердыш",
+            "<green>Прочность: {bar} <white>({hits}/{durability})",
+            "<gold>Каждый 2-й удар — критический!"
+        )
+    )
 ) {
 
     override fun onHit(event: EntityDamageByEntityEvent) {
         super.onHit(event)
 
-        ERacesLogger.info("onHit вызван! Дамагер: ${event.damager}, цель: ${event.entity}")
-
-
         val player = event.damager as? Player ?: return
         val stack = player.inventory.itemInMainHand
         if (stack.type.isAir) return
 
-        val weapon = ItemState(stack)
-        val previousHits = weapon.getInt(StateKeys.HITS)
-        weapon.addInt(StateKeys.HITS, 1)
+        val hits = ItemState(stack).getInt(StateKeys.HITS)
 
-        if ((previousHits + 1) % 2 == 0) {
-            val newDamage = event.damage * 1.5
-            event.damage = newDamage
+        if (hits % 2 == 0) {
+            event.damage *= 1.5
 
             val victimLoc = event.entity.location.clone().add(0.0, 1.0, 0.0)
-
-            ERacesLogger.info("damaged_halberd крит удар!")
 
             event.entity.world.spawnParticle(
                 Particle.CRIT,

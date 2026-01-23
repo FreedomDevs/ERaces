@@ -38,7 +38,7 @@ class Blade(
             "<dark_gray>──────────────"
         )
     )
-) {Ywe
+) {
 
     private val abilityCooldownMillis = 3000L
 

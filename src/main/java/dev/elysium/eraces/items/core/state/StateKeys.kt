@@ -6,9 +6,11 @@ import org.bukkit.NamespacedKey
 object StateKeys {
     lateinit var HITS: NamespacedKey
     lateinit var DURABILITY: NamespacedKey
+    lateinit var KD: NamespacedKey
 
     fun init(plugin: ERaces) {
         HITS = NamespacedKey(plugin, "hits")
         DURABILITY = NamespacedKey(plugin, "max_hits")
+        KD = NamespacedKey(plugin, "kd")
     }
 }

@@ -27,4 +27,13 @@ class ItemState(private val stack: ItemStack) {
         val meta = stack.itemMeta ?: return false
         return meta.persistentDataContainer.has(key, PersistentDataType.INTEGER)
     }
+
+    fun getLong(key: NamespacedKey, default: Long = 0L): Long {
+        return pdc.get(key, PersistentDataType.LONG) ?: default
+    }
+
+    fun setLong(key: NamespacedKey, value: Long) {
+        pdc.set(key, PersistentDataType.LONG, value)
+        stack.itemMeta = meta
+    }
 }

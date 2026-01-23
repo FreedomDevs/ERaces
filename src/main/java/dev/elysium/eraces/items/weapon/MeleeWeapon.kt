@@ -102,7 +102,8 @@ abstract class MeleeWeapon(
             ChatUtil.parse(line, mapOf(
                 "{hits}" to hits.toString(),
                 "{durability}" to max.toString(),
-                "{bar}" to getDurabilityBar(hits, max)
+                "{bar}" to getDurabilityBar(hits, max),
+                "{current_durability}" to (max - hits).toString()
             ))
         }
 

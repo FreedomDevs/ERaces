@@ -18,7 +18,7 @@ class DamagedHalberd(
     name = "<red>Поврежденный Бердыш",
     damage = 10.0,
     attackSpeed = 0.8,
-    maxDurability = 10,
+    maxDurability = 600,
     options = mapOf(
         "lore" to listOf(
             "<gray>⚔ <white>Урон: <red>10.0",

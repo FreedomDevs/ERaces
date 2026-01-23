@@ -33,11 +33,6 @@ abstract class MeleeWeapon(
 
         meta.displayName(ChatUtil.parse(name))
 
-        item.setData(
-            DataComponentTypes.CUSTOM_MODEL_DATA,
-            CustomModelData.customModelData().addString(id).build()
-        );
-
         meta.isUnbreakable = isUnbreakable
 
         val damageModifier = AttributeModifier(
@@ -57,6 +52,11 @@ abstract class MeleeWeapon(
         meta.addAttributeModifier(Attribute.ATTACK_SPEED, speedModifier)
 
         item.itemMeta = meta
+
+        item.setData(
+            DataComponentTypes.CUSTOM_MODEL_DATA,
+            CustomModelData.customModelData().addString(id).build()
+        );
 
         val state = ItemState(item)
 

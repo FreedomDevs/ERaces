@@ -5,6 +5,8 @@ import dev.elysium.eraces.items.core.ItemResolver
 import dev.elysium.eraces.items.core.state.ItemState
 import dev.elysium.eraces.items.core.state.StateKeys
 import dev.elysium.eraces.utils.ChatUtil
+import io.papermc.paper.datacomponent.DataComponentTypes
+import io.papermc.paper.datacomponent.item.CustomModelData
 import org.bukkit.Material
 import org.bukkit.NamespacedKey
 import org.bukkit.attribute.Attribute
@@ -17,7 +19,6 @@ import org.bukkit.inventory.ItemStack
 abstract class MeleeWeapon(
     override val id: String,
     val material: Material,
-    private val model: Int,
     private val name: String,
     val damage: Double,
     val attackSpeed: Double,
@@ -31,7 +32,12 @@ abstract class MeleeWeapon(
         val meta = item.itemMeta ?: return
 
         meta.displayName(ChatUtil.parse(name))
-        meta.setCustomModelData(model)
+
+        item.setData(
+            DataComponentTypes.CUSTOM_MODEL_DATA,
+            CustomModelData.customModelData().addString(id).build()
+        );
+
         meta.isUnbreakable = isUnbreakable
 
         val damageModifier = AttributeModifier(
@@ -99,12 +105,14 @@ abstract class MeleeWeapon(
         } ?: emptyList()
 
         val updateLore = loreLines.map { line ->
-            ChatUtil.parse(line, mapOf(
-                "{hits}" to hits.toString(),
-                "{durability}" to max.toString(),
-                "{bar}" to getDurabilityBar(hits, max),
-                "{current_durability}" to (max - hits).toString()
-            ))
+            ChatUtil.parse(
+                line, mapOf(
+                    "{hits}" to hits.toString(),
+                    "{durability}" to max.toString(),
+                    "{bar}" to getDurabilityBar(hits, max),
+                    "{current_durability}" to (max - hits).toString()
+                )
+            )
         }
 
         meta.lore(updateLore)

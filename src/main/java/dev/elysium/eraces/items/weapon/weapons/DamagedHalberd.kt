@@ -15,16 +15,18 @@ class DamagedHalberd(
 ) : MeleeWeapon(
     id = "damaged_halberd",
     material = Material.IRON_AXE,
-    model = 1005,
-    name = "Поврежденный Бердыш",
+    name = "<red>Поврежденный Бердыш",
     damage = 10.0,
     attackSpeed = 0.8,
     maxDurability = 10,
     options = mapOf(
         "lore" to listOf(
-            "<red>Поврежденный Бердыш",
-            "<green>Прочность: {bar} <white>({hits}/{durability})",
-            "<gold>Каждый 2-й удар — критический!"
+            "<gray>⚔ <white>Урон: <red>10.0",
+            "<gray>⚡ <white>Скорость атаки: <yellow>0.8",
+            "",
+            "<gray>⛏ <white>Прочность:",
+            "<gray>[ <white>{current_durability}<gray> / <white>{durability} <gray>]",
+            "{bar}",
         )
     )
 ) {

@@ -11,11 +11,20 @@ import org.bukkit.entity.Player
 class OneHandedSword(override val plugin: ERaces) : MeleeWeapon(
     id = "one_handed_sword",
     material = Material.IRON_SWORD,
-    model = 1004,
-    name = "bОдноручный меч",
+    name = "<red>Одноручный меч",
     damage = 7.0,
     attackSpeed = 1.7,
-    maxDurability = 400
+    maxDurability = 400,
+    options = mapOf(
+        "lore" to listOf(
+            "<gray>⚔ <white>Урон: <red>7.0",
+            "<gray>⚡ <white>Скорость атаки: <yellow>1.7",
+            "",
+            "<gray>⛏ <white>Прочность:",
+            "<gray>[ <white>{current_durability}<gray> / <white>{durability} <gray>]",
+            "{bar}",
+        )
+    )
 ) {
     override fun onInventory(playersWithSlots: Map<Player, Set<SlotType>>) {
         for ((player, slots) in playersWithSlots) {

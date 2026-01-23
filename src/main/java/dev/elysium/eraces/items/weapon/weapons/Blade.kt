@@ -17,14 +17,12 @@ class Blade(
 ) : MeleeWeapon(
     id = "blade",
     material = Material.IRON_SWORD,
-    model = 1007,
     name = "<red>Клинок",
     damage = 9.0,
     attackSpeed = 1.6,
     maxDurability = 950,
     options = mapOf(
         "lore" to listOf(
-            "<dark_gray>──────────────",
             "<gray>⚔ <white>Урон: <red>9",
             "<gray>⚡ <white>Скорость атаки: <yellow>1.6",
             "",
@@ -35,7 +33,6 @@ class Blade(
             "<gray>⛏ <white>Прочность:",
             "<gray>[ <white>{current_durability}<gray> / <white>{durability} <gray>]",
             "{bar}",
-            "<dark_gray>──────────────"
         )
     )
 ) {

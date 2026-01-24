@@ -7,6 +7,7 @@ import dev.elysium.eraces.items.core.state.StateKeys
 import dev.elysium.eraces.utils.ChatUtil
 import io.papermc.paper.datacomponent.DataComponentTypes
 import io.papermc.paper.datacomponent.item.CustomModelData
+import io.papermc.paper.datacomponent.item.ItemAttributeModifiers
 import org.bukkit.Material
 import org.bukkit.NamespacedKey
 import org.bukkit.attribute.Attribute
@@ -16,6 +17,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.inventory.EquipmentSlotGroup
 import org.bukkit.inventory.ItemStack
 
+@Suppress("UnstableApiUsage")
 abstract class MeleeWeapon(
     override val id: String,
     val material: Material,
@@ -29,34 +31,35 @@ abstract class MeleeWeapon(
     abstract val plugin: ERaces
 
     override fun onInit(item: ItemStack) {
-        val meta = item.itemMeta ?: return
-
-        meta.displayName(ChatUtil.parse(name))
-
-        item.setData(
-            DataComponentTypes.CUSTOM_MODEL_DATA,
-            CustomModelData.customModelData().addString(id).build()
-        );
-
-        meta.isUnbreakable = isUnbreakable
-
         val damageModifier = AttributeModifier(
             NamespacedKey(plugin, "${id}_damage"),
             damage,
             AttributeModifier.Operation.ADD_NUMBER,
             EquipmentSlotGroup.HAND
         )
-        meta.addAttributeModifier(Attribute.ATTACK_DAMAGE, damageModifier)
-
         val speedModifier = AttributeModifier(
             NamespacedKey(plugin, "${id}_speed"),
             attackSpeed - 4.0,
             AttributeModifier.Operation.ADD_NUMBER,
             EquipmentSlotGroup.HAND
         )
-        meta.addAttributeModifier(Attribute.ATTACK_SPEED, speedModifier)
 
-        item.itemMeta = meta
+        item.setData(
+            DataComponentTypes.ATTRIBUTE_MODIFIERS, ItemAttributeModifiers.itemAttributes()
+                .addModifier(Attribute.ATTACK_DAMAGE, damageModifier)
+                .addModifier(Attribute.ATTACK_SPEED, speedModifier)
+                .build()
+        )
+
+        if (isUnbreakable)
+            item.setData(DataComponentTypes.UNBREAKABLE)
+
+        item.setData(DataComponentTypes.CUSTOM_NAME, ChatUtil.parse(name));
+
+        item.setData(
+            DataComponentTypes.CUSTOM_MODEL_DATA,
+            CustomModelData.customModelData().addString(id).build()
+        );
 
         val state = ItemState(item)
 

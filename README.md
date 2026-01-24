@@ -7,7 +7,7 @@
 
 ## ⚙️ Конфигурация
 
-Вся конфигурация делается в plugins/ERaces/*.yml
+Вся конфигурация делается в plugins/ERaces/races.d/*.yml
 
 Документация по этим параметрам находится в [config_docs.md](docs/config_docs.md)
 

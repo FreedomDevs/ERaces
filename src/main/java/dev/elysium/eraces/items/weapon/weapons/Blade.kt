@@ -4,6 +4,7 @@ import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.items.core.state.ItemState
 import dev.elysium.eraces.items.core.state.StateKeys
 import dev.elysium.eraces.items.weapon.MeleeWeapon
+import dev.elysium.eraces.utils.actionMsg
 import dev.elysium.eraces.utils.msg
 import org.bukkit.Material
 import org.bukkit.Particle
@@ -48,7 +49,7 @@ class Blade(
         val kdEnd = state.getLong(StateKeys.KD)
         if (now < kdEnd) {
             val remaining = ((kdEnd - now) / 1000.0)
-            player.msg("<red>Способность еще не готова! <gold>${"%.1f".format(remaining)}s</gold>")
+            player.actionMsg("<red>Способность еще не готова! <gold>${"%.1f".format(remaining)}s</gold>")
             return
         }
         dash(player)

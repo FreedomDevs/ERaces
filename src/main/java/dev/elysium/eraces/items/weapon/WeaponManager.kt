@@ -15,6 +15,7 @@ object WeaponManager {
             Scythes(plugin),
             Blade(plugin),
             Halberd(plugin),
+            WhisperingSickles(plugin),
         )
 
         weapons.forEach(ItemRegistry::register)

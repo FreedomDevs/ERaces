@@ -4,17 +4,15 @@ import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.items.core.ItemResolver
 import dev.elysium.eraces.items.core.state.ItemState
 import dev.elysium.eraces.items.core.state.StateKeys
+import dev.elysium.eraces.utils.WeaponAttributeUtils
 import dev.elysium.eraces.utils.ChatUtil
 import io.papermc.paper.datacomponent.DataComponentTypes
 import io.papermc.paper.datacomponent.item.CustomModelData
 import io.papermc.paper.datacomponent.item.ItemAttributeModifiers
 import org.bukkit.Material
-import org.bukkit.NamespacedKey
 import org.bukkit.attribute.Attribute
-import org.bukkit.attribute.AttributeModifier
 import org.bukkit.entity.Player
 import org.bukkit.event.entity.EntityDamageByEntityEvent
-import org.bukkit.inventory.EquipmentSlotGroup
 import org.bukkit.inventory.ItemStack
 
 @Suppress("UnstableApiUsage")
@@ -31,23 +29,18 @@ abstract class MeleeWeapon(
     abstract val plugin: ERaces
 
     override fun onInit(item: ItemStack) {
-        val damageModifier = AttributeModifier(
-            NamespacedKey(plugin, "${id}_damage"),
-            damage,
-            AttributeModifier.Operation.ADD_NUMBER,
-            EquipmentSlotGroup.HAND
-        )
-        val speedModifier = AttributeModifier(
-            NamespacedKey(plugin, "${id}_speed"),
-            attackSpeed - 4.0,
-            AttributeModifier.Operation.ADD_NUMBER,
-            EquipmentSlotGroup.HAND
+        val attributes = WeaponAttributeUtils.createWeaponAttributes(
+            plugin = plugin,
+            id = id,
+            material = material,
+            damage = damage,
+            attackSpeed = attackSpeed
         )
 
         item.setData(
             DataComponentTypes.ATTRIBUTE_MODIFIERS, ItemAttributeModifiers.itemAttributes()
-                .addModifier(Attribute.ATTACK_DAMAGE, damageModifier)
-                .addModifier(Attribute.ATTACK_SPEED, speedModifier)
+                .addModifier(Attribute.ATTACK_DAMAGE, attributes.damageModifier)
+                .addModifier(Attribute.ATTACK_SPEED, attributes.attackSpeedModifier)
                 .build()
         )
 

@@ -1,5 +1,6 @@
 package dev.elysium.eraces.abilities.abils.base
 
+import dev.elysium.eraces.abilities.interfaces.IComboActivatable
 import org.bukkit.entity.Player
 
 /**
@@ -7,7 +8,13 @@ import org.bukkit.entity.Player
  *
  * @property id уникальный идентификатор способности
  */
-abstract class BaseAbility(override val id: String) : BaseAbilityWithConfig(id) {
+abstract class BaseAbility(override val id: String, val comboKey: String? = null) : BaseAbilityWithConfig(id),
+    IComboActivatable {
+
+    /**
+     * getComboKey лол че тут написать
+     */
+    override fun getComboKeyy(): String? = comboKey
 
     /**
      * Активация способности для указанного игрока.

@@ -3,6 +3,7 @@ package dev.elysium.eraces.abilities.abils.attack.aoe
 import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseEffectsAbility
+import dev.elysium.eraces.abilities.interfaces.IComboActivatable
 import dev.elysium.eraces.utils.TimeParser
 import dev.elysium.eraces.utils.targetUtils.Target
 import dev.elysium.eraces.utils.targetUtils.effects.EffectsTarget
@@ -24,7 +25,8 @@ class AmbushAbility : BaseEffectsAbility(
         "speed" to EffectData("2m", 2, PotionEffectType.SPEED),
         "jump_bost" to EffectData("20s", 2, PotionEffectType.JUMP_BOOST),
         "nvisibility" to EffectData("20s", 2, PotionEffectType.INVISIBILITY)
-    )
+    ),
+    comboKey = "9323"
 ) {
     private var duration: String = "20s"
     private var radius: Double = 3.0
@@ -35,7 +37,7 @@ class AmbushAbility : BaseEffectsAbility(
     override fun customActivate(player: Player) {
         val plugin = ERaces.getInstance()
         var taskId = 0
-        val elapsedSeconds = 0
+        var elapsedSeconds = 0
 
         taskId = Bukkit.getScheduler().runTaskTimer(plugin, Runnable {
             if (elapsedSeconds >= TimeParser.parseToSecondsDouble(duration).toInt()) {
@@ -50,16 +52,17 @@ class AmbushAbility : BaseEffectsAbility(
                     EffectsTarget()
                         .from(Executor.PLAYER(entity = player))
                         .particle(p = Particle.SMOKE)
+                        .extra(0.05)
                         .math(
                             builder = RadiusFillBuilder()
                                 .circle(radius)
                                 .filled(filled = true)
-                                .step(step = 0.3)
+                                .outlineSteps(24)
                                 .interpolationFactor(factor = 2)
                         )
                 )
                 .execute { target ->
-                    if (target is Player && ERaces.Companion.getInstance().context.playerDataManager.getPlayerRace(target).id != "dark_elf") {
+                    if (target is Player && ERaces.getInstance().context.playerDataManager.getPlayerRace(target).id != "dark_elf") {
                         target.addPotionEffects(
                             listOf(
                                 PotionEffect(
@@ -91,6 +94,8 @@ class AmbushAbility : BaseEffectsAbility(
                     }
 
                 }
+
+            elapsedSeconds++
         }, 0L, 20L).taskId
     }
 

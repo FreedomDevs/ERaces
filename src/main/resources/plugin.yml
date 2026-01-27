@@ -32,6 +32,8 @@ commands:
 permissions:
   fdp_races.races_command.use:
     default: op
+  eraces.ignore_ability_access:
+    default: op
 
 libraries:
   - org.jetbrains.kotlin:kotlin-stdlib:2.2.21

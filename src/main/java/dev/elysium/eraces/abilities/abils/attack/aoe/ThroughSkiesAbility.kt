@@ -25,7 +25,7 @@ import kotlin.math.sqrt
 
 @RegisterAbility
 @Suppress("unused")
-class ThroughSkiesAbility : BaseCooldownAbility("throughskies", defaultCooldown = "30s") {
+class ThroughSkiesAbility : BaseCooldownAbility("throughskies", defaultCooldown = "30s", comboKey = "3535") {
 
     private var verticalDistance = 10.0
     private var teleportDistance = 20.0
@@ -41,7 +41,7 @@ class ThroughSkiesAbility : BaseCooldownAbility("throughskies", defaultCooldown 
 
     override fun onActivate(player: Player) {
         // применяем вертикальное ускорение по оси Y
-        player.velocity = Vector(0.0,calculateLaunchVelocity(verticalDistance),0.0)
+        player.velocity = Vector(0.0, calculateLaunchVelocity(verticalDistance), 0.0)
 
         val task = object : BukkitRunnable() {
             //после того, как игрок пролетит 20 блоков, нам нужно выполнить этот код,
@@ -53,7 +53,8 @@ class ThroughSkiesAbility : BaseCooldownAbility("throughskies", defaultCooldown 
 
                 player.teleport(playerTeleportLocation);
 
-                val entities = getAllEntitiesOnLineIgnoringY(playerInitialLocation, playerTeleportLocation, lineThickness)
+                val entities =
+                    getAllEntitiesOnLineIgnoringY(playerInitialLocation, playerTeleportLocation, lineThickness)
 
                 applyEffectsToEntities(entities, player)
             }
@@ -66,11 +67,15 @@ class ThroughSkiesAbility : BaseCooldownAbility("throughskies", defaultCooldown 
     private fun applyEffectsToEntities(entities: List<LivingEntity>, damageSource: Entity) {
         //применяем эффекты к сущностям
         for (entity in entities) {
-            if (entity is LivingEntity) {
-                entity.damage(damage, damageSource)
-                require(bukkitEffect != null) { "Нет такого эффекта $effect" }
-                entity.addPotionEffect(PotionEffect(bukkitEffect, TimeParser.parseToTicks(effectDurarion).toInt(), effectLevel - 1))
-            }
+            entity.damage(damage, damageSource)
+            require(bukkitEffect != null) { "Нет такого эффекта $effect" }
+            entity.addPotionEffect(
+                PotionEffect(
+                    bukkitEffect,
+                    TimeParser.parseToTicks(effectDurarion).toInt(),
+                    effectLevel - 1
+                )
+            )
         }
     }
 
@@ -92,12 +97,12 @@ class ThroughSkiesAbility : BaseCooldownAbility("throughskies", defaultCooldown 
     }
 
     // deepSeek сказал, что так можно расчитать скорость, чтобы подлететь ровно на какое-то количество блоков
-   private fun calculateLaunchVelocity(targetHeight: Double): Double {
+    private fun calculateLaunchVelocity(targetHeight: Double): Double {
         val gravity = 0.08 // Гравитация в Minecraft (блоков/тик²)
         val velocity = sqrt(2 * gravity * targetHeight)
 
         return velocity
-   }
+    }
 
     //считаем, сколько времени занимает полёт
     //может быть лучше надо слушать PlayerMoveEvent и ждать, пока вертикальная скорость не упадет до 0
@@ -114,7 +119,11 @@ class ThroughSkiesAbility : BaseCooldownAbility("throughskies", defaultCooldown 
 
     //получаем список живых сущностей на линии
     //код написан  deepSeek
-    private fun getAllEntitiesOnLineIgnoringY(start: Location, end: Location, lineThickness: Double): List<LivingEntity> {
+    private fun getAllEntitiesOnLineIgnoringY(
+        start: Location,
+        end: Location,
+        lineThickness: Double
+    ): List<LivingEntity> {
         val world = start.world ?: return emptyList()
 
         // Создаем направляющий вектор линии (игнорируем Y)

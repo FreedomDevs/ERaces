@@ -25,6 +25,7 @@ class EffectsTarget {
     private var durationTicks: Int = 1
     private var periodTicks: Long = 1L
     private var maxPointsPerTick: Int = Int.MAX_VALUE
+    private var extra: Double = 0.0
     private var dustOptions: Particle.DustOptions? = null
 
     /**
@@ -46,6 +47,15 @@ class EffectsTarget {
     }
 
     /**
+     * Устанавливает значение extra для создаваемых частиц (обычно обозначает скорость частиц)
+     * @param extra Double (значение extra)
+     * @return текущий EffectsTarget
+     */
+    fun extra(extra: Double): EffectsTarget {
+        this.extra = extra; return this
+    }
+
+    /**
      * Устанавливает тип частицы для эффекта.
      * @param p Particle
      * @return текущий EffectsTarget
@@ -55,11 +65,13 @@ class EffectsTarget {
     }
 
     /**
-     * Устанавливает DustOptions (цвет и размер) для Particle.REDSTONE.
+     * Устанавливает DustOptions (цвет и размер) и particle = Particle.DUST.
      * @param org.bukkit.Particle.DustOptions
      */
     fun dust(options: Particle.DustOptions): EffectsTarget {
-        this.dustOptions = options; return this
+        this.particle = Particle.DUST
+        this.dustOptions = options
+        return this
     }
 
     /**
@@ -136,7 +148,7 @@ class EffectsTarget {
         val targets = t.getEntities()
         val provider = pointsProvider ?: { emptyList<Vec3>() }
 
-        var run = 0
+        var run = 0L
         var task: BukkitTask? = null
 
         val runnable = Runnable {
@@ -146,7 +158,7 @@ class EffectsTarget {
             }
             actionOnEntity?.let { act -> targets.forEach { act(it) } }
 
-            run++
+            run += periodTicks
             if (run >= durationTicks) task?.cancel()
         }
 
@@ -182,7 +194,7 @@ class EffectsTarget {
     private fun spawnAtEntity(entity: LivingEntity, points: List<Vec3>, offset: Vec3?) {
         val origin = entity.location.clone().add(
             offset?.x ?: 0.0,
-            offset?.y ?: (entity.eyeHeight / 2.0),
+            offset?.y ?: (entity.eyeHeight / 4.0),
             offset?.z ?: 0.0
         )
         spawnAt(origin, points)
@@ -204,13 +216,13 @@ class EffectsTarget {
                     origin.y + off.y,
                     origin.z + off.z,
                     1,
-                    0.0, 0.0, 0.0, 0.0,
+                    0.0, 0.0, 0.0, extra,
                     dustOptions
                 )
             }
         } else {
             for (off in offsets) {
-                world.spawnParticle(particle, origin.x + off.x, origin.y + off.y, origin.z + off.z, 1)
+                world.spawnParticle(particle, origin.x + off.x, origin.y + off.y, origin.z + off.z, 1, 0.0, 0.0, 0.0, extra)
             }
         }
     }

@@ -18,13 +18,14 @@ import org.bukkit.entity.Player
 @Suppress("unused")
 class FireBoomAbility : BaseCooldownAbility(
     id = "fireboom",
-    defaultCooldown = "15m"
+    defaultCooldown = "15m",
+    comboKey = "6621"
 ) {
     private var radius: Double = 3.0
     private var fireDuration: String = "10s"
 
     override fun onActivate(player: Player) {
-        Target.Companion.from(player)
+        Target.from(player)
             .filter(TargetFilter.ENTITIES)
             .inRadius(radius, useRaycast = true)
             .excludeCaster()
@@ -37,7 +38,7 @@ class FireBoomAbility : BaseCooldownAbility(
                         RadiusFillBuilder()
                             .circle(radius)
                             .filled(true)
-                            .step(0.3)
+                            .outlineSteps(28)
                             .interpolationFactor(2)
                     )
             )
@@ -45,7 +46,6 @@ class FireBoomAbility : BaseCooldownAbility(
     }
 
     override fun loadCustomParams(cfg: YamlConfiguration) {
-        super.loadCustomParams(cfg)
         ConfigHelper.with(cfg) {
             read("fireDuration", ::fireDuration)
             read("radius", ::radius)
@@ -53,7 +53,6 @@ class FireBoomAbility : BaseCooldownAbility(
     }
 
     override fun writeCustomDefaults(cfg: YamlConfiguration) {
-        super.writeCustomDefaults(cfg)
         ConfigHelper.with(cfg) {
             write("fireDuration", fireDuration)
             write("radius", radius)

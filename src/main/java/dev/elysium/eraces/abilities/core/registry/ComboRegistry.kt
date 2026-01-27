@@ -15,7 +15,7 @@ class ComboRegistry {
      * Если уже существует — возвращает id способности, которая держит эту комбо.
      */
     fun registerCombo(ability: IComboActivatable) {
-        ability.getComboKey()
+        ability.getComboKeyy()
             ?.takeIf { it.isNotBlank() }
             ?.let { combo ->
                 (ability as IAbility).id

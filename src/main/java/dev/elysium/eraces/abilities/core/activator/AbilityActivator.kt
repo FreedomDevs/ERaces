@@ -11,6 +11,7 @@ import dev.elysium.eraces.abilities.interfaces.IManaCostAbility
 import dev.elysium.eraces.exceptions.ExceptionProcessor
 import dev.elysium.eraces.exceptions.base.PlayerException
 import dev.elysium.eraces.exceptions.internal.AbilityActivationException
+import dev.elysium.eraces.utils.msg
 import org.bukkit.entity.Player
 
 class AbilityActivator(
@@ -26,20 +27,23 @@ class AbilityActivator(
             ?: throw AbilityActivationException("Способность '$abilityId' не найдена", null, player)
 
         player.runAbilityAction {
-            validationService.validateAbilityAccess(player, abilityId)
+            if (!player.hasPermission("eraces.ignore_ability_access")) {
+                validationService.validateAbilityAccess(player, abilityId)
 
-            (ability as? IManaCostAbility)?.let {
-                manaService.checkAndConsume(player, it)
+                (ability as? IManaCostAbility)?.let {
+                    manaService.checkAndConsume(player, it)
+                }
+
+                (ability as? ICooldownAbility)?.let {
+                    cooldownService.check(player, abilityId, it)
+                }
+
+                (ability as? ICooldownAbility)?.let {
+                    cooldownService.apply(player, abilityId, it)
+                }
             }
 
-            (ability as? ICooldownAbility)?.let {
-                cooldownService.check(player, abilityId, it)
-            }
-
-            (ability as? ICooldownAbility)?.let {
-                cooldownService.apply(player, abilityId, it)
-            }
-
+            player.msg("Активирована способность: {ability}", Pair("{ability}", ability.id))
             ability.activate(player)
         }
     }

@@ -18,7 +18,7 @@ import kotlin.random.Random
 
 @RegisterAbility
 @Suppress("unused")
-class ShellingAbility : BaseCooldownAbility( id = "shelling", defaultCooldown = "10m") {
+class ShellingAbility : BaseCooldownAbility( id = "shelling", defaultCooldown = "10m", comboKey = "8845") {
     private var radius: Double = 5.0
     private var duration: String = "10s"
     private var arrowFallsEveryTick: Long = 10
@@ -29,7 +29,7 @@ class ShellingAbility : BaseCooldownAbility( id = "shelling", defaultCooldown = 
 
         var task: BukkitTask? = null
         task = Bukkit.getScheduler().runTaskTimer(ERaces.getInstance(), Runnable {
-            if (!player.isOnline && timeEnd < System.currentTimeMillis()) {
+            if (!player.isOnline || timeEnd < System.currentTimeMillis()) {
                 task!!.cancel()
                 return@Runnable
             }
@@ -40,9 +40,9 @@ class ShellingAbility : BaseCooldownAbility( id = "shelling", defaultCooldown = 
 
             val location = Location(
                 player.world,
-                Random.Default.nextDouble(x - radius, x + radius),
+                Random.nextDouble(x - radius, x + radius),
                 y + 9,
-                Random.Default.nextDouble(z - radius, z + radius),
+                Random.nextDouble(z - radius, z + radius),
                 0f,
                 90f
             )

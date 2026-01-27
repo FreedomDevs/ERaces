@@ -19,8 +19,8 @@ import org.bukkit.potion.PotionEffectType
 abstract class BaseEffectsAbility(
     id: String,
     defaultCooldown: String = "10s",
-    defaultEffects: Map<String, EffectData>
-) : BaseCooldownAbility(id, defaultCooldown) {
+    defaultEffects: Map<String, EffectData>, comboKey: String? = null
+) : BaseCooldownAbility(id, defaultCooldown, comboKey) {
 
     /** Список эффектов способности, которые будут применяться к игроку */
     protected val effectsMap: MutableMap<String, EffectData> = defaultEffects.toMutableMap()

@@ -45,7 +45,7 @@ abstract class BaseAbilityWithConfig(override val id: String) : IAbility {
                     cfg.set("manaCost", getManaCost())
 
                 if (this is IComboActivatable)
-                    cfg.set("comboKey", getComboKey())
+                    cfg.set("comboKey", getComboKeyy())
 
                 cfg.save(file)
 

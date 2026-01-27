@@ -59,7 +59,7 @@ class AbilityRegistrar(
     private fun warnIfDuplicateCombo(ability: IAbility) {
         if (ability !is IComboActivatable) return
 
-        val combo = ability.getComboKey()
+        val combo = ability.getComboKeyy()
         if (combo.isNullOrBlank()) return
 
         val existing = combos.getAbilityId(combo)

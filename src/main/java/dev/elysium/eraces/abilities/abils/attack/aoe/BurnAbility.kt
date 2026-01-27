@@ -13,7 +13,8 @@ import org.bukkit.entity.Player
 @Suppress("unused")
 class BurnAbility : BaseTargetTrailAbility(
     id = "burn",
-    defaultCooldown = "10m"
+    defaultCooldown = "10m",
+    comboKey="4608"
 ) {
     private var duration: String = "10s"
 

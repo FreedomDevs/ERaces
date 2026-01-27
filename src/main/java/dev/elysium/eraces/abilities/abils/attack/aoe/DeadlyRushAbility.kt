@@ -23,8 +23,8 @@ class DeadlyRushAbility : BaseEffectsAbility(
     defaultEffects = linkedMapOf(
         "speed" to EffectData("30s", 4, PotionEffectType.SPEED),
         "invisibility" to EffectData("30s", 255, PotionEffectType.INVISIBILITY)
-    )
-
+    ),
+    comboKey = "1217"
 ) {
     private var radius: Double = 3.0
     private var duration: String = "30s"
@@ -45,11 +45,12 @@ class DeadlyRushAbility : BaseEffectsAbility(
                     EffectsTarget()
                         .from(Executor.PLAYER(player))
                         .particle(Particle.DAMAGE_INDICATOR)
+                        .extra(0.1)
                         .math(
                             RadiusFillBuilder()
                                 .circle(radius)
                                 .filled(true)
-                                .step(0.3)
+                                .outlineSteps(24)
                                 .interpolationFactor(2)
                         )
                 )

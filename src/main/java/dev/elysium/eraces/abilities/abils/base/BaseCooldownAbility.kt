@@ -17,8 +17,8 @@ import org.bukkit.entity.Player
  */
 abstract class BaseCooldownAbility(
     id: String,
-    private val defaultCooldown: String = "10s"
-) : BaseAbility(id), ICooldownAbility {
+    private val defaultCooldown: String = "10s", comboKey: String? = null
+) : BaseAbility(id, comboKey), ICooldownAbility {
 
     /** Текущее значение кулдауна, загруженное из конфигурации */
     private var cooldown: String = defaultCooldown

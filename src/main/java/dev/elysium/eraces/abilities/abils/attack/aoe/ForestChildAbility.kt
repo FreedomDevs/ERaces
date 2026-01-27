@@ -21,22 +21,23 @@ import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
+import org.bukkit.event.entity.EntityDeathEvent
 import org.bukkit.event.player.PlayerMoveEvent
 import org.bukkit.potion.PotionEffect
 import java.util.UUID
 
 @RegisterAbility
 @Suppress("unused")
-class ForestChildAbility : BaseCooldownAbility(id = "forestchild", defaultCooldown = "2m"), Listener {
+class ForestChildAbility : BaseCooldownAbility(id = "forestchild", defaultCooldown = "2m", comboKey = "2235"), Listener {
     private var radius: Double = 40.0
     private var targetAmount: Int = 5
     private var damage: Double = 10.0
     private var stunDuration: String = "5s"
 
     private var effectDuration: String = "9s"
-    private var effect: String = "blindness"
+    private var effect: String = "minecraft:blindness"
 
-    private val bukkitEffect = Registry.POTION_EFFECT_TYPE.get(NamespacedKey(ERaces.getInstance(), effect))
+    private val bukkitEffect = NamespacedKey.fromString(effect)?.let { Registry.POTION_EFFECT_TYPE.get(it) }
 
     override fun onActivate(player: Player) {
         require(bukkitEffect != null) { "Нет такого эффекта $effect" }
@@ -55,28 +56,34 @@ class ForestChildAbility : BaseCooldownAbility(id = "forestchild", defaultCooldo
 
         //для каждой сущности выполняем действия
         for (entity in firstFiveClosestEntities) {
-
+            var isAlive: Boolean = false
             Target.from(entity)
-                .execute { it.addPotionEffects(listOf(PotionEffect(bukkitEffect, TimeParser.parseToTicks(effectDuration).toInt(), 0))) }
-                .execute { it.damage(damage) }
                 .execute {
-                    //добавляем сущность в оглушенные и через время убираем
-                    stunnedEntities[it.uniqueId] = it
-                    AbilityUtils.runLater(ERaces.getInstance(), stunDuration) {
-                        stunnedEntities.remove( it.uniqueId)
+                    it.addPotionEffects(listOf(PotionEffect(bukkitEffect, TimeParser.parseToTicks(effectDuration).toInt(), 0)))
+                    it.damage(damage)
+
+                    if (!it.isDead) {
+                        isAlive = true
+
+                        //добавляем сущность в оглушенные и через время убираем
+                        stunnedEntities[it.uniqueId] = it
+                        AbilityUtils.runLater(ERaces.getInstance(), stunDuration) {
+                            stunnedEntities.remove(it.uniqueId)
+                        }
                     }
                 }
                 .executeEffects(
                     //партиклы оглушения
                     EffectsTarget()
-                        .from(Executor.PLAYER(player))
+                        .from(Executor.PLAYER(entity))
                         .dust(Particle.DustOptions(Color.ORANGE, 1.0f))
-                        .duration(TimeParser.parseToTicks(stunDuration).toInt())
+                        .duration(if (isAlive) TimeParser.parseToTicks(stunDuration).toInt() else 1)
+                        .period(5)
                         .math(
                             RadiusFillBuilder()
                                 .circle(1.2)
                                 .filled(false)
-                                .step(0.1)
+                                .outlineSteps(30)
                                 .interpolationFactor(2)
                         )
                 )

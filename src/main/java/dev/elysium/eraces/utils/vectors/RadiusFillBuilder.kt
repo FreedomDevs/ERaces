@@ -24,7 +24,7 @@ class RadiusFillBuilder {
     private var radius: Double = 1.0
     private var filled: Boolean = true
     private var step: Double = 0.3
-    private var outlineSteps: Int = 36
+    private var outlineSteps: Int = 24
     private var interpFactor: Int = 1
     private var rotationY: Double = 0.0
     private var animation: Animation? = null

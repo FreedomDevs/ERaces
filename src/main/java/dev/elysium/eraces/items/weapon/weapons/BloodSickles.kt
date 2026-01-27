@@ -32,7 +32,7 @@ class BloodSickles(override val plugin: ERaces) : MeleeWeapon(
             "<gold>✦ <gradient:#ff4d4d:#8b0000>Способность: Кровавая тишина</gradient>",
             "<gray>▸ <white>[ПКМ] — <#ff5555>рывок к цели</#ff5555>",
             "<gray>▸ <white>6 ударов по <red>2</red> урона",
-            "<gray>▸ <white>Если находится в обоих руках то будет <underlined><bold><red>круче",
+            "<gray>▸ <white>Если находится в обоих руках то будет <red>круче",
             "",
             "<gray>⛏ <white>Прочность:",
             "<gray>[ <white>{current_durability}<gray> / <white>{durability} <gray>]",
@@ -97,7 +97,7 @@ class BloodSickles(override val plugin: ERaces) : MeleeWeapon(
         )
 
         object : BukkitRunnable() {
-            var count = 0
+            var count = 1
 
             override fun run() {
                 if (count >= hits || target.isDead) {
@@ -125,6 +125,6 @@ class BloodSickles(override val plugin: ERaces) : MeleeWeapon(
 
                 count++
             }
-        }.runTaskTimer(plugin, 0L, 5L)
+        }.runTaskTimer(plugin, 0L, 10L)
     }
 }

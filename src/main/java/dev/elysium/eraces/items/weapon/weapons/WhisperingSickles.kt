@@ -33,7 +33,7 @@ class WhisperingSickles(override val plugin: ERaces) : MeleeWeapon(
             "<gray>▸ <white>[ПКМ] — <#caa9ff>рывок к цели</#caa9ff>",
             "<gray>▸ <white>4 удара по <red>3</red> урона",
             "<gray>▸ <white>Накладывает <blue>Замедление I</blue>",
-            "<gray>▸ <white>Если находится в обоих руках то будет <underlined><bold><red>круче",
+            "<gray>▸ <white>Если находится в обоих руках то будет <red>круче",
             "",
             "<gray>⛏ <white>Прочность:",
             "<gray>[ <white>{current_durability}<gray> / <white>{durability} <gray>]",
@@ -99,7 +99,7 @@ class WhisperingSickles(override val plugin: ERaces) : MeleeWeapon(
         )
 
         object : BukkitRunnable() {
-            var count = 0
+            var count = 1
 
             override fun run() {
                 if (count >= hits || target.isDead) {
@@ -127,6 +127,6 @@ class WhisperingSickles(override val plugin: ERaces) : MeleeWeapon(
 
                 count++
             }
-        }.runTaskTimer(plugin, 0L, 5L)
+        }.runTaskTimer(plugin, 0L, 10L)
     }
 }

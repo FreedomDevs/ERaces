@@ -18,7 +18,7 @@ class ManaManager(private val plugin: ERaces) {
 
     init {
         regenTaskId = Bukkit.getScheduler()
-            .runTaskTimerAsynchronously(
+            .runTaskTimer(
                 plugin,
                 Runnable { restoreAllPlayersMana() },
                 regenIntervalTicks,

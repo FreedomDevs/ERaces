@@ -20,7 +20,7 @@ import org.bukkit.scheduler.BukkitRunnable
 class WhisperingSickles(override val plugin: ERaces) : MeleeWeapon(
     id = "whispering_sickles",
     material = Material.IRON_SWORD,
-    name = "dark_purple>Серпы Шепота",
+    name = "<dark_purple>Серпы Шепота",
     damage = 6.0,
     attackSpeed = 2.0,
     maxDurability = 650,

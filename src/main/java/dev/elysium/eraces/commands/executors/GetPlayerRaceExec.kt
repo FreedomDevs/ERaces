@@ -35,7 +35,7 @@ object GetPlayerRaceExec {
         val playerRace = getInstance().context.playerDataManager.getPlayerRaceId(player)
 
         if (source.sender.name == player.name) {
-            source.sender.msg(messages.getPlayerRaceSuccessMe)
+            source.sender.msg(messages.getPlayerRaceSuccessMe, Pair("{race}", playerRace))
         } else {
             source.sender.msg(
                 messages.getPlayerRaceSuccess,

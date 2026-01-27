@@ -32,14 +32,15 @@ abstract class MeleeWeapon(
         val attributes = WeaponAttributeUtils.createWeaponAttributes(
             plugin = plugin,
             id = id,
-            material = material,
             damage = damage,
             attackSpeed = attackSpeed
         )
 
         item.setData(
             DataComponentTypes.ATTRIBUTE_MODIFIERS, ItemAttributeModifiers.itemAttributes()
+                .addModifier(Attribute.ATTACK_DAMAGE, attributes.damageClearModifier)
                 .addModifier(Attribute.ATTACK_DAMAGE, attributes.damageModifier)
+                .addModifier(Attribute.ATTACK_SPEED, attributes.attackSpeedClearModifier)
                 .addModifier(Attribute.ATTACK_SPEED, attributes.attackSpeedModifier)
                 .build()
         )

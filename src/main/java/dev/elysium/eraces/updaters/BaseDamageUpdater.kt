@@ -13,7 +13,7 @@ class BaseDamageUpdater : IUpdater {
     override fun update(race: Race, player: Player) {
         val bonus = race.baseDamageBonus
 
-        val attribute = player.getAttribute(Attribute.ATTACK_SPEED) ?: return
+        val attribute = player.getAttribute(Attribute.ATTACK_DAMAGE) ?: return
 
         attribute.modifiers.firstOrNull { it.key == key }?.let {
             attribute.removeModifier(it)

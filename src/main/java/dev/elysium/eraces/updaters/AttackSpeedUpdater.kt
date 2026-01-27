@@ -15,7 +15,6 @@ class AttackSpeedUpdater : IUpdater {
         val asMultiplier = race.attackSpeedMultiplier
 
         val attribute = player.getAttribute(Attribute.ATTACK_SPEED) ?: return
-        val baseValue = attribute.baseValue
 
         attribute.modifiers.firstOrNull { it.key == key }?.let {
             attribute.removeModifier(it)
@@ -24,7 +23,7 @@ class AttackSpeedUpdater : IUpdater {
         attribute.addModifier(
             AttributeModifier(
                 key,
-                baseValue * asMultiplier,
+                asMultiplier - 1.0,
                 AttributeModifier.Operation.MULTIPLY_SCALAR_1
             )
         )

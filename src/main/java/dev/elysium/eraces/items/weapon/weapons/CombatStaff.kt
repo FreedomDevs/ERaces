@@ -6,8 +6,8 @@ import org.bukkit.Material
 
 class CombatStaff(override val plugin: ERaces) : MeleeWeapon(
     id = "combat_staff",
-    material = Material.STICK,
-    name = "<red>Боевой Посох",
+    material = Material.IRON_SWORD,
+    name = "<green>Боевой Посох",
     damage = 3.5,
     attackSpeed = 1.4,
     isUnbreakable = false,

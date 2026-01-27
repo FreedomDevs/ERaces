@@ -20,7 +20,7 @@ import org.bukkit.potion.PotionEffectType
 class Halberd(override val plugin: ERaces) : MeleeWeapon(
     id = "halberd",
     material = Material.IRON_SWORD,
-    name = "<red>Бердыш",
+    name = "<blue>Бердыш",
     damage = 12.0,
     attackSpeed = 0.8,
     maxDurability = 1300,

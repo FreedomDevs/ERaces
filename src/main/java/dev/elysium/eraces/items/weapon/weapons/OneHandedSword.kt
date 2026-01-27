@@ -11,7 +11,7 @@ import org.bukkit.entity.Player
 class OneHandedSword(override val plugin: ERaces) : MeleeWeapon(
     id = "one_handed_sword",
     material = Material.IRON_SWORD,
-    name = "<red>Одноручный меч",
+    name = "<blue>Одноручный меч",
     damage = 7.0,
     attackSpeed = 1.7,
     maxDurability = 400,

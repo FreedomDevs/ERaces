@@ -18,8 +18,8 @@ class Blade(
 ) : MeleeWeapon(
     id = "blade",
     material = Material.IRON_SWORD,
-    name = "<red>Клинок",
-    damage = 9.0,
+    name = "<blue>Клинок",
+    damage = 8.0,
     attackSpeed = 1.6,
     maxDurability = 950,
     options = mapOf(

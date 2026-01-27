@@ -20,7 +20,7 @@ import org.bukkit.scheduler.BukkitRunnable
 class BloodSickles(override val plugin: ERaces) : MeleeWeapon(
     id = "blood_sickles",
     material = Material.IRON_SWORD,
-    name = "<dark_red>Серпы Крови",
+    name = "<blue>Серпы Крови",
     damage = 4.0,
     attackSpeed = 3.1,
     maxDurability = 650,
@@ -41,7 +41,7 @@ class BloodSickles(override val plugin: ERaces) : MeleeWeapon(
     )
 ) {
     private val cooldownMillis = 5000L
-    private val range = 6.0
+    private val range = 10.0
     private val hits = 6
     private val hitDamage = 2.0
 

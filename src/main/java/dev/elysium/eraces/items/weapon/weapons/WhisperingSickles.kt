@@ -1,6 +1,7 @@
 package dev.elysium.eraces.items.weapon.weapons
 
 import dev.elysium.eraces.ERaces
+import dev.elysium.eraces.items.core.ItemResolver
 import dev.elysium.eraces.items.core.state.ItemState
 import dev.elysium.eraces.items.core.state.StateKeys
 import dev.elysium.eraces.items.weapon.MeleeWeapon
@@ -32,6 +33,7 @@ class WhisperingSickles(override val plugin: ERaces) : MeleeWeapon(
             "<gray>▸ <white>[ПКМ] — <#caa9ff>рывок к цели</#caa9ff>",
             "<gray>▸ <white>4 удара по <red>3</red> урона",
             "<gray>▸ <white>Накладывает <blue>Замедление I</blue>",
+            "<gray>▸ <white>Если находится в обоих руках то будет <underlined><bold><red>круче",
             "",
             "<gray>⛏ <white>Прочность:",
             "<gray>[ <white>{current_durability}<gray> / <white>{durability} <gray>]",
@@ -64,8 +66,10 @@ class WhisperingSickles(override val plugin: ERaces) : MeleeWeapon(
             return
         }
 
-        whisperDash(player, target)
-        state.setLong(StateKeys.KD, now + cooldownMillis)
+        val isTwoHands = ItemResolver.resolve(player.inventory.itemInOffHand) is WhisperingSickles
+
+        whisperDash(player, target, isTwoHands)
+        state.setLong(StateKeys.KD, now + (cooldownMillis / (if (isTwoHands) 2 else 1)))
     }
 
 
@@ -81,7 +85,7 @@ class WhisperingSickles(override val plugin: ERaces) : MeleeWeapon(
         return result?.hitEntity as? LivingEntity
     }
 
-    private fun whisperDash(player: Player, target: LivingEntity) {
+    private fun whisperDash(player: Player, target: LivingEntity, isTwoHands: Boolean) {
         val direction = target.location.toVector().subtract(player.location.toVector()).normalize()
 
         player.velocity = direction.multiply(1.8)
@@ -111,7 +115,7 @@ class WhisperingSickles(override val plugin: ERaces) : MeleeWeapon(
                     return
                 }
 
-                target.damage(hitDamage, player)
+                target.damage(hitDamage + (if (isTwoHands) 2 else 0), player)
 
                 target.world.spawnParticle(
                     Particle.CRIT,

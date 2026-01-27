@@ -1,6 +1,7 @@
 package dev.elysium.eraces.items.weapon.weapons
 
 import dev.elysium.eraces.ERaces
+import dev.elysium.eraces.items.core.ItemResolver
 import dev.elysium.eraces.items.core.state.ItemState
 import dev.elysium.eraces.items.core.state.StateKeys
 import dev.elysium.eraces.items.weapon.MeleeWeapon
@@ -31,6 +32,7 @@ class BloodSickles(override val plugin: ERaces) : MeleeWeapon(
             "<gold>✦ <gradient:#ff4d4d:#8b0000>Способность: Кровавая тишина</gradient>",
             "<gray>▸ <white>[ПКМ] — <#ff5555>рывок к цели</#ff5555>",
             "<gray>▸ <white>6 ударов по <red>2</red> урона",
+            "<gray>▸ <white>Если находится в обоих руках то будет <underlined><bold><red>круче",
             "",
             "<gray>⛏ <white>Прочность:",
             "<gray>[ <white>{current_durability}<gray> / <white>{durability} <gray>]",
@@ -63,8 +65,10 @@ class BloodSickles(override val plugin: ERaces) : MeleeWeapon(
             return
         }
 
-        bloodDash(player, target)
-        state.setLong(StateKeys.KD, now + cooldownMillis)
+        val isTwoHands = ItemResolver.resolve(player.inventory.itemInOffHand) is BloodSickles
+
+        bloodDash(player, target, isTwoHands)
+        state.setLong(StateKeys.KD, now + (cooldownMillis / (if (isTwoHands) 2 else 1)))
     }
 
     private fun findTarget(player: Player): LivingEntity? {
@@ -79,7 +83,7 @@ class BloodSickles(override val plugin: ERaces) : MeleeWeapon(
         return result?.hitEntity as? LivingEntity
     }
 
-    private fun bloodDash(player: Player, target: LivingEntity) {
+    private fun bloodDash(player: Player, target: LivingEntity, isTwoHands: Boolean) {
         val direction = target.location.toVector().subtract(player.location.toVector()).normalize()
 
         player.velocity = direction.multiply(1.8)
@@ -109,7 +113,7 @@ class BloodSickles(override val plugin: ERaces) : MeleeWeapon(
                     return
                 }
 
-                target.damage(hitDamage, player)
+                target.damage(hitDamage + (if (isTwoHands) 4 else 0), player)
 
                 target.world.spawnParticle(
                     Particle.DAMAGE_INDICATOR,

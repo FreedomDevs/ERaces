@@ -18,6 +18,8 @@ import org.bukkit.potion.PotionEffectType
  */
 abstract class BaseEffectsAbility(
     id: String,
+    override val name: String? = null,
+    override val description: String? = null,
     defaultCooldown: String = "10s",
     defaultEffects: Map<String, EffectData>, comboKey: String? = null
 ) : BaseCooldownAbility(id, defaultCooldown, comboKey) {

@@ -67,6 +67,8 @@ class ThroughSkiesAbility : BaseCooldownAbility("throughskies", defaultCooldown 
     private fun applyEffectsToEntities(entities: List<LivingEntity>, damageSource: Entity) {
         //применяем эффекты к сущностям
         for (entity in entities) {
+            if (entity.uniqueId == damageSource.uniqueId) return
+
             entity.damage(damage, damageSource)
             require(bukkitEffect != null) { "Нет такого эффекта $effect" }
             entity.addPotionEffect(

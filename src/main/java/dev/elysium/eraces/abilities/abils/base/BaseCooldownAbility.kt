@@ -17,6 +17,8 @@ import org.bukkit.entity.Player
  */
 abstract class BaseCooldownAbility(
     id: String,
+    override val name: String? = null,
+    override val description: String? = null,
     private val defaultCooldown: String = "10s", comboKey: String? = null
 ) : BaseAbility(id, comboKey), ICooldownAbility {
 

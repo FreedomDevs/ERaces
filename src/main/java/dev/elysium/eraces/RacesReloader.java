@@ -73,6 +73,8 @@ public class RacesReloader implements Listener {
             if (obj instanceof IUpdater upd)
                 upd.update(race, player);
         }
+
+        PluginMessageListener.Companion.sendAbilities(player);
     }
 
     public static void reloadRaceForAllPlayers() {

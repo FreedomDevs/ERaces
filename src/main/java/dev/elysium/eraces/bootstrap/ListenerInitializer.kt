@@ -14,6 +14,7 @@ class ListenerInitializer : IInitializer {
             Bukkit.getPluginManager().registerEvents(RaceSelectListener, plugin)
             plugin.server.messenger
                 .registerIncomingPluginChannel(plugin, "elysium:eraces_cast", PluginMessageListener())
+            plugin.server.messenger.registerOutgoingPluginChannel(plugin, "elysium:eraces_cast")
 
             init(plugin)
             Bukkit.getPluginManager().registerEvents(GuiListener, plugin)

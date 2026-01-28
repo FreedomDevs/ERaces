@@ -8,7 +8,10 @@ import org.bukkit.entity.Player
  *
  * @property id уникальный идентификатор способности
  */
-abstract class BaseAbility(override val id: String, val comboKey: String? = null) : BaseAbilityWithConfig(id),
+abstract class BaseAbility(
+    override val id: String, override val name: String? = null,
+    override val description: String? = null, val comboKey: String? = null
+) : BaseAbilityWithConfig(id),
     IComboActivatable {
 
     /**

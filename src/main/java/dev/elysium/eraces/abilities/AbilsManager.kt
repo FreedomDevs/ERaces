@@ -1,6 +1,7 @@
 package dev.elysium.eraces.abilities
 
 import dev.elysium.eraces.ERaces
+import dev.elysium.eraces.abilities.core.activator.AbilityActivator
 import dev.elysium.eraces.abilities.core.activator.AbilityFactory
 import dev.elysium.eraces.abilities.core.utils.AbilityCooldownManager
 import dev.elysium.eraces.abilities.core.utils.AbilityScanner
@@ -114,4 +115,13 @@ class AbilsManager private constructor(plugin: ERaces) {
      * @return список всех способностей
      */
     fun getAllAbilities(): List<IAbility> = context.registry.getAll().toList()
+
+    /**
+     * Возвращает все способности у игрока.
+     *
+     * @return список способностей у игрока
+     */
+    fun getPlayerAbilities(player: Player): List<IAbility> {
+        return getAllAbilities().filter { ability -> context.activator.hasAccess(player, ability.id) }
+    }
 }

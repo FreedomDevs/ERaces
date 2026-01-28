@@ -1,144 +1,67 @@
-package dev.elysium.eraces.listeners;
+package dev.elysium.eraces.listeners
 
-import com.google.common.io.ByteArrayDataInput;
-import com.google.common.io.ByteStreams;
-import dev.elysium.eraces.ERaces;
-import dev.elysium.eraces.abilities.AbilsManager;
-import dev.elysium.eraces.datatypes.configs.GlobalConfigData;
-import dev.elysium.eraces.utils.ChatUtil;
-import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
+import com.google.common.io.ByteArrayDataInput
+import com.google.common.io.ByteArrayDataOutput
+import com.google.common.io.ByteStreams
+import dev.elysium.eraces.ERaces
+import dev.elysium.eraces.abilities.AbilsManager
+import dev.elysium.eraces.abilities.interfaces.IAbility
+import kotlinx.serialization.json.buildJsonArray
+import kotlinx.serialization.json.buildJsonObject
+import kotlinx.serialization.json.put
+import org.bukkit.entity.Player
+import org.bukkit.plugin.messaging.PluginMessageListener
 
-import java.util.Map;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
+class PluginMessageListener : PluginMessageListener {
 
-public class PluginMessageListener implements org.bukkit.plugin.messaging.PluginMessageListener {
+    override fun onPluginMessageReceived(channel: String, player: Player, message: ByteArray) {
+        if (channel != "elysium:eraces_cast") return
 
-    private static final GlobalConfigData cfg = ERaces.getInstance()
-            .getContext()
-            .getGlobalConfigManager()
-            .getData();
+        val input: ByteArrayDataInput = ByteStreams.newDataInput(message)
 
-    private static class CastingSession {
-        final StringBuilder keys = new StringBuilder();
-        volatile long lastUpdateMillis = System.currentTimeMillis();
-
-        void appendKey(String k) {
-            keys.append(k);
-            lastUpdateMillis = System.currentTimeMillis();
-        }
-
-        String getKeys() {
-            return keys.toString();
-        }
-
-        boolean isExpired() {
-            return System.currentTimeMillis() - lastUpdateMillis > cfg.getCastTimeoutMs();
-        }
-    }
-
-    private final Map<UUID, CastingSession> sessions = new ConcurrentHashMap<>();
-
-    @Override
-    public void onPluginMessageReceived(@NotNull String channel, @NotNull Player player, byte @NotNull [] message) {
-        if (!channel.equals("elysium:eraces_cast")) return;
-
-        ByteArrayDataInput in = ByteStreams.newDataInput(message);
-
-        long timestamp;
-        String type;
-        String payload;
+        val type: String
+        val payload: String
         try {
-            timestamp = in.readLong();
-            type = in.readUTF();
-            payload = in.readUTF();
-        } catch (Exception e) {
-            ERaces.getInstance().getLogger().warning("Ошибка парсинга пакета eraces_cast от " + player.getName());
-            return;
+            type = input.readUTF()
+            payload = input.readUTF()
+        } catch (e: Exception) {
+            ERaces.getInstance().logger.warning("Ошибка парсинга пакета eraces_cast от ${player.name}")
+            return
         }
 
-        String t = type.toLowerCase();
-
-        CastingSession session = sessions.get(player.getUniqueId());
-        if (session != null && session.isExpired()) {
-            sessions.remove(player.getUniqueId());
-            ERaces.getInstance().getLogger().fine("Сессия кастинга игрока " + player.getName() + " устарела и была удалена.");
+        if (type != "activate_ability") {
+            ERaces.getInstance().logger.warning("Неизвестный тип пакета eraces_cast от ${player.name} ($type)")
+            return
         }
 
-        switch (t) {
-            case "start_cast" -> handleStart(player);
-            case "cast_key" -> handleKey(player, payload);
-            case "end_cast" -> handleEnd(player, payload);
-            default -> ERaces.getInstance().getLogger().warning("Неизвестный тип пакета eraces_cast: " + type);
-        }
+        AbilsManager.getInstance().activate(player, payload)
     }
 
-    private void handleStart(Player player) {
-        CastingSession s = new CastingSession();
-        sessions.put(player.getUniqueId(), s);
-        ERaces.getInstance().getLogger().fine("Игрок " + player.getName() + " начал ввод комбо.");
+    companion object {
+        fun sendAbilities(player: Player) {
+            val out: ByteArrayDataOutput = ByteStreams.newDataOutput()
+            out.writeUTF("abilities_list")
 
-        if (cfg.isCastFeedback()) {
-            ChatUtil.INSTANCE.action(player, "<green>Начат ввод комбинации...");
-        }
-    }
+            val abilities: List<IAbility> = AbilsManager.getInstance().getPlayerAbilities(player)
 
-    private void handleKey(Player player, String payload) {
-        CastingSession s = sessions.get(player.getUniqueId());
-        if (s == null) {
-            ERaces.getInstance().getLogger().fine("Игрок " + player.getName() + " отправил cast_key без start_cast.");
-            if (cfg.isCastFeedback()) ChatUtil.INSTANCE.action(player, "<red>Сначала начни ввод (start cast).");
-            return;
-        }
+            val abilitiesArray = buildJsonArray {
+                for (ability in abilities) {
+                    add(
+                        buildJsonObject {
+                            put("id", ability.id)
+                            put("name", ability.name)
+                            put("description", ability.description)
+                        }
+                    )
+                }
+            }
 
-        if (s.isExpired()) {
-            sessions.remove(player.getUniqueId());
-            if (cfg.isCastFeedback()) ChatUtil.INSTANCE.action(player, "<red>Время ввода прошло — начни заново.");
-            return;
-        }
+            val payload = abilitiesArray.toString()
+            out.writeUTF(payload)
 
-        if (s.getKeys().length() >= cfg.getCastMaxLength()) {
-            if (cfg.isCastFeedback()) ChatUtil.INSTANCE.action(player, "<red>Комбинация слишком длинная.");
-            return;
-        }
+            ERaces.logger().info(payload)
 
-        s.appendKey(payload);
-        ERaces.getInstance().getLogger().fine("Игрок " + player.getName() + " добавил клавишу: " + payload + " (текущая: " + s.getKeys() + ")");
-        if (cfg.isCastFeedback()) {
-            ChatUtil.INSTANCE.action(player, "<yellow>Текущая комбинация: <white>" + s.getKeys());
-        }
-    }
-
-    private void handleEnd(Player player, String payload) {
-        CastingSession s = sessions.get(player.getUniqueId());
-        if (s == null) {
-            if (cfg.isCastFeedback()) ChatUtil.INSTANCE.action(player, "<red>Нечего завершать — начни ввод комбинации сначала.");
-            ERaces.getInstance().getLogger().fine("Игрок " + player.getName() + " прислал end_cast без активной сессии.");
-            return;
-        }
-
-        if (s.isExpired()) {
-            sessions.remove(player.getUniqueId());
-            if (cfg.isCastFeedback()) ChatUtil.INSTANCE.action(player, "<red>Время ввода истекло — комбинация сброшена.");
-            return;
-        }
-
-        String collected = s.getKeys();
-        sessions.remove(player.getUniqueId());
-
-        if (collected.isEmpty()) {
-            if (cfg.isCastFeedback()) ChatUtil.INSTANCE.action(player, "<red>Комбинация пуста.");
-            return;
-        }
-
-        ERaces.getInstance().getLogger().info("Игрок " + player.getName() + " ввёл комбинацию: " + collected);
-        try {
-            AbilsManager.getInstance().activateByCombo(player, collected);
-        } catch (Exception e) {
-            ERaces.getInstance().getLogger().severe("Ошибка при активации комбинации '" + collected + "' у игрока " + player.getName());
-            e.printStackTrace();
-            if (cfg.isCastFeedback()) ChatUtil.INSTANCE.action(player, "<red>Ошибка при активации способности.");
+            player.sendPluginMessage(ERaces.getInstance(), "elysium:eraces_cast", out.toByteArray())
         }
     }
 }

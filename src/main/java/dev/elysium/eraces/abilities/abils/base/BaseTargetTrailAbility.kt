@@ -17,6 +17,8 @@ import org.bukkit.entity.LivingEntity
  */
 abstract class BaseTargetTrailAbility(
     id: String,
+    override val name: String? = null,
+    override val description: String? = null,
     defaultCooldown: String = "10s",
     comboKey: String? = null
 ) : BaseCooldownAbility(id, defaultCooldown, comboKey) {

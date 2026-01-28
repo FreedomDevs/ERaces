@@ -29,6 +29,9 @@ dependencies {
     compileOnly("org.jetbrains.kotlin:kotlin-reflect")
     compileOnly("io.github.classgraph:classgraph:4.8.184")
 
+    // Other kotlin
+    compileOnly("org.jetbrains.kotlinx:kotlinx-serialization-json:1.10.0")
+
     // Paper
     compileOnly("io.papermc.paper:paper-api:1.21.10-R0.1-SNAPSHOT")
 

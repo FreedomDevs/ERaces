@@ -20,7 +20,8 @@ import java.lang.reflect.Field
  *
  * @property id уникальный идентификатор способности
  */
-abstract class BaseAbilityWithConfig(override val id: String) : IAbility {
+abstract class BaseAbilityWithConfig(override val id: String, override val name: String? = null,
+                                     override val description: String? = null) : IAbility {
 
     /**
      * Сохраняет конфигурацию способности по умолчанию.

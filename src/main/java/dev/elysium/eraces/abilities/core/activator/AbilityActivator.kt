@@ -27,6 +27,11 @@ class AbilityActivator(
             ?: throw AbilityActivationException("Способность '$abilityId' не найдена", null, player)
 
         player.runAbilityAction {
+            if (player.isDead) {
+                player.msg("Ты не можешь активировать способность, ты мертв идиот");
+                return
+            }
+
             if (!player.hasPermission("eraces.ignore_ability_access")) {
                 validationService.validateAbilityAccess(player, abilityId)
 
@@ -55,6 +60,20 @@ class AbilityActivator(
             player,
             "<red>Нет способности, назначенной на комбинацию <yellow>$combo"
         )
+    }
+
+    fun hasAccess(player: Player, abilityId: String): Boolean {
+        if (player.hasPermission("eraces.ignore_ability_access")) {
+            return true
+        }
+
+        try {
+            validationService.validateAbilityAccess(player, abilityId)
+        } catch (_: Exception) {
+            return false
+        }
+
+        return true
     }
 
     private inline fun Player.runAbilityAction(block: () -> Unit) {

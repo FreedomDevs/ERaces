@@ -7,21 +7,28 @@ import dev.elysium.eraces.items.core.state.StateKeys
 import dev.elysium.eraces.utils.WeaponAttributeUtils
 import dev.elysium.eraces.utils.ChatUtil
 import dev.elysium.eraces.utils.actionMsg
-import io.papermc.paper.command.brigadier.argument.ArgumentTypes.player
 import io.papermc.paper.datacomponent.DataComponentTypes
 import io.papermc.paper.datacomponent.item.CustomModelData
 import io.papermc.paper.datacomponent.item.ItemAttributeModifiers
 import org.bukkit.Material
-import org.bukkit.Particle
 import org.bukkit.attribute.Attribute
 import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.inventory.ItemStack
-import org.bukkit.potion.PotionEffect
-import org.bukkit.potion.PotionEffectType
-import org.bukkit.scheduler.BukkitRunnable
 
+/**
+ * Абстрактный класс для оружия ближнего боя.
+ *
+ * @property id Уникальный идентификатор оружия.
+ * @property material Материал предмета в Minecraft, из которого создается оружие.
+ * @property name Отображаемое имя оружия.
+ * @property damage Базовый урон оружия.
+ * @property attackSpeed Скорость атаки оружия.
+ * @property isUnbreakable Определяет, является ли оружие неразрушимым.
+ * @property maxDurability Максимальная прочность оружия (количество ударов до поломки).
+ * @property options Дополнительные настройки оружия (например, "critChance", "lore" и другие параметры).
+ */
 @Suppress("UnstableApiUsage")
 abstract class MeleeWeapon(
     override val id: String,
@@ -35,6 +42,11 @@ abstract class MeleeWeapon(
 ) : Weapon() {
     abstract val plugin: ERaces
 
+    /**
+     * Инициализирует предмет, задавая его атрибуты, имя, прочность и отображаемый текст.
+     *
+     * @param item ItemStack, который нужно инициализировать.
+     */
     override fun onInit(item: ItemStack) {
         val attributes = WeaponAttributeUtils.createWeaponAttributes(
             plugin = plugin,
@@ -73,6 +85,16 @@ abstract class MeleeWeapon(
         updateLore(item)
     }
 
+    /**
+     * Вызывается при нанесении урона сущностью.
+     *
+     * Выполняет следующие действия:
+     *  - Увеличивает количество ударов оружия.
+     *  - Проверяет, не сломалось ли оружие.
+     *  - Применяет критический урон, если выпал шанс.
+     *
+     * @param event Событие [EntityDamageByEntityEvent].
+     */
     override fun onHit(event: EntityDamageByEntityEvent) {
         val player = event.damager as? Player ?: return
         val stack = player.inventory.itemInMainHand
@@ -97,6 +119,11 @@ abstract class MeleeWeapon(
         }
     }
 
+    /**
+     * Обновляет описание (lore) предмета, включая прочность, количество ударов и индикатор прочности.
+     *
+     * @param item [ItemStack], для которого обновляется lore.
+     */
     private fun updateLore(item: ItemStack) {
         val meta = item.itemMeta ?: return
         val state = ItemState(item)
@@ -123,6 +150,12 @@ abstract class MeleeWeapon(
 
     }
 
+    /**
+     * Удаляет предмет из инвентаря игрока, если он сломался.
+     *
+     * @param player Игрок, который держит сломанный предмет.
+     * @param stack Сломанный [ItemStack].
+     */
     private fun resolveBrokenItem(player: Player, stack: ItemStack) {
         val inv = player.inventory
 
@@ -140,6 +173,14 @@ abstract class MeleeWeapon(
         }
     }
 
+    /**
+     * Генерирует визуальный индикатор прочности оружия в виде строки.
+     *
+     * @param hits Количество использованных ударов.
+     * @param max Максимальная прочность.
+     * @param length Длина индикатора (по умолчанию 10).
+     * @return Строка с индикатором прочности, где заполненная часть красная, а пустая — зеленая.
+     */
     private fun getDurabilityBar(hits: Int, max: Int, length: Int = 10): String {
         val safeHits = hits.coerceAtMost(max)
         val percent = safeHits.toDouble() / max
@@ -154,6 +195,14 @@ abstract class MeleeWeapon(
         return bar
     }
 
+    /**
+     * Ищет ближайшую живую цель в указанном направлении и диапазоне.
+     *
+     * @param player Игрок, от которого ведется поиск.
+     * @param range Дальность поиска.
+     * @param predicate Дополнительное условие для фильтрации целей.
+     * @return Первую подходящую цель [LivingEntity] или null, если ничего не найдено.
+     */
     protected fun findLivingTarget(
         player: Player,
         range: Double,
@@ -173,6 +222,15 @@ abstract class MeleeWeapon(
         return result?.hitEntity as? LivingEntity
     }
 
+    /**
+     * Пытается активировать способность оружия с учётом перезарядки.
+     * Если успешно выполняет onActivate и добовляет кулдаун.
+     *
+     * @param player Игрок, который активирует способность.
+     * @param stack ItemStack оружия, для которого проверяется способность.
+     * @param cooldown Время перезарядки в миллисекундах.
+     * @param onActivate Лямбда, которая выполняется при успешной активации способности.
+     */
     protected fun tryAbility(player: Player, stack: ItemStack, cooldown: Long, onActivate: () -> Unit) {
         val state = ItemState(stack)
         val now = System.currentTimeMillis()

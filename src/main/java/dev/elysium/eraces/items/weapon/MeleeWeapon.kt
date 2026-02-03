@@ -124,9 +124,6 @@ abstract class MeleeWeapon(
         }
     }
 
-
-    override fun onDamage(event: EntityDamageEvent) {}
-
     /**
      * Обновляет описание (lore) предмета, включая прочность, количество ударов и индикатор прочности.
      *

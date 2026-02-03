@@ -3,9 +3,11 @@ package dev.elysium.eraces.items.weapon
 import dev.elysium.eraces.items.SlotType
 import dev.elysium.eraces.items.core.Item
 import dev.elysium.eraces.items.core.ItemType
+import dev.elysium.eraces.items.weapon.TickConfig
 import org.bukkit.entity.Player
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.entity.EntityDamageEvent
+import org.bukkit.event.entity.EntityDeathEvent
 import org.bukkit.event.inventory.ClickType
 import org.bukkit.inventory.EquipmentSlot
 
@@ -22,4 +24,10 @@ abstract class Weapon: Item {
     open fun onInteract(player: Player, hand: EquipmentSlot, click: ClickType) {}
 
     open fun onDamage(event: EntityDamageEvent) {}
+
+    open fun onKill(event: EntityDeathEvent, killer: Player) {}
+
+    open val tickConfig: TickConfig = TickConfig()
+
+    open fun onTick(player: Player) {}
 }

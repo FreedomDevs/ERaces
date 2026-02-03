@@ -2,6 +2,8 @@ package dev.elysium.eraces.items.weapon
 
 import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.items.core.ItemRegistry
+import dev.elysium.eraces.items.weapon.services.WeaponInventoryService
+import dev.elysium.eraces.items.weapon.services.WeaponTickService
 import dev.elysium.eraces.items.weapon.weapons.*
 
 object WeaponManager {
@@ -28,6 +30,8 @@ object WeaponManager {
         weapons.forEach(ItemRegistry::register)
         plugin.server.pluginManager.registerEvents(WeaponListener(), plugin)
 
-        WeaponInventoryTask().runTaskTimer(plugin, 0L, 5L)
+        WeaponInventoryService.init(plugin)
+        WeaponTickService.init(plugin)
+
     }
 }

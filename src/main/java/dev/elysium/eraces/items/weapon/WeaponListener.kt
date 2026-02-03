@@ -7,6 +7,7 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.entity.EntityDamageEvent
+import org.bukkit.event.entity.EntityDeathEvent
 import org.bukkit.event.inventory.ClickType
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.inventory.EquipmentSlot
@@ -43,6 +44,15 @@ class WeaponListener : Listener {
         val (weapon, _) = getWeaponToMainOrOffHand(player, Hand.ALL) ?: return
 
         weapon.onDamage(e)
+    }
+
+    @EventHandler
+    fun onKill(e: EntityDeathEvent) {
+        val killer = e.entity.killer ?: return
+
+        val (weapon, _) = getWeaponToMainOrOffHand(killer, Hand.MAIN_HAND) ?: return
+
+        weapon.onKill(e, killer)
     }
 
     /*

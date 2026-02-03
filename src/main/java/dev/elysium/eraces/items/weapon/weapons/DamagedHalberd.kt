@@ -4,6 +4,8 @@ import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.items.core.state.ItemState
 import dev.elysium.eraces.items.core.state.StateKeys
 import dev.elysium.eraces.items.weapon.MeleeWeapon
+import dev.elysium.eraces.utils.eParticle.EParticle
+import dev.elysium.eraces.utils.eParticle.ParticleConfig
 import org.bukkit.Material
 import org.bukkit.Particle
 import org.bukkit.Sound
@@ -45,28 +47,25 @@ class DamagedHalberd(
 
             val victimLoc = event.entity.location.clone().add(0.0, 1.0, 0.0)
 
-            event.entity.world.spawnParticle(
-                Particle.CRIT,
-                victimLoc,
-                30,
-                0.5, 0.7, 0.5,
-                0.2
+            EParticle.spawn(player.world, victimLoc, ParticleConfig.Builder(Particle.CRIT)
+                .count(30)
+                .offset(0.5, 0.7, 0.5)
+                .extra(0.2)
+                .build()
             )
 
-            event.entity.world.spawnParticle(
-                Particle.END_ROD,
-                victimLoc,
-                15,
-                0.3, 0.5, 0.3,
-                0.1
+            EParticle.spawn(player.world, victimLoc, ParticleConfig.Builder(Particle.END_ROD)
+                .count(15)
+                .offset(0.3, 0.5, 0.3)
+                .extra(0.1)
+                .build()
             )
 
-            event.entity.world.spawnParticle(
-                Particle.WITCH,
-                victimLoc,
-                10,
-                0.2, 0.5, 0.2,
-                0.05
+            EParticle.spawn(player.world, victimLoc, ParticleConfig.Builder(Particle.WITCH)
+                .count(10)
+                .offset(0.2, 0.5, 0.2)
+                .extra(0.05)
+                .build()
             )
 
             event.entity.world.playSound(

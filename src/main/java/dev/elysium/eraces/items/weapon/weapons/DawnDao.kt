@@ -6,6 +6,7 @@ import dev.elysium.eraces.items.core.state.StateKeys
 import dev.elysium.eraces.items.weapon.MeleeWeapon
 import dev.elysium.eraces.utils.TimeParser
 import dev.elysium.eraces.utils.actionMsg
+import dev.elysium.eraces.utils.eParticle.EParticle
 import org.bukkit.Material
 import org.bukkit.Particle
 import org.bukkit.entity.LivingEntity
@@ -73,13 +74,7 @@ class DawnDao(override val plugin: ERaces) : MeleeWeapon(
     private fun pierce(player: Player, target: LivingEntity) {
         target.damage(directDamage, player)
 
-        target.world.spawnParticle(
-            Particle.CRIT,
-            target.location.add(0.0, target.height * 0.5, 0.0),
-            20,
-            0.2, 0.2, 0.2,
-            0.2
-        )
+        EParticle.crit(target.world, target)
 
         object : BukkitRunnable() {
             var ticksPassed = 0
@@ -92,13 +87,11 @@ class DawnDao(override val plugin: ERaces) : MeleeWeapon(
 
                 target.damage(bleedTickDamage, player)
 
-                target.world.spawnParticle(
-                    Particle.DAMAGE_INDICATOR,
-                    target.location.add(0.0, target.height * 0.5, 0.0),
-                    8,
-                    0.15, 0.15, 0.15,
-                    0.05
+                EParticle.damageIndicator(
+                    target.world,
+                    target.location.clone().add(0.0, target.height * 0.5, 0.0)
                 )
+
 
                 ticksPassed += bleedInterval.toInt()
             }

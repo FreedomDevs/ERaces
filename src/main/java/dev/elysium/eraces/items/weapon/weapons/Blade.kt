@@ -1,11 +1,8 @@
 package dev.elysium.eraces.items.weapon.weapons
 
 import dev.elysium.eraces.ERaces
-import dev.elysium.eraces.items.core.state.ItemState
-import dev.elysium.eraces.items.core.state.StateKeys
 import dev.elysium.eraces.items.weapon.MeleeWeapon
-import dev.elysium.eraces.utils.actionMsg
-import dev.elysium.eraces.utils.msg
+import dev.elysium.eraces.utils.eParticle.EParticle
 import org.bukkit.Material
 import org.bukkit.Particle
 import org.bukkit.entity.LivingEntity
@@ -59,29 +56,9 @@ class Blade(
         val damage = 5.0
 
         val step = 0.2
-        var traveled = 0.0
 
-        while (traveled <= maxDistance) {
-            val point = start.clone().add(direction.clone().multiply(traveled))
-
-            world.spawnParticle(
-                Particle.SWEEP_ATTACK,
-                point,
-                1,
-                0.0, 0.0, 0.0,
-                0.0
-            )
-
-            world.spawnParticle(
-                Particle.CLOUD,
-                point,
-                1,
-                0.0, 0.0, 0.0,
-                0.01
-            )
-
-            traveled += step
-        }
+        EParticle.lineEffect(world, start, direction, maxDistance, step = step, particle = Particle.SWEEP_ATTACK)
+        EParticle.lineEffect(world, start, direction, maxDistance, step = step, particle = Particle.CLOUD)
 
         player.velocity = direction.multiply(1.5)
 
@@ -98,13 +75,7 @@ class Blade(
 
         hit.damage(damage, player)
 
-        world.spawnParticle(
-            Particle.CRIT,
-            hit.location.clone().add(0.0, hit.height * 0.5, 0.0),
-            15,
-            0.3, 0.3, 0.3,
-            0.2
-        )
+        EParticle.crit(world, hit, 15)
     }
 }
 

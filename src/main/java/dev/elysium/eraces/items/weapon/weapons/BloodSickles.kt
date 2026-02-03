@@ -2,11 +2,10 @@ package dev.elysium.eraces.items.weapon.weapons
 
 import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.items.core.ItemResolver
-import dev.elysium.eraces.items.core.state.ItemState
-import dev.elysium.eraces.items.core.state.StateKeys
 import dev.elysium.eraces.items.weapon.MeleeWeapon
 import dev.elysium.eraces.utils.TimeParser
 import dev.elysium.eraces.utils.actionMsg
+import dev.elysium.eraces.utils.eParticle.EParticle
 import org.bukkit.Material
 import org.bukkit.Particle
 import org.bukkit.entity.LivingEntity
@@ -79,13 +78,7 @@ class BloodSickles(override val plugin: ERaces) : MeleeWeapon(
 
         player.velocity = direction.multiply(1.8)
 
-        player.world.spawnParticle(
-            Particle.WHITE_SMOKE,
-            player.location.add(0.0, 1.0, 0.0),
-            20,
-            0.3, 0.3, 0.3,
-            0.02
-        )
+        EParticle.cloud(player.world, player.location.add(0.0, 1.0, 0.0), count = 20, speed = 0.02)
 
         object : BukkitRunnable() {
             var count = 1
@@ -106,12 +99,9 @@ class BloodSickles(override val plugin: ERaces) : MeleeWeapon(
 
                 target.damage(hitDamage + (if (isTwoHands) 4 else 0), player)
 
-                target.world.spawnParticle(
-                    Particle.DAMAGE_INDICATOR,
-                    target.location.clone().add(0.0, target.height * 0.5, 0.0),
-                    10,
-                    0.2, 0.2, 0.2,
-                    0.1
+                EParticle.damageIndicator(
+                    target.world,
+                    target.location.clone().add(0.0, target.height * 0.5, 0.0)
                 )
 
                 count++

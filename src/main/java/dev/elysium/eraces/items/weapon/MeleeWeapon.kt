@@ -10,12 +10,16 @@ import dev.elysium.eraces.utils.actionMsg
 import io.papermc.paper.datacomponent.DataComponentTypes
 import io.papermc.paper.datacomponent.item.CustomModelData
 import io.papermc.paper.datacomponent.item.ItemAttributeModifiers
+import org.bukkit.Location
 import org.bukkit.Material
+import org.bukkit.Particle
+import org.bukkit.World
 import org.bukkit.attribute.Attribute
 import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.inventory.ItemStack
+import org.bukkit.util.Vector
 
 /**
  * Абстрактный класс для оружия ближнего боя.

@@ -4,6 +4,7 @@ import org.bukkit.attribute.Attribute
 import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.items.weapon.MeleeWeapon
 import dev.elysium.eraces.utils.actionMsg
+import dev.elysium.eraces.utils.eParticle.EParticle
 import dev.elysium.eraces.utils.targetUtils.safeHeal
 import org.bukkit.Material
 import org.bukkit.Particle
@@ -51,13 +52,7 @@ class BloodDrinkerGreatsword(override val plugin: ERaces) : MeleeWeapon(
 
         attacker.safeHeal((attacker.health + healAmount).coerceAtMost(maxHp))
 
-        attacker.world.spawnParticle(
-            Particle.DAMAGE_INDICATOR,
-            attacker.location.add(0.0, 1.0, 0.0),
-            10,
-            0.3, 0.4, 0.3,
-            0.1
-        )
+        EParticle.damageIndicator(attacker.world, attacker.location)
 
         attacker.actionMsg(
             "<pink>Меч Кровопийца</pink> <gray>восстановил <red>${"%.1f".format(healAmount)}</red> ❤</gray>"

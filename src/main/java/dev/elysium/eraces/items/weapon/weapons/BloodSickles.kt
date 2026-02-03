@@ -50,26 +50,17 @@ class BloodSickles(override val plugin: ERaces) : MeleeWeapon(
         if (hand != EquipmentSlot.HAND) return
 
         val stack = player.inventory.itemInMainHand
-        val state = ItemState(stack)
-        val now = System.currentTimeMillis()
-        val kdEnd = state.getLong(StateKeys.KD)
+        tryAbility(player, stack, cooldownMillis) {
+            val target = findTarget(player) ?: run {
+                player.actionMsg("<gray>Нет цели поблизости…</gray>")
+                return@tryAbility
+            }
 
-        if (now < kdEnd) {
-            val remaining = (kdEnd - now) / 1000.0
-            player.actionMsg("<red>Способность еще не готова! <gold>${"%.1f".format(remaining)}s</gold>")
-            return
+            val isTwoHands = ItemResolver.resolve(player.inventory.itemInOffHand) is BloodSickles
+            bloodDash(player, target, isTwoHands)
         }
-
-        val target = findTarget(player) ?: run {
-            player.actionMsg("<gray>Нет цели поблизости…</gray>")
-            return
-        }
-
-        val isTwoHands = ItemResolver.resolve(player.inventory.itemInOffHand) is BloodSickles
-
-        bloodDash(player, target, isTwoHands)
-        state.setLong(StateKeys.KD, now + (cooldownMillis / (if (isTwoHands) 2 else 1)))
     }
+
 
     private fun findTarget(player: Player): LivingEntity? {
         val result = player.world.rayTraceEntities(

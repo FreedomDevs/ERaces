@@ -51,29 +51,20 @@ class MurasuSpear(override val plugin: ERaces) : MeleeWeapon(
     private val hitInterval = 6L
 
     override fun onInteract(player: Player, hand: EquipmentSlot, click: ClickType) {
-        if (click != ClickType.RIGHT) return
-        if (hand != EquipmentSlot.HAND) return
+        if (click != ClickType.RIGHT || hand != EquipmentSlot.HAND) return
 
         val stack = player.inventory.itemInMainHand
-        val state = ItemState(stack)
 
-        val now = System.currentTimeMillis()
-        val kdEnd = state.getLong(StateKeys.KD)
-
-        if (now < kdEnd) {
-            val remain = (kdEnd - now) / 1000.0
-            player.actionMsg("<red>Способность не готова! <gold>${"%.1f".format(remain)}s</gold>")
-            return
+        tryAbility(player, stack, cooldownMillis) {
+            val target = findLivingTarget(player, totalRange)
+            if (target == null) {
+                player.actionMsg("<gray>Нет цели в досягаемости…</gray>")
+            } else {
+                triplePierce(player, target)
+            }
         }
-
-        val target = findLivingTarget(player, totalRange) ?: run {
-            player.actionMsg("<gray>Нет цели в досягаемости…</gray>")
-            return
-        }
-
-        triplePierce(player, target)
-        state.setLong(StateKeys.KD, now + cooldownMillis)
     }
+
 
     private fun triplePierce(player: Player, target: LivingEntity) {
         object : BukkitRunnable() {

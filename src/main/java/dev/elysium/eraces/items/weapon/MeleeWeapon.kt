@@ -6,15 +6,21 @@ import dev.elysium.eraces.items.core.state.ItemState
 import dev.elysium.eraces.items.core.state.StateKeys
 import dev.elysium.eraces.utils.WeaponAttributeUtils
 import dev.elysium.eraces.utils.ChatUtil
+import dev.elysium.eraces.utils.actionMsg
+import io.papermc.paper.command.brigadier.argument.ArgumentTypes.player
 import io.papermc.paper.datacomponent.DataComponentTypes
 import io.papermc.paper.datacomponent.item.CustomModelData
 import io.papermc.paper.datacomponent.item.ItemAttributeModifiers
 import org.bukkit.Material
+import org.bukkit.Particle
 import org.bukkit.attribute.Attribute
 import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.inventory.ItemStack
+import org.bukkit.potion.PotionEffect
+import org.bukkit.potion.PotionEffectType
+import org.bukkit.scheduler.BukkitRunnable
 
 @Suppress("UnstableApiUsage")
 abstract class MeleeWeapon(
@@ -165,5 +171,20 @@ abstract class MeleeWeapon(
         }
 
         return result?.hitEntity as? LivingEntity
+    }
+
+    protected fun tryAbility(player: Player, stack: ItemStack, cooldown: Long, onActivate: () -> Unit) {
+        val state = ItemState(stack)
+        val now = System.currentTimeMillis()
+        val kdEnd = state.getLong(StateKeys.KD)
+
+        if (now < kdEnd) {
+            val remaining = (kdEnd - now) / 1000.0
+            player.actionMsg("<red>Способность еще не готова! <gold>${"%.1f".format(remaining)}s</gold>")
+            return
+        }
+
+        onActivate()
+        state.setLong(StateKeys.KD, now + cooldown)
     }
 }

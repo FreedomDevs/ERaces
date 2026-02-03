@@ -48,25 +48,17 @@ class DawnDao(override val plugin: ERaces) : MeleeWeapon(
         if (hand != EquipmentSlot.HAND) return
 
         val stack = player.inventory.itemInMainHand
-        val state = ItemState(stack)
 
-        val now = System.currentTimeMillis()
-        val kdEnd = state.getLong(StateKeys.KD)
+        tryAbility(player, stack, cooldownMillis) {
+            val target = findTarget(player) ?: run {
+                player.actionMsg("<gray>Нет цели в досягаемости…</gray>")
+                return@tryAbility
+            }
 
-        if (now < kdEnd) {
-            val remain = (kdEnd - now) / 1000.0
-            player.actionMsg("<red>Способность не готова! <gold>${"%.1f".format(remain)}s</gold>")
-            return
+            pierce(player, target)
         }
-
-        val target = findTarget(player) ?: run {
-            player.actionMsg("<gray>Нет цели в досягаемости…</gray>")
-            return
-        }
-
-        pierce(player, target)
-        state.setLong(StateKeys.KD, now + cooldownMillis)
     }
+
 
     private fun findTarget(player: Player): LivingEntity? {
         val result = player.world.rayTraceEntities(

@@ -41,19 +41,12 @@ class Blade(
     private val abilityCooldownMillis = 3000L
 
     override fun onInteract(player: Player, hand: EquipmentSlot, click: ClickType) {
-        if (click != ClickType.RIGHT) return
-        if (hand != EquipmentSlot.HAND) return
+        if (click != ClickType.RIGHT || hand != EquipmentSlot.HAND) return
         val stack = player.inventory.itemInMainHand
-        val state = ItemState(stack)
-        val now = System.currentTimeMillis()
-        val kdEnd = state.getLong(StateKeys.KD)
-        if (now < kdEnd) {
-            val remaining = ((kdEnd - now) / 1000.0)
-            player.actionMsg("<red>Способность еще не готова! <gold>${"%.1f".format(remaining)}s</gold>")
-            return
-        }
-        dash(player)
-        state.setLong(StateKeys.KD, now + abilityCooldownMillis)
+
+        tryAbility(player, stack, abilityCooldownMillis, onActivate = {
+            dash(player)
+        })
     }
 
     private fun dash(player: Player) {

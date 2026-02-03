@@ -16,6 +16,7 @@ import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.inventory.ItemStack
+import org.luaj.vm2.ast.Stat
 
 /**
  * Абстрактный класс для оружия ближнего боя.
@@ -129,6 +130,7 @@ abstract class MeleeWeapon(
         val state = ItemState(item)
         val hits = state.getInt(StateKeys.HITS)
         val max = state.getInt(StateKeys.DURABILITY)
+        val mana = state.getInt(StateKeys.MANA)
 
         val loreLines = (options["lore"] as? List<*>)?.mapNotNull {
             it as? String
@@ -140,7 +142,8 @@ abstract class MeleeWeapon(
                     "{hits}" to hits.toString(),
                     "{durability}" to max.toString(),
                     "{bar}" to getDurabilityBar(hits, max),
-                    "{current_durability}" to (max - hits).toString()
+                    "{current_durability}" to (max - hits).toString(),
+                    "{mana}" to mana.toString()
                 )
             )
         }
@@ -259,7 +262,8 @@ abstract class MeleeWeapon(
             extraInfo: List<String> = emptyList(),
             currentDurabilityPlaceholder: String = "{current_durability}",
             maxDurabilityPlaceholder: String = "{durability}",
-            barPlaceholder: String = "{bar}"
+            barPlaceholder: String = "{bar}",
+            useMana: Boolean = false
         ): MutableList<String> {
             val result = mutableListOf(
                 "<gray>$DAMAGE_ICON <white>Урон: <red>$damage",
@@ -268,7 +272,11 @@ abstract class MeleeWeapon(
             if (extraInfo.isNotEmpty()) {
                 result += extraInfo
             }
+
             result += ""
+            if (useMana) {
+                result += "<white>Мана: <yellow>{mana}"
+            }
             result += "<gray>$DURABILITY_ICON <white>Прочность:"
             result += "<gray>[ <white>$currentDurabilityPlaceholder<gray> / <white>$maxDurabilityPlaceholder <gray>]"
             result += barPlaceholder
@@ -297,11 +305,12 @@ abstract class MeleeWeapon(
             extraBaseInfo: List<String> = emptyList(),
             currentDurabilityPlaceholder: String = "{current_durability}",
             maxDurabilityPlaceholder: String = "{durability}",
-            barPlaceholder: String = "{bar}"
+            barPlaceholder: String = "{bar}",
+            useMana: Boolean = false
         ): List<String> {
             val lore = mutableListOf<String>()
 
-            lore += base(damage, attackSpeed, extraBaseInfo, currentDurabilityPlaceholder, maxDurabilityPlaceholder, barPlaceholder)
+            lore += base(damage, attackSpeed, extraBaseInfo, currentDurabilityPlaceholder, maxDurabilityPlaceholder, barPlaceholder, useMana)
             lore += ""
 
             passiveEffects.forEach { (name, desc) ->

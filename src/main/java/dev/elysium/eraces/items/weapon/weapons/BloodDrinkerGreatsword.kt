@@ -7,7 +7,6 @@ import dev.elysium.eraces.utils.actionMsg
 import dev.elysium.eraces.utils.eParticle.EParticle
 import dev.elysium.eraces.utils.targetUtils.safeHeal
 import org.bukkit.Material
-import org.bukkit.Particle
 import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
 import org.bukkit.event.entity.EntityDamageByEntityEvent

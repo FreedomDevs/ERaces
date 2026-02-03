@@ -24,7 +24,8 @@ object WeaponManager {
             TwoHandedAxe(plugin),
             MurasuSpear(plugin),
             HeroMourningFlamberge(plugin),
-            SplitChakrams(plugin)
+            SplitChakrams(plugin),
+            CrackedBlade(plugin)
         )
 
         weapons.forEach(ItemRegistry::register)

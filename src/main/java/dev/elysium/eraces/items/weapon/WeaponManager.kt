@@ -18,6 +18,7 @@ object WeaponManager {
             WhisperingSickles(plugin),
             BloodSickles(plugin),
             BloodDrinkerGreatsword(plugin),
+            DawnDao(plugin),
 
         )
 

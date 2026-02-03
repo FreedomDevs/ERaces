@@ -19,6 +19,7 @@ object WeaponManager {
             BloodSickles(plugin),
             BloodDrinkerGreatsword(plugin),
             DawnDao(plugin),
+            TwoHandedAxe(plugin),
 
         )
 

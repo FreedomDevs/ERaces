@@ -6,6 +6,7 @@ import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageByEntityEvent
+import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.inventory.ClickType
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.inventory.EquipmentSlot
@@ -33,6 +34,15 @@ class WeaponListener : Listener {
         val (weapon, _) = getWeaponToMainOrOffHand(e.player, hand) ?: return
 
         weapon.onInteract(e.player, slot, clickType)
+    }
+
+    @EventHandler
+    fun onDamage(e: EntityDamageEvent) {
+        val player = e.entity as? Player ?: return
+
+        val (weapon, _) = getWeaponToMainOrOffHand(player, Hand.ALL) ?: return
+
+        weapon.onDamage(e)
     }
 
     /*

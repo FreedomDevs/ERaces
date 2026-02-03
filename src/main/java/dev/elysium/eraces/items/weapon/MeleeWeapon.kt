@@ -18,6 +18,7 @@ import org.bukkit.attribute.Attribute
 import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
 import org.bukkit.event.entity.EntityDamageByEntityEvent
+import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.inventory.ItemStack
 import org.bukkit.util.Vector
 
@@ -122,6 +123,9 @@ abstract class MeleeWeapon(
             player.sendMessage(ChatUtil.parse("&6Критический удар!"))
         }
     }
+
+
+    override fun onDamage(event: EntityDamageEvent) {}
 
     /**
      * Обновляет описание (lore) предмета, включая прочность, количество ударов и индикатор прочности.

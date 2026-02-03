@@ -5,6 +5,7 @@ import dev.elysium.eraces.items.core.Item
 import dev.elysium.eraces.items.core.ItemType
 import org.bukkit.entity.Player
 import org.bukkit.event.entity.EntityDamageByEntityEvent
+import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.inventory.ClickType
 import org.bukkit.inventory.EquipmentSlot
 
@@ -19,4 +20,6 @@ abstract class Weapon: Item {
     open fun onInteractOffHand(player: Player) {}
 
     open fun onInteract(player: Player, hand: EquipmentSlot, click: ClickType) {}
+
+    open fun onDamage(event: EntityDamageEvent) {}
 }

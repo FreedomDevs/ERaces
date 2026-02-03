@@ -21,7 +21,7 @@ object WeaponManager {
             DawnDao(plugin),
             TwoHandedAxe(plugin),
             MurasuSpear(plugin),
-
+            HeroMourningFlamberge(plugin)
         )
 
         weapons.forEach(ItemRegistry::register)

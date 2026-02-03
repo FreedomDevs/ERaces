@@ -17,6 +17,8 @@ object WeaponManager {
             Halberd(plugin),
             WhisperingSickles(plugin),
             BloodSickles(plugin),
+            BloodDrinkerGreatsword(plugin),
+
         )
 
         weapons.forEach(ItemRegistry::register)

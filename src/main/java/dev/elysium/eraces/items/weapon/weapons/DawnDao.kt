@@ -23,17 +23,15 @@ class DawnDao(override val plugin: ERaces) : MeleeWeapon(
     attackSpeed = 1.7,
     maxDurability = 1000,
     options = mapOf(
-        "lore" to listOf(
-            "<gray>⚔ <white>Урон: <red>8",
-            "<gray>⚡ <white>Скорость атаки: <yellow>1.7",
-            "",
-            "<gold>✦ <gradient:#ffd54f:#ff9800>Способность: Прокалывание</gradient>",
-            "<gray>▸ <white>[ПКМ] — <yellow>12</yellow> урона",
-            "<gray>▸ <white>Кровотечение <red>7 сек</red>",
-            "",
-            "<gray>⛏ <white>Прочность:",
-            "<gray>[ <white>{current_durability}<gray> / <white>{durability} <gray>]",
-            "{bar}",
+        "lore" to WeaponLoreBuilder.build(
+            damage = 8.0,
+            attackSpeed = 1.7,
+            activeAbilities = listOf(
+                "<gradient:#ffd54f:#ff9800>Способность: Прокалывание</gradient>" to listOf(
+                    "<gray>▸ <white>[ПКМ] — <yellow>12</yellow> урона",
+                    "<gray>▸ <white>Кровотечение <red>7 сек</red>"
+                )
+            )
         )
     )
 ) {

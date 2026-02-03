@@ -15,17 +15,15 @@ class TwoHandedAxe(override val plugin: ERaces) : MeleeWeapon(
     attackSpeed = 0.9,
     maxDurability = 1500,
     options = mapOf(
-        "lore" to listOf(
-            "<gray>⚔ <white>Урон: <red>14",
-            "<gray>⚡ <white>Скорость атаки: <yellow>0.9",
-            "",
-            "<gold>✦ <gradient:#b0bec5:#37474f>Способность: Разлом щитов</gradient>",
-            "<gray>▸ <white>Удар по активному щиту",
-            "<gray>▸ <white>отключает его",
-            "",
-            "<gray>⛏ <white>Прочность:",
-            "<gray>[ <white>{current_durability}<gray> / <white>{durability} <gray>]",
-            "{bar}",
+        "lore" to WeaponLoreBuilder.build(
+            damage = 14.0,
+            attackSpeed = 0.9,
+            activeAbilities = listOf(
+                "<gradient:#b0bec5:#37474f>Способность: Разлом щитов</gradient>" to listOf(
+                    "<gray>▸ <white>Удар по активному щиту",
+                    "<gray>▸ <white>отключает его"
+                )
+            )
         )
     )
 ) {

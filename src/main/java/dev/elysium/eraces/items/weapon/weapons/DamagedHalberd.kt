@@ -22,13 +22,9 @@ class DamagedHalberd(
     attackSpeed = 0.8,
     maxDurability = 600,
     options = mapOf(
-        "lore" to listOf(
-            "<gray>⚔ <white>Урон: <red>10.0",
-            "<gray>⚡ <white>Скорость атаки: <yellow>0.8",
-            "",
-            "<gray>⛏ <white>Прочность:",
-            "<gray>[ <white>{current_durability}<gray> / <white>{durability} <gray>]",
-            "{bar}",
+        "lore" to WeaponLoreBuilder.build(
+            damage = 10.0,
+            attackSpeed = 0.8
         )
     )
 ) {

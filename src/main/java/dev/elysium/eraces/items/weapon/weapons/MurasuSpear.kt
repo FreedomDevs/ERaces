@@ -1,13 +1,12 @@
 package dev.elysium.eraces.items.weapon.weapons
 
 import dev.elysium.eraces.ERaces
-import dev.elysium.eraces.items.core.state.ItemState
-import dev.elysium.eraces.items.core.state.StateKeys
 import dev.elysium.eraces.items.weapon.MeleeWeapon
 import dev.elysium.eraces.utils.TimeParser
 import dev.elysium.eraces.utils.actionMsg
+import dev.elysium.eraces.utils.eParticle.EParticle
+import dev.elysium.eraces.utils.targetUtils.safeDamage
 import org.bukkit.Material
-import org.bukkit.Particle
 import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.ClickType
@@ -24,20 +23,20 @@ class MurasuSpear(override val plugin: ERaces) : MeleeWeapon(
     attackSpeed = 1.0,
     maxDurability = 1349,
     options = mapOf(
-        "lore" to listOf(
-            "<gray>⚔ <white>Урон: <red>11",
-            "<gray>⚡ <white>Скорость атаки: <yellow>1.0",
-            "",
-            "<aqua>✦ Пассивное действие:</aqua>",
-            "<gray>▸ <white>+2 к досягаемости",
-            "",
-            "<gold>✦ <gradient:#4fc3f7:#01579b>Способность: Тройной прокол</gradient>",
-            "<gray>▸ <white>3 удара по <red>5</red> урона",
-            "<gray>▸ <white>Стан <red>3 сек</red>",
-            "",
-            "<gray>⛏ <white>Прочность:",
-            "<gray>[ <white>{current_durability}<gray> / <white>{durability} <gray>]",
-            "{bar}",
+        "lore" to WeaponLoreBuilder.build(
+            damage = 11.0,
+            attackSpeed = 1.0,
+            passiveEffects = listOf(
+                "Пассивное действие:" to listOf(
+                    "<gray>▸ <white>+2 к досягаемости"
+                )
+            ),
+            activeAbilities = listOf(
+                "<gradient:#4fc3f7:#01579b>Способность: Тройной прокол</gradient>" to listOf(
+                    "<gray>▸ <white>3 удара по <red>5</red> урона",
+                    "<gray>▸ <white>Стан <red>3 сек</red>"
+                )
+            )
         )
     )
 ) {
@@ -87,15 +86,9 @@ class MurasuSpear(override val plugin: ERaces) : MeleeWeapon(
                     return
                 }
 
-                target.damage(hitDamage, player)
+                target.safeDamage(hitDamage, player)
 
-                target.world.spawnParticle(
-                    Particle.CRIT,
-                    target.location.add(0.0, target.height * 0.6, 0.0),
-                    12,
-                    0.2, 0.2, 0.2,
-                    0.2
-                )
+                EParticle.crit(target.world, target)
 
                 count++
             }

@@ -20,17 +20,15 @@ class Blade(
     attackSpeed = 1.6,
     maxDurability = 950,
     options = mapOf(
-        "lore" to listOf(
-            "<gray>⚔ <white>Урон: <red>9",
-            "<gray>⚡ <white>Скорость атаки: <yellow>1.6",
-            "",
-            "<gold>✦ <gradient:#ffcc66:#ff9966>Способность: Выпад</gradient>",
-            "<gray>▸ <white>[ПКМ] — <#ffb347>рывок вперёд</#ffb347>",
-            "<gray>▸ <white>Наносит <red>5</red> <gray>урона всем на пути",
-            "",
-            "<gray>⛏ <white>Прочность:",
-            "<gray>[ <white>{current_durability}<gray> / <white>{durability} <gray>]",
-            "{bar}",
+        "lore" to WeaponLoreBuilder.build(
+            damage = 9.0,
+            attackSpeed = 1.6,
+            activeAbilities = listOf(
+                "<gradient:#ffcc66:#ff9966>Способность: Выпад</gradient>" to listOf(
+                    "<gray>▸ <white>[ПКМ] — <#ffb347>рывок вперёд</#ffb347>",
+                    "<gray>▸ <white>Наносит <red>5</red> <gray>урона всем на пути"
+                )
+            )
         )
     )
 ) {

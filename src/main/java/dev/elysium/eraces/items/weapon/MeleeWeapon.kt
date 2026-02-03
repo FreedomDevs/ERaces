@@ -249,4 +249,76 @@ abstract class MeleeWeapon(
         onActivate()
         state.setLong(StateKeys.KD, now + cooldown)
     }
+
+    protected object WeaponLoreBuilder {
+        private const val DAMAGE_ICON = "⚔"
+        private const val SPEED_ICON = "⚡"
+        private const val DURABILITY_ICON = "⛏"
+        private const val ACTIVE_ICON = "✦"
+        private const val PASSIVE_ICON = "✦"
+
+        fun base(
+            damage: Double,
+            attackSpeed: Double,
+            extraInfo: List<String> = emptyList(),
+            currentDurabilityPlaceholder: String = "{current_durability}",
+            maxDurabilityPlaceholder: String = "{durability}",
+            barPlaceholder: String = "{bar}"
+        ): MutableList<String> {
+            val result = mutableListOf(
+                "<gray>$DAMAGE_ICON <white>Урон: <red>$damage",
+                "<gray>$SPEED_ICON <white>Скорость атаки: <yellow>$attackSpeed"
+            )
+            if (extraInfo.isNotEmpty()) {
+                result += extraInfo
+            }
+            result += ""
+            result += "<gray>$DURABILITY_ICON <white>Прочность:"
+            result += "<gray>[ <white>$currentDurabilityPlaceholder<gray> / <white>$maxDurabilityPlaceholder <gray>]"
+            result += barPlaceholder
+            return result
+        }
+
+        fun activeAbility(
+            name: String,
+            description: List<String>
+        ): List<String> {
+            return listOf("<gold>$ACTIVE_ICON $name</gold>") + description
+        }
+
+        fun passiveEffect(
+            name: String,
+            description: List<String>
+        ): List<String> {
+            return listOf("<aqua>$PASSIVE_ICON $name</aqua>") + description
+        }
+
+        fun build(
+            damage: Double,
+            attackSpeed: Double,
+            activeAbilities: List<Pair<String, List<String>>> = emptyList(),
+            passiveEffects: List<Pair<String, List<String>>> = emptyList(),
+            extraBaseInfo: List<String> = emptyList(),
+            currentDurabilityPlaceholder: String = "{current_durability}",
+            maxDurabilityPlaceholder: String = "{durability}",
+            barPlaceholder: String = "{bar}"
+        ): List<String> {
+            val lore = mutableListOf<String>()
+
+            lore += base(damage, attackSpeed, extraBaseInfo, currentDurabilityPlaceholder, maxDurabilityPlaceholder, barPlaceholder)
+            lore += ""
+
+            passiveEffects.forEach { (name, desc) ->
+                lore += passiveEffect(name, desc)
+                lore += ""
+            }
+
+            activeAbilities.forEach { (name, desc) ->
+                lore += activeAbility(name, desc)
+                lore += ""
+            }
+
+            return lore
+        }
+    }
 }

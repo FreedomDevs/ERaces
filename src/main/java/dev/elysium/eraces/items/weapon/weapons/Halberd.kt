@@ -25,13 +25,9 @@ class Halberd(override val plugin: ERaces) : MeleeWeapon(
     attackSpeed = 0.8,
     maxDurability = 1300,
     options = mapOf(
-        "lore" to listOf(
-            "<gray>⚔ <white>Урон: <red>12.0",
-            "<gray>⚡ <white>Скорость атаки: <yellow>0.8",
-            "",
-            "<gray>⛏ <white>Прочность:",
-            "<gray>[ <white>{current_durability}<gray> / <white>{durability} <gray>]",
-            "{bar}",
+        "lore" to WeaponLoreBuilder.build(
+            damage = 12.0,
+            attackSpeed = 0.8
         )
     )
 ) {

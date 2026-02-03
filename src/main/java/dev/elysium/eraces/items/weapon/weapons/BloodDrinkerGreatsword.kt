@@ -21,17 +21,15 @@ class BloodDrinkerGreatsword(override val plugin: ERaces) : MeleeWeapon(
     attackSpeed = 1.7,
     maxDurability = 1120,
     options = mapOf(
-        "lore" to listOf(
-            "<gray>⚔ <white>Урон: <red>10",
-            "<gray>⚡ <white>Скорость атаки: <yellow>1.7",
-            "",
-            "<gold>✦ <gradient:#ff3b3b:#7a0000>Пассивное действие: Поглотитель кровей</gradient>",
-            "<gray>▸ <white>10% шанс восстановить",
-            "<gray>▸ <red>50%</red> от нанесённого урона",
-            "",
-            "<gray>⛏ <white>Прочность:",
-            "<gray>[ <white>{current_durability}<gray> / <white>{durability} <gray>]",
-            "{bar}",
+        "lore" to WeaponLoreBuilder.build(
+            damage = 10.0,
+            attackSpeed = 1.7,
+            passiveEffects = listOf(
+                "<gradient:#ff3b3b:#7a0000>Пассивное действие: Поглотитель кровей</gradient>" to listOf(
+                    "<gray>▸ <white>10% шанс восстановить",
+                    "<gray>▸ <red>50%</red> от нанесённого урона"
+                )
+            )
         )
     )
 ) {

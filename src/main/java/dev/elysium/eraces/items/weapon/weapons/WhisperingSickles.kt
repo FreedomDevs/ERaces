@@ -25,19 +25,17 @@ class WhisperingSickles(override val plugin: ERaces) : MeleeWeapon(
     attackSpeed = 2.0,
     maxDurability = 650,
     options = mapOf(
-        "lore" to listOf(
-            "<gray>⚔ <white>Урон: <red>6",
-            "<gray>⚡ <white>Скорость атаки: <yellow>2.0",
-            "",
-            "<gold>✦ <gradient:#b388ff:#7c4dff>Способность: Шептание ягнят</gradient>",
-            "<gray>▸ <white>[ПКМ] — <#caa9ff>рывок к цели</#caa9ff>",
-            "<gray>▸ <white>4 удара по <red>3</red> урона",
-            "<gray>▸ <white>Накладывает <blue>Замедление I</blue>",
-            "<gray>▸ <white>Если находится в обоих руках то будет <red>круче",
-            "",
-            "<gray>⛏ <white>Прочность:",
-            "<gray>[ <white>{current_durability}<gray> / <white>{durability} <gray>]",
-            "{bar}",
+        "lore" to WeaponLoreBuilder.build(
+            damage = 6.0,
+            attackSpeed = 2.0,
+            activeAbilities = listOf(
+                "<gradient:#b388ff:#7c4dff>Способность: Шептание ягнят</gradient>" to listOf(
+                    "<gray>▸ <white>[ПКМ] — <#caa9ff>рывок к цели</#caa9ff>",
+                    "<gray>▸ <white>4 удара по <red>3</red> урона",
+                    "<gray>▸ <white>Накладывает <blue>Замедление I</blue>",
+                    "<gray>▸ <white>Если находится в обоих руках то будет <red>круче"
+                )
+            )
         )
     )
 ) {

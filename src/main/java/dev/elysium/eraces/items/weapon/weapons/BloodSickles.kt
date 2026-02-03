@@ -24,18 +24,16 @@ class BloodSickles(override val plugin: ERaces) : MeleeWeapon(
     attackSpeed = 3.1,
     maxDurability = 650,
     options = mapOf(
-        "lore" to listOf(
-            "<gray>⚔ <white>Урон: <red>4",
-            "<gray>⚡ <white>Скорость атаки: <yellow>3.1",
-            "",
-            "<gold>✦ <gradient:#ff4d4d:#8b0000>Способность: Кровавая тишина</gradient>",
-            "<gray>▸ <white>[ПКМ] — <#ff5555>рывок к цели</#ff5555>",
-            "<gray>▸ <white>6 ударов по <red>2</red> урона",
-            "<gray>▸ <white>Если находится в обоих руках то будет <red>круче",
-            "",
-            "<gray>⛏ <white>Прочность:",
-            "<gray>[ <white>{current_durability}<gray> / <white>{durability} <gray>]",
-            "{bar}",
+        "lore" to WeaponLoreBuilder.build(
+            damage = 4.0,
+            attackSpeed = 3.1,
+            activeAbilities = listOf(
+                "<gradient:#ff4d4d:#8b0000>Способность: Кровавая тишина</gradient>" to listOf(
+                    "<gray>▸ <white>[ПКМ] — <#ff5555>рывок к цели</#ff5555>",
+                    "<gray>▸ <white>6 ударов по <red>2</red> урона",
+                    "<gray>▸ <white>Если находится в обоих руках то будет <red>круче"
+                )
+            )
         )
     )
 ) {

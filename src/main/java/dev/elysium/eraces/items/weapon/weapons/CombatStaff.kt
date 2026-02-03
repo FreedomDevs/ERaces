@@ -13,13 +13,9 @@ class CombatStaff(override val plugin: ERaces) : MeleeWeapon(
     isUnbreakable = false,
     maxDurability = 159,
     options = mapOf(
-        "lore" to listOf(
-            "<gray>⚔ <white>Урон: <red>3.5",
-            "<gray>⚡ <white>Скорость атаки: <yellow>1.4",
-            "",
-            "<gray>⛏ <white>Прочность:",
-            "<gray>[ <white>{current_durability}<gray> / <white>{durability} <gray>]",
-            "{bar}",
+        "lore" to WeaponLoreBuilder.build(
+            damage = 3.5,
+            attackSpeed = 1.4
         )
     )
 )

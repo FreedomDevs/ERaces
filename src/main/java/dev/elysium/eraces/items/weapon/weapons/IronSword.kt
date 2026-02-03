@@ -12,13 +12,9 @@ class IronSword(override val plugin: ERaces) : MeleeWeapon(
     attackSpeed = 1.6,
     maxDurability = 250,
     options = mapOf(
-        "lore" to listOf(
-            "<gray>⚔ <white>Урон: <red>6.0",
-            "<gray>⚡ <white>Скорость атаки: <yellow>1.6",
-            "",
-            "<gray>⛏ <white>Прочность:",
-            "<gray>[ <white>{current_durability}<gray> / <white>{durability} <gray>]",
-            "{bar}",
+        "lore" to WeaponLoreBuilder.build(
+            damage = 6.0,
+            attackSpeed = 1.6
         )
     )
 )

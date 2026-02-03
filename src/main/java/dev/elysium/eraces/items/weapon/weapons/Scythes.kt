@@ -24,13 +24,9 @@ class Scythes(
     isUnbreakable = false,
     maxDurability = 500,
     options = mapOf(
-        "lore" to listOf(
-            "<gray>⚔ <white>Урон: <red>5.0",
-            "<gray>⚡ <white>Скорость атаки: <yellow>2.2",
-            "",
-            "<gray>⛏ <white>Прочность:",
-            "<gray>[ <white>{current_durability}<gray> / <white>{durability} <gray>]",
-            "{bar}",
+        "lore" to WeaponLoreBuilder.build(
+            damage = 5.0,
+            attackSpeed = 2.2
         )
     )
 ) {

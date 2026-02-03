@@ -55,5 +55,4 @@ class CrackedBlade(override val plugin: ERaces) : MeleeWeapon(
             // TODO: Ещё редактора отпиздеть.. ибо что это блять за эффект такой нахуй
         }
     }
-
 }

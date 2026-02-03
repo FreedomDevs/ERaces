@@ -20,6 +20,7 @@ object WeaponManager {
             BloodDrinkerGreatsword(plugin),
             DawnDao(plugin),
             TwoHandedAxe(plugin),
+            MurasuSpear(plugin),
 
         )
 

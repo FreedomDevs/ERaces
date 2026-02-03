@@ -11,6 +11,7 @@ import io.papermc.paper.datacomponent.item.CustomModelData
 import io.papermc.paper.datacomponent.item.ItemAttributeModifiers
 import org.bukkit.Material
 import org.bukkit.attribute.Attribute
+import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.inventory.ItemStack
@@ -145,5 +146,24 @@ abstract class MeleeWeapon(
         val bar = "<red>$barFilled<green>$barEmpty"
 
         return bar
+    }
+
+    protected fun findLivingTarget(
+        player: Player,
+        range: Double,
+        predicate: ((LivingEntity) -> Boolean)? = null
+    ): LivingEntity? {
+
+        val result = player.world.rayTraceEntities(
+            player.eyeLocation,
+            player.eyeLocation.direction,
+            range
+        ) { entity ->
+            entity is LivingEntity &&
+                    entity != player &&
+                    (predicate?.invoke(entity) ?: true)
+        }
+
+        return result?.hitEntity as? LivingEntity
     }
 }

@@ -3,7 +3,7 @@ name: Новая способность
 about: Предложить новую способность
 title: "[НАЗВАНИЕ СПОСОБНОСТИ]"
 labels: ability_request
-assignees: ""
+assignees: ''
 
 ---
 

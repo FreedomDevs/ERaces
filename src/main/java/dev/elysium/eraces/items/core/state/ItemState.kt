@@ -36,4 +36,13 @@ class ItemState(private val stack: ItemStack) {
         pdc.set(key, PersistentDataType.LONG, value)
         stack.itemMeta = meta
     }
+
+    fun getBoolean(key: NamespacedKey, default: Boolean = false): Boolean {
+        return getInt(key, if (default) 1 else 0) != 0
+    }
+
+    fun setBoolean(key: NamespacedKey, value: Boolean) {
+        setInt(key, if (value) 1 else 0)
+    }
+
 }

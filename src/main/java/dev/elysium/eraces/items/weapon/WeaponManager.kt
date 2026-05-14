@@ -27,6 +27,7 @@ object WeaponManager {
             SplitChakrams(plugin),
             CrackedBlade(plugin),
             HopeRapier(plugin),
+            WarTearsAxe(plugin),
         )
 
         weapons.forEach(ItemRegistry::register)

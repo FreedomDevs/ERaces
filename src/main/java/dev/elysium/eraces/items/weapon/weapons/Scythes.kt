@@ -1,6 +1,5 @@
 package dev.elysium.eraces.items.weapon.weapons
 
-import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.items.core.state.ItemState
 import dev.elysium.eraces.items.core.state.StateKeys
 import dev.elysium.eraces.items.weapon.MeleeWeapon
@@ -13,9 +12,7 @@ import org.bukkit.entity.Player
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import kotlin.random.Random
 
-class Scythes(
-    override val plugin: ERaces
-) : MeleeWeapon(
+class Scythes : MeleeWeapon(
     id = "scythes",
     material = Material.IRON_SWORD,
     name = "<blue>Серпы",

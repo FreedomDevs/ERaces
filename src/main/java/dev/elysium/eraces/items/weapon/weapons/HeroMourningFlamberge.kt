@@ -8,15 +8,13 @@ import org.bukkit.Material
 import org.bukkit.entity.LivingEntity
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.scheduler.BukkitRunnable
-import java.util.UUID
+import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 
-class HeroMourningFlamberge(
-    override val plugin: ERaces
-) : MeleeWeapon(
+class HeroMourningFlamberge : MeleeWeapon(
     id = "hero_mourning_flamberge",
     material = Material.IRON_SWORD,
-    name = "<pink>Фламберг Скорбь Героя",
+    name = "<#FF3399>Фламберг Скорбь Героя",
     damage = 8.0,
     attackSpeed = 1.7,
     maxDurability = 1350,
@@ -71,7 +69,7 @@ class HeroMourningFlamberge(
         }
 
         bleedingTasks[uuid] = task
-        task.runTaskTimer(plugin, 0L, 10L)
+        task.runTaskTimer(ERaces.getInstance(), 0L, 10L)
     }
 
     companion object {
@@ -79,3 +77,4 @@ class HeroMourningFlamberge(
     }
 
 }
+

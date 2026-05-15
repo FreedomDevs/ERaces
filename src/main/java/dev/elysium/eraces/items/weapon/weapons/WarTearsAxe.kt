@@ -12,11 +12,8 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.inventory.ClickType
 import org.bukkit.inventory.EquipmentSlot
 
-class WarTearsAxe(
-    override val plugin: ERaces
-) : MeleeWeapon(
-
-    id = "war_tears_axe",
+class WarTearsAxe : MeleeWeapon(
+    id = "double_axe_of_tears_of_war",
 
     material = Material.IRON_AXE,
 
@@ -110,8 +107,8 @@ class WarTearsAxe(
         )
 
         // Через 2 секунды завершаем заряд
-        plugin.server.scheduler.runTaskLater(
-            plugin,
+        ERaces.getInstance().server.scheduler.runTaskLater(
+            ERaces.getInstance(),
             Runnable {
 
                 // Игрок мог сменить предмет

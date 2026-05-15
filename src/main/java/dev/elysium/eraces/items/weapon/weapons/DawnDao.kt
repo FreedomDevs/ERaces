@@ -1,24 +1,21 @@
 package dev.elysium.eraces.items.weapon.weapons
 
 import dev.elysium.eraces.ERaces
-import dev.elysium.eraces.items.core.state.ItemState
-import dev.elysium.eraces.items.core.state.StateKeys
 import dev.elysium.eraces.items.weapon.MeleeWeapon
 import dev.elysium.eraces.utils.TimeParser
 import dev.elysium.eraces.utils.actionMsg
 import dev.elysium.eraces.utils.eParticle.EParticle
 import org.bukkit.Material
-import org.bukkit.Particle
 import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.ClickType
 import org.bukkit.inventory.EquipmentSlot
 import org.bukkit.scheduler.BukkitRunnable
 
-class DawnDao(override val plugin: ERaces) : MeleeWeapon(
+class DawnDao : MeleeWeapon(
     id = "dawn_dao",
     material = Material.IRON_SWORD,
-    name = "<pink>Дао Рассвета",
+    name = "<#FF3399>Дао Рассвета",
     damage = 8.0,
     attackSpeed = 1.7,
     maxDurability = 1000,
@@ -93,6 +90,6 @@ class DawnDao(override val plugin: ERaces) : MeleeWeapon(
 
                 ticksPassed += bleedInterval.toInt()
             }
-        }.runTaskTimer(plugin, bleedInterval, bleedInterval)
+        }.runTaskTimer(ERaces.getInstance(), bleedInterval, bleedInterval)
     }
 }

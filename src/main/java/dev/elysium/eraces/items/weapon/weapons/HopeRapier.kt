@@ -9,13 +9,12 @@ import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.ClickType
 import org.bukkit.inventory.EquipmentSlot
+import org.bukkit.scheduler.BukkitRunnable
 
-class HopeRapier(
-    override val plugin: ERaces
-) : MeleeWeapon(
+class HopeRapier : MeleeWeapon(
     id = "hope_rapier",
     material = Material.IRON_SWORD,
-    name = "<pink>Шпага «Завет надежды»",
+    name = "<#FF3399>Шпага «Завет надежды»",
     damage = 8.0,
     attackSpeed = 2.5,
     maxDurability = 600,
@@ -43,6 +42,7 @@ class HopeRapier(
         }
     }
 
+    @Suppress("deprecated")
     private fun whirlwind(player: Player) {
         val world = player.world
         val start = player.eyeLocation.clone()
@@ -55,21 +55,25 @@ class HopeRapier(
         EParticle.lineEffect(world, start, direction, maxDistance, step = 0.2, particle = Particle.SWEEP_ATTACK)
         EParticle.lineEffect(world, start, direction, maxDistance, step = 0.2, particle = Particle.CLOUD)
 
-        var hitsDone = 0
-
-        while (hitsDone < hits) {
-            val result = world.rayTraceEntities(start, direction, maxDistance, hitRadius) { entity ->
-                entity is LivingEntity && entity != player && entity.health > entity.maxHealth * 0.25
-            }
-            val target = result?.hitEntity as? LivingEntity ?: break
-
-            val maxDamage = target.health - target.maxHealth * 0.25
-            val appliedDamage = damage.coerceAtMost(maxDamage)
-            if (appliedDamage > 0) target.damage(appliedDamage, player)
-
-            EParticle.crit(world, target, 10)
-
-            hitsDone++
+        val result = world.rayTraceEntities(start, direction, maxDistance, hitRadius) { entity ->
+            entity is LivingEntity && entity != player && entity.health > entity.maxHealth * 0.25
         }
+        val target = result?.hitEntity as? LivingEntity ?: return
+
+        object : BukkitRunnable() {
+            var hitsDone = 0
+
+            override fun run() {
+                val maxDamage = target.health - target.maxHealth * 0.25
+                val appliedDamage = damage.coerceAtMost(maxDamage)
+                if (appliedDamage > 0) target.damage(appliedDamage, player)
+
+                EParticle.crit(world, target, 10)
+
+                hitsDone++
+                if (hitsDone == hits)
+                    cancel()
+            }
+        }.runTaskTimer(ERaces.getInstance(), 0, 10)
     }
 }

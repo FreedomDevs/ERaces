@@ -50,8 +50,10 @@ public class RacesReloader implements Listener {
             new AttackSpeedUpdater(),
             new MoveSpeedUpdater(),
             new BaseDamageUpdater(),
-            new AdditionalScaleUpdater(),
+            new AdditionalScaleUpdater()
+    );
 
+    private static final List<? extends Listener> listeners = List.of(
             new PlayerJoinListener(),
             new PlayerQuitListener(),
             new PlayerRespawnListener(),
@@ -87,6 +89,9 @@ public class RacesReloader implements Listener {
         for (Object obj : updaters)
             if (obj instanceof Listener lis)
                 Bukkit.getPluginManager().registerEvents(lis, plugin);
+
+        for (Listener obj : listeners)
+            Bukkit.getPluginManager().registerEvents(obj, plugin);
     }
 
     public static void unloadPlayerData(Player player) { // Типо удаляет мусор из ОЗУ

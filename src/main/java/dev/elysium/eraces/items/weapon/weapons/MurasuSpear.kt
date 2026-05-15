@@ -15,10 +15,10 @@ import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 import org.bukkit.scheduler.BukkitRunnable
 
-class MurasuSpear(override val plugin: ERaces) : MeleeWeapon(
+class MurasuSpear : MeleeWeapon(
     id = "murasu_spear",
-    material = Material.TRIDENT,
-    name = "<pink>Копьё Мурасу",
+    material = Material.IRON_SWORD,
+    name = "<#FF3399>Копьё Мурасу",
     damage = 11.0,
     attackSpeed = 1.0,
     maxDurability = 1349,
@@ -47,7 +47,7 @@ class MurasuSpear(override val plugin: ERaces) : MeleeWeapon(
     private val cooldownMillis = 7000L
     private val hitDamage = 5.0
     private val hits = 3
-    private val hitInterval = 6L
+    private val hitInterval = 10L
 
     override fun onInteract(player: Player, hand: EquipmentSlot, click: ClickType) {
         if (click != ClickType.RIGHT || hand != EquipmentSlot.HAND) return
@@ -55,7 +55,15 @@ class MurasuSpear(override val plugin: ERaces) : MeleeWeapon(
         val stack = player.inventory.itemInMainHand
 
         tryAbility(player, stack, cooldownMillis) {
-            val target = findLivingTarget(player, totalRange)
+            val result = player.world.rayTraceEntities(
+                player.eyeLocation,
+                player.eyeLocation.direction,
+                totalRange,
+                0.1
+            ) { entity ->
+                entity is LivingEntity && entity != player
+            }
+            val target = result?.hitEntity as? LivingEntity
             if (target == null) {
                 player.actionMsg("<gray>Нет цели в досягаемости…</gray>")
             } else {
@@ -92,6 +100,6 @@ class MurasuSpear(override val plugin: ERaces) : MeleeWeapon(
 
                 count++
             }
-        }.runTaskTimer(plugin, 0L, hitInterval)
+        }.runTaskTimer(ERaces.getInstance(), 0L, hitInterval)
     }
 }

@@ -1,11 +1,8 @@
 package dev.elysium.eraces.items.weapon.weapons
 
 import dev.elysium.eraces.ERaces
-import dev.elysium.eraces.items.core.state.ItemState
-import dev.elysium.eraces.items.core.state.StateKeys
 import dev.elysium.eraces.items.weapon.MeleeWeapon
 import dev.elysium.eraces.utils.actionMsg
-import dev.elysium.eraces.utils.msg
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.Particle
@@ -17,7 +14,7 @@ import org.bukkit.inventory.EquipmentSlot
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 
-class Halberd(override val plugin: ERaces) : MeleeWeapon(
+class Halberd : MeleeWeapon(
     id = "halberd",
     material = Material.IRON_SWORD,
     name = "<blue>Бердыш",
@@ -51,7 +48,7 @@ class Halberd(override val plugin: ERaces) : MeleeWeapon(
             val world = player.world
             val loc = player.location
 
-            Bukkit.getScheduler().runTaskLater(plugin, Runnable  {
+            Bukkit.getScheduler().runTaskLater(ERaces.getInstance(), Runnable {
                 val remainingTicks = chargeTicks - (i * step)
                 val seconds = remainingTicks / 20.0
 
@@ -67,7 +64,7 @@ class Halberd(override val plugin: ERaces) : MeleeWeapon(
             }, i * step)
         }
 
-        Bukkit.getScheduler().runTaskLater(plugin, Runnable {
+        Bukkit.getScheduler().runTaskLater(ERaces.getInstance(), Runnable {
             val world = player.world
             val loc = player.location
 

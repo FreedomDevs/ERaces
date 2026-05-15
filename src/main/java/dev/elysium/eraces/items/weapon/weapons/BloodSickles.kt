@@ -7,7 +7,6 @@ import dev.elysium.eraces.utils.TimeParser
 import dev.elysium.eraces.utils.actionMsg
 import dev.elysium.eraces.utils.eParticle.EParticle
 import org.bukkit.Material
-import org.bukkit.Particle
 import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.ClickType
@@ -16,7 +15,7 @@ import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 import org.bukkit.scheduler.BukkitRunnable
 
-class BloodSickles(override val plugin: ERaces) : MeleeWeapon(
+class BloodSickles : MeleeWeapon(
     id = "blood_sickles",
     material = Material.IRON_SWORD,
     name = "<blue>Серпы Крови",
@@ -104,6 +103,6 @@ class BloodSickles(override val plugin: ERaces) : MeleeWeapon(
 
                 count++
             }
-        }.runTaskTimer(plugin, 0L, 10L)
+        }.runTaskTimer(ERaces.getInstance(), 0L, 10L)
     }
 }

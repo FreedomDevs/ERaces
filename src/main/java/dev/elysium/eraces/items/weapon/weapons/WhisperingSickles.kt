@@ -2,8 +2,6 @@ package dev.elysium.eraces.items.weapon.weapons
 
 import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.items.core.ItemResolver
-import dev.elysium.eraces.items.core.state.ItemState
-import dev.elysium.eraces.items.core.state.StateKeys
 import dev.elysium.eraces.items.weapon.MeleeWeapon
 import dev.elysium.eraces.utils.TimeParser
 import dev.elysium.eraces.utils.actionMsg
@@ -17,7 +15,7 @@ import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 import org.bukkit.scheduler.BukkitRunnable
 
-class WhisperingSickles(override val plugin: ERaces) : MeleeWeapon(
+class WhisperingSickles : MeleeWeapon(
     id = "whispering_sickles",
     material = Material.IRON_SWORD,
     name = "<blue>Серпы Шепота",
@@ -115,6 +113,6 @@ class WhisperingSickles(override val plugin: ERaces) : MeleeWeapon(
 
                 count++
             }
-        }.runTaskTimer(plugin, 0L, 10L)
+        }.runTaskTimer(ERaces.getInstance(), 0L, 10L)
     }
 }

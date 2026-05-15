@@ -1,10 +1,9 @@
 package dev.elysium.eraces.items.weapon.weapons
 
-import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.items.weapon.MeleeWeapon
 import org.bukkit.Material
 
-class IronSword(override val plugin: ERaces) : MeleeWeapon(
+class IronSword : MeleeWeapon(
     id = "iron_sword",
     material = Material.IRON_SWORD,
     name = "<green>Железный Меч",

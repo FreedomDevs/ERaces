@@ -1,6 +1,5 @@
 package dev.elysium.eraces.items.weapon.weapons
 
-import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.items.SlotType
 import dev.elysium.eraces.items.weapon.MeleeWeapon
 import dev.elysium.eraces.utils.EffectUtils
@@ -8,7 +7,7 @@ import dev.elysium.eraces.utils.TimeParser
 import org.bukkit.Material
 import org.bukkit.entity.Player
 
-class OneHandedSword(override val plugin: ERaces) : MeleeWeapon(
+class OneHandedSword : MeleeWeapon(
     id = "one_handed_sword",
     material = Material.IRON_SWORD,
     name = "<blue>Одноручный меч",

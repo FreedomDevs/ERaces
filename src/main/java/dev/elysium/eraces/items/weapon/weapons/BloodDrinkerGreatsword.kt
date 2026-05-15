@@ -1,21 +1,20 @@
 package dev.elysium.eraces.items.weapon.weapons
 
-import org.bukkit.attribute.Attribute
-import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.items.weapon.MeleeWeapon
 import dev.elysium.eraces.utils.actionMsg
 import dev.elysium.eraces.utils.eParticle.EParticle
 import dev.elysium.eraces.utils.targetUtils.safeHeal
 import org.bukkit.Material
+import org.bukkit.attribute.Attribute
 import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import kotlin.random.Random
 
-class BloodDrinkerGreatsword(override val plugin: ERaces) : MeleeWeapon(
+class BloodDrinkerGreatsword : MeleeWeapon(
     id = "blooddrinker_greatsword",
     material = Material.IRON_SWORD,
-    name = "<pink>Двуручный Меч Кровопийца",
+    name = "<#FF3399>Двуручный Меч Кровопийца",
     damage = 10.0,
     attackSpeed = 1.7,
     maxDurability = 1120,
@@ -52,7 +51,7 @@ class BloodDrinkerGreatsword(override val plugin: ERaces) : MeleeWeapon(
         EParticle.damageIndicator(attacker.world, attacker.location)
 
         attacker.actionMsg(
-            "<pink>Меч Кровопийца</pink> <gray>восстановил <red>${"%.1f".format(healAmount)}</red> ❤</gray>"
+            "<#FF3399>Меч Кровопийца</pink> <gray>восстановил <red>${"%.1f".format(healAmount)}</red> ❤</gray>"
         )
     }
 }

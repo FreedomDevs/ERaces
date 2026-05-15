@@ -1,6 +1,7 @@
 package dev.elysium.eraces.items.core
 
 import dev.elysium.eraces.items.weapon.MeleeWeapon
+import dev.elysium.eraces.items.колчаны.Колчаны
 import org.bukkit.Material
 import org.bukkit.inventory.ItemStack
 import org.bukkit.persistence.PersistentDataType
@@ -10,6 +11,7 @@ object ItemFactory {
         val stack = existingStack ?: ItemStack(
             when(item) {
                 is MeleeWeapon -> item.material
+                is Колчаны -> Material.STICK
                 else -> Material.STONE
             }
         )

@@ -1,6 +1,5 @@
 package dev.elysium.eraces.items.weapon.weapons
 
-import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.items.core.state.ItemState
 import dev.elysium.eraces.items.core.state.StateKeys
 import dev.elysium.eraces.items.weapon.MeleeWeapon
@@ -12,9 +11,7 @@ import org.bukkit.Sound
 import org.bukkit.entity.Player
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 
-class DamagedHalberd(
-    override val plugin: ERaces
-) : MeleeWeapon(
+class DamagedHalberd : MeleeWeapon(
     id = "damaged_halberd",
     material = Material.IRON_AXE,
     name = "<blue>Поврежденный Бердыш",

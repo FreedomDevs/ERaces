@@ -59,8 +59,6 @@ class PluginMessageListener : PluginMessageListener {
             val payload = abilitiesArray.toString()
             out.writeUTF(payload)
 
-            ERaces.logger().info(payload)
-
             player.sendPluginMessage(ERaces.getInstance(), "elysium:eraces_cast", out.toByteArray())
         }
     }

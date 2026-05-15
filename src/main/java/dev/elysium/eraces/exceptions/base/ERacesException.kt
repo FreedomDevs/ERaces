@@ -1,6 +1,6 @@
 package dev.elysium.eraces.exceptions.base
 
-import dev.elysium.eraces.ERacesLogger
+import dev.elysium.eraces.ERaces.Companion.logger
 import dev.elysium.eraces.exceptions.ErrorCodes
 
 /**
@@ -24,6 +24,6 @@ abstract class ERacesException(
      * Дочерние классы могут переопределять метод для кастомной обработки.
      */
     open fun handle() {
-        ERacesLogger.warning("[$code] $message")
+        logger().warning("[$code] $message")
     }
 }

@@ -1,6 +1,6 @@
 package dev.elysium.eraces.exceptions.base
 
-import dev.elysium.eraces.ERacesLogger
+import dev.elysium.eraces.ERaces.Companion.logger
 import dev.elysium.eraces.exceptions.ErrorCodes
 import dev.elysium.eraces.utils.ChatUtil
 import org.bukkit.entity.Player
@@ -28,7 +28,7 @@ abstract class PlayerException(
      * Также вызывает [sendToPlayer] для уведомления игрока.
      */
     override fun handle() {
-        ERacesLogger.warning("[Player][$code][${player.name}] $message")
+        logger().warning("[Player][$code][${player.name}] $message")
         sendToPlayer()
     }
 

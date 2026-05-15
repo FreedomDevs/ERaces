@@ -1,7 +1,7 @@
 package dev.elysium.eraces.exceptions.base
 
 import dev.elysium.eraces.ERaces
-import dev.elysium.eraces.ERacesLogger
+import dev.elysium.eraces.ERaces.Companion.logger
 import dev.elysium.eraces.exceptions.ErrorCodes
 import dev.elysium.eraces.utils.ChatUtil
 
@@ -39,7 +39,7 @@ abstract class InternalException(
         val ctx = context?.let { " Context: $it" } ?: ""
         val causeInfo =
             cause?.let { "\nCause: ${it::class.java.name}: ${it.message}\n${it.stackTraceToString()}" } ?: ""
-        ERacesLogger.warning("[Internal][$code] $message$ctx$causeInfo")
+        logger().warning("[Internal][$code] $message$ctx$causeInfo")
 
         try {
             val eraces = ERaces.getInstance()

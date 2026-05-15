@@ -1,7 +1,7 @@
 package dev.elysium.eraces.exceptions
 
 import dev.elysium.eraces.ERaces
-import dev.elysium.eraces.ERacesLogger
+import dev.elysium.eraces.ERaces.Companion.logger
 import dev.elysium.eraces.utils.ChatUtil
 import org.bukkit.entity.Player
 
@@ -37,7 +37,7 @@ object ExceptionProcessor {
                 }
                 val msg = "[Unhandled] ${e::class.java.name}: ${e.message} ${if (ctxStr.isNotBlank()) "($ctxStr)" else ""}"
                 val stack = e.stackTraceToString()
-                ERacesLogger.warning("$msg\n$stack")
+                logger().warning("$msg\n$stack")
 
                 try {
                     val eraces = ERaces.getInstance()

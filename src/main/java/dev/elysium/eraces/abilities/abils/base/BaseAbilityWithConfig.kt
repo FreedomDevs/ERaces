@@ -1,7 +1,7 @@
 package dev.elysium.eraces.abilities.abils.base
 
 import dev.elysium.eraces.ERaces
-import dev.elysium.eraces.ERacesLogger
+import dev.elysium.eraces.ERaces.Companion.logger
 import dev.elysium.eraces.abilities.interfaces.IAbility
 import dev.elysium.eraces.abilities.interfaces.IComboActivatable
 import dev.elysium.eraces.abilities.interfaces.IManaCostAbility
@@ -75,7 +75,7 @@ abstract class BaseAbilityWithConfig(override val id: String, override val name:
 
         try {
             if (!file.exists()) {
-                ERacesLogger.warning("Файл конфигурации способности $id не найден, создаю дефолтный")
+                logger().warning("Файл конфигурации способности $id не найден, создаю дефолтный")
                 saveDefaultConfig(plugin)
             }
 

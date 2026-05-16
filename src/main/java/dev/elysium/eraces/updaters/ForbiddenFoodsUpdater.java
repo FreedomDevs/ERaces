@@ -12,7 +12,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 
 import java.util.List;
-import java.util.Map;
 
 public class ForbiddenFoodsUpdater extends RaceAttributeMapStorage<List<String>> implements Listener {
     @EventHandler
@@ -22,10 +21,7 @@ public class ForbiddenFoodsUpdater extends RaceAttributeMapStorage<List<String>>
         if (param == null || !param.contains(event.getItem().getType().toString())) return;
 
         player.sendActionBar(
-                ChatUtil.INSTANCE.legacyFormat(
-                        ERaces.getInstance().getContext().getMessageManager().getData().getForbiddenFoods(),
-                        Map.of()
-                )
+                ChatUtil.INSTANCE.parse(ERaces.getInstance().getContext().getMessageManager().getData().getForbiddenFoods())
         );
 
         player.playSound(

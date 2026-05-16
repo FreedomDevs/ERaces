@@ -14,7 +14,6 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 public class ShieldUsageUpdater implements Listener, IUpdater, IUnloadable {
@@ -29,7 +28,7 @@ public class ShieldUsageUpdater implements Listener, IUpdater, IUnloadable {
                     && event.getItem().getType() == Material.SHIELD) {
 
                 event.getPlayer()
-                        .sendActionBar(ChatUtil.INSTANCE.legacyFormat(ERaces.getInstance().getContext().messageManager.getData().getShieldBlock(), Map.of()));
+                        .sendActionBar(ChatUtil.INSTANCE.parse(ERaces.getInstance().getContext().messageManager.getData().getShieldBlock()));
 
                 event.getPlayer().playSound(
                         event.getPlayer().getLocation(),

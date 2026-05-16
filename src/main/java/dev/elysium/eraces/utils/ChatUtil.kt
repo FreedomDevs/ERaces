@@ -1,5 +1,8 @@
 package dev.elysium.eraces.utils
 
+import dev.elysium.eraces.utils.ChatUtil.message
+import dev.elysium.eraces.utils.ChatUtil.parse
+import dev.elysium.eraces.utils.ChatUtil.title
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.TextColor
 import net.kyori.adventure.text.format.TextDecoration
@@ -46,6 +49,7 @@ object ChatUtil {
     /**
      * Перегрузка [parse], принимающая пары аргументов.
      */
+    @SafeVarargs
     fun parse(text: String, vararg args: Pair<String, String>): Component =
         parse(text, args.toMap())
 
@@ -147,74 +151,6 @@ object ChatUtil {
             )
         )
     )
-
-    /** @deprecated Используй [parse] */
-    @Deprecated("Use ChatUtil.parse(text, args)")
-    fun formatOld(text: String, args: Map<String, String>): Component =
-        mini.deserialize(applyArgs(text, args))
-
-    /** @deprecated Используй [parse] */
-    @Deprecated("Use ChatUtil.parse(text)")
-    @Suppress("Deprecation")
-    fun formatOld(text: String): Component =
-        formatOld(text, emptyMap())
-
-    /** @deprecated Используй [parse] */
-    @Deprecated("Use ChatUtil.parse(text, args)")
-    fun legacyFormat(text: String, args: Map<String, String>): Component {
-        val colored = hexToLegacy(applyArgs(text, args)).replace('&', '§')
-        return clearItalic(legacy.deserialize(colored))
-    }
-
-    /** @deprecated Используй [parse] */
-    @Deprecated("Use ChatUtil.parse(text)")
-    @Suppress("Deprecation")
-    fun legacyFormat(text: String): Component = legacyFormat(text, emptyMap())
-
-    /** @deprecated Используй [message] */
-    @Deprecated("Use ChatUtil.message(sender, text, args)")
-    fun messageOld(sender: CommandSender, msg: String, args: Map<String, String>) =
-        sender.sendMessage(parse(msg, args))
-
-    /** @deprecated Используй [message] */
-    @Deprecated("Use ChatUtil.message(sender, text)")
-    @Suppress("Deprecation")
-    fun messageOld(sender: CommandSender, msg: String) =
-        messageOld(sender, msg, emptyMap())
-
-    /** @deprecated Используй [message] */
-    @Deprecated("Use ChatUtil.message(sender, text, args)")
-    @Suppress("Deprecation")
-    fun legacyMessageOld(sender: CommandSender, msg: String, args: Map<String, String>) =
-        sender.sendMessage(legacyFormat(msg, args))
-
-    /** @deprecated Используй [message] */
-    @Deprecated("Use ChatUtil.message(sender, text)")
-    @Suppress("Deprecation")
-    fun legacyMessageOld(sender: CommandSender, msg: String) =
-        legacyMessageOld(sender, msg, emptyMap())
-
-    /** @deprecated Используй [title] */
-    @Deprecated("Use ChatUtil.title(player, title, subtitle)")
-    fun sendTitleOld(player: Player, title: String, subtitle: String, fadeIn: Int, stay: Int, fadeOut: Int) =
-        title(player, title, subtitle, fadeIn.toLong(), stay.toLong(), fadeOut.toLong())
-
-    /** @deprecated Используй [title] */
-    @Deprecated("Use ChatUtil.title(player, title, subtitle)")
-    fun sendTitleOld(player: Player, title: String, subtitle: String) =
-        title(player, title, subtitle)
-
-    /** @deprecated Используй [action] */
-    @Deprecated("Use ChatUtil.action(player, text)")
-    @Suppress("Deprecation")
-    fun sendActionOld(player: Player, msg: String, args: Map<String, String>) =
-        player.sendActionBar(parse(msg, args))
-
-    /** @deprecated Используй [action] */
-    @Deprecated("Use ChatUtil.action(player, text)")
-    @Suppress("Deprecation")
-    fun sendActionOld(player: Player, msg: String) =
-        sendActionOld(player, msg, emptyMap())
 
     private fun applyArgs(text: String, args: Map<String, String>): String {
         var result = text

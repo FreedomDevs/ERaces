@@ -3,7 +3,6 @@ package dev.elysium.eraces.bootstrap
 import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.exceptions.internal.InitFailedException
 import dev.elysium.eraces.listeners.GuiListener
-import dev.elysium.eraces.listeners.GuiListener.init
 import dev.elysium.eraces.listeners.PluginMessageListener
 import dev.elysium.eraces.listeners.RaceSelectListener
 import org.bukkit.Bukkit
@@ -16,7 +15,7 @@ class ListenerInitializer : IInitializer {
                 .registerIncomingPluginChannel(plugin, "elysium:eraces_cast", PluginMessageListener())
             plugin.server.messenger.registerOutgoingPluginChannel(plugin, "elysium:eraces_cast")
 
-            init(plugin)
+            GuiListener.init(plugin)
             Bukkit.getPluginManager().registerEvents(GuiListener, plugin)
         } catch (e: Exception) {
             throw InitFailedException("Ошибка при регистрации слушателей", e)

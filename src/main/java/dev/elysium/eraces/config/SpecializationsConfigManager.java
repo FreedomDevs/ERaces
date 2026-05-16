@@ -8,10 +8,17 @@ import dev.elysium.eraces.datatypes.configs.SpecializationsConfigData;
 import lombok.Getter;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.luaj.vm2.*;
+import org.luaj.vm2.Globals;
+import org.luaj.vm2.LoadState;
+import org.luaj.vm2.LuaError;
+import org.luaj.vm2.LuaValue;
 import org.luaj.vm2.compiler.LuaC;
-import org.luaj.vm2.lib.*;
-import org.luaj.vm2.lib.jse.*;
+import org.luaj.vm2.lib.Bit32Lib;
+import org.luaj.vm2.lib.PackageLib;
+import org.luaj.vm2.lib.StringLib;
+import org.luaj.vm2.lib.TableLib;
+import org.luaj.vm2.lib.jse.JseBaseLib;
+import org.luaj.vm2.lib.jse.JseMathLib;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +26,7 @@ import java.util.logging.Level;
 
 public class SpecializationsConfigManager {
     private static final String FILE_NAME = "specializations.yml";
-    private final Globals luaGlobals;
+    private Globals luaGlobals;
 
     @Getter
     private LuaValue xpNextFormula;
@@ -34,27 +41,21 @@ public class SpecializationsConfigManager {
     public SpecializationsConfigManager(JavaPlugin plugin) {
         this.plugin = plugin;
         this.cfgManager = new YamlManager(this.plugin, FILE_NAME, true);
-        //this.luaGlobals = JsePlatform.standardGlobals();
 
+        reloadConfig();
+    }
+
+    public void reloadConfig() {
         this.luaGlobals = new Globals();
         luaGlobals.load(new JseBaseLib());
         luaGlobals.load(new PackageLib());
         luaGlobals.load(new Bit32Lib());
         luaGlobals.load(new TableLib());
         luaGlobals.load(new StringLib());
-        //luaGlobals.load(new CoroutineLib());
         luaGlobals.load(new JseMathLib());
-        //luaGlobals.load(new JseIoLib());
-        //luaGlobals.load(new JseOsLib());
-        //luaGlobals.load(new LuajavaLib());
         LoadState.install(luaGlobals);
         LuaC.install(luaGlobals);
 
-        reloadConfig();
-    }
-
-
-    public void reloadConfig() {
         ConfigurationSection section = cfgManager.getConfig();
 
         SpecializationsConfigData specializationsConfigData = new SpecializationsConfigData();
@@ -71,10 +72,10 @@ public class SpecializationsConfigManager {
         this.specializations = new HashMap<>();
         for (SpecializationConfigData i : specializationsConfigData.getSpecializations()) {
             SpecializationData data = new SpecializationData();
-            data.setStrength(data.getStrength());
-            data.setIntelligent(data.getIntelligent());
-            data.setAgility(data.getAgility());
-            data.setVitality(data.getVitality());
+            data.setStrength(i.getStrength());
+            data.setIntelligent(i.getIntelligent());
+            data.setAgility(i.getAgility());
+            data.setVitality(i.getVitality());
             this.specializations.put(i.getName(), data);
         }
 

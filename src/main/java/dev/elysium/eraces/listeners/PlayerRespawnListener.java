@@ -14,7 +14,7 @@ public class PlayerRespawnListener implements Listener {
     public void onPlayerRespawn(PlayerRespawnEvent event) {
         Bukkit.getScheduler().runTaskLater(ERaces.getInstance(), () -> {
             Player player = event.getPlayer();
-            RacesReloader.reloadRaceForPlayer(player);
+            RacesReloader.INSTANCE.reloadRaceForPlayer(player);
             VisualsManager.updateVisualsForPlayer(player);
         }, 5L);
     }

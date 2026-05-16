@@ -8,6 +8,6 @@ import org.bukkit.event.player.PlayerQuitEvent;
 public class PlayerQuitListener implements Listener {
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
-        RacesReloader.unloadPlayerData(event.getPlayer());
+        RacesReloader.INSTANCE.unloadPlayerData(event.getPlayer());
     }
 }

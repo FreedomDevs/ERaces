@@ -1,102 +1,97 @@
-package dev.elysium.eraces;
+package dev.elysium.eraces
 
-import dev.elysium.eraces.datatypes.Race;
-import dev.elysium.eraces.items.RaceChangePotion;
-import dev.elysium.eraces.listeners.*;
-import dev.elysium.eraces.updaters.*;
-import dev.elysium.eraces.updaters.base.IUnloadable;
-import dev.elysium.eraces.updaters.base.IUpdater;
-import dev.elysium.eraces.updaters.damage.*;
-import dev.elysium.eraces.updaters.speed.SlownessWithIronAndMoreArmorListener;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
-import org.bukkit.plugin.java.JavaPlugin;
+import dev.elysium.eraces.ERaces.Companion.getInstance
+import dev.elysium.eraces.items.RaceChangePotion
+import dev.elysium.eraces.listeners.*
+import dev.elysium.eraces.listeners.PluginMessageListener.Companion.sendAbilities
+import dev.elysium.eraces.updaters.*
+import dev.elysium.eraces.updaters.base.IUnloadable
+import dev.elysium.eraces.updaters.base.IUpdater
+import dev.elysium.eraces.updaters.damage.*
+import dev.elysium.eraces.updaters.speed.SlownessWithIronAndMoreArmorListener
+import org.bukkit.Bukkit
+import org.bukkit.entity.Player
+import org.bukkit.event.Listener
+import org.bukkit.plugin.java.JavaPlugin
 
-import java.util.List;
+object RacesReloader : Listener {
+    private val updaters: List<Any> = listOf(
+        HealthUpdater(),
+        AdditionalArmorUpdater(),
+        HealthRegenUpdater(),
+        ShieldUsageUpdater(),
+        ForbiddenFoodsUpdater(),
+        HandDamageUpdater(),
+        AntiKnockbackLevelUpdater(),
+        AxeDamageUpdater(),
+        SwordDamageUpdater(),
+        BowDamageUpdater(),
+        PeacefulMobsAfraidUpdater(),
+        BowSpeedUpdater(),
+        MaceDamageUpdater(),
+        DualWeaponDamageUpdater(),
+        DamageUpdater(),
+        AntiKnockbackLevelWithIronArmorAndMoreUpdater(),
+        DamageAdditionalWithLowerThanIronArmorUpdater(),
+        BlockReachUpdater(),
+        DamageWithWolfsNearUpdater(),
+        SaturationUpdater(),
+        SlownessWithIronAndMoreArmorListener(),
+        EffectsUpdater(),
+        NeutralMobsUpdater(),
+        ClumsinessUpdater(),
+        AdditionalFireDamage(),
+        FallDamageUpdater(),
+        EffectsTargetingUpdater(),
+        SecondLifeUpdater(),
+        OxygenBonusUpdater(),
+        AttackSpeedUpdater(),
+        MoveSpeedUpdater(),
+        BaseDamageUpdater(),
+        AdditionalScaleUpdater(),
+    )
 
-public class RacesReloader implements Listener {
+    private val listeners: List<Listener> = listOf(
+        PlayerJoinListener(),
+        PlayerQuitListener(),
+        PlayerRespawnListener(),
+        RaceChangeGuiListener(),
+        RaceChangePotion(),
+        PlayerShootBowEventListener(),
+        ManaRegenerationListener(),
+        ChanceResurrectionListener(),
+        MissingChanceListener(),
+    )
 
-    private static final List<Object> updaters = List.of(
-            new HealthUpdater(),
-            new AdditionalArmorUpdater(),
-            new HealthRegenUpdater(),
-            new ShieldUsageUpdater(),
-            new ForbiddenFoodsUpdater(),
-            new HandDamageUpdater(),
-            new AntiKnockbackLevelUpdater(),
-            new AxeDamageUpdater(),
-            new SwordDamageUpdater(),
-            new BowDamageUpdater(),
-            new PeacefulMobsAfraidUpdater(),
-            new BowSpeedUpdater(),
-            new MaceDamageUpdater(),
-            new DualWeaponDamageUpdater(),
-            new DamageUpdater(),
-            new AntiKnockbackLevelWithIronArmorAndMoreUpdater(),
-            new DamageAdditionalWithLowerThanIronArmorUpdater(),
-            new BlockReachUpdater(),
-            new DamageWithWolfsNearUpdater(),
-            new SaturationUpdater(),
-            new SlownessWithIronAndMoreArmorListener(),
-            new EffectsUpdater(),
-            new NeutralMobsUpdater(),
-            new ClumsinessUpdater(),
-            new AdditionalFireDamage(),
-            new FallDamageUpdater(),
-            new EffectsTargetingUpdater(),
-            new SecondLifeUpdater(),
-            new OxygenBonusUpdater(),
-            new AttackSpeedUpdater(),
-            new MoveSpeedUpdater(),
-            new BaseDamageUpdater(),
-            new AdditionalScaleUpdater()
-    );
+    fun reloadRaceForPlayer(player: Player) {
+        val race = getInstance().context.playerDataManager.getPlayerRace(player) ?: return
 
-    private static final List<? extends Listener> listeners = List.of(
-            new PlayerJoinListener(),
-            new PlayerQuitListener(),
-            new PlayerRespawnListener(),
-            new RaceChangeGuiListener(),
-            new RaceChangePotion(),
-            new PlayerShootBowEventListener(),
-            new ManaRegenerationListener(),
-            new ChanceResurrectionListener(),
-            new MissingChanceListener()
-    );
+        for (obj in updaters)
+            if (obj is IUpdater)
+                obj.update(race, player)
 
-    public static void reloadRaceForPlayer(Player player) {
-        Race race = ERaces.getInstance().getContext().playerDataManager.getPlayerRace(player);
-        if (race == null) {
-            return;
-        }
-
-        for (Object obj : updaters) {
-            if (obj instanceof IUpdater upd)
-                upd.update(race, player);
-        }
-
-        PluginMessageListener.Companion.sendAbilities(player);
+        sendAbilities(player)
     }
 
-    public static void reloadRaceForAllPlayers() {
-        for (Player i : Bukkit.getOnlinePlayers()) {
-            reloadRaceForPlayer(i);
-        }
+    fun reloadRaceForAllPlayers() {
+        for (i in Bukkit.getOnlinePlayers())
+            reloadRaceForPlayer(i)
     }
 
-    public static void startListeners(JavaPlugin plugin) { // Ищет все листенеры в updaters и включает их
-        for (Object obj : updaters)
-            if (obj instanceof Listener lis)
-                Bukkit.getPluginManager().registerEvents(lis, plugin);
+    // Включает все листенеры
+    fun startListeners(plugin: JavaPlugin) {
+        for (obj in updaters)
+            if (obj is Listener)
+                Bukkit.getPluginManager().registerEvents(obj, plugin)
 
-        for (Listener obj : listeners)
-            Bukkit.getPluginManager().registerEvents(obj, plugin);
+        for (obj in listeners)
+            Bukkit.getPluginManager().registerEvents(obj, plugin)
     }
 
-    public static void unloadPlayerData(Player player) { // Типо удаляет мусор из ОЗУ
-        for (Object obj : updaters)
-            if (obj instanceof IUnloadable unl)
-                unl.unload(player);
+    // Чистит какой-то мусор, TODO надо потом разобратся с ним
+    fun unloadPlayerData(player: Player) {
+        for (obj in updaters)
+            if (obj is IUnloadable)
+                obj.unload(player)
     }
 }

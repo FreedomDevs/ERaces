@@ -32,7 +32,7 @@ public class RaceChangeGuiListener implements Listener {
         var context = ERaces.getInstance().getContext();
         context.getPlayerDataManager().setPlayerRace(player, raceKey);
 
-        RacesReloader.reloadRaceForPlayer(player);
+        RacesReloader.INSTANCE.reloadRaceForPlayer(player);
         VisualsManager.updateVisualsForPlayer(player);
 
         player.sendMessage("§aВы выбрали расу: §f" + raceKey);

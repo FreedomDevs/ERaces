@@ -1,6 +1,7 @@
 package dev.elysium.eraces.listeners;
 
-import dev.elysium.eraces.*;
+import dev.elysium.eraces.ERaces;
+import dev.elysium.eraces.RacesReloader;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,7 +14,9 @@ public class PlayerJoinListener implements Listener {
         Player player = event.getPlayer();
         ERaces.logger().info("Log");
 
-        Bukkit.getScheduler().runTaskLater(ERaces.getInstance(), () -> {RacesReloader.reloadRaceForPlayer(player);}, 5);
+        Bukkit.getScheduler().runTaskLater(ERaces.getInstance(), () -> {
+            RacesReloader.INSTANCE.reloadRaceForPlayer(player);
+        }, 5);
 
         ERaces.getInstance().getContext().getSpecializationsManager().ensurePlayerInitialized(event.getPlayer());
         ERaces.getInstance().getContext().getManaManager().getMana(player);

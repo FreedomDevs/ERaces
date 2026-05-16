@@ -46,14 +46,16 @@ class BloodSickles : MeleeWeapon(
         if (hand != EquipmentSlot.HAND) return
 
         val stack = player.inventory.itemInMainHand
-        tryAbility(player, stack, cooldownMillis) {
+        tryAbilityWithResult(player, stack, cooldownMillis) {
             val target = findTarget(player) ?: run {
                 player.actionMsg("<gray>Нет цели поблизости…</gray>")
-                return@tryAbility
+                return@tryAbilityWithResult false
             }
 
             val isTwoHands = ItemResolver.resolve(player.inventory.itemInOffHand) is BloodSickles
             bloodDash(player, target, isTwoHands)
+
+            true
         }
     }
 

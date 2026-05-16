@@ -45,13 +45,14 @@ class DawnDao : MeleeWeapon(
 
         val stack = player.inventory.itemInMainHand
 
-        tryAbility(player, stack, cooldownMillis) {
+        tryAbilityWithResult(player, stack, cooldownMillis) {
             val target = findTarget(player) ?: run {
                 player.actionMsg("<gray>Нет цели в досягаемости…</gray>")
-                return@tryAbility
+                return@tryAbilityWithResult false
             }
 
             pierce(player, target)
+            true
         }
     }
 

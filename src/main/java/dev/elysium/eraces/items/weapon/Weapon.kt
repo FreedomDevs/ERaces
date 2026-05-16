@@ -164,7 +164,7 @@ abstract class Weapon(
      * - Если кулдаун ещё не завершён, сообщает игроку время ожидания.
      * - В противном случае выполняет [onActivate] и обновляет время кулдауна.
      */
-    protected fun tryAbility(player: Player, stack: ItemStack, cooldown: Long, onActivate: () -> Unit) {
+    protected fun tryAbilityWithResult(player: Player, stack: ItemStack, cooldown: Long, onActivate: () -> Boolean) {
         val state = ItemState(stack)
         val now = System.currentTimeMillis()
         val kdEnd = state.getLong(StateKeys.KD)
@@ -175,10 +175,19 @@ abstract class Weapon(
             return
         }
 
-        onActivate()
+        val success = onActivate()
+        if (!success)  return
+
         state.setLong(StateKeys.KD, now + cooldown)
+        return
     }
 
+    protected fun tryAbility(player: Player, stack: ItemStack, cooldown: Long, onActivate: () -> Unit) {
+        tryAbilityWithResult(player, stack, cooldown) {
+            onActivate()
+            true
+        }
+    }
     /**
      * Удаляет предмет из инвентаря игрока, если он сломался.
      *

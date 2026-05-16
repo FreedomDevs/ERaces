@@ -2,6 +2,7 @@ package dev.elysium.eraces.items.weapon.weapons
 
 import dev.elysium.eraces.items.weapon.MeleeWeapon
 import org.bukkit.Material
+import org.bukkit.event.entity.EntityDamageByEntityEvent
 
 class CombatStaff : MeleeWeapon(
     id = "combat_staff",

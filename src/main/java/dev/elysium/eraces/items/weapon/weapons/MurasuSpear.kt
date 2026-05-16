@@ -54,7 +54,7 @@ class MurasuSpear : MeleeWeapon(
 
         val stack = player.inventory.itemInMainHand
 
-        tryAbility(player, stack, cooldownMillis) {
+        tryAbilityWithResult(player, stack, cooldownMillis) {
             val result = player.world.rayTraceEntities(
                 player.eyeLocation,
                 player.eyeLocation.direction,
@@ -66,8 +66,10 @@ class MurasuSpear : MeleeWeapon(
             val target = result?.hitEntity as? LivingEntity
             if (target == null) {
                 player.actionMsg("<gray>Нет цели в досягаемости…</gray>")
+                return@tryAbilityWithResult false
             } else {
                 triplePierce(player, target)
+                true
             }
         }
     }

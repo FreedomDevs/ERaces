@@ -4,6 +4,7 @@ import dev.elysium.eraces.items.weapon.MeleeWeapon
 import dev.elysium.eraces.utils.eParticle.EParticle
 import org.bukkit.Material
 import org.bukkit.Particle
+import org.bukkit.Sound
 import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.ClickType
@@ -52,6 +53,8 @@ class Blade : MeleeWeapon(
 
         val step = 0.2
 
+        world.playSound(start, Sound.ENTITY_PLAYER_ATTACK_SWEEP, 1f, 0f)
+
         EParticle.lineEffect(world, start, direction, maxDistance, step = step, particle = Particle.SWEEP_ATTACK)
         EParticle.lineEffect(world, start, direction, maxDistance, step = step, particle = Particle.CLOUD)
 
@@ -69,8 +72,8 @@ class Blade : MeleeWeapon(
         val hit = result?.hitEntity as? LivingEntity ?: return
 
         hit.damage(damage, player)
+        world.playSound(hit.location, Sound.ENTITY_PLAYER_ATTACK_STRONG, 1f, 0f)
 
         EParticle.crit(world, hit, 15)
     }
 }
-

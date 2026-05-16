@@ -5,6 +5,7 @@ import dev.elysium.eraces.utils.actionMsg
 import dev.elysium.eraces.utils.eParticle.EParticle
 import dev.elysium.eraces.utils.targetUtils.safeHeal
 import org.bukkit.Material
+import org.bukkit.Sound
 import org.bukkit.attribute.Attribute
 import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
@@ -50,8 +51,9 @@ class BloodDrinkerGreatsword : MeleeWeapon(
 
         EParticle.damageIndicator(attacker.world, attacker.location)
 
+        target.world.playSound(target.location, Sound.ENTITY_PLAYER_LEVELUP, 0.5f, -0.8f)
         attacker.actionMsg(
-            "<#FF3399>Меч Кровопийца</pink> <gray>восстановил <red>${"%.1f".format(healAmount)}</red> ❤</gray>"
+            "<#FF3399>Меч Кровопийца <gray>восстановил <red>${"%.1f".format(healAmount)}</red> ❤</gray>"
         )
     }
 }

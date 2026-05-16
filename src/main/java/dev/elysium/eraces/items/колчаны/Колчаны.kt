@@ -13,11 +13,18 @@ import io.papermc.paper.datacomponent.item.ItemLore
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.entity.Player
+import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
 
 @Suppress("UnstableApiUsage")
-class Колчаны(override val id: String, val name: String, val lore: ItemLore, val arrowSlots: Int) : Item {
+open class Колчаны(
+    override val id: String,
+    val name: String,
+    val lore: ItemLore,
+    val arrowSlots: Int,
+    val additionalDamage: Double = 0.0
+) : Item {
     final override val type = ItemType.КОЛЧАНЫ
 
     override fun onInit(item: ItemStack) {
@@ -29,6 +36,10 @@ class Колчаны(override val id: String, val name: String, val lore: ItemLo
             DataComponentTypes.CUSTOM_MODEL_DATA,
             CustomModelData.customModelData().addString(id).build()
         );
+    }
+
+    open fun onHit(event: EntityDamageByEntityEvent) {
+        event.damage += 1
     }
 
     fun openКолчаныGui(player: Player) {

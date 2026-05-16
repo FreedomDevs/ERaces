@@ -2,9 +2,6 @@ package dev.elysium.eraces
 
 import dev.elysium.eraces.bootstrap.*
 import dev.elysium.eraces.exceptions.internal.InitFailedException
-import dev.elysium.eraces.items.core.ItemKeys
-import dev.elysium.eraces.items.core.state.StateKeys
-import dev.elysium.eraces.items.weapon.WeaponManager
 import org.bukkit.plugin.java.JavaPlugin
 import java.util.logging.Logger
 
@@ -28,7 +25,8 @@ class ERaces : JavaPlugin() {
         PlaceholderInitializer(),
         CommandInitializer(),
         ListenerInitializer(),
-        LoggerConfigurator()
+        WeaponInitializer(),
+        LoggerConfigurator(),
     )
 
     private fun runInitializer(init: IInitializer) {
@@ -53,12 +51,6 @@ class ERaces : JavaPlugin() {
     override fun onEnable() {
         initializers.forEach { runInitializer(it) }
         logger.info(context.messageManager.data.pluginEnabled)
-
-//        ВРЕМЕННО!!!!
-//        TODO: Вынести в bootstrap
-        ItemKeys.init(this)
-        StateKeys.init(this)
-        WeaponManager.enable(this)
     }
 
     override fun onDisable() {

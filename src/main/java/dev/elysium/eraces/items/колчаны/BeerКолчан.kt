@@ -1,5 +1,5 @@
 package dev.elysium.eraces.items.колчаны
 
-class BeerКолчан {
+class BeerКолчан: Колчаны() {
 
 }

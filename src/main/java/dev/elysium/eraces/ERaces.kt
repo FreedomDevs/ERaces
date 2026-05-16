@@ -25,7 +25,7 @@ class ERaces : JavaPlugin() {
         PlaceholderInitializer(),
         CommandInitializer(),
         ListenerInitializer(),
-        WeaponInitializer(),
+        ItemsInitializer(),
         LoggerConfigurator(),
     )
 

@@ -8,7 +8,7 @@ import dev.elysium.eraces.items.weapon.weapons.*
 
 object WeaponManager {
     fun enable(plugin: ERaces) {
-        val weapons = listOf(
+        val weapons = listOf<Weapon>(
             CombatStaff(),
             Dagger(),
             IronSword(),

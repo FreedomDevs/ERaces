@@ -17,6 +17,8 @@ object StateKeys {
     lateinit var ABILITY_CHARGE_START: NamespacedKey
     lateinit var ABILITY_CHARGED_UNTIL: NamespacedKey
 
+    lateinit var ARROWS_КОЛЧАН: NamespacedKey
+
     fun init(plugin: ERaces) {
         HITS = NamespacedKey(plugin, "hits")
         DURABILITY = NamespacedKey(plugin, "max_hits")
@@ -33,5 +35,7 @@ object StateKeys {
 
         ABILITY_CHARGED_UNTIL =
             NamespacedKey(plugin, "ability_charged_until")
+
+        ARROWS_КОЛЧАН = NamespacedKey(plugin, "arrows_колчан")
     }
 }

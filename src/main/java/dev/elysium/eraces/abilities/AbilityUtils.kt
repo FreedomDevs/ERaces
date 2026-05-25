@@ -1,7 +1,7 @@
 package dev.elysium.eraces.abilities
 
 import dev.elysium.eraces.ERaces
-import dev.elysium.eraces.utils.TimeUtil
+import dev.elysium.eraces.utils.TimeParser
 import org.bukkit.Bukkit
 import org.bukkit.event.HandlerList
 import org.bukkit.event.Listener
@@ -28,7 +28,7 @@ object AbilityUtils {
      * @return [BukkitTask] задача, которую можно отменить
      */
     fun runLater(plugin: ERaces, delay: String, block: () -> Unit): BukkitTask {
-        val ticks = TimeUtil.parseToTicks(delay)
+        val ticks = TimeParser.parseToTicks(delay)
         return Bukkit.getScheduler().runTaskLater(plugin, Runnable { block() }, ticks)
     }
 
@@ -60,7 +60,7 @@ object AbilityUtils {
         tickInterval: Long = 20L,
         block: (elapsedSeconds: Long) -> Unit
     ): BukkitTask {
-        val totalTicks = TimeUtil.parseToTicks(duration)
+        val totalTicks = TimeParser.parseToTicks(duration)
         var elapsed = 0L
         var task: BukkitTask? = null
 
@@ -84,7 +84,7 @@ object AbilityUtils {
      */
     fun registerTemporaryListener(plugin: ERaces, listener: Listener, duration: String) {
         Bukkit.getPluginManager().registerEvents(listener, plugin)
-        val ticks = TimeUtil.parseToTicks(duration)
+        val ticks = TimeParser.parseToTicks(duration)
         Bukkit.getScheduler().runTaskLater(plugin, Runnable {
             HandlerList.unregisterAll(listener)
         }, ticks)

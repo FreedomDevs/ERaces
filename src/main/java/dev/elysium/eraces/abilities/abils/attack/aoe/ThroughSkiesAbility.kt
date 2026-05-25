@@ -4,7 +4,7 @@ import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.abilities.ConfigHelper
 import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseCooldownAbility
-import dev.elysium.eraces.utils.TimeUtil
+import dev.elysium.eraces.utils.TimeParser
 import org.bukkit.Location
 import org.bukkit.NamespacedKey
 import org.bukkit.Registry
@@ -68,7 +68,7 @@ class ThroughSkiesAbility : BaseCooldownAbility("throughskies", defaultCooldown 
             entity.addPotionEffect(
                 PotionEffect(
                     bukkitEffect,
-                    TimeUtil.parseToTicks(effectDurarion).toInt(),
+                    TimeParser.parseToTicks(effectDurarion).toInt(),
                     effectLevel - 1
                 )
             )

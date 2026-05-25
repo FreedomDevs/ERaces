@@ -3,7 +3,6 @@ package dev.elysium.eraces.abilities.core.utils
 import org.bukkit.entity.Player
 import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
-import java.util.concurrent.TimeUnit
 
 /**
  * Менеджер кулдаунов способностей.
@@ -18,12 +17,12 @@ internal object AbilityCooldownManager {
 
     fun getRemaining(player: Player, abilityId: String): Long {
         val remaining = (cooldowns[player.uniqueId]?.get(abilityId) ?: 0) - System.currentTimeMillis()
-        return maxOf(0, TimeUnit.MILLISECONDS.toSeconds(remaining))
+        return maxOf(0, remaining)
     }
 
-    fun setCooldown(player: Player, abilityId: String, seconds: Long) {
+    fun setCooldown(player: Player, abilityId: String, millis: Long) {
         val playerCooldowns = cooldowns.computeIfAbsent(player.uniqueId) { ConcurrentHashMap() }
-        playerCooldowns[abilityId] = System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(seconds)
+        playerCooldowns[abilityId] = System.currentTimeMillis() + millis
     }
 
     fun resetCooldown(player: Player, abilityId: String) {

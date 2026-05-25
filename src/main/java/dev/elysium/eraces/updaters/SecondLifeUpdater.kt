@@ -2,7 +2,7 @@ package dev.elysium.eraces.updaters
 
 import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.datatypes.Race
-import dev.elysium.eraces.utils.TimeUtil
+import dev.elysium.eraces.utils.TimeParser
 import org.bukkit.Sound
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -23,7 +23,7 @@ class SecondLifeUpdater : Listener {
         val player: Player = event.player
         val uuid: UUID = event.player.uniqueId
         val curTime: Long = System.currentTimeMillis()
-        val cooldown: Long = TimeUtil.parseToMilliseconds(race.secondLifeCooldown)
+        val cooldown: Long = TimeParser.parseToMilliseconds(race.secondLifeCooldown)
 
 
         if (secondLifeCooldowns.getOrDefault(uuid, 0) + cooldown < curTime) {

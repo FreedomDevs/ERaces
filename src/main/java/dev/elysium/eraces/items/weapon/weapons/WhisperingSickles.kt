@@ -3,7 +3,7 @@ package dev.elysium.eraces.items.weapon.weapons
 import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.items.core.ItemResolver
 import dev.elysium.eraces.items.weapon.MeleeWeapon
-import dev.elysium.eraces.utils.TimeUtil
+import dev.elysium.eraces.utils.TimeValue
 import dev.elysium.eraces.utils.actionMsg
 import org.bukkit.Material
 import org.bukkit.Particle
@@ -95,7 +95,7 @@ class WhisperingSickles : MeleeWeapon(
                     player.addPotionEffect(
                         PotionEffect(
                             PotionEffectType.SLOWNESS,
-                            TimeUtil.parseToTicks("3s").toInt(),
+                            TimeValue.fromSeconds(3).toTicksInt(),
                             0
                         )
                     )

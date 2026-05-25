@@ -3,7 +3,7 @@ package dev.elysium.eraces.abilities.abils.attack.aoe
 import dev.elysium.eraces.abilities.ConfigHelper
 import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseCooldownAbility
-import dev.elysium.eraces.utils.TimeUtil
+import dev.elysium.eraces.utils.TimeValue
 import dev.elysium.eraces.utils.targetUtils.Target
 import dev.elysium.eraces.utils.targetUtils.effects.EffectsTarget
 import dev.elysium.eraces.utils.targetUtils.effects.Executor
@@ -22,14 +22,14 @@ class FireBoomAbility : BaseCooldownAbility(
     comboKey = "6621"
 ) {
     private var radius: Double = 3.0
-    private var fireDuration: String = "10s"
+    private var fireDuration: TimeValue = TimeValue("10s")
 
     override fun onActivate(player: Player) {
         Target.from(player)
             .filter(TargetFilter.ENTITIES)
             .inRadius(radius, useRaycast = true)
             .excludeCaster()
-            .execute { it -> it.ignite(TimeUtil.parseToTicks(fireDuration).toInt()) }
+            .execute { it -> it.ignite(fireDuration.toTicksInt()) }
             .executeEffects(
                 EffectsTarget()
                     .from(Executor.PLAYER(player))

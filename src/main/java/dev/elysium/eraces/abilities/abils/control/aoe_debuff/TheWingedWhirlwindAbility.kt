@@ -3,7 +3,7 @@ package dev.elysium.eraces.abilities.abils.control.aoe_debuff
 import dev.elysium.eraces.abilities.ConfigHelper
 import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseCooldownAbility
-import dev.elysium.eraces.utils.TimeUtil
+import dev.elysium.eraces.utils.TimeParser
 import dev.elysium.eraces.utils.targetUtils.Target
 import dev.elysium.eraces.utils.targetUtils.target.TargetFilter
 import org.bukkit.configuration.file.YamlConfiguration
@@ -35,7 +35,7 @@ class TheWingedWhirlwindAbility : BaseCooldownAbility(
                         listOf(
                             PotionEffect(
                                 PotionEffectType.WITHER,
-                                TimeUtil.parseToTicks(witherDuration).toInt(),
+                                TimeParser.parseToTicks(witherDuration).toInt(),
                                 witherLevel - 1,
                                 false,
                                 false
@@ -43,7 +43,7 @@ class TheWingedWhirlwindAbility : BaseCooldownAbility(
                             ),
                             PotionEffect(
                                 PotionEffectType.NAUSEA,
-                                TimeUtil.parseToTicks(nauseDuration).toInt(),
+                                TimeParser.parseToTicks(nauseDuration).toInt(),
                                 nauseLevel - 1,
                                 false,
                                 false
@@ -51,7 +51,7 @@ class TheWingedWhirlwindAbility : BaseCooldownAbility(
                             ),
                             PotionEffect(
                                 PotionEffectType.SLOWNESS,
-                                TimeUtil.parseToTicks(slownessDuration).toInt(),
+                                TimeParser.parseToTicks(slownessDuration).toInt(),
                                 slownessLevel,
                                 false,
                                 false

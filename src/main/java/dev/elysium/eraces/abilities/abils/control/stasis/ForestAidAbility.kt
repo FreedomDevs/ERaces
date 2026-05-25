@@ -6,7 +6,7 @@ import dev.elysium.eraces.abilities.ConfigHelper
 import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseCooldownAbility
 import dev.elysium.eraces.utils.EffectUtils
-import dev.elysium.eraces.utils.TimeUtil
+import dev.elysium.eraces.utils.TimeParser
 import org.bukkit.event.Listener
 import java.util.UUID
 import dev.elysium.eraces.utils.targetUtils.Target
@@ -51,7 +51,7 @@ class ForestAidAbility : BaseCooldownAbility(
                 EffectUtils.applyEffects(
                     target,
                     mapOf("minecraft:poison" to poisonLevel),
-                    TimeUtil.parseToTicks(poisonDuration).toInt()
+                    TimeParser.parseToTicks(poisonDuration).toInt()
                 )
 
                 AbilityUtils.runRepeatingForDuration(plugin, duration, 2L) { _ ->
@@ -115,7 +115,7 @@ class ForestAidAbility : BaseCooldownAbility(
         val uuid = event.player.uniqueId
         val start = activePlayers[uuid] ?: return
         val elapsed = System.currentTimeMillis() - start
-        if (elapsed < TimeUtil.parseToMilliseconds(duration)) {
+        if (elapsed < TimeParser.parseToMilliseconds(duration)) {
             event.isCancelled = true
         } else {
             activePlayers.remove(uuid)
@@ -128,7 +128,7 @@ class ForestAidAbility : BaseCooldownAbility(
         val uuid = event.damager.uniqueId
         val start = activePlayers[uuid] ?: return
         val elapsed = System.currentTimeMillis() - start
-        if (elapsed < TimeUtil.parseToMilliseconds(duration)) {
+        if (elapsed < TimeParser.parseToMilliseconds(duration)) {
             event.isCancelled = true
         } else {
             activePlayers.remove(uuid)

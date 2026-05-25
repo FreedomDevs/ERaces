@@ -3,7 +3,7 @@ package dev.elysium.eraces.abilities.abils.buffs.self_buffs
 import dev.elysium.eraces.abilities.ConfigHelper
 import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseCooldownAbility
-import dev.elysium.eraces.utils.TimeUtil
+import dev.elysium.eraces.utils.TimeParser
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -44,7 +44,7 @@ class OrkregaliaAbility : BaseCooldownAbility(
         val a = activatePlayers[uuid]?: return
         val now = System.currentTimeMillis()
         val g = now - a
-        if (g < TimeUtil.parseToMilliseconds(duration)){
+        if (g < TimeParser.parseToMilliseconds(duration)){
             event.damage = event.damage * 2.0
             return
         }

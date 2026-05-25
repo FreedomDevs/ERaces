@@ -1,6 +1,7 @@
 package dev.elysium.eraces.abilities
 
 
+import dev.elysium.eraces.utils.TimeValue
 import org.bukkit.configuration.file.YamlConfiguration
 import kotlin.reflect.KMutableProperty0
 
@@ -53,6 +54,7 @@ object ConfigHelper {
             is Int -> prop as KMutableProperty0<Int> then { it.set(cfg.getInt(key, current)) }
             is Long -> prop as KMutableProperty0<Long> then { it.set(cfg.getLong(key, current)) }
             is Boolean -> prop as KMutableProperty0<Boolean> then { it.set(cfg.getBoolean(key, current)) }
+            is TimeValue -> prop as KMutableProperty0<TimeValue> then { it.set(if (cfg.isString(key)) TimeValue(cfg.getString(key)!!) else current ) }
         }
     }
 
@@ -68,6 +70,11 @@ object ConfigHelper {
      * @param value значение для записи
      */
     fun write(key: String, value: Any) {
+        if (value is TimeValue) {
+            cfg.set(key, value.input)
+            return
+        }
+
         cfg.set(key, value)
     }
 }

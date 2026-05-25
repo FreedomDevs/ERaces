@@ -3,7 +3,7 @@ package dev.elysium.eraces.abilities.abils.support.ally_buffs
 import dev.elysium.eraces.abilities.ConfigHelper
 import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseCooldownAbility
-import dev.elysium.eraces.utils.TimeUtil
+import dev.elysium.eraces.utils.TimeParser
 import dev.elysium.eraces.utils.targetUtils.Target
 import dev.elysium.eraces.utils.targetUtils.effects.EffectsTarget
 import dev.elysium.eraces.utils.targetUtils.effects.Executor
@@ -52,7 +52,7 @@ class MasterTheForestAbility : BaseCooldownAbility(
                         listOf(
                             PotionEffect(
                                 PotionEffectType.SATURATION,
-                                TimeUtil.parseToTicks(duration).toInt(),
+                                TimeParser.parseToTicks(duration).toInt(),
                                 level,
                                 false,
                                 false
@@ -60,7 +60,7 @@ class MasterTheForestAbility : BaseCooldownAbility(
                             ),
                             PotionEffect(
                                 PotionEffectType.REGENERATION,
-                                TimeUtil.parseToTicks(duration).toInt(),
+                                TimeParser.parseToTicks(duration).toInt(),
                                 level,
                                 false,
                                 false

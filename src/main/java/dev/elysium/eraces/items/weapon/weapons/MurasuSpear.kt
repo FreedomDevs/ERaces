@@ -2,7 +2,7 @@ package dev.elysium.eraces.items.weapon.weapons
 
 import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.items.weapon.MeleeWeapon
-import dev.elysium.eraces.utils.TimeUtil
+import dev.elysium.eraces.utils.TimeValue
 import dev.elysium.eraces.utils.actionMsg
 import dev.elysium.eraces.utils.eParticle.EParticle
 import dev.elysium.eraces.utils.targetUtils.safeDamage
@@ -86,7 +86,7 @@ class MurasuSpear : MeleeWeapon(
                     target.addPotionEffect(
                         PotionEffect(
                             PotionEffectType.SLOWNESS,
-                            TimeUtil.parseToTicks("3s").toInt(),
+                            TimeValue.fromSeconds(3).toTicksInt(),
                             100,
                             false,
                             false,

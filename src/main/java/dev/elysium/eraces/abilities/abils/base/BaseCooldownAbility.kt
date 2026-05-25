@@ -2,7 +2,7 @@ package dev.elysium.eraces.abilities.abils.base
 
 import dev.elysium.eraces.abilities.AbilsManager
 import dev.elysium.eraces.abilities.interfaces.ICooldownAbility
-import dev.elysium.eraces.utils.TimeUtil
+import dev.elysium.eraces.utils.TimeValue
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.entity.Player
 
@@ -23,7 +23,7 @@ abstract class BaseCooldownAbility(
 ) : BaseAbility(id, comboKey), ICooldownAbility {
 
     /** Текущее значение кулдауна, загруженное из конфигурации */
-    private var cooldown: String = defaultCooldown
+    private var cooldown: TimeValue = TimeValue(defaultCooldown)
 
     /**
      * Загружает параметры способности из конфигурации.
@@ -32,7 +32,9 @@ abstract class BaseCooldownAbility(
      * @param cfg YAML конфигурация
      */
     final override fun loadParams(cfg: YamlConfiguration) {
-        cooldown = cfg.getString("cooldown", defaultCooldown)!!
+        if (cfg.isString("cooldown"))
+            cooldown = TimeValue(cfg.getString("cooldown")!!)
+
         loadCustomParams(cfg)
     }
 
@@ -43,7 +45,7 @@ abstract class BaseCooldownAbility(
      * @param cfg YAML конфигурация
      */
     final override fun writeDefaultParams(cfg: YamlConfiguration) {
-        cfg.set("cooldown", cooldown)
+        cfg.set("cooldown", defaultCooldown)
         writeCustomDefaults(cfg)
     }
 
@@ -75,5 +77,5 @@ abstract class BaseCooldownAbility(
      *
      * @return кулдаун в секундах
      */
-    override fun getCooldown(): Long = TimeUtil.parseToSeconds(cooldown).toLong()
+    override fun getCooldown(): TimeValue = cooldown
 }

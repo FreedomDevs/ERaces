@@ -1,17 +1,17 @@
 package dev.elysium.eraces.abilities.abils.attack.aoe
 
 import dev.elysium.eraces.ERaces
-import dev.elysium.eraces.abilities.AbilityUtils
 import dev.elysium.eraces.abilities.ConfigHelper
 import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseCooldownAbility
-import dev.elysium.eraces.utils.TimeUtil
+import dev.elysium.eraces.utils.TimeValue
 import dev.elysium.eraces.utils.targetUtils.Target
 import dev.elysium.eraces.utils.targetUtils.effects.EffectsTarget
 import dev.elysium.eraces.utils.targetUtils.effects.Executor
 import dev.elysium.eraces.utils.targetUtils.target.TargetFilter
 import dev.elysium.eraces.utils.vectors.RadiusFillBuilder
 import io.papermc.paper.event.entity.EntityMoveEvent
+import org.bukkit.Bukkit
 import org.bukkit.Color
 import org.bukkit.NamespacedKey
 import org.bukkit.Particle
@@ -27,13 +27,14 @@ import java.util.UUID
 
 @RegisterAbility
 @Suppress("unused")
-class ForestChildAbility : BaseCooldownAbility(id = "forestchild", defaultCooldown = "2m", comboKey = "2235"), Listener {
+class ForestChildAbility : BaseCooldownAbility(id = "forestchild", defaultCooldown = "2m", comboKey = "2235"),
+    Listener {
     private var radius: Double = 40.0
     private var targetAmount: Int = 5
     private var damage: Double = 10.0
-    private var stunDuration: String = "5s"
+    private var stunDuration: TimeValue = TimeValue("5s")
 
-    private var effectDuration: String = "9s"
+    private var effectDuration: TimeValue = TimeValue("9s")
     private var effect: String = "minecraft:blindness"
 
     private val bukkitEffect = NamespacedKey.fromString(effect)?.let { Registry.POTION_EFFECT_TYPE.get(it) }
@@ -42,7 +43,7 @@ class ForestChildAbility : BaseCooldownAbility(id = "forestchild", defaultCooldo
         require(bukkitEffect != null) { "Нет такого эффекта $effect" }
 
         // берем все сущности в радиусе
-        val entities =Target
+        val entities = Target
             .from(player)
             .filter(TargetFilter.ENTITIES)
             .inRadius(radius, useRaycast = false)
@@ -58,7 +59,15 @@ class ForestChildAbility : BaseCooldownAbility(id = "forestchild", defaultCooldo
             var isAlive: Boolean = false
             Target.from(entity)
                 .execute {
-                    it.addPotionEffects(listOf(PotionEffect(bukkitEffect, TimeUtil.parseToTicks(effectDuration).toInt(), 0)))
+                    it.addPotionEffects(
+                        listOf(
+                            PotionEffect(
+                                bukkitEffect,
+                                effectDuration.toTicksInt(),
+                                0
+                            )
+                        )
+                    )
                     it.damage(damage)
 
                     if (!it.isDead) {
@@ -66,9 +75,9 @@ class ForestChildAbility : BaseCooldownAbility(id = "forestchild", defaultCooldo
 
                         //добавляем сущность в оглушенные и через время убираем
                         stunnedEntities[it.uniqueId] = it
-                        AbilityUtils.runLater(ERaces.getInstance(), stunDuration) {
+                        Bukkit.getScheduler().runTaskLater(ERaces.getInstance(), Runnable {
                             stunnedEntities.remove(it.uniqueId)
-                        }
+                        }, stunDuration.toTicks())
                     }
                 }
                 .executeEffects(
@@ -76,7 +85,7 @@ class ForestChildAbility : BaseCooldownAbility(id = "forestchild", defaultCooldo
                     EffectsTarget()
                         .from(Executor.PLAYER(entity))
                         .dust(Particle.DustOptions(Color.ORANGE, 1.0f))
-                        .duration(if (isAlive) TimeUtil.parseToTicks(stunDuration).toInt() else 1)
+                        .duration(if (isAlive) stunDuration.toTicksInt() else 1)
                         .period(5)
                         .math(
                             RadiusFillBuilder()
@@ -97,6 +106,7 @@ class ForestChildAbility : BaseCooldownAbility(id = "forestchild", defaultCooldo
             event.isCancelled = true
         }
     }
+
     @EventHandler
     private fun onPlayerMove(event: PlayerMoveEvent) {
         if (stunnedEntities[event.player.uniqueId] != null) {

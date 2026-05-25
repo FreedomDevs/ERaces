@@ -3,7 +3,7 @@ package dev.elysium.eraces.abilities.abils.special.focus_target
 import dev.elysium.eraces.abilities.ConfigHelper
 import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseCooldownAbility
-import dev.elysium.eraces.utils.TimeUtil
+import dev.elysium.eraces.utils.TimeParser
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -30,13 +30,13 @@ class FindMeIfYouCan : Listener, BaseCooldownAbility(id = "find_me_if_you_can", 
 
         val value = playersOnEffect[player.uniqueId] ?: return
 
-        if (value + TimeUtil.parseToMilliseconds(duration) < System.currentTimeMillis()) {
+        if (value + TimeParser.parseToMilliseconds(duration) < System.currentTimeMillis()) {
             playersOnEffect.remove(player.uniqueId)
             return
         }
 
         val effect = player.getPotionEffect(PotionEffectType.INVISIBILITY)
-        if (effect != null && effect.duration < TimeUtil.parseToTicks(duration)) {
+        if (effect != null && effect.duration < TimeParser.parseToTicks(duration)) {
             player.removePotionEffect(PotionEffectType.INVISIBILITY)
         }
     }
@@ -45,7 +45,7 @@ class FindMeIfYouCan : Listener, BaseCooldownAbility(id = "find_me_if_you_can", 
         player.addPotionEffect(
             PotionEffect(
                 PotionEffectType.INVISIBILITY,
-                TimeUtil.parseToTicks(duration).toInt(),
+                TimeParser.parseToTicks(duration).toInt(),
                 0,
                 false
             )

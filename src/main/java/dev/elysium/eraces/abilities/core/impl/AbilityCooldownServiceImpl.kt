@@ -16,9 +16,9 @@ class AbilityCooldownServiceImpl : IAbilityCooldownService {
 
     override fun apply(player: Player, abilityId: String, ability: ICooldownAbility) {
         ability.getCooldown()
-            .takeIf { it > 0 }
-            ?.let { seconds ->
-                AbilityCooldownManager.setCooldown(player, abilityId, seconds)
+            .takeIf { it.milliseconds > 0 }
+            ?.let { timeParser ->
+                AbilityCooldownManager.setCooldown(player, abilityId, timeParser.milliseconds)
             }
     }
 }

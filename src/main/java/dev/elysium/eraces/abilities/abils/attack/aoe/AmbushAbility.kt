@@ -1,9 +1,10 @@
 package dev.elysium.eraces.abilities.abils.attack.aoe
 
 import dev.elysium.eraces.ERaces
+import dev.elysium.eraces.abilities.ConfigHelper
 import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseEffectsAbility
-import dev.elysium.eraces.utils.TimeUtil
+import dev.elysium.eraces.utils.TimeValue
 import dev.elysium.eraces.utils.targetUtils.Target
 import dev.elysium.eraces.utils.targetUtils.effects.EffectsTarget
 import dev.elysium.eraces.utils.targetUtils.effects.Executor
@@ -27,19 +28,19 @@ class AmbushAbility : BaseEffectsAbility(
     ),
     comboKey = "9323"
 ) {
-    private var duration: String = "20s"
+    private var duration: TimeValue = TimeValue("20s")
     private var radius: Double = 3.0
     private var blindnessLevel: Int = 2
-    private var poisionLevel: Int = 1
+    private var poisonLevel: Int = 1
     private var nauseaLevel: Int = 1
 
     override fun customActivate(player: Player) {
         val plugin = ERaces.getInstance()
         var taskId = 0
-        var elapsedSeconds = 0
+        var elapsedTicks = 0
 
         taskId = Bukkit.getScheduler().runTaskTimer(plugin, Runnable {
-            if (elapsedSeconds >= TimeUtil.parseToSeconds(duration).toInt()) {
+            if (elapsedTicks >= duration.toTicks()) {
                 Bukkit.getScheduler().cancelTask(taskId)
                 return@Runnable
             }
@@ -66,7 +67,7 @@ class AmbushAbility : BaseEffectsAbility(
                             listOf(
                                 PotionEffect(
                                     PotionEffectType.BLINDNESS,
-                                    TimeUtil.parseToTicks(duration).toInt(),
+                                    duration.toTicksInt(),
                                     blindnessLevel - 1,
                                     false,
                                     false
@@ -74,15 +75,15 @@ class AmbushAbility : BaseEffectsAbility(
                                 ),
                                 PotionEffect(
                                     PotionEffectType.POISON,
-                                    TimeUtil.parseToTicks(duration).toInt(),
-                                    poisionLevel - 1,
+                                    duration.toTicksInt(),
+                                    poisonLevel - 1,
                                     false,
                                     false
 
                                 ),
                                 PotionEffect(
                                     PotionEffectType.NAUSEA,
-                                    TimeUtil.parseToTicks(duration).toInt(),
+                                    duration.toTicksInt(),
                                     nauseaLevel - 1,
                                     false,
                                     false
@@ -94,24 +95,30 @@ class AmbushAbility : BaseEffectsAbility(
 
                 }
 
-            elapsedSeconds++
+            elapsedTicks += 20
         }, 0L, 20L).taskId
     }
 
 
     override fun loadCustomParams(cfg: YamlConfiguration) {
-        duration = cfg.getString("duration", duration).toString()
-        radius = cfg.getDouble("radius", radius)
-        blindnessLevel = cfg.getInt("blindnessLevel", blindnessLevel)
-        poisionLevel = cfg.getInt("poisionLevel", poisionLevel)
-        nauseaLevel = cfg.getInt("nauseaLevel", nauseaLevel)
+        super.loadCustomParams(cfg)
+        ConfigHelper.with(cfg) {
+            read("duration", ::duration)
+            read("radius", ::radius)
+            read("blindnessLevel", ::blindnessLevel)
+            read("poisonLevel", ::poisonLevel)
+            read("nauseaLevel", ::nauseaLevel)
+        }
     }
 
     override fun writeCustomDefaults(cfg: YamlConfiguration) {
-        cfg.set("duration", duration)
-        cfg.set("radius", radius)
-        cfg.set("blindnessLevel", blindnessLevel)
-        cfg.set("poisionLevel", poisionLevel)
-        cfg.set("nauseaLevel", nauseaLevel)
+        super.writeCustomDefaults(cfg)
+        ConfigHelper.with(cfg) {
+            write("duration", duration)
+            write("radius", radius)
+            write("blindnessLevel", blindnessLevel)
+            write("poisonLevel", poisonLevel)
+            write("nauseaLevel", nauseaLevel)
+        }
     }
 }

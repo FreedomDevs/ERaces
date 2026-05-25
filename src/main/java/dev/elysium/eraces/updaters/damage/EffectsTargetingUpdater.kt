@@ -2,7 +2,7 @@ package dev.elysium.eraces.updaters.damage
 
 import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.utils.EffectUtils
-import dev.elysium.eraces.utils.TimeUtil
+import dev.elysium.eraces.utils.TimeParser
 import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -22,7 +22,7 @@ class EffectsTargetingUpdater : Listener {
             EffectUtils.applyEffects(
                 targetEntity,
                 attackerRace.effectsTargeting.effectsOnPlayerAttacking,
-                TimeUtil.parseToTicks(attackerRace.effectsTargeting.effectsOnPlayerAttackingTime).toInt()
+                TimeParser.parseToTicks(attackerRace.effectsTargeting.effectsOnPlayerAttackingTime).toInt()
             )
         }
 
@@ -30,7 +30,7 @@ class EffectsTargetingUpdater : Listener {
             EffectUtils.applyEffects(
                 damager,
                 attackerRace.effectsTargeting.effectsOnPlayerTargeted,
-                TimeUtil.parseToTicks(attackerRace.effectsTargeting.effectsOnPlayerTargetedTime).toInt()
+                TimeParser.parseToTicks(attackerRace.effectsTargeting.effectsOnPlayerTargetedTime).toInt()
             )
         }
     }

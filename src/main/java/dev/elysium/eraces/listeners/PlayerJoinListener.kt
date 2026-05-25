@@ -1,24 +1,22 @@
-package dev.elysium.eraces.listeners;
+package dev.elysium.eraces.listeners
 
-import dev.elysium.eraces.ERaces;
-import dev.elysium.eraces.RacesReloader;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
+import dev.elysium.eraces.ERaces.Companion.getInstance
+import dev.elysium.eraces.RacesReloader.reloadRaceForPlayer
+import org.bukkit.Bukkit
+import org.bukkit.event.EventHandler
+import org.bukkit.event.Listener
+import org.bukkit.event.player.PlayerJoinEvent
 
-public class PlayerJoinListener implements Listener {
+class PlayerJoinListener : Listener {
     @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent event) {
-        Player player = event.getPlayer();
-        ERaces.logger().info("Log");
+    fun onPlayerJoin(event: PlayerJoinEvent) {
+        val player = event.player
 
-        Bukkit.getScheduler().runTaskLater(ERaces.getInstance(), () -> {
-            RacesReloader.INSTANCE.reloadRaceForPlayer(player);
-        }, 5);
+        getInstance().context.specializationsManager.ensurePlayerInitialized(player)
+        getInstance().context.manaManager.ensurePlayerInitialized(player)
 
-        ERaces.getInstance().getContext().getSpecializationsManager().ensurePlayerInitialized(event.getPlayer());
-        ERaces.getInstance().getContext().getManaManager().getMana(player);
+        Bukkit.getScheduler().runTaskLater(getInstance(), Runnable {
+            reloadRaceForPlayer(player)
+        }, 5)
     }
 }

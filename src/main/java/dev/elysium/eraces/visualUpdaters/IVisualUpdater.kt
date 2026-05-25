@@ -1,10 +1,10 @@
-package dev.elysium.eraces.visualUpdaters;
+package dev.elysium.eraces.visualUpdaters
 
-import dev.elysium.eraces.datatypes.Race;
-import org.bukkit.entity.Player;
+import dev.elysium.eraces.datatypes.Race
+import org.bukkit.entity.Player
 
-public interface IVisualUpdater {
-    void updateVisuals(Race race, Player player);
+interface IVisualUpdater {
+    fun updateVisuals(race: Race, player: Player)
 
-    void unloadVisuals(Player player);
+    fun unloadVisuals(player: Player)
 }

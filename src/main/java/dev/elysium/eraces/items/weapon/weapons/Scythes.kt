@@ -4,7 +4,7 @@ import dev.elysium.eraces.items.core.state.ItemState
 import dev.elysium.eraces.items.core.state.StateKeys
 import dev.elysium.eraces.items.weapon.MeleeWeapon
 import dev.elysium.eraces.utils.EffectUtils
-import dev.elysium.eraces.utils.TimeParser
+import dev.elysium.eraces.utils.TimeUtil
 import org.bukkit.Material
 import org.bukkit.Particle
 import org.bukkit.Sound
@@ -42,7 +42,7 @@ class Scythes : MeleeWeapon(
             EffectUtils.applyEffects(
                 player,
                 mapOf("minecraft:speed" to 2),
-                TimeParser.parseToTicks("4s").toInt()
+                TimeUtil.parseToTicks("4s").toInt()
             )
 
             val chance = Random.nextDouble()

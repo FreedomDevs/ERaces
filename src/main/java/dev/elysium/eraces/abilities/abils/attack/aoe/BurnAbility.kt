@@ -3,7 +3,7 @@ package dev.elysium.eraces.abilities.abils.attack.aoe
 import dev.elysium.eraces.abilities.ConfigHelper
 import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseTargetTrailAbility
-import dev.elysium.eraces.utils.TimeParser
+import dev.elysium.eraces.utils.TimeUtil
 import dev.elysium.eraces.utils.targetUtils.ignite
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.entity.LivingEntity
@@ -19,7 +19,7 @@ class BurnAbility : BaseTargetTrailAbility(
     private var duration: String = "10s"
 
     override fun onHitTarget(player: Player, target: LivingEntity) {
-        target.ignite(TimeParser.parseToTicks(duration).toInt())
+        target.ignite(TimeUtil.parseToTicks(duration).toInt())
     }
 
     override fun loadCustomParams(cfg: YamlConfiguration) {

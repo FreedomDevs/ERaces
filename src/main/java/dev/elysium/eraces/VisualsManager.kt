@@ -1,32 +1,28 @@
-package dev.elysium.eraces;
+package dev.elysium.eraces
 
-import dev.elysium.eraces.datatypes.Race;
-import dev.elysium.eraces.visualUpdaters.EarsUpdater;
-import dev.elysium.eraces.visualUpdaters.IVisualUpdater;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
+import dev.elysium.eraces.ERaces.Companion.getInstance
+import dev.elysium.eraces.visualUpdaters.EarsUpdater
+import dev.elysium.eraces.visualUpdaters.IVisualUpdater
+import org.bukkit.Bukkit
+import org.bukkit.entity.Player
 
-import java.util.List;
+object VisualsManager {
+    private val visualUpdaters = listOf<IVisualUpdater>(
+        EarsUpdater(),
+    ) as MutableList<IVisualUpdater>
 
-public class VisualsManager {
-    private static final List<IVisualUpdater> visualUpdaters = List.of(
-            new EarsUpdater()
-    );
+    @JvmStatic
+    fun updateVisualsForPlayer(player: Player) {
+        val race = getInstance().context.playerDataManager.getPlayerRace(player)
 
-    public static void updateVisualsForPlayer(Player player) {
-        Race race = ERaces.getInstance().getContext().playerDataManager.getPlayerRace(player);
-
-        for (IVisualUpdater updater : visualUpdaters)
-            updater.updateVisuals(race, player);
+        for (updater in visualUpdaters) updater.updateVisuals(race, player)
     }
 
-    public static void reloadVisualsForAllPlayer() {
-        for (Player player : Bukkit.getOnlinePlayers())
-            updateVisualsForPlayer(player);
+    fun reloadVisualsForAllPlayer() {
+        for (player in Bukkit.getOnlinePlayers()) updateVisualsForPlayer(player)
     }
 
-    public static void unloadVisualsForPlayer(Player player) {
-        for (IVisualUpdater updater : visualUpdaters)
-            updater.unloadVisuals(player);
+    fun unloadVisualsForPlayer(player: Player) {
+        for (updater in visualUpdaters) updater.unloadVisuals(player)
     }
 }

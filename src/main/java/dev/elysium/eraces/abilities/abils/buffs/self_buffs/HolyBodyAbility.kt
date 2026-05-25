@@ -3,7 +3,7 @@ package dev.elysium.eraces.abilities.abils.buffs.self_buffs
 import dev.elysium.eraces.abilities.ConfigHelper
 import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseCooldownAbility
-import dev.elysium.eraces.utils.TimeParser
+import dev.elysium.eraces.utils.TimeUtil
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.entity.Player
 import org.bukkit.potion.PotionEffect
@@ -47,7 +47,7 @@ class HolyBodyAbility : BaseCooldownAbility(
 
         regenerationLevelRange = regenerationMinLevel..regenerationMaxLevel
         regenerationDurationRange =
-            TimeParser.parseToTicks(regenerationMinDuration).toInt()..TimeParser.parseToTicks(regenerationMaxDuration)
+            TimeUtil.parseToTicks(regenerationMinDuration).toInt()..TimeUtil.parseToTicks(regenerationMaxDuration)
                 .toInt()
     }
 

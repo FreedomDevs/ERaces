@@ -1,17 +1,12 @@
-package dev.elysium.eraces.datatypes;
+package dev.elysium.eraces.datatypes
 
-import lombok.Data;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import lombok.Data
 
 @Data
-public class EffectsWithBlock {
+class EffectsWithBlock {
     @RaceProperty(path = "blocks", type = FieldType.LIST)
-    List<String> blocks = new ArrayList<>();
+    var blocks: MutableList<String> = ArrayList()
 
     @RaceProperty(path = "effects", type = FieldType.MAP_STRING_INT)
-    Map<String, Integer> effects = new HashMap<>();
+    var effects: MutableMap<String, Int> = HashMap()
 }

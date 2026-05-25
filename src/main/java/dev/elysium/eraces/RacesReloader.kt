@@ -88,7 +88,7 @@ object RacesReloader : Listener {
             Bukkit.getPluginManager().registerEvents(obj, plugin)
     }
 
-    // Чистит какой-то мусор, TODO надо потом разобратся с ним
+    // Чистит какой-то мусор, TODO надо потом разобраться с ним
     fun unloadPlayerData(player: Player) {
         for (obj in updaters)
             if (obj is IUnloadable)

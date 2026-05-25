@@ -3,7 +3,7 @@ package dev.elysium.eraces.abilities.abils.control.aoe_debuff
 import dev.elysium.eraces.abilities.ConfigHelper
 import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseCooldownAbility
-import dev.elysium.eraces.utils.TimeParser
+import dev.elysium.eraces.utils.TimeUtil
 import dev.elysium.eraces.utils.targetUtils.Target
 import dev.elysium.eraces.utils.targetUtils.target.TargetFilter
 import org.bukkit.configuration.file.YamlConfiguration
@@ -28,7 +28,7 @@ class AncientKnowledgeAbility: BaseCooldownAbility(
                 if (target is Player) {
                     val effect = PotionEffect(
                         PotionEffectType.GLOWING,
-                        TimeParser.parseToTicks(duration).toInt(),
+                        TimeUtil.parseToTicks(duration).toInt(),
                         0,
                         false,
                         false

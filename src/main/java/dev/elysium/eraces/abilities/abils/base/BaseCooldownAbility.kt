@@ -2,7 +2,7 @@ package dev.elysium.eraces.abilities.abils.base
 
 import dev.elysium.eraces.abilities.AbilsManager
 import dev.elysium.eraces.abilities.interfaces.ICooldownAbility
-import dev.elysium.eraces.utils.TimeParser
+import dev.elysium.eraces.utils.TimeUtil
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.entity.Player
 
@@ -75,5 +75,5 @@ abstract class BaseCooldownAbility(
      *
      * @return кулдаун в секундах
      */
-    override fun getCooldown(): Long = TimeParser.parseToSecondsDouble(cooldown).toLong()
+    override fun getCooldown(): Long = TimeUtil.parseToSeconds(cooldown).toLong()
 }

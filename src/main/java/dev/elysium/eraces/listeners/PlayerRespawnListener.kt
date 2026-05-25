@@ -1,22 +1,22 @@
-package dev.elysium.eraces.listeners;
+package dev.elysium.eraces.listeners
 
-import dev.elysium.eraces.ERaces;
-import dev.elysium.eraces.RacesReloader;
-import dev.elysium.eraces.VisualsManager;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerRespawnEvent;
+import dev.elysium.eraces.ERaces.Companion.getInstance
+import dev.elysium.eraces.RacesReloader.reloadRaceForPlayer
+import dev.elysium.eraces.VisualsManager
+import org.bukkit.Bukkit
+import org.bukkit.event.EventHandler
+import org.bukkit.event.Listener
+import org.bukkit.event.player.PlayerRespawnEvent
 
-public class PlayerRespawnListener implements Listener {
+class PlayerRespawnListener : Listener {
     @EventHandler
-    public void onPlayerRespawn(PlayerRespawnEvent event) {
-        Bukkit.getScheduler().runTaskLater(ERaces.getInstance(), () -> {
-            Player player = event.getPlayer();
-            RacesReloader.INSTANCE.reloadRaceForPlayer(player);
-            VisualsManager.updateVisualsForPlayer(player);
-        }, 5L);
+    fun onPlayerRespawn(event: PlayerRespawnEvent) {
+        val player = event.player
+
+        Bukkit.getScheduler().runTaskLater(getInstance(), Runnable {
+            reloadRaceForPlayer(player)
+            VisualsManager.updateVisualsForPlayer(player)
+        }, 5L)
     }
 }
 

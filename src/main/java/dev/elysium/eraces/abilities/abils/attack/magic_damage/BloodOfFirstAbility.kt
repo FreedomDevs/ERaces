@@ -3,7 +3,7 @@ package dev.elysium.eraces.abilities.abils.attack.magic_damage
 import dev.elysium.eraces.abilities.ConfigHelper
 import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseEffectsAbility
-import dev.elysium.eraces.utils.TimeParser
+import dev.elysium.eraces.utils.TimeUtil
 import dev.elysium.eraces.utils.targetUtils.Target
 import dev.elysium.eraces.utils.targetUtils.target.TargetFilter
 import dev.elysium.eraces.utils.targetUtils.target.TargetTrail
@@ -45,7 +45,7 @@ class BloodOfFirstAbility : Listener, BaseEffectsAbility(
         if (!playersWaiting.containsKey(uuid)) return
 
         val waitingPlayer = playersWaiting[uuid]!!
-        val durationMs: Long = TimeParser.parseToMilliseconds(duration)
+        val durationMs: Long = TimeUtil.parseToMilliseconds(duration)
         val curtime = System.currentTimeMillis()
         if (waitingPlayer.lastActivateTime + durationMs < curtime) return
         if (waitingPlayer.lastClickTime + clickCooldownMs > curtime) return

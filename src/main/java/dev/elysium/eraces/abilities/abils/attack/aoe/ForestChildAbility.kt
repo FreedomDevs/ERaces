@@ -5,7 +5,7 @@ import dev.elysium.eraces.abilities.AbilityUtils
 import dev.elysium.eraces.abilities.ConfigHelper
 import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseCooldownAbility
-import dev.elysium.eraces.utils.TimeParser
+import dev.elysium.eraces.utils.TimeUtil
 import dev.elysium.eraces.utils.targetUtils.Target
 import dev.elysium.eraces.utils.targetUtils.effects.EffectsTarget
 import dev.elysium.eraces.utils.targetUtils.effects.Executor
@@ -21,7 +21,6 @@ import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
-import org.bukkit.event.entity.EntityDeathEvent
 import org.bukkit.event.player.PlayerMoveEvent
 import org.bukkit.potion.PotionEffect
 import java.util.UUID
@@ -59,7 +58,7 @@ class ForestChildAbility : BaseCooldownAbility(id = "forestchild", defaultCooldo
             var isAlive: Boolean = false
             Target.from(entity)
                 .execute {
-                    it.addPotionEffects(listOf(PotionEffect(bukkitEffect, TimeParser.parseToTicks(effectDuration).toInt(), 0)))
+                    it.addPotionEffects(listOf(PotionEffect(bukkitEffect, TimeUtil.parseToTicks(effectDuration).toInt(), 0)))
                     it.damage(damage)
 
                     if (!it.isDead) {
@@ -77,7 +76,7 @@ class ForestChildAbility : BaseCooldownAbility(id = "forestchild", defaultCooldo
                     EffectsTarget()
                         .from(Executor.PLAYER(entity))
                         .dust(Particle.DustOptions(Color.ORANGE, 1.0f))
-                        .duration(if (isAlive) TimeParser.parseToTicks(stunDuration).toInt() else 1)
+                        .duration(if (isAlive) TimeUtil.parseToTicks(stunDuration).toInt() else 1)
                         .period(5)
                         .math(
                             RadiusFillBuilder()

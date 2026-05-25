@@ -4,7 +4,7 @@ import dev.elysium.eraces.abilities.ConfigHelper
 import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseTargetTrailAbility
 import dev.elysium.eraces.abilities.interfaces.IManaCostAbility
-import dev.elysium.eraces.utils.TimeParser
+import dev.elysium.eraces.utils.TimeUtil
 import dev.elysium.eraces.utils.targetUtils.target.TargetFilter
 import org.bukkit.Location
 import org.bukkit.Particle
@@ -45,7 +45,7 @@ class FireballAbility : BaseTargetTrailAbility(
 
     override fun onHitTarget(player: Player, target: LivingEntity) {
         target.damage(power, player)
-        target.fireTicks = TimeParser.parseToTicks(burnDuration).toInt()
+        target.fireTicks = TimeUtil.parseToTicks(burnDuration).toInt()
         player.sendMessage("§cТы попал по игроку §e${target.name}!")
     }
 

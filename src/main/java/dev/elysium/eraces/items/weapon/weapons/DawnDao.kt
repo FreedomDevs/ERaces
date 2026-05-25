@@ -2,7 +2,7 @@ package dev.elysium.eraces.items.weapon.weapons
 
 import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.items.weapon.MeleeWeapon
-import dev.elysium.eraces.utils.TimeParser
+import dev.elysium.eraces.utils.TimeUtil
 import dev.elysium.eraces.utils.actionMsg
 import dev.elysium.eraces.utils.eParticle.EParticle
 import org.bukkit.Material
@@ -35,7 +35,7 @@ class DawnDao : MeleeWeapon(
     private val cooldownMillis = 6000L
     private val range = 4.5
     private val directDamage = 12.0
-    private val bleedDurationTicks = TimeParser.parseToTicks("7s").toInt()
+    private val bleedDurationTicks = TimeUtil.parseToTicks("7s").toInt()
     private val bleedTickDamage = 1.0
     private val bleedInterval = 20L
 

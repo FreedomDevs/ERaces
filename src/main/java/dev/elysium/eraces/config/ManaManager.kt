@@ -87,7 +87,7 @@ class ManaManager(private val plugin: ERaces) {
         setMana(player, currentMana + regenAmount)
     }
 
-    private fun ensurePlayerInitialized(player: OfflinePlayer) {
+    fun ensurePlayerInitialized(player: OfflinePlayer) {
         if (manaMap.contains(player.uniqueId)) return
         manaMap.putIfAbsent(player.uniqueId, getMaxMana(player))
     }

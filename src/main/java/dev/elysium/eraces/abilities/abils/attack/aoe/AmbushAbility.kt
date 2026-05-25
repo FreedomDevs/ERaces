@@ -3,8 +3,7 @@ package dev.elysium.eraces.abilities.abils.attack.aoe
 import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseEffectsAbility
-import dev.elysium.eraces.abilities.interfaces.IComboActivatable
-import dev.elysium.eraces.utils.TimeParser
+import dev.elysium.eraces.utils.TimeUtil
 import dev.elysium.eraces.utils.targetUtils.Target
 import dev.elysium.eraces.utils.targetUtils.effects.EffectsTarget
 import dev.elysium.eraces.utils.targetUtils.effects.Executor
@@ -40,7 +39,7 @@ class AmbushAbility : BaseEffectsAbility(
         var elapsedSeconds = 0
 
         taskId = Bukkit.getScheduler().runTaskTimer(plugin, Runnable {
-            if (elapsedSeconds >= TimeParser.parseToSecondsDouble(duration).toInt()) {
+            if (elapsedSeconds >= TimeUtil.parseToSeconds(duration).toInt()) {
                 Bukkit.getScheduler().cancelTask(taskId)
                 return@Runnable
             }
@@ -67,7 +66,7 @@ class AmbushAbility : BaseEffectsAbility(
                             listOf(
                                 PotionEffect(
                                     PotionEffectType.BLINDNESS,
-                                    TimeParser.parseToTicks(duration).toInt(),
+                                    TimeUtil.parseToTicks(duration).toInt(),
                                     blindnessLevel - 1,
                                     false,
                                     false
@@ -75,7 +74,7 @@ class AmbushAbility : BaseEffectsAbility(
                                 ),
                                 PotionEffect(
                                     PotionEffectType.POISON,
-                                    TimeParser.parseToTicks(duration).toInt(),
+                                    TimeUtil.parseToTicks(duration).toInt(),
                                     poisionLevel - 1,
                                     false,
                                     false
@@ -83,7 +82,7 @@ class AmbushAbility : BaseEffectsAbility(
                                 ),
                                 PotionEffect(
                                     PotionEffectType.NAUSEA,
-                                    TimeParser.parseToTicks(duration).toInt(),
+                                    TimeUtil.parseToTicks(duration).toInt(),
                                     nauseaLevel - 1,
                                     false,
                                     false

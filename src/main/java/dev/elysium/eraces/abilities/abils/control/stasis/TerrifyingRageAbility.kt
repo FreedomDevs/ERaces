@@ -3,7 +3,7 @@ package dev.elysium.eraces.abilities.abils.control.stasis
 import dev.elysium.eraces.abilities.ConfigHelper
 import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseCooldownAbility
-import dev.elysium.eraces.utils.TimeParser
+import dev.elysium.eraces.utils.TimeUtil
 import dev.elysium.eraces.utils.targetUtils.Target
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.entity.Player
@@ -53,7 +53,7 @@ class TerrifyingRageAbility : BaseCooldownAbility(
         val a = activatePlayers[uuid]?: return
         val now = System.currentTimeMillis()
         val g = now - a
-        if (g < TimeParser.parseToMilliseconds(duration)){
+        if (g < TimeUtil.parseToMilliseconds(duration)){
            event.isCancelled = true
             return
         }
@@ -68,7 +68,7 @@ class TerrifyingRageAbility : BaseCooldownAbility(
         val a = activatePlayers[uuid]?: return
         val now = System.currentTimeMillis()
         val g = now - a
-        if (g < TimeParser.parseToMilliseconds(duration)){
+        if (g < TimeUtil.parseToMilliseconds(duration)){
             event.isCancelled = true
             return
         }

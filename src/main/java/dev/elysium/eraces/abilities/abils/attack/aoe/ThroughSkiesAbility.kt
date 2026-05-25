@@ -4,21 +4,15 @@ import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.abilities.ConfigHelper
 import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseCooldownAbility
-import dev.elysium.eraces.abilities.abils.base.BaseEffectsAbility
-import dev.elysium.eraces.utils.EffectUtils
-import dev.elysium.eraces.utils.TimeParser
-import io.papermc.paper.registry.RegistryAccess
-import org.bukkit.Bukkit
+import dev.elysium.eraces.utils.TimeUtil
 import org.bukkit.Location
 import org.bukkit.NamespacedKey
 import org.bukkit.Registry
 import org.bukkit.configuration.file.YamlConfiguration
-import org.bukkit.damage.DamageSource
 import org.bukkit.entity.Entity
 import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
 import org.bukkit.potion.PotionEffect
-import org.bukkit.potion.PotionEffectType
 import org.bukkit.scheduler.BukkitRunnable
 import org.bukkit.util.Vector
 import kotlin.math.sqrt
@@ -74,7 +68,7 @@ class ThroughSkiesAbility : BaseCooldownAbility("throughskies", defaultCooldown 
             entity.addPotionEffect(
                 PotionEffect(
                     bukkitEffect,
-                    TimeParser.parseToTicks(effectDurarion).toInt(),
+                    TimeUtil.parseToTicks(effectDurarion).toInt(),
                     effectLevel - 1
                 )
             )

@@ -4,6 +4,7 @@ import dev.elysium.eraces.abilities.ConfigHelper
 import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseCooldownAbility
 import dev.elysium.eraces.utils.TimeParser
+import dev.elysium.eraces.utils.TimeValue
 import dev.elysium.eraces.utils.targetUtils.Target
 import dev.elysium.eraces.utils.targetUtils.target.TargetFilter
 import org.bukkit.configuration.file.YamlConfiguration
@@ -16,9 +17,9 @@ import org.bukkit.potion.PotionEffectType
 class TheWingedWhirlwindAbility : BaseCooldownAbility(
     id = "thewingedwhirlwind", defaultCooldown = "2m"
 ) {
-    private var witherDuration: String = "4s"
-    private var nauseDuration: String = "3s"
-    private var slownessDuration: String = "5s"
+    private var witherDuration = TimeValue.fromSeconds(4)
+    private var nauseDuration = TimeValue.fromSeconds(3)
+    private var slownessDuration = TimeValue.fromSeconds(5)
     private var radius: Double = 40.0
     private var witherLevel: Int = 1
     private var nauseLevel: Int = 1
@@ -35,7 +36,7 @@ class TheWingedWhirlwindAbility : BaseCooldownAbility(
                         listOf(
                             PotionEffect(
                                 PotionEffectType.WITHER,
-                                TimeParser.parseToTicks(witherDuration).toInt(),
+                                witherDuration.toTicksInt(),
                                 witherLevel - 1,
                                 false,
                                 false
@@ -43,7 +44,7 @@ class TheWingedWhirlwindAbility : BaseCooldownAbility(
                             ),
                             PotionEffect(
                                 PotionEffectType.NAUSEA,
-                                TimeParser.parseToTicks(nauseDuration).toInt(),
+                                nauseDuration.toTicksInt(),
                                 nauseLevel - 1,
                                 false,
                                 false
@@ -51,7 +52,7 @@ class TheWingedWhirlwindAbility : BaseCooldownAbility(
                             ),
                             PotionEffect(
                                 PotionEffectType.SLOWNESS,
-                                TimeParser.parseToTicks(slownessDuration).toInt(),
+                                slownessDuration.toTicksInt(),
                                 slownessLevel,
                                 false,
                                 false

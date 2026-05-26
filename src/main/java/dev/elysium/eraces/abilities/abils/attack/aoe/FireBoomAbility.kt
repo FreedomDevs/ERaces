@@ -22,7 +22,7 @@ class FireBoomAbility : BaseCooldownAbility(
     comboKey = "6621"
 ) {
     private var radius: Double = 3.0
-    private var fireDuration: TimeValue = TimeValue("10s")
+    private var fireDuration: TimeValue = TimeValue.fromSeconds(10)
 
     override fun onActivate(player: Player) {
         Target.from(player)

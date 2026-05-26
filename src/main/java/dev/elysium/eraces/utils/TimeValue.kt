@@ -1,14 +1,12 @@
 package dev.elysium.eraces.utils
 
 import dev.elysium.eraces.ERaces
+import org.apache.logging.log4j.util.PropertySource
 import java.util.Locale
 import java.util.Scanner
 import kotlin.math.roundToLong
 
-class TimeValue(val milliseconds: Long) {
-    var input: String = "0s"
-        private set
-
+class TimeValue(val milliseconds: Long, val input: String = "0s") {
     /**Парсит длительность из строки типа "2d 1m 1s"
      * Может принимать дроби "1.2d"
      * Парсит так:
@@ -30,9 +28,7 @@ class TimeValue(val milliseconds: Long) {
      * @param input Вводная строка
      * @throws IllegalArgumentException Если не удалось спарсить вообще ничего
      */
-    constructor(input: String) : this(parseDuration(input)) {
-        this.input = input
-    }
+    constructor(input: String) : this(parseDuration(input), input)
 
     fun toTicks(): Long = milliseconds / 50
     fun toTicksInt(): Int {
@@ -62,59 +58,28 @@ class TimeValue(val milliseconds: Long) {
         withMilliseconds: Boolean = false
     ): String {
         if (milliseconds == 0L) return "0 секунд"
-
         var remaining: Long = milliseconds
-        var result = ""
+        val result = StringBuilder()
+        val units = listOf(
+            UnitPart(withYears, MS_PER_YEAR, "год", "года", "лет"),
+            UnitPart(withWeeks, MS_PER_WEEK, "неделя", "недели", "недель"),
+            UnitPart(withDays, MS_PER_DAY, "день", "дня", "дней"),
+            UnitPart(withHours, MS_PER_HOUR, "час", "часа", "часов"),
+            UnitPart(withMinutes, MS_PER_MINUTE, "минута", "минуты", "минут"),
+            UnitPart(withSeconds, MS_PER_SECOND, "секунда", "секунды", "секунд"),
+            UnitPart(withTicks, MS_PER_TICK, "тик", "тика", "тиков"),
+            UnitPart(withMilliseconds, 1, "миллисекунда", "миллисекунды", "миллисекунд"),
+        )
 
-        if (withYears) {
-            val years = genPart(remaining, MS_PER_YEAR, "год", "года", "лет")
-            remaining = years.first
-            result += years.second
+        for (u in units) {
+            if (!u.enabled) continue
+
+            val part = genPart(remaining, u)
+            remaining = part.first
+            result.append(part.second)
         }
 
-        if (withWeeks) {
-            val weeks = genPart(remaining, MS_PER_WEEK, "неделя", "недели", "недель")
-            remaining = weeks.first
-            result += weeks.second
-        }
-
-        if (withDays) {
-            val days = genPart(remaining, MS_PER_DAY, "день", "дня", "дней")
-            remaining = days.first
-            result += days.second
-        }
-
-        if (withHours) {
-            val hours = genPart(remaining, MS_PER_HOUR, "час", "часа", "часов")
-            remaining = hours.first
-            result += hours.second
-        }
-
-        if (withMinutes) {
-            val minutes = genPart(remaining, MS_PER_MINUTE, "минута", "минуты", "минут")
-            remaining = minutes.first
-            result += minutes.second
-        }
-
-        if (withSeconds) {
-            val seconds = genPart(remaining, MS_PER_SECOND, "секунда", "секунды", "секунд")
-            remaining = seconds.first
-            result += seconds.second
-        }
-
-        if (withTicks) {
-            val ticks = genPart(remaining, MS_PER_TICK, "тик", "тика", "тиков")
-            remaining = ticks.first
-            result += ticks.second
-        }
-
-        if (withMilliseconds) {
-            val milliseconds = genPart(remaining, 1, "миллисекунда", "миллисекунды", "миллисекунд")
-            remaining = milliseconds.first
-            result += milliseconds.second
-        }
-
-        return result
+        return result.toString()
     }
 
     companion object {
@@ -126,9 +91,9 @@ class TimeValue(val milliseconds: Long) {
         const val MS_PER_WEEK = 7 * 24 * 60 * 60 * 1000L
         const val MS_PER_YEAR = (365.2425 * 24 * 60 * 60 * 1000).toLong()
 
-        fun fromSeconds(seconds: Double) = TimeValue((seconds * MS_PER_SECOND).toLong())
-        fun fromSeconds(seconds: Long) = TimeValue(seconds * MS_PER_SECOND)
-        fun fromSeconds(seconds: Int) = TimeValue(seconds * MS_PER_SECOND)
+        fun fromSeconds(seconds: Double) = TimeValue((seconds * MS_PER_SECOND).toLong(), seconds.toString() + "s")
+        fun fromSeconds(seconds: Long) = TimeValue(seconds * MS_PER_SECOND, seconds.toString() + "s")
+        fun fromSeconds(seconds: Int) = TimeValue(seconds * MS_PER_SECOND, seconds.toString() + "s")
 
         fun parseDuration(input: String): Long {
             val cleanInput = input.lowercase().replace(',', '.')
@@ -197,8 +162,19 @@ class TimeValue(val milliseconds: Long) {
             }
         }
 
-        private fun genPart(remaining: Long, msPer: Long, one: String, two: String, five: String): Pair<Long, String> {
-            return Pair(remaining % msPer, pluralize(remaining / msPer, one, two, five))
+        private fun genPart(remaining: Long, unitPart: UnitPart): Pair<Long, String> {
+            return Pair(
+                remaining % unitPart.ms,
+                pluralize(remaining / unitPart.ms, unitPart.one, unitPart.two, unitPart.five)
+            )
         }
+
+        private data class UnitPart(
+            val enabled: Boolean,
+            val ms: Long,
+            val one: String,
+            val two: String,
+            val five: String
+        )
     }
 }

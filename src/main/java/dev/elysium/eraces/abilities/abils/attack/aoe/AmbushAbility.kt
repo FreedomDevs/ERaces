@@ -28,7 +28,7 @@ class AmbushAbility : BaseEffectsAbility(
     ),
     comboKey = "9323"
 ) {
-    private var duration: TimeValue = TimeValue("20s")
+    private var duration: TimeValue = TimeValue.fromSeconds(20)
     private var radius: Double = 3.0
     private var blindnessLevel: Int = 2
     private var poisonLevel: Int = 1

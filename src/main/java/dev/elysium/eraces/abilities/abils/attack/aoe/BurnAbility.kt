@@ -16,7 +16,7 @@ class BurnAbility : BaseTargetTrailAbility(
     defaultCooldown = "10m",
     comboKey="4608"
 ) {
-    private var duration: TimeValue = TimeValue("10s")
+    private var duration: TimeValue = TimeValue.fromSeconds(10)
 
     override fun onHitTarget(player: Player, target: LivingEntity) {
         target.ignite(duration.toTicksInt())

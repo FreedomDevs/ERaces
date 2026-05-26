@@ -1,10 +1,10 @@
-package dev.elysium.eraces.abilities.abils
+package dev.elysium.eraces.abilities.abils.attack.aoe
 
 import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.abilities.ConfigHelper
 import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseCooldownAbility
-import dev.elysium.eraces.utils.TimeParser
+import dev.elysium.eraces.utils.TimeValue
 import org.bukkit.Location
 import org.bukkit.NamespacedKey
 import org.bukkit.Registry
@@ -15,6 +15,7 @@ import org.bukkit.entity.Player
 import org.bukkit.potion.PotionEffect
 import org.bukkit.scheduler.BukkitRunnable
 import org.bukkit.util.Vector
+import kotlin.math.floor
 import kotlin.math.sqrt
 
 @RegisterAbility
@@ -28,7 +29,7 @@ class ThroughSkiesAbility : BaseCooldownAbility("throughskies", defaultCooldown 
     private var damage = 7.0
 
     private var effectLevel = 10
-    private var effectDurarion = "2s"
+    private var effectDuration = TimeValue.fromSeconds(2)
     private var effect = "slowness"
 
     private val bukkitEffect = Registry.POTION_EFFECT_TYPE.get(NamespacedKey(ERaces.getInstance(), effect))
@@ -68,7 +69,7 @@ class ThroughSkiesAbility : BaseCooldownAbility("throughskies", defaultCooldown 
             entity.addPotionEffect(
                 PotionEffect(
                     bukkitEffect,
-                    TimeParser.parseToTicks(effectDurarion).toInt(),
+                    effectDuration.toTicksInt(),
                     effectLevel - 1
                 )
             )
@@ -107,7 +108,7 @@ class ThroughSkiesAbility : BaseCooldownAbility("throughskies", defaultCooldown 
 
         val timeTicks = targetHeight / velocity
         //округляем потому что timeTicks скорее всего дробное, а тики это целое число
-        val timeTicksRounded = Math.floor(timeTicks)
+        val timeTicksRounded = floor(timeTicks)
 
         return timeTicksRounded.toLong()
     }
@@ -183,7 +184,7 @@ class ThroughSkiesAbility : BaseCooldownAbility("throughskies", defaultCooldown 
             read("damage", ::damage)
             read("effect", ::effect)
             read("effectLevel", ::effectLevel)
-            read("effectDuration", ::effectDurarion)
+            read("effectDuration", ::effectDuration)
             read("verticalDistance", ::verticalDistance)
             read("teleportDistance", ::teleportDistance)
             read("lineThickness", ::lineThickness)
@@ -195,7 +196,7 @@ class ThroughSkiesAbility : BaseCooldownAbility("throughskies", defaultCooldown 
             write("damage", damage)
             write("effect", effect)
             write("effectLevel", effectLevel)
-            write("effectDuration", effectDurarion)
+            write("effectDuration", effectDuration)
             write("verticalDistance", verticalDistance)
             write("teleportDistance", teleportDistance)
             write("lineThickness", lineThickness)

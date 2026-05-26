@@ -32,9 +32,9 @@ class ForestChildAbility : BaseCooldownAbility(id = "forestchild", defaultCooldo
     private var radius: Double = 40.0
     private var targetAmount: Int = 5
     private var damage: Double = 10.0
-    private var stunDuration: TimeValue = TimeValue("5s")
+    private var stunDuration: TimeValue = TimeValue.fromSeconds(5)
 
-    private var effectDuration: TimeValue = TimeValue("9s")
+    private var effectDuration: TimeValue = TimeValue.fromSeconds(9)
     private var effect: String = "minecraft:blindness"
 
     private val bukkitEffect = NamespacedKey.fromString(effect)?.let { Registry.POTION_EFFECT_TYPE.get(it) }

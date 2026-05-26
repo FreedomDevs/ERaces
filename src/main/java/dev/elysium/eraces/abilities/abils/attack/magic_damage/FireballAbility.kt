@@ -5,6 +5,7 @@ import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseTargetTrailAbility
 import dev.elysium.eraces.abilities.interfaces.IManaCostAbility
 import dev.elysium.eraces.utils.TimeParser
+import dev.elysium.eraces.utils.TimeValue
 import dev.elysium.eraces.utils.targetUtils.target.TargetFilter
 import org.bukkit.Location
 import org.bukkit.Particle
@@ -23,7 +24,7 @@ class FireballAbility : BaseTargetTrailAbility(
 ), IManaCostAbility {
 
     private var power: Double = 2.0
-    private var burnDuration: String = "3s"
+    private var burnDuration = TimeValue.fromSeconds(3)
     private var manaCost: Double = 3.0
     override var distance: Double = 10.0
     override var step: Double = 0.5
@@ -45,7 +46,7 @@ class FireballAbility : BaseTargetTrailAbility(
 
     override fun onHitTarget(player: Player, target: LivingEntity) {
         target.damage(power, player)
-        target.fireTicks = TimeParser.parseToTicks(burnDuration).toInt()
+        target.fireTicks = burnDuration.toTicksInt()
         player.sendMessage("§cТы попал по игроку §e${target.name}!")
     }
 

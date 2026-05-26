@@ -4,6 +4,7 @@ import dev.elysium.eraces.abilities.ConfigHelper
 import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseCooldownAbility
 import dev.elysium.eraces.utils.TimeParser
+import dev.elysium.eraces.utils.TimeValue
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -16,7 +17,7 @@ import java.util.UUID
 @RegisterAbility
 @Suppress("unused")
 class FindMeIfYouCan : Listener, BaseCooldownAbility(id = "find_me_if_you_can", defaultCooldown = "3m") {
-    private var duration: String = "20s"
+    private var duration = TimeValue.fromSeconds(20)
 
     private val playersOnEffect: MutableMap<UUID, Long> = mutableMapOf()
 
@@ -30,13 +31,13 @@ class FindMeIfYouCan : Listener, BaseCooldownAbility(id = "find_me_if_you_can", 
 
         val value = playersOnEffect[player.uniqueId] ?: return
 
-        if (value + TimeParser.parseToMilliseconds(duration) < System.currentTimeMillis()) {
+        if (value + duration.milliseconds < System.currentTimeMillis()) {
             playersOnEffect.remove(player.uniqueId)
             return
         }
 
         val effect = player.getPotionEffect(PotionEffectType.INVISIBILITY)
-        if (effect != null && effect.duration < TimeParser.parseToTicks(duration)) {
+        if (effect != null && effect.duration < duration.toTicksInt()) {
             player.removePotionEffect(PotionEffectType.INVISIBILITY)
         }
     }
@@ -45,7 +46,7 @@ class FindMeIfYouCan : Listener, BaseCooldownAbility(id = "find_me_if_you_can", 
         player.addPotionEffect(
             PotionEffect(
                 PotionEffectType.INVISIBILITY,
-                TimeParser.parseToTicks(duration).toInt(),
+                duration.toTicksInt(),
                 0,
                 false
             )

@@ -4,6 +4,7 @@ import dev.elysium.eraces.abilities.ConfigHelper
 import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseCooldownAbility
 import dev.elysium.eraces.utils.TimeParser
+import dev.elysium.eraces.utils.TimeValue
 import dev.elysium.eraces.utils.targetUtils.Target
 import dev.elysium.eraces.utils.targetUtils.effects.EffectsTarget
 import dev.elysium.eraces.utils.targetUtils.effects.Executor
@@ -21,7 +22,7 @@ class MasterTheForestAbility : BaseCooldownAbility(
     id = "mastertheforest", defaultCooldown = "30m"
 ) {
     private var radius: Double = 3.0
-    private var duration: String = "30s"
+    private var duration = TimeValue.fromSeconds(30)
     private var level: Int = 3
 
     override fun onActivate(player: Player) {
@@ -52,7 +53,7 @@ class MasterTheForestAbility : BaseCooldownAbility(
                         listOf(
                             PotionEffect(
                                 PotionEffectType.SATURATION,
-                                TimeParser.parseToTicks(duration).toInt(),
+                                duration.toTicksInt(),
                                 level,
                                 false,
                                 false
@@ -60,7 +61,7 @@ class MasterTheForestAbility : BaseCooldownAbility(
                             ),
                             PotionEffect(
                                 PotionEffectType.REGENERATION,
-                                TimeParser.parseToTicks(duration).toInt(),
+                                duration.toTicksInt(),
                                 level,
                                 false,
                                 false

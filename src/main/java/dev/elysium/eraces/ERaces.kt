@@ -1,23 +1,13 @@
 package dev.elysium.eraces
 
+import dev.elysium.eraces.RacesReloader.disableUpdaters
 import dev.elysium.eraces.bootstrap.*
 import dev.elysium.eraces.exceptions.internal.InitFailedException
 import org.bukkit.plugin.java.JavaPlugin
 import java.util.logging.Logger
 
 class ERaces : JavaPlugin() {
-    companion object {
-        private lateinit var instance: ERaces
-
-        @JvmStatic
-        fun logger(): Logger = instance.logger
-
-        @JvmStatic
-        fun getInstance(): ERaces = instance
-    }
-
     val context: PluginContext = PluginContext()
-
     private val initializers = listOf(
         DatabaseInitializer(),
         ManagerInitializer(),
@@ -55,6 +45,17 @@ class ERaces : JavaPlugin() {
 
     override fun onDisable() {
         context.database.close()
+        disableUpdaters()
         logger.info(context.messageManager.data.pluginDisabled)
+    }
+
+    companion object {
+        private lateinit var instance: ERaces
+
+        @JvmStatic
+        fun logger(): Logger = instance.logger
+
+        @JvmStatic
+        fun getInstance(): ERaces = instance
     }
 }

@@ -8,8 +8,7 @@ import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 
-class ManaRegenerationListener : Listener {
-
+class ManaRegenerationUpdater : Listener {
     @EventHandler
     fun onManaRegen(e: ManaRegenerationEvent) {
         val player: Player = e.player.player ?: return

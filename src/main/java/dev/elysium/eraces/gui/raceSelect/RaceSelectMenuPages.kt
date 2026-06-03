@@ -34,11 +34,11 @@ object RaceSelectMenuPages {
         )
 
         pages += RacePage(
-            id = "demon",
+            id = "beastman",
             displayName = "Зверолюд",
             lore = listOf("Могущественный", "Пушистик"),
             material = Material.BLAZE_POWDER,
-            title = "race.demon"
+            title = "race.beastman"
         )
     }
 

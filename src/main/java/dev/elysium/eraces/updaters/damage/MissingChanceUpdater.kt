@@ -9,7 +9,7 @@ import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import kotlin.random.Random
 
-class MissingChanceListener: Listener {
+class MissingChanceUpdater: Listener {
 
     @EventHandler
     fun onPlayerDamage(event: EntityDamageByEntityEvent) {

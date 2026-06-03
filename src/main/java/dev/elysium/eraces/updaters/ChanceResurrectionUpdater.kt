@@ -1,7 +1,6 @@
 package dev.elysium.eraces.updaters
 
 import dev.elysium.eraces.ERaces
-import dev.elysium.eraces.utils.ChatUtil
 import dev.elysium.eraces.utils.actionMsg
 import org.bukkit.NamespacedKey
 import org.bukkit.attribute.Attribute
@@ -12,8 +11,7 @@ import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.persistence.PersistentDataType
 import kotlin.random.Random
 
-class ChanceResurrectionListener : Listener {
-
+class ChanceResurrectionUpdater : Listener {
     @EventHandler
     fun onPlayerDamage(event: EntityDamageEvent) {
         val player = event.entity

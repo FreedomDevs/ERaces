@@ -115,32 +115,16 @@ elf:
     name: "§aЭльф"
     lore: "§aЛесной народ, в гармонии с природой.\n\n§eБонусы:\n§7»  Скорость II в лесах и равнинах.\n§7»  Удвоенный урон и скорость стрел из лука.\n§7»  Метаболизм: расход голода на 25% меньше.\n\n§cМинусы:\n§7»  Только 15 HP (7.5 сердечек).\n§7»  Штраф за ношение брони выше железной — замедление I.\n§7»  Не может есть мясо (вегетарианец).\n§7»  Урон ближнего боя x0.5.\n\n§7Для выбора нажмите: §f[ПКМ]"
     icon: "OAK_SAPLING"
-  max_hp: 16                              # Макс хп 15
-  hunger_loss_multiplier: 0.75            # Голодают на 25% медленнее
+  max_hp: 20
+  mana_regeneration_modifiers:
+    - multiplier: 1.1
   weapon_proficiency:
-    bow_damage_multiplier: 2  # Урон от лука увеличен на 100%
-    bow_projectile_speed_multiplier: 2
-    sword_damage_multiplier: 0.5 # Урон от меча уменьшен на 50%
-    axe_damage_multiplier: 0.5  # Урон от топора уменьшен на 50%
-    mace_damage_multiplier: 0.5  # Урон от булавы увеличен на 50%
-  forbidden_foods: # Запрещённая еда для поедания
-    - COOKED_BEEF
-    - COOKED_PORK
-    - COOKED_MUTTON
-    - COOKED_CHICKEN
-  visuals:
-    - ears
-  effects_with:
-    in_biome:
-      - biomes:
-          - forest
-          - birch_forest
-          - dark_forest
-          - taiga
-        effects:
-          speed: 1
-  exhaustion_multiplier: 0.75
-  slowness_with_iron_and_more_armor: 1
+    sword_damage_multiplier: 0.75
+    axe_damage_multiplier: 0.75
+
+
+    #Скорость атаки +15%(в принципе нету)
+    #Эффект замерзания в зимних биомах
 
 
 dark_elf:
@@ -396,3 +380,91 @@ elf_king:
   #Область 3x3
   #КД 30 минут
   #При использование владелец создаёт под собой область 3x3 в которой любой игрок получает регенерацию 2, а также насыщенность.
+
+эльфСВ_Альвы:
+  gui_config:
+    name: "Эльф Альва"
+    lore: ""
+    icon: "MACE"
+  max_hp: 22
+  mana_regeneration_modifiers:
+    - multiplier: 1.15
+  exclude_from_random: true
+  weapon_proficiency:
+    sword_damage_multiplier: 0.8
+    axe_damage_multiplier: 0.8
+
+ЭльфСВ_Высший эльф:
+  gui_config:
+    name: "Высший Эльф"
+    lore: ""
+    icon: "MACE"
+  max_hp: 30
+  mana_regeneration_modifiers:
+    - multiplier: 1.4
+  effects_with:
+    in_world:
+      - world: the_nether
+        effects:
+          nausea: 2 #20 сек, КД — 3 мин
+          blindness: 1 #5 сек, КД — 1 мин
+  exclude_from_random: true
+
+  weapon_proficiency:
+    sword_damage_multiplier: 0.8
+    axe_damage_multiplier: 0.8
+
+ЭльфЛВ_Нандор:
+  gui_config:
+    name: "Элфь Нандор"
+    lore: ""
+    icon: "MACE"
+  max_hp: 20
+  exclude_from_random: true
+  effects_with:
+    in_biome:
+      - biomes:
+          - forest
+          - birch_forest
+          - taiga
+          - dark_forest
+          - flower_forest
+          - jungle
+          - grove
+          - cherry_grove
+          - bamboo_jungle
+        effects:
+          speed: 1
+          jump_boost: 1
+  weapon_proficiency:
+    sword_damage_multiplier: 0.8
+    axe_damage_multiplier: 0.8
+
+ЭльфЛВ_Сильван:
+  gui_config:
+    name: "Элфь Сильван"
+    lore: ""
+    icon: "MACE"
+  max_hp: 20
+  exclude_from_random: true
+  effects_with:
+    in_biome:
+      - biomes:
+          - forest
+          - birch_forest
+          - taiga
+          - dark_forest
+          - flower_forest
+          - jungle
+          - grove
+          - cherry_grove
+          - bamboo_jungle
+        effects:
+          speed: 1
+          jump_boost: 1
+
+        #снижение урона от падения (на 10%)
+  weapon_proficiency:
+    sword_damage_multiplier: 0.8
+    axe_damage_multiplier: 0.8
+

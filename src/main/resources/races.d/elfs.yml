@@ -356,3 +356,116 @@ elf_king:
     sword_damage_multiplier: 0.8
     axe_damage_multiplier: 0.8
 
+ЭльфЛВ_Тэлери:
+  gui_config:
+    name: "Эльф Тэлери"
+    lore: ""
+    icon: "MACE"
+  max_hp: 24
+  exclude_from_random: true
+  weapon_proficiency:
+    sword_damage_multiplier: 0.8
+    axe_damage_multiplier: 0.8
+
+ЭльфЛВ_Нолдор:
+  gui_config:
+    name: "Элфь Нолдолр"
+    lore: ""
+    icon: "MACE"
+  max_hp: 24
+  exclude_from_random: true
+  effects_with:
+    in_biome:
+      - biomes:
+          - forest
+          - birch_forest
+          - taiga
+          - dark_forest
+          - flower_forest
+          - jungle
+          - grove
+          - cherry_grove
+          - bamboo_jungle
+        effects:
+          speed: 2
+          jump_boost: 2
+
+        #снижение урона от падения (на 30%)
+  weapon_proficiency:
+    sword_damage_multiplier: 0.8
+    axe_damage_multiplier: 0.8
+
+ЭльфЛВ_Фалатрим:
+  gui_config:
+    name: "Элфь Фалатрим"
+    lore: ""
+    icon: "MACE"
+  max_hp: 26
+  exclude_from_random: true
+  effects_with:
+    in_biome:
+      - biomes:
+          - forest
+          - birch_forest
+          - taiga
+          - dark_forest
+          - flower_forest
+          - jungle
+          - grove
+          - cherry_grove
+          - bamboo_jungle
+        effects:
+          speed: 3
+          jump_boost: 3
+          night_vision: 256
+
+        #снижение урона от падения (на 50%)
+  weapon_proficiency:
+    sword_damage_multiplier: 0.8
+    axe_damage_multiplier: 0.8
+
+ЭльфЛВ_Иффил:
+  gui_config:
+    name: "Элфь Фалатрим"
+    lore: ""
+    icon: "MACE"
+  max_hp: 26
+  exclude_from_random: true
+  effects_with:
+    in_biome:
+      - biomes:
+          - forest
+          - birch_forest
+          - taiga
+          - dark_forest
+          - flower_forest
+          - jungle
+          - grove
+          - cherry_grove
+          - bamboo_jungle
+        effects:
+          speed: 4
+          jump_boost: 4
+
+        #снижение урона от падения (на 50%)
+  weapon_proficiency:
+    sword_damage_multiplier: 0.8
+    axe_damage_multiplier: 0.8
+
+ЭльфТВ_Дверги:
+  gui_config:
+    name: "Элфь Фалатрим"
+    lore: ""
+    icon: "MACE"
+  max_hp: 18
+  mana_regeneration_modifiers:
+    - multiplier: 1.1
+  exclude_from_random: true
+  effects_with:
+    at_light:
+      - blindness: 256
+
+        #Питаются гнилью (как хлеб)
+  weapon_proficiency:
+    sword_damage_multiplier: 0.8
+    axe_damage_multiplier: 0.8

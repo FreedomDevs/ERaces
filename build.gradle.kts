@@ -102,7 +102,7 @@ tasks {
     }
 
     val sourcesJar by registering(Jar::class) {
-        archiveBaseName.set("${rootProject.name}-common")
+        archiveBaseName.set("${rootProject.name}")
         archiveClassifier.set("sources")
         from(sourceSets.main.get().allSource)
     }

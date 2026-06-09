@@ -5,13 +5,12 @@ plugins {
     `maven-publish`
     kotlin("jvm") version "2.2.21"
     kotlin("plugin.serialization") version "2.2.21"
-    id("com.gradleup.shadow") version "8.3.0"
     id("xyz.jpenilla.run-paper") version "2.3.1"
 }
 
 group = "dev.elysium.eraces"
 
-version = "1.10.1"
+version = "1.11.0"
 
 repositories {
     mavenCentral()
@@ -89,15 +88,6 @@ tasks {
         }
     }
 
-    // jar = shadowJar
-    build {
-        dependsOn("shadowJar")
-    }
-
-    shadowJar {
-        archiveClassifier.set("") // чтобы jar назывался как обычно, без "-all"
-    }
-
     processResources {
         val props = mapOf("version" to version)
         inputs.properties(props)
@@ -110,15 +100,29 @@ tasks {
     withType<JavaCompile> {
         options.compilerArgs.add("-Xlint:deprecation")
     }
+
+    val sourcesJar by registering(Jar::class) {
+        archiveBaseName.set("${rootProject.name}-common")
+        archiveClassifier.set("sources")
+        from(sourceSets.main.get().allSource)
+    }
 }
 
 publishing {
     publications {
         create<MavenPublication>("mavenJava") {
             from(components["java"])
+
             groupId = project.group.toString()
-            artifactId = "eraces"
+            artifactId = "${rootProject.name}"
             version = project.version.toString()
+
+            artifact(tasks.named("sourcesJar"))
+        }
+    }
+    repositories {
+        maven {
+            url = rootProject.layout.buildDirectory.dir("repo").get().asFile.toURI()
         }
     }
 }

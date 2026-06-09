@@ -1,0 +1,10 @@
+name: Deploy Plugin
+
+on:
+  push:
+    branches: [ "master" ]
+
+jobs:
+  call-shared-workflow:
+    secrets: inherit 
+    uses: FreedomDevs/.github/.github/workflows/gradle-deploy.yml@main

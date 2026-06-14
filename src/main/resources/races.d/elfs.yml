@@ -463,9 +463,52 @@ elf_king:
   exclude_from_random: true
   effects_with:
     at_light:
-      - blindness: 256
-
+      min: 12
+      max: 15
+      effects:
+        blindness: 1
+  #Питаются гнилью (как хлеб) (нету на момент написания)
         #Питаются гнилью (как хлеб)
+  weapon_proficiency:
+    sword_damage_multiplier: 0.8
+    axe_damage_multiplier: 0.8
+
+ЭльфТВ_Уманиар:
+  gui_config:
+    name: "Элфь Уманиар"
+    lore: ""
+    icon: "MACE"
+  max_hp: 18
+  mana_regeneration_modifiers:
+    - multiplier: 1.1
+  exclude_from_random: true
+  effects_with:
+    at_light:
+      min: 12
+      max: 15
+      effects:
+        blindness: 1
+        #Питаются гнилью (как хлеб) (нету на момент написания)
+  weapon_proficiency:
+    sword_damage_multiplier: 0.8
+    axe_damage_multiplier: 0.8
+
+ЭльфТВ_Осквернённый сильван:
+  gui_config:
+    name: "Элфь Оскверненный сильван"
+    lore: ""
+    icon: "MACE"
+  max_hp: 20
+  mana_regeneration_modifiers:
+    - multiplier: 1.5
+  exclude_from_random: true
+  effects_with:
+    at_light:
+      min: 12
+      max: 15
+      effects:
+        blindness: 1
+        #Питаются гнилью (как хлеб) (нету на момент написания)
   weapon_proficiency:
     sword_damage_multiplier: 0.8
     axe_damage_multiplier: 0.8

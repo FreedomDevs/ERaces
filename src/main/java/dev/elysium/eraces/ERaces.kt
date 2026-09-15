@@ -51,6 +51,7 @@ class ERaces : JavaPlugin() {
 
     companion object {
         private lateinit var instance: ERaces
+        const val PLUGIN_NAMESPACE: String = "eraces"
 
         @JvmStatic
         fun logger(): Logger = instance.logger

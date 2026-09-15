@@ -9,7 +9,6 @@ import dev.elysium.eraces.items.колчаны.КолчанManager
 class ItemsInitializer : IInitializer {
     override fun setup(plugin: ERaces) {
         ItemKeys.init(plugin)
-        StateKeys.init(plugin)
         WeaponManager.enable(plugin)
         КолчанManager.enable(plugin)
     }

@@ -3,8 +3,8 @@ import java.net.URI
 plugins {
     java
     `maven-publish`
-    kotlin("jvm") version "2.2.21"
-    kotlin("plugin.serialization") version "2.2.21"
+    kotlin("jvm") version "2.4.20"
+    kotlin("plugin.serialization") version "2.4.20"
     id("xyz.jpenilla.run-paper") version "2.3.1"
 }
 
@@ -46,7 +46,7 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok:1.18.42")
 }
 
-val targetJavaVersion = 21
+val targetJavaVersion = 25
 kotlin {
     jvmToolchain(targetJavaVersion)
 }

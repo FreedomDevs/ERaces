@@ -4,6 +4,7 @@ import dev.elysium.eraces.abilities.ConfigHelper
 import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseCooldownAbility
 import dev.elysium.eraces.utils.TimeParser
+import dev.elysium.eraces.utils.TimeValue
 import dev.elysium.eraces.utils.targetUtils.Target
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.entity.Player
@@ -18,7 +19,7 @@ import java.util.UUID
 class TerrifyingRageAbility : BaseCooldownAbility(
     id = "terrifyingrage", defaultCooldown = "90s"
 ), Listener {
-    private var duration: String = "5s"
+    private var duration = TimeValue.fromSeconds(5)
     private var radiuas: Double = 2.0
     private val activatePlayers = mutableMapOf<UUID, Long>()
 
@@ -53,7 +54,7 @@ class TerrifyingRageAbility : BaseCooldownAbility(
         val a = activatePlayers[uuid]?: return
         val now = System.currentTimeMillis()
         val g = now - a
-        if (g < TimeParser.parseToMilliseconds(duration)){
+        if (g < duration.milliseconds){
            event.isCancelled = true
             return
         }
@@ -68,7 +69,7 @@ class TerrifyingRageAbility : BaseCooldownAbility(
         val a = activatePlayers[uuid]?: return
         val now = System.currentTimeMillis()
         val g = now - a
-        if (g < TimeParser.parseToMilliseconds(duration)){
+        if (g < duration.milliseconds){
             event.isCancelled = true
             return
         }

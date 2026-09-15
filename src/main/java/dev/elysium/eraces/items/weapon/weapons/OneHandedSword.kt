@@ -10,7 +10,7 @@ import org.bukkit.entity.Player
 class OneHandedSword : MeleeWeapon(
     id = "one_handed_sword",
     material = Material.IRON_SWORD,
-    name = "<blue>Одноручный меч",
+    name = "<green>Одноручный меч",
     damage = 7.0,
     attackSpeed = 1.7,
     maxDurability = 400,

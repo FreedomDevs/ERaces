@@ -1,41 +1,23 @@
 package dev.elysium.eraces.items.core.state
 
-import dev.elysium.eraces.ERaces
+import dev.elysium.eraces.ERaces.Companion.PLUGIN_NAMESPACE
 import org.bukkit.NamespacedKey
 
 object StateKeys {
-    lateinit var HITS: NamespacedKey
-    lateinit var DURABILITY: NamespacedKey
-    lateinit var KD: NamespacedKey
+    val HITS = NamespacedKey(PLUGIN_NAMESPACE, "hits")
+    val DURABILITY =  NamespacedKey(PLUGIN_NAMESPACE, "max_hits")
+    val KD = NamespacedKey(PLUGIN_NAMESPACE, "kd")
 
-    lateinit var MANA: NamespacedKey
+    val MANA = NamespacedKey(PLUGIN_NAMESPACE, "mana")
 
-    lateinit var IS_ABILITY_CHARGED: NamespacedKey
-    lateinit var CHARGE_START: NamespacedKey
-    lateinit var CHARGE_TASK_ID: NamespacedKey
+    val IS_ABILITY_CHARGED = NamespacedKey(PLUGIN_NAMESPACE, "is_ability_charged")
+    val CHARGE_START = NamespacedKey(PLUGIN_NAMESPACE, "charge_start")
+    val CHARGE_TASK_ID = NamespacedKey(PLUGIN_NAMESPACE, "charge_task_id")
 
-    lateinit var ABILITY_CHARGE_START: NamespacedKey
-    lateinit var ABILITY_CHARGED_UNTIL: NamespacedKey
+    val ABILITY_CHARGE_START =
+        NamespacedKey(PLUGIN_NAMESPACE, "ability_charge_start")
+    val ABILITY_CHARGED_UNTIL  =
+        NamespacedKey(PLUGIN_NAMESPACE, "ability_charged_until")
 
-    lateinit var ARROWS_КОЛЧАН: NamespacedKey
-
-    fun init(plugin: ERaces) {
-        HITS = NamespacedKey(plugin, "hits")
-        DURABILITY = NamespacedKey(plugin, "max_hits")
-        KD = NamespacedKey(plugin, "kd")
-
-        MANA = NamespacedKey(plugin, "mana")
-
-        IS_ABILITY_CHARGED = NamespacedKey(plugin, "is_ability_charged")
-        CHARGE_START = NamespacedKey(plugin, "charge_start")
-        CHARGE_TASK_ID = NamespacedKey(plugin, "charge_task_id")
-
-        ABILITY_CHARGE_START =
-            NamespacedKey(plugin, "ability_charge_start")
-
-        ABILITY_CHARGED_UNTIL =
-            NamespacedKey(plugin, "ability_charged_until")
-
-        ARROWS_КОЛЧАН = NamespacedKey(plugin, "arrows_колчан")
-    }
+    val ARROWS_QUIVER = NamespacedKey(PLUGIN_NAMESPACE, "arrows_quiver")
 }

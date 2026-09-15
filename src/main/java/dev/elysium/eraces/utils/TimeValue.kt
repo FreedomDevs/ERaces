@@ -97,16 +97,16 @@ class TimeValue(val milliseconds: Long, val input: String = "0s") {
 
         fun parseDuration(input: String): Long {
             val cleanInput = input.lowercase().replace(',', '.')
-
             val scanner = Scanner(cleanInput).useLocale(Locale.US)
 
             var totalMillis = 0L
             var isValid = false
 
             while (scanner.hasNext()) {
-                if (scanner.hasNextDouble()) {
-                    val value = scanner.nextDouble()
+                val valueStr = scanner.findInLine("""\d+(\.\d+)?""")
 
+                if (valueStr != null) {
+                    val value = valueStr.toDouble()
                     val unitStr = scanner.findInLine("[ywdhmst]")
 
                     if (unitStr == null) {
@@ -118,7 +118,7 @@ class TimeValue(val milliseconds: Long, val input: String = "0s") {
                     totalMillis += convertToMillis(value, unitStr)
                     isValid = true
                 } else {
-                    val char = scanner.nextByte().toInt().toChar().toString()
+                    val char = scanner.findInLine(".") ?: break
                     if (char != " ") {
                         ERaces.logger()
                             .warning("Внимание: Обнаружен и проигнорирован невалидный символ: '$char' в $cleanInput")

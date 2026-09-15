@@ -18,7 +18,7 @@ import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
 
 @Suppress("UnstableApiUsage")
-open class Колчаны(
+open class Quivers(
     override val id: String,
     val name: String,
     val lore: ItemLore,
@@ -42,7 +42,7 @@ open class Колчаны(
         event.damage += 1
     }
 
-    fun openКолчаныGui(player: Player) {
+    fun openQuiversGui(player: Player) {
         val size = 18
         val holder = GuiHolder(GuiType.QUIVER, name)
         val inv: Inventory = Bukkit.createInventory(player, size, ChatUtil.parse(name))
@@ -53,7 +53,7 @@ open class Колчаны(
                 isHideTooltip = true
             }
         }
-        val currentArrows = ItemState(player.inventory.itemInMainHand).getInt(StateKeys.ARROWS_КОЛЧАН)
+        val currentArrows = ItemState(player.inventory.itemInMainHand).getInt(StateKeys.ARROWS_QUIVER)
 
         var remaining = currentArrows
         var slot = 0

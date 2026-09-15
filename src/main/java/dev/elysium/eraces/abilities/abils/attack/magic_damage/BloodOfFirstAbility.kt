@@ -4,6 +4,7 @@ import dev.elysium.eraces.abilities.ConfigHelper
 import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseEffectsAbility
 import dev.elysium.eraces.utils.TimeParser
+import dev.elysium.eraces.utils.TimeValue
 import dev.elysium.eraces.utils.targetUtils.Target
 import dev.elysium.eraces.utils.targetUtils.target.TargetFilter
 import dev.elysium.eraces.utils.targetUtils.target.TargetTrail
@@ -26,7 +27,7 @@ class BloodOfFirstAbility : Listener, BaseEffectsAbility(
         "speed" to EffectData("2m", 3, PotionEffectType.SPEED),
     )
 ) {
-    private var duration: String = "2m"
+    private var duration: TimeValue = TimeValue.fromSeconds(120)
     private var clickCooldownMs: Long = 75
     private var damage: Double = 1.0
     private var maxDistance: Double = 25.0
@@ -45,7 +46,7 @@ class BloodOfFirstAbility : Listener, BaseEffectsAbility(
         if (!playersWaiting.containsKey(uuid)) return
 
         val waitingPlayer = playersWaiting[uuid]!!
-        val durationMs: Long = TimeParser.parseToMilliseconds(duration)
+        val durationMs: Long = duration.milliseconds
         val curtime = System.currentTimeMillis()
         if (waitingPlayer.lastActivateTime + durationMs < curtime) return
         if (waitingPlayer.lastClickTime + clickCooldownMs > curtime) return

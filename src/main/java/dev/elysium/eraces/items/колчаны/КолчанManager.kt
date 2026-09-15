@@ -2,12 +2,11 @@ package dev.elysium.eraces.items.колчаны
 
 import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.items.core.ItemRegistry
-import dev.elysium.eraces.items.колчаны.колчаны.BeerКолчан
 
 object КолчанManager {
     fun enable(plugin: ERaces) {
-        val колчаны = listOf<Колчаны>(
-            BeerКолчан()
+        val колчаны = listOf<Quivers>(
+            BeerQuiver()
         )
 
         колчаны.forEach(ItemRegistry::register)

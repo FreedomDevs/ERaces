@@ -1,6 +1,5 @@
-package dev.elysium.eraces.items.колчаны.колчаны
+package dev.elysium.eraces.items.колчаны
 
-import dev.elysium.eraces.items.колчаны.Колчаны
 import dev.elysium.eraces.utils.ChatUtil
 import io.papermc.paper.datacomponent.item.ItemLore
 import org.bukkit.entity.LivingEntity
@@ -9,7 +8,7 @@ import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 
 @Suppress("UnstableApiUsage")
-class BeerКолчан : Колчаны(
+class BeerQuiver : Quivers(
     "beer_колчан",
     "<green>Пивной колчан",
     ItemLore.lore().addLine(ChatUtil.parse("<red>Test1234")).build(),

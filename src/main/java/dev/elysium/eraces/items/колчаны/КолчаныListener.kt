@@ -24,15 +24,15 @@ class КолчаныListener: Listener {
         val player = e.player
 
         if (clickType != ClickType.LEFT) return
-        val itemInMainHand = ItemResolver.resolve(player.inventory.itemInMainHand) as? Колчаны ?: return
+        val itemInMainHand = ItemResolver.resolve(player.inventory.itemInMainHand) as? Quivers ?: return
 
-        itemInMainHand.openКолчаныGui(player)
+        itemInMainHand.openQuiversGui(player)
     }
 
     @EventHandler
     fun onInventoryClick(e: InventoryClickEvent) {
         val player = e.inventory.holder as? Player ?: return
-        val itemInMainHand = ItemResolver.resolve(player.inventory.itemInMainHand) as? Колчаны ?: return
+        val itemInMainHand = ItemResolver.resolve(player.inventory.itemInMainHand) as? Quivers ?: return
         val holder = e.view.topInventory.holder
 
         if (holder is GuiHolder && holder.guiType == GuiType.QUIVER && holder.id == itemInMainHand.name) {
@@ -63,7 +63,7 @@ class КолчаныListener: Listener {
                         count += item.amount
                     }
 
-                    ItemState(player.inventory.itemInMainHand).setInt(StateKeys.ARROWS_КОЛЧАН, count)
+                    ItemState(player.inventory.itemInMainHand).setInt(StateKeys.ARROWS_QUIVER, count)
                 }
             }.runTaskLater(ERaces.getInstance(), 1L)
 

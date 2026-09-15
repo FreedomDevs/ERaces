@@ -5,6 +5,7 @@ import dev.elysium.eraces.abilities.ConfigHelper
 import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseCooldownAbility
 import dev.elysium.eraces.utils.TimeParser
+import dev.elysium.eraces.utils.TimeValue
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.configuration.file.YamlConfiguration
@@ -20,11 +21,11 @@ import kotlin.random.Random
 @Suppress("unused")
 class ShellingAbility : BaseCooldownAbility( id = "shelling", defaultCooldown = "10m", comboKey = "8845") {
     private var radius: Double = 5.0
-    private var duration: String = "10s"
+    private var duration: TimeValue = TimeValue.fromSeconds(10)
     private var arrowFallsEveryTick: Long = 10
 
     override fun onActivate(player: Player) {
-        val timeEnd: Long = System.currentTimeMillis() + TimeParser.parseToMilliseconds(duration)
+        val timeEnd: Long = System.currentTimeMillis() + duration.milliseconds
         var iterationsCount: Long = 0
 
         var task: BukkitTask? = null

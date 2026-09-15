@@ -4,6 +4,7 @@ import dev.elysium.eraces.abilities.ConfigHelper
 import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseCooldownAbility
 import dev.elysium.eraces.utils.TimeParser
+import dev.elysium.eraces.utils.TimeValue
 import dev.elysium.eraces.utils.targetUtils.Target
 import dev.elysium.eraces.utils.targetUtils.target.TargetFilter
 import org.bukkit.configuration.file.YamlConfiguration
@@ -17,10 +18,10 @@ class AncientKnowledgeAbility: BaseCooldownAbility(
     id = "ancientknowledge", defaultCooldown = "3m"
 ) {
     private var radius: Double = 15.0
-    private var duration: String = "15s"
+    private var duration: TimeValue = TimeValue.fromSeconds(15)
 
     override fun onActivate(player: Player) {
-        Target.Companion.from(player)
+        Target.from(player)
             .filter(TargetFilter.ENTITIES)
             .inRadius(radius)
             .excludeCaster()
@@ -28,7 +29,7 @@ class AncientKnowledgeAbility: BaseCooldownAbility(
                 if (target is Player) {
                     val effect = PotionEffect(
                         PotionEffectType.GLOWING,
-                        TimeParser.parseToTicks(duration).toInt(),
+                        duration.toTicksInt(),
                         0,
                         false,
                         false

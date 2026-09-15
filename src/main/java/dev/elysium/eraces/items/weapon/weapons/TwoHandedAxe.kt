@@ -2,6 +2,8 @@ package dev.elysium.eraces.items.weapon.weapons
 
 import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.items.weapon.MeleeWeapon
+import dev.elysium.eraces.utils.actionMsg
+import dev.elysium.eraces.utils.msg
 import dev.elysium.eraces.utils.titleMsg
 import org.bukkit.Bukkit
 import org.bukkit.Material
@@ -71,9 +73,12 @@ class TwoHandedAxe : MeleeWeapon(
             return
         }
 
+        player.actionMsg("Абилка заюзана")
+        player.msg("Тест")
         tryAbility(player, stack, cooldown) {
             title(target)
             playersForExecution[uuid] = setOf(target.uniqueId) as MutableSet<UUID>
+
 
             object : BukkitRunnable() {
                 override fun run() {

@@ -5,6 +5,7 @@ import dev.elysium.eraces.abilities.ConfigHelper
 import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseCooldownAbility
 import dev.elysium.eraces.utils.TimeParser
+import dev.elysium.eraces.utils.TimeValue
 import dev.elysium.eraces.utils.targetUtils.Target
 import dev.elysium.eraces.utils.targetUtils.target.TargetFilter
 import dev.elysium.eraces.utils.targetUtils.target.TargetTrail
@@ -24,7 +25,7 @@ import kotlin.random.Random
 class SupremeMagicianAbility : BaseCooldownAbility( id = "supreme_magician", defaultCooldown = "25m") {
     private var radius: Double = 5.0
     private var step: Double = 0.25
-    private var duration: String = "10s"
+    private var duration: TimeValue = TimeValue.fromSeconds(10)
     private var sphereFallsEveryTick: Long = 10
 
     private var fireSphereDamage: Double = 4.0
@@ -35,7 +36,7 @@ class SupremeMagicianAbility : BaseCooldownAbility( id = "supreme_magician", def
     private var iceSphereSlownessDuration: String = "3s"
 
     override fun onActivate(player: Player) {
-        val timeEnd: Long = System.currentTimeMillis() + TimeParser.parseToMilliseconds(duration)
+        val timeEnd: Long = System.currentTimeMillis() + duration.milliseconds
         var iterationsCount: Long = 0
 
         var task: BukkitTask? = null

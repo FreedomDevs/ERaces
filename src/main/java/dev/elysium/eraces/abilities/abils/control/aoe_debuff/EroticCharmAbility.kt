@@ -4,7 +4,7 @@ import dev.elysium.eraces.abilities.ConfigHelper
 import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseEffectsAbility
 import dev.elysium.eraces.utils.EffectUtils
-import dev.elysium.eraces.utils.TimeParser
+import dev.elysium.eraces.utils.TimeValue
 import dev.elysium.eraces.utils.targetUtils.Target
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.entity.Player
@@ -18,16 +18,16 @@ class EroticCharmAbility : BaseEffectsAbility(
     )
 ) {
     private var level: Int = 5
-    private var duration: String = "10s"
+    private var duration = TimeValue.fromSeconds(10)
 
     override fun onActivate(player: Player) {
-        Target.Companion.from(player).excludeCaster().execute { it ->
+        Target.from(player).excludeCaster().execute { it ->
             EffectUtils.applyEffects(
                 it as Player,
                 mapOf<String, Int>(
                     "SLOWNESS" to level
                 ),
-                durationTicks = TimeParser.parseToTicks(duration).toInt()
+                durationTicks = duration.toTicksInt()
             )
         }
     }

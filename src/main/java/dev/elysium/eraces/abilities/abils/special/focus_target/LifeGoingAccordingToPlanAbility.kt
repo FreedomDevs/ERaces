@@ -4,7 +4,7 @@ import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.abilities.ConfigHelper
 import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseCooldownAbility
-import dev.elysium.eraces.utils.TimeParser
+import dev.elysium.eraces.utils.TimeValue
 import dev.elysium.eraces.utils.msg
 import dev.elysium.eraces.utils.targetUtils.Target
 import dev.elysium.eraces.utils.targetUtils.target.TargetFilter
@@ -23,7 +23,7 @@ class LifeGoingAccordingToPlanAbility : BaseCooldownAbility(
     id = "lifegoingaccordingtoplan",
     defaultCooldown = "5m"
 ) {
-    private var duration = "2m"
+    private var duration = TimeValue.fromSeconds(120)
     private var radius = 15.0
     private var damage = 15.0
 
@@ -34,7 +34,7 @@ class LifeGoingAccordingToPlanAbility : BaseCooldownAbility(
         val toRemove: MutableSet<UUID> = mutableSetOf()
 
         for ((key, value) in affectedPlayers) {
-            if (value.startTime + TimeParser.parseToMilliseconds(duration) < System.currentTimeMillis()) {
+            if (value.startTime + duration.milliseconds < System.currentTimeMillis()) {
                 toRemove.add(key)
                 continue
             }

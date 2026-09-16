@@ -1,9 +1,7 @@
 package dev.elysium.eraces.utils
 
 import dev.elysium.eraces.ERaces
-import org.apache.logging.log4j.util.PropertySource
-import java.util.Locale
-import java.util.Scanner
+import java.util.*
 import kotlin.math.roundToLong
 
 class TimeValue(val milliseconds: Long, val input: String = "0s") {

@@ -5,6 +5,7 @@ import dev.elysium.eraces.abilities.AbilityUtils
 import dev.elysium.eraces.abilities.ConfigHelper
 import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseEffectsAbility
+import dev.elysium.eraces.utils.TimeValue
 import org.bukkit.NamespacedKey
 import org.bukkit.attribute.Attribute
 import org.bukkit.attribute.AttributeModifier
@@ -25,13 +26,13 @@ class DestructiveRageAbility : BaseEffectsAbility(
     )), Listener {
 
     var additionalArmor = 3.0
-    var armorDuration = "20s"
+    var armorDuration = TimeValue.fromSeconds(20)
 
     override fun customActivate(player: Player) {
         addArmor(player)
 
         // убираем броню через 20 секунд
-        AbilityUtils.runLater(ERaces.getInstance(), armorDuration) {
+        AbilityUtils.runLater(ERaces.getInstance(), armorDuration.toTicks()) {
             if (player.isOnline)
                 removeArmor(player)
         }

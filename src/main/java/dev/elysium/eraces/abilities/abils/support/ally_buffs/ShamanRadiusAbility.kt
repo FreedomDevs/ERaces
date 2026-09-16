@@ -6,17 +6,18 @@ import dev.elysium.eraces.abilities.ConfigHelper
 import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseCooldownAbility
 import dev.elysium.eraces.listeners.custom.ManaConsumeEvent
+import dev.elysium.eraces.utils.TimeValue
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
-import java.util.UUID
+import java.util.*
 
 @RegisterAbility
 @Suppress("unused")
 class ShamanRadiusAbility: BaseCooldownAbility(id = "shaman_radius", defaultCooldown = "60s"), Listener {
     private var radius: Double = 4.0
-    private var duration: String = "30s"
+    private var duration = TimeValue.fromSeconds(30)
 
     private val boostedPlayers: MutableSet<UUID> = mutableSetOf()
 
@@ -26,7 +27,7 @@ class ShamanRadiusAbility: BaseCooldownAbility(id = "shaman_radius", defaultCool
 
         nearPlayers.add(player)
         nearPlayers.forEach { boostedPlayers.add(it.uniqueId) }
-        AbilityUtils.runLater(plugin, duration) {
+        AbilityUtils.runLater(plugin, duration.toTicks()) {
             nearPlayers.forEach { boostedPlayers.remove(it.uniqueId) }
         }
 

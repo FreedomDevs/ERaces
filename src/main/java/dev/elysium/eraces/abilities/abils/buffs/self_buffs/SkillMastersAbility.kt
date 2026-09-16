@@ -7,6 +7,7 @@ import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseEffectsAbility
 import dev.elysium.eraces.listeners.custom.ManaConsumeEvent
 import dev.elysium.eraces.listeners.custom.ManaRegenerationEvent
+import dev.elysium.eraces.utils.TimeValue
 import dev.elysium.eraces.utils.actionMsg
 import org.bukkit.Color
 import org.bukkit.Particle
@@ -16,7 +17,7 @@ import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.potion.PotionEffectType
-import java.util.UUID
+import java.util.*
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -35,7 +36,7 @@ class SkillMastersAbility : BaseEffectsAbility(
     private var manaRegenBonus: Double = 0.1 // +10%
     private var manaConsumeReduction: Double = 0.1 // -10%
     private var attackSpeedBonus: Double = 0.2
-    private var duration: String = "2m"
+    private var duration = TimeValue.fromSeconds(120)
 
     override fun customActivate(player: Player) {
         val plugin = ERaces.getInstance()
@@ -53,7 +54,7 @@ class SkillMastersAbility : BaseEffectsAbility(
 
         spawnStartEffect(player)
 
-        AbilityUtils.runLater(plugin, duration) {
+        AbilityUtils.runLater(plugin, duration.toTicks()) {
             active.remove(player.uniqueId)
             attr?.baseValue = base
             player.actionMsg("<gray>Эффект способности 'Духовный щит' закончился.")
@@ -63,7 +64,7 @@ class SkillMastersAbility : BaseEffectsAbility(
     }
 
     private fun spawnParticle(plugin: ERaces, player: Player) {
-        AbilityUtils.runRepeatingForDuration(plugin, duration, 3L) { tick ->
+        AbilityUtils.runRepeatingForDuration(plugin, duration.toTicks(), 3L) { tick ->
             if (!active.contains(player.uniqueId)) return@runRepeatingForDuration
 
             val world = player.world

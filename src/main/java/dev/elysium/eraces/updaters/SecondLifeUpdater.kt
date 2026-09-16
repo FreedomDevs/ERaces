@@ -2,7 +2,7 @@ package dev.elysium.eraces.updaters
 
 import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.datatypes.Race
-import dev.elysium.eraces.utils.TimeParser
+import dev.elysium.eraces.utils.TimeValue
 import org.bukkit.Sound
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -10,7 +10,7 @@ import org.bukkit.event.Listener
 import org.bukkit.event.entity.PlayerDeathEvent
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
-import java.util.UUID
+import java.util.*
 
 class SecondLifeUpdater : Listener {
     private val secondLifeCooldowns: MutableMap<UUID, Long> = mutableMapOf()
@@ -23,7 +23,7 @@ class SecondLifeUpdater : Listener {
         val player: Player = event.player
         val uuid: UUID = event.player.uniqueId
         val curTime: Long = System.currentTimeMillis()
-        val cooldown: Long = TimeParser.parseToMilliseconds(race.secondLifeCooldown)
+        val cooldown: Long = TimeValue(race.secondLifeCooldown).milliseconds
 
 
         if (secondLifeCooldowns.getOrDefault(uuid, 0) + cooldown < curTime) {

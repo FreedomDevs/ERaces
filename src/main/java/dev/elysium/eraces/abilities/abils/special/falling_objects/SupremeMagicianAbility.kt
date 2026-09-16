@@ -4,7 +4,6 @@ import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.abilities.ConfigHelper
 import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseCooldownAbility
-import dev.elysium.eraces.utils.TimeParser
 import dev.elysium.eraces.utils.TimeValue
 import dev.elysium.eraces.utils.targetUtils.Target
 import dev.elysium.eraces.utils.targetUtils.target.TargetFilter
@@ -33,7 +32,7 @@ class SupremeMagicianAbility : BaseCooldownAbility( id = "supreme_magician", def
     private var iceSphereDamage: Double = 4.0
 
     private var iceSphereSlownessLevel: Int = 2
-    private var iceSphereSlownessDuration: String = "3s"
+    private var iceSphereSlownessDuration = TimeValue.fromSeconds(3)
 
     override fun onActivate(player: Player) {
         val timeEnd: Long = System.currentTimeMillis() + duration.milliseconds
@@ -72,7 +71,7 @@ class SupremeMagicianAbility : BaseCooldownAbility( id = "supreme_magician", def
                     entity.addPotionEffect(
                         PotionEffect(
                             PotionEffectType.SLOWNESS,
-                            TimeParser.parseToTicks(iceSphereSlownessDuration).toInt(),
+                            iceSphereSlownessDuration.toTicksInt(),
                             iceSphereSlownessLevel - 1,
                             false
                         )

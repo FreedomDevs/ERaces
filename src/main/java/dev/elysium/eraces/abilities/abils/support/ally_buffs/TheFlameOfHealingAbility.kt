@@ -3,7 +3,7 @@ package dev.elysium.eraces.abilities.abils.support.ally_buffs
 import dev.elysium.eraces.abilities.ConfigHelper
 import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseCooldownAbility
-import dev.elysium.eraces.utils.TimeParser
+import dev.elysium.eraces.utils.TimeValue
 import dev.elysium.eraces.utils.targetUtils.Target
 import dev.elysium.eraces.utils.targetUtils.target.TargetFilter
 import org.bukkit.configuration.file.YamlConfiguration
@@ -17,7 +17,7 @@ class TheFlameOfHealingAbility : BaseCooldownAbility(
     id = "theflameofhealing", defaultCooldown = "2m"
 ) {
     private var radius: Double = 5.0
-    private var duration: String = "10s"
+    private var duration = TimeValue.fromSeconds(10)
     private var level: Int = 3
 
     override fun onActivate(player: Player) {
@@ -29,7 +29,7 @@ class TheFlameOfHealingAbility : BaseCooldownAbility(
                 if (target is Player) {
                     val effect = PotionEffect(
                         PotionEffectType.REGENERATION,
-                        TimeParser.parseToTicks(duration).toInt(),
+                        duration.toTicksInt(),
                         level,
                         false,
                         false

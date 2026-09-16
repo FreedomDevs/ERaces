@@ -3,7 +3,6 @@ package dev.elysium.eraces.abilities.abils.attack.magic_damage
 import dev.elysium.eraces.abilities.ConfigHelper
 import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseEffectsAbility
-import dev.elysium.eraces.utils.TimeParser
 import dev.elysium.eraces.utils.TimeValue
 import dev.elysium.eraces.utils.targetUtils.Target
 import dev.elysium.eraces.utils.targetUtils.target.TargetFilter
@@ -16,7 +15,7 @@ import org.bukkit.event.Listener
 import org.bukkit.event.block.Action
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.potion.PotionEffectType
-import java.util.UUID
+import java.util.*
 
 @RegisterAbility
 @Suppress("unused")

@@ -2,7 +2,6 @@ package dev.elysium.eraces.items.weapon.weapons
 
 import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.items.weapon.MeleeWeapon
-import dev.elysium.eraces.utils.TimeParser
 import dev.elysium.eraces.utils.TimeValue
 import dev.elysium.eraces.utils.actionMsg
 import dev.elysium.eraces.utils.eParticle.EParticle

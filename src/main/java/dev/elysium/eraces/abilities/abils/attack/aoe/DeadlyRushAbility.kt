@@ -5,6 +5,7 @@ import dev.elysium.eraces.abilities.AbilityUtils
 import dev.elysium.eraces.abilities.ConfigHelper
 import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseEffectsAbility
+import dev.elysium.eraces.utils.TimeValue
 import dev.elysium.eraces.utils.targetUtils.Target
 import dev.elysium.eraces.utils.targetUtils.effects.EffectsTarget
 import dev.elysium.eraces.utils.targetUtils.effects.Executor
@@ -27,14 +28,14 @@ class DeadlyRushAbility : BaseEffectsAbility(
     comboKey = "1217"
 ) {
     private var radius: Double = 3.0
-    private var duration: String = "30s"
+    private var duration = TimeValue.fromSeconds(30)
     private var damagePerSeconds: Double = 1.0
 
     override fun customActivate(player: Player) {
         val plugin = ERaces.getInstance()
 
-        AbilityUtils.runRepeatingForDuration(plugin, duration) {
-            Target.Companion.from(player)
+        AbilityUtils.runRepeatingForDuration(plugin, duration.toTicks()) {
+            Target.from(player)
                 .filter(TargetFilter.ENTITIES)
                 .inRadius(radius)
                 .excludeCaster()

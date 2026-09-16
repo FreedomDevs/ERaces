@@ -7,6 +7,7 @@ import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseEffectsAbility
 import dev.elysium.eraces.listeners.custom.ManaConsumeEvent
 import dev.elysium.eraces.listeners.custom.ManaRegenerationEvent
+import dev.elysium.eraces.utils.TimeValue
 import dev.elysium.eraces.utils.actionMsg
 import org.bukkit.Color
 import org.bukkit.Particle
@@ -15,7 +16,7 @@ import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.potion.PotionEffectType
-import java.util.UUID
+import java.util.*
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -30,10 +31,10 @@ class OldAcquaintancesAbility : BaseEffectsAbility(
     private val manaConsumeBoost = mutableSetOf<UUID>()
 
     private var manaRegen: Double = 0.5 // +50% regeneration mana
-    private var manaRegenTime: String = "10s"
+    private var manaRegenTime = TimeValue.fromSeconds(10)
 
     private var manaConsume: Double = 0.2 // -20% consume mana
-    private var manaConsumeTime: String = "2m"
+    private var manaConsumeTime = TimeValue.fromSeconds(120)
 
     override fun customActivate(player: Player) {
         val plugin = ERaces.getInstance()
@@ -44,12 +45,12 @@ class OldAcquaintancesAbility : BaseEffectsAbility(
         }
 
         manaRegenBoost.add(player.uniqueId)
-        AbilityUtils.runLater(plugin, manaRegenTime) {
+        AbilityUtils.runLater(plugin, manaRegenTime.toTicks()) {
             manaRegenBoost.remove(player.uniqueId)
         }
 
         manaConsumeBoost.add(player.uniqueId)
-        AbilityUtils.runLater(plugin, manaConsumeTime) {
+        AbilityUtils.runLater(plugin, manaConsumeTime.toTicks()) {
             manaConsumeBoost.remove(player.uniqueId)
         }
 
@@ -57,7 +58,7 @@ class OldAcquaintancesAbility : BaseEffectsAbility(
     }
 
     private fun spawnParticle(plugin: ERaces, player: Player) {
-        AbilityUtils.runRepeatingForDuration(plugin, manaRegenTime, 2L) { tick ->
+        AbilityUtils.runRepeatingForDuration(plugin, manaRegenTime.toTicks(), 2L) { tick ->
             if (!manaRegenBoost.contains(player.uniqueId)) return@runRepeatingForDuration
 
             val world = player.world
@@ -77,7 +78,7 @@ class OldAcquaintancesAbility : BaseEffectsAbility(
             )
         }
 
-        AbilityUtils.runRepeatingForDuration(plugin, manaConsumeTime, 2L) { tick ->
+        AbilityUtils.runRepeatingForDuration(plugin, manaConsumeTime.toTicks(), 2L) { tick ->
             if (!manaConsumeBoost.contains(player.uniqueId)) return@runRepeatingForDuration
 
             val world = player.world

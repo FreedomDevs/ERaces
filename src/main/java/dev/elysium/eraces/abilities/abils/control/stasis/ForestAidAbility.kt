@@ -6,18 +6,18 @@ import dev.elysium.eraces.abilities.ConfigHelper
 import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseCooldownAbility
 import dev.elysium.eraces.utils.EffectUtils
-import dev.elysium.eraces.utils.TimeParser
-import org.bukkit.event.Listener
-import java.util.UUID
+import dev.elysium.eraces.utils.TimeValue
 import dev.elysium.eraces.utils.targetUtils.Target
 import org.bukkit.Material
 import org.bukkit.Particle
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
+import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.player.PlayerMoveEvent
 import org.bukkit.util.Vector
+import java.util.*
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -26,10 +26,10 @@ import kotlin.math.sin
 class ForestAidAbility : BaseCooldownAbility(
     id = "forest_aid", defaultCooldown = "1m"
 ), Listener {
-    private var duration: String = "5s"
+    private var duration = TimeValue.fromSeconds(5)
     private var radius: Double = 40.0
     private var poisonLevel: Int = 1
-    private var poisonDuration: String = "5s"
+    private var poisonDuration = TimeValue.fromSeconds(5)
     private var particleCount: Int = 8
     private var fallingBlocks: Boolean = true
     private var fallingBlockMaterial: String = "OAK_WOOD"
@@ -51,10 +51,10 @@ class ForestAidAbility : BaseCooldownAbility(
                 EffectUtils.applyEffects(
                     target,
                     mapOf("minecraft:poison" to poisonLevel),
-                    TimeParser.parseToTicks(poisonDuration).toInt()
+                    poisonDuration.toTicksInt()
                 )
 
-                AbilityUtils.runRepeatingForDuration(plugin, duration, 2L) { _ ->
+                AbilityUtils.runRepeatingForDuration(plugin, duration.toTicks(), 2L) { _ ->
                     val loc = target.location.clone().add(0.0, 1.0, 0.0)
                     for (i in 0 until particleCount) {
                         val angle = i * 2 * Math.PI / particleCount
@@ -70,10 +70,10 @@ class ForestAidAbility : BaseCooldownAbility(
 
                 if (fallingBlocks) {
                     val material = Material.matchMaterial(fallingBlockMaterial) ?: Material.OAK_WOOD
-                    AbilityUtils.runRepeatingForDuration(plugin, duration, 4L) { _ ->
+                    AbilityUtils.runRepeatingForDuration(plugin, duration.toTicks(), 4L) { _ ->
                         val loc = target.location.clone().add(0.0, 5.0, 0.0)
                         repeat(fallingBlockCount) {
-                            val block = loc.world?.spawnFallingBlock(
+                            @Suppress("DEPRECATION") val block = loc.world?.spawnFallingBlock(
                                 loc.clone().add(Math.random() - 0.5, 0.0, Math.random() - 0.5),
                                 material.createBlockData()
                             )
@@ -115,7 +115,7 @@ class ForestAidAbility : BaseCooldownAbility(
         val uuid = event.player.uniqueId
         val start = activePlayers[uuid] ?: return
         val elapsed = System.currentTimeMillis() - start
-        if (elapsed < TimeParser.parseToMilliseconds(duration)) {
+        if (elapsed < duration.milliseconds) {
             event.isCancelled = true
         } else {
             activePlayers.remove(uuid)
@@ -128,7 +128,7 @@ class ForestAidAbility : BaseCooldownAbility(
         val uuid = event.damager.uniqueId
         val start = activePlayers[uuid] ?: return
         val elapsed = System.currentTimeMillis() - start
-        if (elapsed < TimeParser.parseToMilliseconds(duration)) {
+        if (elapsed < duration.milliseconds) {
             event.isCancelled = true
         } else {
             activePlayers.remove(uuid)

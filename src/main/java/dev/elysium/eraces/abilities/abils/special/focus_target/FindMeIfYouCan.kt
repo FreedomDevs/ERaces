@@ -3,7 +3,6 @@ package dev.elysium.eraces.abilities.abils.special.focus_target
 import dev.elysium.eraces.abilities.ConfigHelper
 import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseCooldownAbility
-import dev.elysium.eraces.utils.TimeParser
 import dev.elysium.eraces.utils.TimeValue
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.entity.Player
@@ -12,7 +11,7 @@ import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
-import java.util.UUID
+import java.util.*
 
 @RegisterAbility
 @Suppress("unused")

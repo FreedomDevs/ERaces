@@ -5,6 +5,7 @@ import dev.elysium.eraces.abilities.AbilityUtils
 import dev.elysium.eraces.abilities.ConfigHelper
 import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseEffectsAbility
+import dev.elysium.eraces.utils.TimeValue
 import dev.elysium.eraces.utils.targetUtils.Target
 import dev.elysium.eraces.utils.targetUtils.effects.EffectsTarget
 import dev.elysium.eraces.utils.targetUtils.effects.Executor
@@ -26,7 +27,7 @@ class AfterimageAbility : BaseEffectsAbility(
         "invisibility" to EffectData("30s", 255, PotionEffectType.INVISIBILITY)
     )
 ) {
-    private var duration: String = "30s"
+    private var duration = TimeValue.fromSeconds(30)
     private var radius: Double = 2.0
 
     override fun onActivate(player: Player) {
@@ -34,7 +35,7 @@ class AfterimageAbility : BaseEffectsAbility(
 
         val plugin = ERaces.getInstance()
 
-        AbilityUtils.runRepeatingForDuration(plugin, duration) {
+        AbilityUtils.runRepeatingForDuration(plugin, duration.toTicks()) {
             Target.Companion.from(player)
                 .executeEffects(
                     EffectsTarget()

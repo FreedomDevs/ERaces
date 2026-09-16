@@ -80,7 +80,7 @@ object EffectUtils {
 
     @JvmStatic
     fun effectDataToPotionEffect(effect: BaseEffectsAbility.EffectData): PotionEffect {
-        val ticks = TimeParser.parseToTicks(effect.duration).toInt()
+        val ticks = TimeValue(effect.duration).toTicksInt()
         val type = try {
             getPotionEffectType(effect.type.key.key)
         } catch (_: Exception) {

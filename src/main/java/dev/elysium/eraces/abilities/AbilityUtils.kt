@@ -1,7 +1,6 @@
 package dev.elysium.eraces.abilities
 
 import dev.elysium.eraces.ERaces
-import dev.elysium.eraces.utils.TimeParser
 import org.bukkit.Bukkit
 import org.bukkit.event.HandlerList
 import org.bukkit.event.Listener
@@ -27,9 +26,8 @@ object AbilityUtils {
      * @param block блок кода, который будет выполнен
      * @return [BukkitTask] задача, которую можно отменить
      */
-    fun runLater(plugin: ERaces, delay: String, block: () -> Unit): BukkitTask {
-        val ticks = TimeParser.parseToTicks(delay)
-        return Bukkit.getScheduler().runTaskLater(plugin, Runnable { block() }, ticks)
+    fun runLater(plugin: ERaces, delay: Long, block: () -> Unit): BukkitTask {
+        return Bukkit.getScheduler().runTaskLater(plugin, Runnable { block() }, delay)
     }
 
     /**
@@ -56,16 +54,15 @@ object AbilityUtils {
      */
     fun runRepeatingForDuration(
         plugin: ERaces,
-        duration: String,
+        duration: Long,
         tickInterval: Long = 20L,
         block: (elapsedSeconds: Long) -> Unit
     ): BukkitTask {
-        val totalTicks = TimeParser.parseToTicks(duration)
         var elapsed = 0L
         var task: BukkitTask? = null
 
         task = Bukkit.getScheduler().runTaskTimer(plugin, Runnable {
-            if (elapsed >= totalTicks) {
+            if (elapsed >= duration) {
                 task?.cancel()
                 return@Runnable
             }
@@ -82,12 +79,11 @@ object AbilityUtils {
      * @param listener слушатель событий
      * @param duration длительность активности слушателя в формате строки, например "5s"
      */
-    fun registerTemporaryListener(plugin: ERaces, listener: Listener, duration: String) {
+    fun registerTemporaryListener(plugin: ERaces, listener: Listener, duration: Long) {
         Bukkit.getPluginManager().registerEvents(listener, plugin)
-        val ticks = TimeParser.parseToTicks(duration)
         Bukkit.getScheduler().runTaskLater(plugin, Runnable {
             HandlerList.unregisterAll(listener)
-        }, ticks)
+        }, duration)
     }
 
     /**

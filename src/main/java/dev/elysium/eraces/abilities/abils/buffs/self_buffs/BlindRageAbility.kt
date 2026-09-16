@@ -4,6 +4,7 @@ import dev.elysium.eraces.ERaces
 import dev.elysium.eraces.abilities.AbilityUtils
 import dev.elysium.eraces.abilities.ConfigHelper
 import dev.elysium.eraces.abilities.abils.base.BaseEffectsAbility
+import dev.elysium.eraces.utils.TimeValue
 import org.bukkit.NamespacedKey
 import org.bukkit.attribute.Attribute
 import org.bukkit.attribute.AttributeModifier
@@ -19,13 +20,13 @@ class BlindRageAbility : BaseEffectsAbility(id = "blindrage", defaultCooldown = 
         "blindness" to EffectData("15s", 1, PotionEffectType.BLINDNESS)
     )), Listener {
 
-    var armorDuration = "15s"
+    var armorDuration = TimeValue.fromSeconds(15)
     var additionalArmor = 4.0
 
     override fun customActivate(player: Player) {
         addArmor(player);
 
-        AbilityUtils.runLater(ERaces.getInstance(), armorDuration) {
+        AbilityUtils.runLater(ERaces.getInstance(), armorDuration.toTicks()) {
             if (player.isOnline)
                 removeArmor(player)
         }

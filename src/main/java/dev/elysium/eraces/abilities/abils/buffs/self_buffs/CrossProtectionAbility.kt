@@ -5,6 +5,7 @@ import dev.elysium.eraces.abilities.AbilityUtils
 import dev.elysium.eraces.abilities.ConfigHelper
 import dev.elysium.eraces.abilities.RegisterAbility
 import dev.elysium.eraces.abilities.abils.base.BaseCooldownAbility
+import dev.elysium.eraces.utils.TimeValue
 import dev.elysium.eraces.utils.actionMsg
 import org.bukkit.Bukkit
 import org.bukkit.Color
@@ -16,7 +17,7 @@ import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.scheduler.BukkitTask
 import org.bukkit.util.Vector
-import java.util.UUID
+import java.util.*
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -26,7 +27,7 @@ class CrossProtectionAbility : BaseCooldownAbility(id = "crossprotection", defau
     private val particleTasks = mutableMapOf<UUID, BukkitTask>()
     private val active = mutableSetOf<UUID>()
 
-    private var duration: String = "1s"
+    private var duration = TimeValue.fromSeconds(1)
 
     override fun onActivate(player: Player) {
         val plugin = ERaces.getInstance()
@@ -40,7 +41,7 @@ class CrossProtectionAbility : BaseCooldownAbility(id = "crossprotection", defau
         val task = startParticleTails(player)
         particleTasks[player.uniqueId] = task
 
-        AbilityUtils.runLater(plugin, duration) {
+        AbilityUtils.runLater(plugin, duration.toTicks()) {
             active.remove(player.uniqueId)
             particleTasks.remove(player.uniqueId)?.cancel()
         }

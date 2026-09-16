@@ -71,7 +71,7 @@ class JerkAbility : BaseCooldownAbility(id = "jerk", defaultCooldown = "5m") {
         player.teleport(targetLoc)
         player.world.playSound(player.location, Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1.2f)
 
-        AbilityUtils.runLater(plugin, "5t") {
+        AbilityUtils.runLater(plugin, 5) {
             player.world.spawnParticle(
                 Particle.WITCH, player.location.add(0.0, 1.0, 0.0),
                 40, 0.5, 0.5, 0.5, 0.1
